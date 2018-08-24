@@ -20,7 +20,7 @@ export class Aggregator<I, R> extends Node<I, R> {
         let node = this.in['node'],
             inputs = this.inputs,
             callback = this.callback,
-            result = this.initial,
+            result = Aggregator.copy(this.initial),
             values = this.values;
 
         // storing last value
@@ -33,5 +33,23 @@ export class Aggregator<I, R> extends Node<I, R> {
         }
 
         this.out(result);
+    }
+
+    /**
+     * Shallow copies specified value.
+     */
+    private static copy(value: any): any {
+        switch (true) {
+            case value instanceof Array:
+                return value.concat();
+            case value instanceof Object:
+                let copy = {};
+                for (let key in value) {
+                    copy[key] = value[key];
+                }
+                return copy;
+            default:
+                return value;
+        }
     }
 }

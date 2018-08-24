@@ -2,6 +2,7 @@
 import {Logger} from "./src/Logger";
 import {Noop} from "./src/Noop";
 import {Aggregator} from "./src/Aggregator";
+import {Merger} from "./src/Merger";
 import {Filter} from "./src/Filter";
 import {Mapper} from "./src/Mapper";
 import {Delayer} from "./src/Delayer";
@@ -26,6 +27,19 @@ let l = new Logger();
     let a = new Noop(),
         b = new Noop(),
         c = new Aggregator<number, number>((sum, next) => sum + (next || 0), 0);
+    a.edge(c);
+    b.edge(c);
+    c.edge(l);
+    a.in(2);
+    b.in(3);
+    b.in(4);
+}
+
+{
+    console.log("Merger");
+    let a = new Noop(),
+        b = new Noop(),
+        c = new Merger<number>();
     a.edge(c);
     b.edge(c);
     c.edge(l);
