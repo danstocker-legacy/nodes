@@ -1,27 +1,37 @@
 import {Node} from './Node';
-import {Reducer} from './Reducer';
+import {AggregatorCallback} from './typedefs/AggregatorCallback';
 
 /**
- * Aggregates inputs to a single output value as defined by the specified reducer function.
+ * Aggregates inputs to a single output value as defined by the specified reducer callback.
  */
-export class Aggregator<Item, Result> extends Node {
-    private readonly reducer: Reducer<Item, Result>;
-    private readonly initial: Result;
+export class Aggregator<I, R> extends Node<I, R> {
+    private readonly callback: AggregatorCallback<I, R>;
+    private readonly initial: R;
+    private readonly values: Object;
 
-    constructor(reducer: Reducer<Item, Result>, initial: Result) {
+    constructor(callback: AggregatorCallback<I, R>, initial: R) {
         super();
-        this.reducer = reducer;
+        this.callback = callback;
         this.initial = initial;
+        this.values = {};
     }
 
-    public in(): void {
-        let reducer = this.reducer,
+    public in(value: I): void {
+        let node = this.in['node'],
             inputs = this.inputs,
-            result = this.initial;
-        for (let nodeId in inputs) {
-            let node = inputs[nodeId];
-            result = reducer(result, node.value, nodeId, inputs);
+            callback = this.callback,
+            result = this.initial,
+            values = this.values;
+
+        // storing last value
+        values[node.id] = value;
+
+        // calculating aggregate value
+        for (let nodeId in values) {
+            let value = values[nodeId];
+            result = callback(result, value, nodeId, inputs);
         }
+
         this.out(result);
     }
 }

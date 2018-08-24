@@ -1,7 +1,7 @@
 /**
  * Basic unit of graph of observables.
  */
-export class Node {
+export class Node<I, O> {
     /**
      * Keeps track of issued identifiers.
      */
@@ -22,33 +22,28 @@ export class Node {
      */
     protected readonly outputs: Object;
 
-    /**
-     * Last output value set by node.
-     */
-    public value: any;
-
     constructor() {
         this.id = this.constructor['name'] + Node.nextId++;
         this.inputs = {};
         this.outputs = {};
-        this.value = undefined;
     }
 
     /**
      * Sends value to current node.
      */
-    public in(value: any): void {
+    public in(value: I): void {
     }
 
     /**
      * Sends specified value to all output nodes.
      */
-    protected out(value: any): void {
+    protected out(value: O): void {
         let outputs = this.outputs;
-        this.value = value;
         for (let nodeId in outputs) {
             let node = outputs[nodeId];
+            node.in['node'] = this;
             node.in(value);
+            node.in['node'] = undefined;
         }
     }
 
