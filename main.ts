@@ -6,6 +6,7 @@ import {Filter} from "./src/Filter";
 import {Mapper} from "./src/Mapper";
 import {Delayer} from "./src/Delayer";
 import {Debouncer} from "./src/Debouncer";
+import {Throttler} from "./src/Throttler";
 
 let l = new Logger();
 
@@ -79,3 +80,14 @@ let l = new Logger();
     a.in(4);
 }
 
+{
+    console.log("Throttler");
+    let a = new Noop(),
+        b = new Throttler(1000);
+    a.edge(b);
+    b.edge(l);
+    setTimeout(() => a.in(1), 0);
+    setTimeout(() => a.in(2), 600);
+    setTimeout(() => a.in(3), 1200);
+    setTimeout(() => a.in(4), 1800);
+}
