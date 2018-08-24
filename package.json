@@ -1,0 +1,23 @@
+{
+  "name": "edgeflow",
+  "version": "0.0.1",
+  "description": "Graph-based Stream Processing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "graph",
+    "stream",
+    "push",
+    "observable",
+    "observer",
+    "iterable",
+    "iterator"
+  ],
+  "author": "Dan Stocker <dan@kwaia.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^1.0.3"
+  }
+}
