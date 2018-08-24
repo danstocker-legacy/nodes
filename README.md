@@ -28,6 +28,7 @@ Supported Node types
 
 General purpose:
 - `Noop`: forwards value synchronously
+- `Logger`: logs input to console
 
 Functional:
 - `Aggregator`: aggregates values from multiple source nodes

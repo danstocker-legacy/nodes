@@ -1,4 +1,8 @@
 /.idea
+/.tscache
+/dist
 /node_modules
+/*.tgz
 *.js
 *.map
+!Gruntfile.js

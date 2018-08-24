@@ -2,7 +2,13 @@
   "name": "edgeflow",
   "version": "0.0.1",
   "description": "Graph-based Stream Processing",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,6 +24,8 @@
   "author": "Dan Stocker <dan@kwaia.com>",
   "license": "MIT",
   "devDependencies": {
-    "grunt": "^1.0.3"
+    "grunt": "^1.0.3",
+    "grunt-ts": "^6.0.0-beta.21",
+    "typescript": "^3.0.1"
   }
 }
