@@ -1,6 +1,9 @@
 import {Node} from './Node';
 import {FilterCallback} from "./typedefs/FilterCallback";
 
+/**
+ * Outputs only those inputs that satisfy the specified filter callback.
+ */
 export class Filter<I> extends Node<I, I> {
     private readonly callback: FilterCallback<I>;
 

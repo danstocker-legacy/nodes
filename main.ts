@@ -4,6 +4,8 @@ import {Noop} from "./src/Noop";
 import {Aggregator} from "./src/Aggregator";
 import {Filter} from "./src/Filter";
 import {Mapper} from "./src/Mapper";
+import {Delayer} from "./src/Delayer";
+import {Debouncer} from "./src/Debouncer";
 
 let l = new Logger();
 
@@ -54,5 +56,26 @@ let l = new Logger();
     a.in(1);
     a.in(2);
     a.in(3);
+}
+
+{
+    console.log("Delayer");
+    let a = new Noop(),
+        b = new Delayer(1000);
+    a.edge(b);
+    b.edge(l);
+    a.in("Hello with 1s delay");
+}
+
+{
+    console.log("Debouncer");
+    let a = new Noop(),
+        b = new Debouncer(1000);
+    a.edge(b);
+    b.edge(l);
+    a.in(1);
+    a.in(2);
+    a.in(3);
+    a.in(4);
 }
 
