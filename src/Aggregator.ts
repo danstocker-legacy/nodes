@@ -7,29 +7,29 @@ import {AggregatorCallback} from './typedefs/AggregatorCallback';
 export class Aggregator<I, R> extends Node<I, R> {
     private readonly callback: AggregatorCallback<I, R>;
     private readonly seed: R;
-    private readonly values: Object;
+    private readonly inputs: Object;
 
     constructor(callback: AggregatorCallback<I, R>, seed: R) {
         super();
         this.callback = callback;
         this.seed = seed;
-        this.values = {};
+        this.inputs = {};
     }
 
     public in(value: I): void {
-        let node = this.in['node'],
-            inputs = this.inputs,
+        let source = this.in['source'],
+            sources = this.sources,
             callback = this.callback,
             result = Aggregator.copy(this.seed),
-            values = this.values;
+            inputs = this.inputs;
 
         // storing last value
-        values[node.id] = value;
+        inputs[source.id] = value;
 
         // calculating aggregate value
-        for (let nodeId in values) {
-            let value = values[nodeId];
-            result = callback(result, value, nodeId, inputs);
+        for (let nodeId in inputs) {
+            let value = inputs[nodeId];
+            result = callback(result, value, nodeId, sources);
         }
 
         this.out(result);

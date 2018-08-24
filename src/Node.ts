@@ -13,19 +13,19 @@ export class Node<I, O> {
     public readonly id: string;
 
     /**
-     * Lookup of input nodes indexed by IDs.
+     * Lookup of source nodes indexed by their IDs.
      */
-    protected readonly inputs: Object;
+    protected readonly sources: Object;
 
     /**
-     * Lookup of output nodes indexed by IDs.
+     * Lookup of target nodes indexed by IDs.
      */
-    protected readonly outputs: Object;
+    protected readonly targets: Object;
 
     constructor() {
         this.id = this.constructor['name'] + Node.nextId++;
-        this.inputs = {};
-        this.outputs = {};
+        this.sources = {};
+        this.targets = {};
     }
 
     /**
@@ -38,12 +38,12 @@ export class Node<I, O> {
      * Sends specified value to all output nodes.
      */
     protected out(value: O): void {
-        let outputs = this.outputs;
-        for (let nodeId in outputs) {
-            let node = outputs[nodeId];
-            node.in['node'] = this;
-            node.in(value);
-            node.in['node'] = undefined;
+        let targets = this.targets;
+        for (let nodeId in targets) {
+            let target = targets[nodeId];
+            target.in['source'] = this;
+            target.in(value);
+            target.in['source'] = undefined;
         }
     }
 
@@ -53,8 +53,8 @@ export class Node<I, O> {
     public edge(...nodes): void {
         for (let i = 0; i < nodes.length; i++) {
             let node = nodes[i];
-            this.outputs[node.id] = node;
-            node.inputs[this.id] = this;
+            this.targets[node.id] = node;
+            node.sources[this.id] = this;
         }
     }
 }

@@ -13,8 +13,8 @@ export class Filter<I> extends Node<I, I> {
     }
 
     public in(value: I): void {
-        let node = this.in['node'];
-        if (this.callback(value, node.id, this.inputs)) {
+        let source = this.in['source'];
+        if (this.callback(value, source.id, this.sources)) {
             this.out(value);
         }
     }
