@@ -1,7 +1,7 @@
 {
-  "name": "edgeflow",
+  "name": "cross-stream",
   "version": "0.0.1",
-  "description": "Graph-based Stream Processing",
+  "description": "Push event propagation along graph edges",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

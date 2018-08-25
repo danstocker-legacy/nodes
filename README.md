@@ -1,20 +1,20 @@
-Edgeflow
-========
+Cross Stream
+============
 
 Push event propagation along graph edges
 
-With Edgeflow, you plan the flow of data and events like you would draw a 
-graph. Edgeflow's API footprint is very small compared to something like Rx.js, 
-for instance, but is flexible enough to solve complex problems, from stream 
-data processing to neural networks.
+With Cross Stream, you plan the flow of data and events like you would draw a 
+graph. Cross Stream's API footprint is very small compared to something like
+Rx.js, for instance, but is flexible enough to solve complex problems, from 
+stream data processing to neural networks.
 
-The basic unit of Edgeflow is the `Node`. You build the graph by connecting 
+The basic unit of Cross Stream is the `Node`. You build the graph by connecting 
 nodes, then feed data into the graph by invoking `Node#in` on relevant nodes.
 
 A simple example:
 
 ```typescript
-import {Logger, Noop} from "edgeflow";
+import {Logger, Noop} from "cross-stream";
 let l = new Logger(),
     a = new Noop(),
     b = new Noop();
