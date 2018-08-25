@@ -1,13 +1,12 @@
-#!/usr/bin/env node
-import {Logger} from "../src/Logger";
-import {Noop} from "../src/Noop";
-import {Aggregator} from "../src/Aggregator";
-import {Merger} from "../src/Merger";
-import {Filter} from "../src/Filter";
-import {Mapper} from "../src/Mapper";
-import {Delayer} from "../src/Delayer";
-import {Debouncer} from "../src/Debouncer";
-import {Throttler} from "../src/Throttler";
+import {Logger} from "../Logger";
+import {Noop} from "../Noop";
+import {Aggregator} from "../Aggregator";
+import {Merger} from "../Merger";
+import {Filter} from "../Filter";
+import {Mapper} from "../Mapper";
+import {Delayer} from "../Delayer";
+import {Debouncer} from "../Debouncer";
+import {Throttler} from "../Throttler";
 
 let l = new Logger();
 
