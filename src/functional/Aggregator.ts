@@ -4,12 +4,12 @@ import {AggregatorCallback} from '../typedefs'
 /**
  * Aggregates inputs to a single output value as defined by the specified reducer callback.
  */
-export class Aggregator<I, R> extends Node<I, R> {
-    private readonly callback: AggregatorCallback<I, R>;
-    private readonly seed: R;
+export class Aggregator<I, O> extends Node<I, O> {
+    private readonly callback: AggregatorCallback<I, O>;
+    private readonly seed: O;
     private readonly inputs: Object;
 
-    constructor(callback: AggregatorCallback<I, R>, seed: R) {
+    constructor(callback: AggregatorCallback<I, O>, seed: O) {
         super();
         this.callback = callback;
         this.seed = seed;
