@@ -54,6 +54,7 @@ Functional:
 Timing:
 - `Delayer`: forwards delayed
 - `Debouncer`: forwards accumulated values with debouncing
+- `Interval`: emits at every interval
 - `Throttler`: forwards accumulated values with throttling
 
 Input / Output:
