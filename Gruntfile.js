@@ -23,12 +23,21 @@ module.exports = function (grunt) {
         files: ['src/**/*.ts'],
         tasks: ['default']
       }
+    },
+
+    notify: {
+      build: {
+        options: {
+          message: "Build ready"
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-notify');
   grunt.loadNpmTasks('grunt-ts');
-  grunt.registerTask('build', ['clean:tsc', 'ts']);
+  grunt.registerTask('build', ['clean:tsc', 'ts', 'notify:build']);
   grunt.registerTask('default', ['build', 'watch']);
 };
