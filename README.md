@@ -3,15 +3,17 @@ Cross Stream
 
 Push event propagation along graph edges
 
-With Cross Stream, you plan the flow of data and events like you would draw a 
-graph. Cross Stream's API footprint is very small compared to something like
-Rx.js for instance, but is flexible enough to solve complex problems, from 
-stream data processing to neural networks.
+With Cross Stream, you plan the flow of data as you would draw a directed 
+graph. Cross Stream's API footprint is small, but it's flexible enough to solve 
+complex problems, from streaming data processing to neural networks.
 
-The basic unit of Cross Stream is the `Node`. You build the graph by connecting 
-nodes, then feed data into the graph by invoking `Node#in` on relevant nodes.
+The basic unit of Cross Stream is the *node* (`Node`). A node behaves much 
+like a function: it takes an *input*, and generates an *output*. The 
+difference is, you may connect nodes in a declarative manner, (which ends up 
+being your program) then feed in data into the whole graph through relevant 
+input nodes or sources (eg. *stdin*).
 
-A simple example:
+A simple example that throttles asynchronous input into batches:
 
 ```typescript
 import {Delayer, Logger, Throttler} from "cross-stream";
