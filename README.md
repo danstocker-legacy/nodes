@@ -29,6 +29,7 @@ Supported Node types
 General purpose:
 - `Noop`: forwards value synchronously
 - `Logger`: logs input to console
+- `Stringifier`: converts input to string
 
 Functional:
 - `Aggregator`: aggregates values from multiple source nodes
@@ -40,3 +41,8 @@ Timing:
 - `Delayer`: forwards delayed
 - `Debouncer`: forwards accumulated values with debouncing
 - `Throttler`: forwards accumulated values with throttling
+
+Input / Output:
+- `StdIn`: outputs when `process.stdin` receives data
+- `StdOut`: writes input to `process.stdout`
+- `StdErr`: writes input to `process.stderr`
