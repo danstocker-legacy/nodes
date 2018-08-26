@@ -1,5 +1,5 @@
-import {Node} from './Node';
-import {MapperCallback} from "./typedefs/MapperCallback";
+import {Node} from '../Node';
+import {MapperCallback} from "../typedefs/MapperCallback";
 
 export class Mapper<I, O> extends Node<I, O> {
     private readonly callback: MapperCallback<I, O>;

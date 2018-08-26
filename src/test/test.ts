@@ -1,12 +1,12 @@
-import {Logger} from "../Logger";
-import {Noop} from "../Noop";
-import {Aggregator} from "../Aggregator";
-import {Merger} from "../Merger";
-import {Filter} from "../Filter";
-import {Mapper} from "../Mapper";
-import {Delayer} from "../Delayer";
-import {Debouncer} from "../Debouncer";
-import {Throttler} from "../Throttler";
+import {Logger} from "../general/Logger";
+import {Noop} from "../general/Noop";
+import {Aggregator} from "../functional/Aggregator";
+import {Merger} from "../functional/Merger";
+import {Filter} from "../functional/Filter";
+import {Mapper} from "../functional/Mapper";
+import {Delayer} from "../timing/Delayer";
+import {Debouncer} from "../timing/Debouncer";
+import {Throttler} from "../timing/Throttler";
 
 let l = new Logger();
 

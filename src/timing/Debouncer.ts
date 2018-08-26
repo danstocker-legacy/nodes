@@ -1,9 +1,9 @@
-import {Node} from './Node';
+import {Node} from '../Node';
 
 /**
- * Throttles output by the specified number of milliseconds.
+ * Debounces output by the specified number of milliseconds.
  */
-export class Throttler extends Node<any, any> {
+export class Debouncer extends Node<any, any> {
     private readonly delay: number;
     private timer: NodeJS.Timer;
     private values: Array<any>;
@@ -19,19 +19,17 @@ export class Throttler extends Node<any, any> {
         this.values.push(value);
 
         let timer = this.timer;
-        if (!timer) {
-            this.timer = setTimeout(this.onTimeout, this.delay);
+        if (timer) {
+            clearTimeout(timer);
         }
+
+        this.timer = setTimeout(this.onTimeout, this.delay);
     }
 
     private onTimeout(): void {
         let values = this.values;
-        if (values.length) {
-            this.timer = setTimeout(this.onTimeout, this.delay);
-            this.values = [];
-            this.out(values);
-        } else {
-            this.timer = undefined;
-        }
+        this.timer = undefined;
+        this.values = [];
+        this.out(values);
     }
 }
