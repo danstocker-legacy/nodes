@@ -14,11 +14,22 @@ nodes, then feed data into the graph by invoking `Node#in` on relevant nodes.
 A simple example:
 
 ```typescript
-import {Logger, Noop} from "cross-stream";
-let noop = new Noop(),
+import {Delayer, Logger, Throttler} from "cross-stream";
+let delayer1 = new Delayer(1500),
+    delayer2 = new Delayer(1000),
+    delayer3 = new Delayer(500),
+    throttler = new Throttler(500),
     logger = new Logger();
-noop.edge(logger);
-noop.in("Hello World");
+delayer1.edge(throttler);
+delayer2.edge(throttler);
+delayer3.edge(throttler);
+throttler.edge(logger);
+delayer1.in("Hello");
+delayer2.in("World");
+delayer3.in("!");
+// output:
+// [ '!', 'World' ]
+// [ 'Hello' ]
 ```
 
 For more examples, look in `src/examples`.
@@ -28,6 +39,7 @@ Bundled nodes
 
 General purpose:
 - `Noop`: forwards value synchronously
+- `LineSplitter`: splits string into lines
 - `Logger`: logs input to console
 - `Stringifier`: converts input to string
 
