@@ -3,7 +3,7 @@ import {Node} from '../Node';
 /**
  * Delays output by the specified number of milliseconds.
  */
-export class Delayer extends Node<any, any> {
+export class Delayer<I> extends Node<I, I> {
   private readonly delay: number;
   private timer: NodeJS.Timer;
 

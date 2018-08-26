@@ -11,9 +11,9 @@ Delayer (500ms)  --|--> Logger
 `);
 //@formatter:on
 
-let delayer1 = new Delayer(1500),
-  delayer2 = new Delayer(1000),
-  delayer3 = new Delayer(500),
+let delayer1 = new Delayer<string>(1500),
+  delayer2 = new Delayer<string>(1000),
+  delayer3 = new Delayer<string>(500),
   logger = new Logger();
 
 delayer1.edge(logger);

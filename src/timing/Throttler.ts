@@ -3,7 +3,7 @@ import {Node} from '../Node';
 /**
  * Throttles output by the specified number of milliseconds.
  */
-export class Throttler extends Node<any, any> {
+export class Throttler<I> extends Node<I, Array<I>> {
   private readonly delay: number;
   private timer: NodeJS.Timer;
   private values: Array<any>;

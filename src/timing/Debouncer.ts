@@ -3,7 +3,7 @@ import {Node} from '../Node';
 /**
  * Debounces output by the specified number of milliseconds.
  */
-export class Debouncer extends Node<any, any> {
+export class Debouncer<I> extends Node<I, Array<I>> {
   private readonly delay: number;
   private timer: NodeJS.Timer;
   private values: Array<any>;
