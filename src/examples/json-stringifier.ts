@@ -9,7 +9,7 @@ JsonStringifier --> Logger
 `);
 //@formatter:on
 
-let stringifier = new JsonStringifier(),
+let stringifier = new JsonStringifier(true),
   logger = new Logger();
 
 stringifier.edge(logger);
