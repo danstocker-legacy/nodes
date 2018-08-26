@@ -5,7 +5,7 @@ import {Node} from './Node';
  */
 export class Throttler extends Node<any, any> {
     private readonly delay: number;
-    private timer: number;
+    private timer: NodeJS.Timer;
     private values: Array<any>;
 
     constructor(delay) {
