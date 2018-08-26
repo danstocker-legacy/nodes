@@ -5,6 +5,7 @@ import {Node} from '../Node';
  */
 export class Delayer extends Node<any, any> {
     private readonly delay: number;
+    private timer: NodeJS.Timer;
 
     constructor(delay) {
         super();
@@ -12,6 +13,6 @@ export class Delayer extends Node<any, any> {
     }
 
     public in(value: any): void {
-        setTimeout(() => this.out(value), this.delay);
+        this.timer = setTimeout(() => this.out(value), this.delay);
     }
 }
