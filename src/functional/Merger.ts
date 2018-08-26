@@ -1,4 +1,4 @@
-import {Aggregator} from './Aggregator';
+import {Aggregator} from './Aggregator'
 
 /**
  * Merges inputs into a single array output.

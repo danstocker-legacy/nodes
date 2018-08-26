@@ -14,7 +14,7 @@ nodes, then feed data into the graph by invoking `Node#in` on relevant nodes.
 A simple example:
 
 ```typescript
-import {Logger, Noop} from "cross-stream";
+import {Logger, Noop} from "cross-stream"
 let l = new Logger(),
     a = new Noop(),
     b = new Noop();

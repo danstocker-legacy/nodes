@@ -1,5 +1,5 @@
-import {Node} from '../Node';
-import {FilterCallback} from "../typedefs/FilterCallback";
+import {Node} from '../Node'
+import {FilterCallback} from "../typedefs"
 
 /**
  * Outputs only those inputs that satisfy the specified filter callback.
@@ -14,7 +14,7 @@ export class Filter<I> extends Node<I, I> {
 
     public in(value: I): void {
         let source = this.in['source'];
-        if (this.callback(value, source.id, this.sources)) {
+        if (this.callback(value, source && source.id, this.sources)) {
             this.out(value);
         }
     }
