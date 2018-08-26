@@ -5,7 +5,7 @@ Push event propagation along graph edges
 
 With Cross Stream, you plan the flow of data and events like you would draw a 
 graph. Cross Stream's API footprint is very small compared to something like
-Rx.js, for instance, but is flexible enough to solve complex problems, from 
+Rx.js for instance, but is flexible enough to solve complex problems, from 
 stream data processing to neural networks.
 
 The basic unit of Cross Stream is the `Node`. You build the graph by connecting 
@@ -15,16 +15,16 @@ A simple example:
 
 ```typescript
 import {Logger, Noop} from "cross-stream"
-let l = new Logger(),
-    a = new Noop(),
-    b = new Noop();
-a.edge(b);
-b.edge(l);
-a.in("Hello World");
+let noop = new Noop(),
+    logger = new Logger();
+noop.edge(logger);
+noop.in("Hello World");
 ```
 
-Supported Node types
---------------------
+For more examples, look in `src/examples`.
+
+Bundled nodes
+-------------
 
 General purpose:
 - `Noop`: forwards value synchronously
