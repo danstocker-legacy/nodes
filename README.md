@@ -44,6 +44,7 @@ General purpose:
 - `LineSplitter`: splits string into lines
 - `Logger`: logs input to console
 - `Stringifier`: converts input to string
+- `JsonStringifier`: converts structure input to string
 
 Functional:
 - `Aggregator`: aggregates values from multiple source nodes
