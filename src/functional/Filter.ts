@@ -5,6 +5,9 @@ import {FilterCallback} from "../typedefs";
  * Outputs only those inputs that satisfy the specified filter callback.
  */
 export class Filter<I> extends Node<I, I> {
+  /**
+   * Filter callback. Similar to callback passed to Array#filter().
+   */
   private readonly callback: FilterCallback<I>;
 
   constructor(callback: FilterCallback<I>) {

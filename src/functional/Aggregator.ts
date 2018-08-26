@@ -5,8 +5,19 @@ import {AggregatorCallback} from '../typedefs';
  * Aggregates inputs to a single output value as defined by the specified reducer callback.
  */
 export class Aggregator<I, O> extends Node<I, O> {
+  /**
+   * Aggregator callback. Similar to callback passed to Array#reduce().
+   */
   private readonly callback: AggregatorCallback<I, O>;
+
+  /**
+   * Initial value of aggregated value.
+   */
   private readonly seed: O;
+
+  /**
+   * Lookup of input values from all sources.
+   */
   private readonly inputs: Object;
 
   constructor(callback: AggregatorCallback<I, O>, seed: O) {
