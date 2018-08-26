@@ -3,8 +3,8 @@ import {Logger, Merger, Noop} from "..";
 //@formatter:off
 console.log(`
 Propagation graph:
-noop1 --|
-noop2 --|--> merger --> logger
+Noop --|
+Noop --|--> Merger --> Logger
 `);
 //@formatter:on
 

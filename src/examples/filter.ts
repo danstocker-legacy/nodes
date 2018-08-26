@@ -5,7 +5,7 @@ console.log(`
 Filtering out numbers higher than 5 and lower than 1;
 
 Propagation graph:
-filter --> logger
+Filter --> Logger
 `);
 //@formatter:on
 

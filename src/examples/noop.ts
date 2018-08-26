@@ -3,8 +3,8 @@ import {Logger, Noop} from "..";
 //@formatter:off
 console.log(`
 Propagation graph:
-noop1 --|--> noop2 --|
-        |--> noop3 --|--> logger
+Noop --|--> Noop --|
+       |--> Noop --|--> Logger
 `);
 //@formatter:on
 

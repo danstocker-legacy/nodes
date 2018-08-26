@@ -5,9 +5,9 @@ console.log(`
 Sends inputs to output throttled.
 
 Propagation graph:
-delayer1 (1500ms) --|
-delayer2 (1000ms) --|
-delayer3 (500ms)  --|--> throttler (500ms) --> logger
+Delayer (1500ms) --|
+Delayer (1000ms) --|
+Delayer (500ms)  --|--> Throttler (500ms) --> Logger
 `);
 //@formatter:on
 

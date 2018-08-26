@@ -5,9 +5,9 @@ console.log(`
 Sends inputs to output debounced.
 
 Propagation graph:
-delayer1 (1500ms) --|
-delayer2 (1000ms) --|
-delayer3 (500ms)  --|--> debouncer (1000ms) --> logger
+Delayer (1500ms) --|
+Delayer (1000ms) --|
+Delayer (500ms)  --|--> Debouncer (1000ms) --> Logger
 `);
 //@formatter:on
 
