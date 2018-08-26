@@ -1,3 +1,4 @@
+export {JsonStringifier} from './JsonStringifier'
 export {LineSplitter} from './LineSplitter'
 export {Logger} from './Logger'
 export {Noop} from './Noop'
