@@ -12,10 +12,10 @@ Delayer (500ms)  --|--> Debouncer (1000ms) --> Logger
 //@formatter:on
 
 let delayer1 = new Delayer(1500),
-    delayer2 = new Delayer(1000),
-    delayer3 = new Delayer(500),
-    debouncer = new Debouncer(1000),
-    logger = new Logger();
+  delayer2 = new Delayer(1000),
+  delayer3 = new Delayer(500),
+  debouncer = new Debouncer(1000),
+  logger = new Logger();
 
 delayer1.edge(debouncer);
 delayer2.edge(debouncer);

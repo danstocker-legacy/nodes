@@ -10,7 +10,7 @@ Filter --> Logger
 //@formatter:on
 
 let filter = new Filter<number>(value => value <= 5 && value > 0),
-    logger = new Logger();
+  logger = new Logger();
 
 filter.edge(logger);
 

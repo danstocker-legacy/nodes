@@ -12,10 +12,10 @@ Delayer (500ms)  --|--> Throttler (500ms) --> Logger
 //@formatter:on
 
 let delayer1 = new Delayer(1500),
-    delayer2 = new Delayer(1000),
-    delayer3 = new Delayer(500),
-    throttler = new Throttler(500),
-    logger = new Logger();
+  delayer2 = new Delayer(1000),
+  delayer3 = new Delayer(500),
+  throttler = new Throttler(500),
+  logger = new Logger();
 
 delayer1.edge(throttler);
 delayer2.edge(throttler);

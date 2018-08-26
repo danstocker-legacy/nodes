@@ -10,7 +10,7 @@ Mapper --> Logger
 //@formatter:on
 
 let mapper = new Mapper<number, number>(value => value * 2),
-    logger = new Logger();
+  logger = new Logger();
 
 mapper.edge(logger);
 

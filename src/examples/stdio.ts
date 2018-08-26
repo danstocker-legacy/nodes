@@ -10,6 +10,6 @@ StdIn --> StdOut
 //@formatter:on
 
 let stdIn = new StdIn(),
-    stdOut = new StdOut();
+  stdOut = new StdOut();
 
 stdIn.edge(stdOut);

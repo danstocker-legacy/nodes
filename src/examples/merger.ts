@@ -9,9 +9,9 @@ Noop --|--> Merger --> Logger
 //@formatter:on
 
 let noop1 = new Noop(),
-    noop2 = new Noop(),
-    merger = new Merger<number>(),
-    logger = new Logger();
+  noop2 = new Noop(),
+  merger = new Merger<number>(),
+  logger = new Logger();
 
 noop1.edge(merger);
 noop2.edge(merger);

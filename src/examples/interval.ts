@@ -1,4 +1,4 @@
-import {Node, Interval, Logger} from "..";
+import {Interval, Logger, Node} from "..";
 
 //@formatter:off
 console.log(`
@@ -10,20 +10,20 @@ Interval (500ms) --> Custom --> Logger
 //@formatter:on
 
 class Custom extends Node<any, number> {
-    private count: number = 0;
+  private count: number = 0;
 
-    public in(value: any): void {
-        this.out(this.count++);
-        if (this.count > 10) {
-            let source = this.in['source'];
-            clearInterval(source.timer);
-        }
+  public in(value: any): void {
+    this.out(this.count++);
+    if (this.count > 10) {
+      let source = this.in['source'];
+      clearInterval(source.timer);
     }
+  }
 }
 
 let interval = new Interval(500),
-    custom = new Custom(),
-    logger = new Logger();
+  custom = new Custom(),
+  logger = new Logger();
 
 interval.edge(custom);
 custom.edge(logger);
