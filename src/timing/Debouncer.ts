@@ -1,4 +1,4 @@
-import {Node} from '../Node'
+import {Node} from '../Node';
 
 /**
  * Debounces output by the specified number of milliseconds.

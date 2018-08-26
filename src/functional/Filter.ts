@@ -1,5 +1,5 @@
-import {Node} from '../Node'
-import {FilterCallback} from "../typedefs"
+import {Node} from '../Node';
+import {FilterCallback} from "../typedefs";
 
 /**
  * Outputs only those inputs that satisfy the specified filter callback.

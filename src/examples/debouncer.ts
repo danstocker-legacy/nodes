@@ -1,4 +1,4 @@
-import {Debouncer, Delayer, Logger} from ".."
+import {Debouncer, Delayer, Logger} from "..";
 
 //@formatter:off
 console.log(`

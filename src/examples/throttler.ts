@@ -1,4 +1,4 @@
-import {Delayer, Logger, Throttler} from ".."
+import {Delayer, Logger, Throttler} from "..";
 
 //@formatter:off
 console.log(`

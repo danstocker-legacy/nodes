@@ -1,4 +1,4 @@
-import {Node} from "../Node"
+import {Node} from "../Node";
 
 export class StdErr extends Node<string | Buffer, null> {
     public in(value: string | Buffer): void {

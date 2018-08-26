@@ -1,4 +1,4 @@
-import {Filter, Logger} from ".."
+import {Filter, Logger} from "..";
 
 //@formatter:off
 console.log(`

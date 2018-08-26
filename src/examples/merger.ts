@@ -1,4 +1,4 @@
-import {Logger, Merger, Noop} from ".."
+import {Logger, Merger, Noop} from "..";
 
 //@formatter:off
 console.log(`

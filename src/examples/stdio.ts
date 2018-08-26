@@ -1,4 +1,4 @@
-import {StdIn, StdOut} from "../stdio"
+import {StdIn, StdOut} from "../stdio";
 
 let stdIn = new StdIn(),
     stdOut = new StdOut();

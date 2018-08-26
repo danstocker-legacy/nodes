@@ -1,4 +1,4 @@
-import {Logger, Mapper} from ".."
+import {Logger, Mapper} from "..";
 
 //@formatter:off
 console.log(`

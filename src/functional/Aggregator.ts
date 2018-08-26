@@ -1,5 +1,5 @@
-import {Node} from '../Node'
-import {AggregatorCallback} from '../typedefs'
+import {Node} from '../Node';
+import {AggregatorCallback} from '../typedefs';
 
 /**
  * Aggregates inputs to a single output value as defined by the specified reducer callback.
