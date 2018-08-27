@@ -11,11 +11,11 @@ Delayer (500ms)  --|--> Throttler (500ms) --> Logger
 `);
 //@formatter:on
 
-let delayer1 = new Delayer<string>(1500),
-  delayer2 = new Delayer<string>(1000),
-  delayer3 = new Delayer<string>(500),
-  throttler = new Throttler<string>(500),
-  logger = new Logger();
+const delayer1 = new Delayer<string>(1500);
+const delayer2 = new Delayer<string>(1000);
+const delayer3 = new Delayer<string>(500);
+const throttler = new Throttler<string>(500);
+const logger = new Logger();
 
 delayer1.edge(throttler);
 delayer2.edge(throttler);

@@ -11,7 +11,7 @@ export class StdIn extends Node<null, string | Buffer> {
   }
 
   private onReadable() {
-    let chunk = process.stdin.read();
+    const chunk = process.stdin.read();
     if (chunk !== null) {
       this.out(chunk);
     }

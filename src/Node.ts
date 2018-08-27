@@ -38,9 +38,9 @@ export class Node<I, O> {
    * Sends specified value to all output nodes.
    */
   protected out(value: O): void {
-    let targets = this.targets;
+    const targets = this.targets;
     for (let nodeId in targets) {
-      let target = targets[nodeId];
+      const target = targets[nodeId];
       target.in['source'] = this;
       target.in(value);
       target.in['source'] = undefined;
@@ -52,7 +52,7 @@ export class Node<I, O> {
    */
   public edge(...nodes): void {
     for (let i = 0; i < nodes.length; i++) {
-      let node = nodes[i];
+      const node = nodes[i];
       this.targets[node.id] = node;
       node.sources[this.id] = this;
     }

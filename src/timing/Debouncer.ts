@@ -18,7 +18,7 @@ export class Debouncer<I> extends Node<I, Array<I>> {
   public in(value: any): void {
     this.values.push(value);
 
-    let timer = this.timer;
+    const timer = this.timer;
     if (timer) {
       clearTimeout(timer);
     }
@@ -27,7 +27,7 @@ export class Debouncer<I> extends Node<I, Array<I>> {
   }
 
   private onTimeout(): void {
-    let values = this.values;
+    const values = this.values;
     this.timer = undefined;
     this.values = [];
     this.out(values);

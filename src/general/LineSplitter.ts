@@ -7,12 +7,12 @@ export class LineSplitter extends Node<string, string> {
   private fragment: string = '';
 
   public in(value: string): void {
-    let text = this.fragment + value,
-      lines = text.split('\n');
+    const text = this.fragment + value;
+    const lines = text.split('\n');
 
     this.fragment = lines.pop();
 
-    let lineCount = lines.length;
+    const lineCount = lines.length;
     for (let i = 0; i < lineCount; i++) {
       this.out(lines[i]);
     }

@@ -16,7 +16,7 @@ export class Filter<I> extends Node<I, I> {
   }
 
   public in(value: I): void {
-    let source = this.in['source'];
+    const source = this.in['source'];
     if (this.callback(value, source && source.id, this.sources)) {
       this.out(value);
     }

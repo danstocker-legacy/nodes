@@ -9,8 +9,8 @@ Mapper --> Logger
 `);
 //@formatter:on
 
-let mapper = new Mapper<number, number>(value => value * 2),
-  logger = new Logger();
+const mapper = new Mapper<number, number>(value => value * 2);
+const logger = new Logger();
 
 mapper.edge(logger);
 

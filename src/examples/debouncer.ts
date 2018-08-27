@@ -11,11 +11,11 @@ Delayer (500ms)  --|--> Debouncer (1000ms) --> Logger
 `);
 //@formatter:on
 
-let delayer1 = new Delayer<string>(1500),
-  delayer2 = new Delayer<string>(1000),
-  delayer3 = new Delayer<string>(500),
-  debouncer = new Debouncer<string>(1000),
-  logger = new Logger();
+const delayer1 = new Delayer<string>(1500);
+const delayer2 = new Delayer<string>(1000);
+const delayer3 = new Delayer<string>(500);
+const debouncer = new Debouncer<string>(1000);
+const logger = new Logger();
 
 delayer1.edge(debouncer);
 delayer2.edge(debouncer);

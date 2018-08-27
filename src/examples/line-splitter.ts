@@ -9,11 +9,11 @@ StdIn --> Stringifier --> LineSplitter --> Mapper --> Logger
 `);
 //@formatter:on
 
-let stdIn = new StdIn(),
-  stringifier = new Stringifier(),
-  lineSplitter = new LineSplitter(),
-  lengthCounter = new Mapper<string, number>(line => line.length),
-  logger = new Logger();
+const stdIn = new StdIn();
+const stringifier = new Stringifier();
+const lineSplitter = new LineSplitter();
+const lengthCounter = new Mapper<string, number>(line => line.length);
+const logger = new Logger();
 
 stdIn.edge(stringifier);
 stringifier.edge(lineSplitter);

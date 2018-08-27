@@ -28,18 +28,18 @@ export class Aggregator<I, O> extends Node<I, O> {
   }
 
   public in(value: I): void {
-    let source = this.in['source'],
-      sources = this.sources,
-      callback = this.callback,
-      result = Aggregator.copy(this.seed),
-      inputs = this.inputs;
+    const source = this.in['source'];
+    const sources = this.sources;
+    const callback = this.callback;
+    const inputs = this.inputs;
+    let result = Aggregator.copy(this.seed);
 
     // storing last value
     inputs[source.id] = value;
 
     // calculating aggregate value
     for (let nodeId in inputs) {
-      let value = inputs[nodeId];
+      const value = inputs[nodeId];
       result = callback(result, value, nodeId, sources);
     }
 
@@ -54,7 +54,7 @@ export class Aggregator<I, O> extends Node<I, O> {
       case value instanceof Array:
         return value.concat();
       case value instanceof Object:
-        let copy = {};
+        const copy = {};
         for (let key in value) {
           copy[key] = value[key];
         }

@@ -13,7 +13,7 @@ export class Mapper<I, O> extends Node<I, O> {
   }
 
   public in(value: I): void {
-    let source = this.in['source'];
+    const source = this.in['source'];
     this.out(this.callback(value, source && source.id, this.sources));
   }
 }

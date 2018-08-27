@@ -9,8 +9,8 @@ Stringifier --> Logger
 `);
 //@formatter:on
 
-let stringifier = new Stringifier<number>(),
-  logger = new Logger();
+const stringifier = new Stringifier<number>();
+const logger = new Logger();
 
 stringifier.edge(logger);
 

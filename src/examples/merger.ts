@@ -8,10 +8,10 @@ Noop --|--> Merger --> Logger
 `);
 //@formatter:on
 
-let noop1 = new Noop(),
-  noop2 = new Noop(),
-  merger = new Merger<number>(),
-  logger = new Logger();
+const noop1 = new Noop();
+const noop2 = new Noop();
+const merger = new Merger<number>();
+const logger = new Logger();
 
 noop1.edge(merger);
 noop2.edge(merger);

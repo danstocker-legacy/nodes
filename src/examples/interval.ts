@@ -15,15 +15,15 @@ class Custom extends Node<any, number> {
   public in(value: any): void {
     this.out(this.count++);
     if (this.count > 10) {
-      let source = this.in['source'];
+      const source = this.in['source'];
       clearInterval(source.timer);
     }
   }
 }
 
-let interval = new Interval(500),
-  custom = new Custom(),
-  logger = new Logger();
+const interval = new Interval(500);
+const custom = new Custom();
+const logger = new Logger();
 
 interval.edge(custom);
 custom.edge(logger);

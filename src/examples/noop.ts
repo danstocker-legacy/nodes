@@ -8,10 +8,10 @@ Noop --|--> Noop --|
 `);
 //@formatter:on
 
-let logger = new Logger(),
-  noop1 = new Noop<string>(),
-  noop2 = new Noop<string>(),
-  noop3 = new Noop<string>();
+const logger = new Logger();
+const noop1 = new Noop<string>();
+const noop2 = new Noop<string>();
+const noop3 = new Noop<string>();
 
 noop1.edge(noop2, noop3);
 noop2.edge(logger);

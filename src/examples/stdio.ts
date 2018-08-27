@@ -9,7 +9,7 @@ StdIn --> StdOut
 `);
 //@formatter:on
 
-let stdIn = new StdIn(),
-  stdOut = new StdOut();
+const stdIn = new StdIn();
+const stdOut = new StdOut();
 
 stdIn.edge(stdOut);

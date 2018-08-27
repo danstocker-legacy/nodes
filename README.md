@@ -17,11 +17,11 @@ A simple example that throttles asynchronous input into batches:
 
 ```typescript
 import {Delayer, Logger, Throttler} from "cross-stream";
-let delayer1 = new Delayer(1500),
-    delayer2 = new Delayer(1000),
-    delayer3 = new Delayer(500),
-    throttler = new Throttler(500),
-    logger = new Logger();
+const delayer1 = new Delayer(1500);
+const delayer2 = new Delayer(1000);
+const delayer3 = new Delayer(500);
+const throttler = new Throttler(500);
+const logger = new Logger();
 delayer1.edge(throttler);
 delayer2.edge(throttler);
 delayer3.edge(throttler);

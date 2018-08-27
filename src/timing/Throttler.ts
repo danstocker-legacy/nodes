@@ -18,14 +18,14 @@ export class Throttler<I> extends Node<I, Array<I>> {
   public in(value: any): void {
     this.values.push(value);
 
-    let timer = this.timer;
+    const timer = this.timer;
     if (!timer) {
       this.timer = setTimeout(this.onTimeout, this.delay);
     }
   }
 
   private onTimeout(): void {
-    let values = this.values;
+    const values = this.values;
     if (values.length) {
       this.timer = setTimeout(this.onTimeout, this.delay);
       this.values = [];
