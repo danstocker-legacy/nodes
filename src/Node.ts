@@ -13,19 +13,26 @@ export class Node<I, O> {
   public readonly id: string;
 
   /**
-   * Lookup of source nodes indexed by their IDs.
+   * Source nodes in order of connection.
+   * TODO: Lookup for sources?
    */
-  protected readonly sources: Object;
+  protected readonly sources: Array<Node<any, I>>;
 
   /**
-   * Lookup of target nodes indexed by IDs.
+   * Targets in order of connection.
    */
-  protected readonly targets: Object;
+  protected readonly targets: Array<Node<O, any>>;
+
+  /**
+   * Lookup of target nodes indexed by node ID.
+   */
+  protected readonly targetsById: Object;
 
   constructor() {
     this.id = this.constructor['name'] + Node.nextId++;
-    this.sources = {};
-    this.targets = {};
+    this.sources = [];
+    this.targets = [];
+    this.targetsById = {};
   }
 
   /**
@@ -39,8 +46,9 @@ export class Node<I, O> {
    */
   protected out(value: O): void {
     const targets = this.targets;
-    for (let nodeId in targets) {
-      const target = targets[nodeId];
+    const targetCount = targets.length;
+    for (let i = 0; i < targetCount; i++) {
+      const target = targets[i];
       target.in['source'] = this;
       target.in(value);
       target.in['source'] = undefined;
@@ -53,8 +61,9 @@ export class Node<I, O> {
   public edge(...nodes): void {
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
-      this.targets[node.id] = node;
-      node.sources[this.id] = this;
+      this.targets.push(node);
+      this.targetsById[node.id] = node;
+      node.sources.push(this);
     }
   }
 }

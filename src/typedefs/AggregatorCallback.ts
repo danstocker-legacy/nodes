@@ -1,1 +1,3 @@
-export type AggregatorCallback<I, R> = (result: R, next: I, i: string, nodes: Object) => R;
+import {Node} from "../Node";
+
+export type AggregatorCallback<I, O> = (result: O, next: I, i: string, nodes: Array<Node<any, I>>) => O;
