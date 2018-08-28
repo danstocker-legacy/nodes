@@ -59,11 +59,15 @@ export class Node<I, O> {
    * Creates unidirectional edges to specified nodes for propagation.
    */
   public edge(...nodes): void {
+    const targetsById = this.targetsById;
     for (let i = 0; i < nodes.length; i++) {
-      const node = nodes[i];
-      this.targets.push(node);
-      this.targetsById[node.id] = node;
-      node.sources.push(this);
+      const target = nodes[i];
+      const targetId = target.id;
+      if (!targetsById[targetId]) {
+        this.targets.push(target);
+        this.targetsById[targetId] = target;
+        target.sources.push(this);
+      }
     }
   }
 }
