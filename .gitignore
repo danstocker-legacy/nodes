@@ -3,6 +3,5 @@
 /dist
 /node_modules
 /*.tgz
-*.js
-*.map
-!Gruntfile.js
+/src/**/*.js
+/src/**/*.map

@@ -24,12 +24,18 @@
     "type": "git",
     "url": "git@github.com:danstocker/cross-stream.git"
   },
+  "scripts": {
+    "test": "jasmine"
+  },
   "devDependencies": {
+    "@types/jasmine": "^2.8.8",
     "grunt": "^1.0.3",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-notify": "^0.4.5",
     "grunt-ts": "^6.0.0-beta.21",
+    "jasmine": "^3.2.0",
+    "jasmine-spec-reporter": "^4.2.1",
     "typescript": "^3.0.1"
   },
   "dependencies": {
