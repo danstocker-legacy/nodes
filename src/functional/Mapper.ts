@@ -1,4 +1,4 @@
-import {Node} from '../Node';
+import {Node} from '../node/Node';
 import {MapperCallback} from "../typedefs";
 
 export class Mapper<I, O> extends Node<I, O> {

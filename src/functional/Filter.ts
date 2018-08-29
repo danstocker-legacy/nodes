@@ -1,4 +1,4 @@
-import {Node} from '../Node';
+import {Node} from '../node/Node';
 import {FilterCallback} from "../typedefs";
 
 /**
