@@ -1,5 +1,6 @@
-import {MapperCallback} from "../typedefs";
 import {INode, Port} from "../node";
+
+type MapperCallback<I, O> = (next: I, i: string, node: INode) => O;
 
 export class Mapper<I, O> implements INode {
   public readonly ports: {

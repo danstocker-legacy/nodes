@@ -1,5 +1,6 @@
-import {ReducerCallback} from "../typedefs";
 import {INode, Port} from "../node";
+
+type ReducerCallback<I, O> = (result: O, next: I, i: Port<I>, node: INode) => O;
 
 /**
  * Mergers inputs to a single output value as defined by the specified reducer

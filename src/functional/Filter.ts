@@ -1,5 +1,6 @@
-import {FilterCallback} from "../typedefs";
 import {INode, Port} from "../node";
+
+type FilterCallback<T> = (next: T, i: string, node: INode) => boolean;
 
 /**
  * Outputs only those inputs that satisfy the specified filter callback.
