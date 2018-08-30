@@ -1,12 +1,10 @@
 import {INode, Port} from "../node";
 
-type StringifierPorts<I> = {
-  in: Port<I>,
-  out: Port<string>
-}
-
 export class Stringifier<I> implements INode {
-  public ports: StringifierPorts<I>;
+  public readonly ports: {
+    in: Port<I>,
+    out: Port<string>
+  };
 
   constructor() {
     this.ports = {

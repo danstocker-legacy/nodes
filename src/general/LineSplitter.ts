@@ -1,12 +1,10 @@
 import {INode, Port} from "../node";
 
-type LineSplitterPorts = {
-  in: Port<string>,
-  out: Port<string>
-}
-
 export class LineSplitter implements INode {
-  public readonly ports: LineSplitterPorts;
+  public readonly ports: {
+    in: Port<string>,
+    out: Port<string>
+  };
 
   /**
    * Line fragment from last input.

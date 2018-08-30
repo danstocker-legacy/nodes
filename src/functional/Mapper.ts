@@ -1,13 +1,11 @@
 import {MapperCallback} from "../typedefs";
 import {INode, Port} from "../node";
 
-type MapperPorts<I, O> = {
-  in: Port<I>,
-  out: Port<O>
-}
-
 export class Mapper<I, O> implements INode {
-  public ports: MapperPorts<I, O>;
+  public readonly ports:{
+    in: Port<I>,
+    out: Port<O>
+  };
 
   /**
    * Mapper callback. Similar ro callback passed to Array#map().

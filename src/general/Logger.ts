@@ -1,11 +1,9 @@
 import {INode, Port} from '../node';
 
-type LoggerPorts = {
-  in: Port<any>
-}
-
 export class Logger implements INode {
-  public ports: LoggerPorts;
+  public readonly ports: {
+    in: Port<any>
+  };
 
   constructor() {
     this.ports = {

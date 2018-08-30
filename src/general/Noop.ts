@@ -1,12 +1,10 @@
 import {INode, Port} from "../node";
 
-type NoopPorts<T> = {
-  in: Port<T>,
-  out: Port<T>
-}
-
 export class Noop<T> implements INode {
-  public ports: NoopPorts<T>;
+  public readonly ports: {
+    in: Port<T>,
+    out: Port<T>
+  };
 
   constructor() {
     this.ports = {

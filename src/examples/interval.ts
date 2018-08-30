@@ -1,5 +1,4 @@
-import {INode, Interval, Logger, Node, Port} from "..";
-import {isNumber} from "util";
+import {INode, Interval, Logger, Port} from "..";
 
 //@formatter:off
 console.log(`
@@ -11,7 +10,7 @@ Interval:out (500ms) --> in:Custom:out --> in:Logger
 //@formatter:on
 
 class Custom implements INode {
-  public ports: {
+  public readonly ports: {
     in: Port<null>,
     out: Port<number>
   };

@@ -1,16 +1,14 @@
 import {FilterCallback} from "../typedefs";
 import {INode, Port} from "../node";
 
-type FilterPorts<T> = {
-  in: Port<T>,
-  out: Port<T>
-}
-
 /**
  * Outputs only those inputs that satisfy the specified filter callback.
  */
 export class Filter<T> implements INode {
-  public ports: FilterPorts<T>;
+  public readonly ports: {
+    in: Port<T>,
+    out: Port<T>
+  };
 
   /**
    * Filter callback. Similar to callback passed to Array#filter().

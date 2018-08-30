@@ -1,12 +1,10 @@
 import {INode, Port} from "../node";
 
-type StringifierPorts<I> = {
-  in: Port<I>,
-  out: Port<string>
-}
-
 export class JsonStringifier<I extends Object> implements INode {
-  public ports: StringifierPorts<I>;
+  public readonly ports: {
+    in: Port<I>,
+    out: Port<string>
+  };
 
   /**
    * Whether output is formatted.

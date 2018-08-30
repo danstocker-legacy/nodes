@@ -1,17 +1,15 @@
 import {AggregatorCallback} from "../typedefs";
 import {INode, Port} from "../node";
 
-type AggregatorPorts<I, O> = {
-  in: Port<I>,
-  out: Port<O>
-}
-
 /**
  * Aggregates inputs to a single output value as defined by the specified reducer callback.
  * TODO: Rename to Merger
  */
 export class Aggregator<I, O> implements INode {
-  public ports: AggregatorPorts<I, O>;
+  public readonly ports: {
+    in: Port<I>,
+    out: Port<O>
+  };
 
   /**
    * Aggregator callback. Similar to callback passed to Array#reduce().
