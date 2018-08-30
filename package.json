@@ -1,7 +1,7 @@
 {
-  "name": "cross-stream",
+  "name": "@kwaia/nodes",
   "version": "0.1.0",
-  "description": "Push event propagation along graph edges",
+  "description": "Reactive graph",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -12,6 +12,7 @@
   "keywords": [
     "graph",
     "stream",
+    "reactive",
     "push",
     "observable",
     "observer",
@@ -22,7 +23,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:danstocker/cross-stream.git"
+    "url": "git@github.com:kwaia/nodes.git"
   },
   "scripts": {
     "test": "jasmine"
