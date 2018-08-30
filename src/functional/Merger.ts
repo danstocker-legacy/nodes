@@ -26,11 +26,11 @@ export class Merger<I, O> implements INode {
 
   public in(port: Port<I>, value: I): void {
     if (port === this.ports.in) {
-      const peer = port.in["peer"];
+      const origin = port.in["origin"];
       const callback = this.callback;
       const inputs = this.inputs;
 
-      inputs.set(peer, value);
+      inputs.set(origin, value);
 
       let result = Merger.copy(this.seed);
       for (let entry of inputs.entries()) {
