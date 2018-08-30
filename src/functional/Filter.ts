@@ -9,10 +9,6 @@ export class Filter<T> implements INode {
     in: Port<T>,
     out: Port<T>
   };
-
-  /**
-   * Filter callback. Similar to callback passed to Array#filter().
-   */
   private readonly callback: FilterCallback<T>;
 
   constructor(callback: FilterCallback<T>) {
@@ -25,7 +21,7 @@ export class Filter<T> implements INode {
 
   public in(port: Port<T>, value: T): void {
     if (port === this.ports.in) {
-      const source = this.in['source'];
+      const source = this.in["source"];
       if (this.callback(value, source && source.id, this)) {
         this.ports.out.out(value);
       }

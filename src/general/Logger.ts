@@ -1,4 +1,4 @@
-import {INode, Port} from '../node';
+import {INode, Port} from "../node";
 
 export class Logger implements INode {
   public readonly ports: {
@@ -8,7 +8,7 @@ export class Logger implements INode {
   constructor() {
     this.ports = {
       in: new Port<any>(this)
-    }
+    };
   }
 
   public in(port: Port<any>, value: any): void {

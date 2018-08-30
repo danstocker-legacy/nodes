@@ -5,10 +5,6 @@ export class JsonStringifier<I extends Object> implements INode {
     in: Port<I>,
     out: Port<string>
   };
-
-  /**
-   * Whether output is formatted.
-   */
   private readonly pretty: boolean;
 
   constructor(pretty: boolean = false) {

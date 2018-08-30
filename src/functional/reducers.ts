@@ -1,6 +1,3 @@
-import {ReducerCallback} from "../typedefs";
-import {INode, Port} from "../node";
-
 export namespace reducers {
   export function array<I>(result: Array<I>, next: I) {
     result.push(next);

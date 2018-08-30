@@ -10,20 +10,8 @@ export class Merger<I, O> implements INode {
     in: Port<I>,
     out: Port<O>
   };
-
-  /**
-   * Merger callback. Similar to callback passed to Array#reduce().
-   */
   private readonly callback: ReducerCallback<I, O>;
-
-  /**
-   * Initial value of aggregated value.
-   */
   private readonly seed: O;
-
-  /**
-   * Lookup of input values from all sources.
-   */
   private readonly inputs: Map<Port<I>, I>;
 
   constructor(callback: ReducerCallback<I, O>, seed: O) {
@@ -42,10 +30,8 @@ export class Merger<I, O> implements INode {
       const callback = this.callback;
       const inputs = this.inputs;
 
-      // storing last value
       inputs.set(peer, value);
 
-      // calculating aggregate value
       let result = Merger.copy(this.seed);
       for (let entry of inputs.entries()) {
         result = callback(result, entry[1], entry[0], this);

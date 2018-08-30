@@ -3,7 +3,7 @@ import {Logger, Noop} from "..";
 //@formatter:off
 console.log(`
 Propagation graph:
-Noop:out --> Logger:in
+Noop:out --> in:Logger
 `);
 //@formatter:on
 

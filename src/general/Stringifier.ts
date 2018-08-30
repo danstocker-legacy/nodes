@@ -10,7 +10,7 @@ export class Stringifier<I> implements INode {
     this.ports = {
       in: new Port<I>(this),
       out: new Port<string>(this)
-    }
+    };
   }
 
   public in(port: Port<I>, value: I): void {

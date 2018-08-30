@@ -5,7 +5,7 @@ console.log(`
 Piping standard input to standard output.
 
 Propagation graph:
-StdIn:out --> StdOut:in
+StdIn:out --> in:StdOut
 `);
 //@formatter:on
 

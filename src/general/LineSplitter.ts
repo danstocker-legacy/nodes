@@ -5,10 +5,6 @@ export class LineSplitter implements INode {
     in: Port<string>,
     out: Port<string>
   };
-
-  /**
-   * Line fragment from last input.
-   */
   private fragment: string = '';
 
   constructor() {

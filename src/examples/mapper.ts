@@ -5,7 +5,7 @@ console.log(`
 Mapping input numbers to their doubles.
 
 Propagation graph:
-Mapper:out --> Logger:in
+Mapper:out --> in:Logger
 `);
 //@formatter:on
 

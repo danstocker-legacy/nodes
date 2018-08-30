@@ -1,4 +1,4 @@
-import {INode} from './INode';
+import {INode} from "./INode";
 
 export class Port<T> {
   public node: INode;
@@ -18,7 +18,7 @@ export class Port<T> {
     const peerCount = peers.length;
     for (let i = 0; i < peerCount; i++) {
       const peer = peers[i];
-      peer.in['peer'] = this;
+      peer.in["peer"] = this;
       peer.in(value);
     }
   }

@@ -10,7 +10,7 @@ export class Noop<T> implements INode {
     this.ports = {
       in: new Port<T>(this),
       out: new Port<T>(this)
-    }
+    };
   }
 
   public in(port: Port<T>, value: any): void {

@@ -1,4 +1,4 @@
-import {Port} from './Port';
+import {Port} from "./Port";
 
 export interface INode {
   readonly ports: Object;

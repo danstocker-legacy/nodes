@@ -5,7 +5,7 @@ console.log(`
 Stringifies numbers.
 
 Propagation graph:
-Stringifier:out --> Logger:in
+Stringifier:out --> in:Logger
 `);
 //@formatter:on
 
