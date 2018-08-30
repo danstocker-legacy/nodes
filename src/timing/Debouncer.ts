@@ -23,14 +23,16 @@ export class Debouncer<T> implements INode {
   }
 
   public in(port:Port<T>, value: T): void {
-    this.values.push(value);
+    if (port === this.ports.in) {
+      this.values.push(value);
 
-    const timer = this.timer;
-    if (timer) {
-      clearTimeout(timer);
+      const timer = this.timer;
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      this.timer = setTimeout(this.onTimeout, this.delay);
     }
-
-    this.timer = setTimeout(this.onTimeout, this.delay);
   }
 
   private onTimeout(): void {

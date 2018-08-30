@@ -20,6 +20,8 @@ export class JsonStringifier<I extends Object> implements INode {
   }
 
   public in(port: Port<I>, value: I): void {
-    this.ports.out.out(JSON.stringify(value, null, this.pretty ? 2 : 0));
+    if (port === this.ports.in) {
+      this.ports.out.out(JSON.stringify(value, null, this.pretty ? 2 : 0));
+    }
   }
 }

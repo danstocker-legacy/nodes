@@ -19,14 +19,16 @@ export class LineSplitter implements INode {
   }
 
   public in(port: Port<string>, value: string): void {
-    const text = this.fragment + value;
-    const lines = text.split('\n');
+    if (port === this.ports.in) {
+      const text = this.fragment + value;
+      const lines = text.split('\n');
 
-    this.fragment = lines.pop();
+      this.fragment = lines.pop();
 
-    const lineCount = lines.length;
-    for (let i = 0; i < lineCount; i++) {
-      this.ports.out.out(lines[i]);
+      const lineCount = lines.length;
+      for (let i = 0; i < lineCount; i++) {
+        this.ports.out.out(lines[i]);
+      }
     }
   }
 }

@@ -12,6 +12,8 @@ export class StdErr implements INode {
   }
 
   public in(port: Port<string | Buffer>, value: string | Buffer): void {
-    process.stderr.write(value);
+    if (port === this.ports.in) {
+      process.stderr.write(value);
+    }
   }
 }

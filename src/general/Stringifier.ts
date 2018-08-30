@@ -14,6 +14,8 @@ export class Stringifier<I> implements INode {
   }
 
   public in(port: Port<I>, value: I): void {
-    this.ports.out.out(String(value));
+    if (port === this.ports.in) {
+      this.ports.out.out(String(value));
+    }
   }
 }

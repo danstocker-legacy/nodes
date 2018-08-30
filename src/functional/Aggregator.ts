@@ -37,20 +37,22 @@ export class Aggregator<I, O> implements INode {
   }
 
   public in(port: Port<I>, value: I): void {
-    const peer = port.in["peer"];
-    const callback = this.callback;
-    const inputs = this.inputs;
+    if (port === this.ports.in) {
+      const peer = port.in["peer"];
+      const callback = this.callback;
+      const inputs = this.inputs;
 
-    // storing last value
-    inputs.set(peer, value);
+      // storing last value
+      inputs.set(peer, value);
 
-    // calculating aggregate value
-    let result = Aggregator.copy(this.seed);
-    for (let entry of inputs.entries()) {
-      result = callback(result, entry[1], entry[0], this);
+      // calculating aggregate value
+      let result = Aggregator.copy(this.seed);
+      for (let entry of inputs.entries()) {
+        result = callback(result, entry[1], entry[0], this);
+      }
+
+      this.ports.out.out(result);
     }
-
-    this.ports.out.out(result);
   }
 
   /**

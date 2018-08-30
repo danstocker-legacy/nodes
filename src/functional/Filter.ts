@@ -24,9 +24,11 @@ export class Filter<T> implements INode {
   }
 
   public in(port: Port<T>, value: T): void {
-    const source = this.in['source'];
-    if (this.callback(value, source && source.id, this)) {
-      this.ports.out.out(value);
+    if (port === this.ports.in) {
+      const source = this.in['source'];
+      if (this.callback(value, source && source.id, this)) {
+        this.ports.out.out(value);
+      }
     }
   }
 }

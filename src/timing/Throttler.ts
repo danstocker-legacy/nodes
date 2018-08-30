@@ -23,11 +23,13 @@ export class Throttler<T> implements INode {
   }
 
   public in(port: Port<T>, value: any): void {
-    this.values.push(value);
+    if (port === this.ports.in) {
+      this.values.push(value);
 
-    const timer = this.timer;
-    if (!timer) {
-      this.timer = setTimeout(this.onTimeout, this.delay);
+      const timer = this.timer;
+      if (!timer) {
+        this.timer = setTimeout(this.onTimeout, this.delay);
+      }
     }
   }
 

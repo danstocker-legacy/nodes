@@ -21,7 +21,9 @@ export class Mapper<I, O> implements INode {
   }
 
   public in(port:Port<I>, value: I): void {
-    const source = this.in['source'];
-    this.ports.out.out(this.callback(value, source && source.id, this));
+    if (port === this.ports.in) {
+      const source = this.in['source'];
+      this.ports.out.out(this.callback(value, source && source.id, this));
+    }
   }
 }

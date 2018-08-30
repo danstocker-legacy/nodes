@@ -12,6 +12,8 @@ export class StdOut implements INode {
   }
 
   public in(port: Port<string | Buffer>, value: string | Buffer): void {
-    process.stdout.write(value);
+    if (port === this.ports.in) {
+      process.stdout.write(value);
+    }
   }
 }
