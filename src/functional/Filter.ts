@@ -1,24 +1,34 @@
-import {Node} from '../node/Node';
 import {FilterCallback} from "../typedefs";
+import {INode, Port} from "../node";
+
+type FilterPorts<T> = {
+  in: Port<T>,
+  out: Port<T>
+}
 
 /**
  * Outputs only those inputs that satisfy the specified filter callback.
  */
-export class Filter<I> extends Node<I, I> {
+export class Filter<T> implements INode {
+  public ports: FilterPorts<T>;
+
   /**
    * Filter callback. Similar to callback passed to Array#filter().
    */
-  private readonly callback: FilterCallback<I>;
+  private readonly callback: FilterCallback<T>;
 
-  constructor(callback: FilterCallback<I>) {
-    super();
+  constructor(callback: FilterCallback<T>) {
+    this.ports = {
+      in: new Port<T>(this),
+      out: new Port<T>(this)
+    };
     this.callback = callback;
   }
 
-  public in(value: I): void {
+  public in(port: Port<T>, value: T): void {
     const source = this.in['source'];
-    if (this.callback(value, source && source.id, this.sources)) {
-      this.out(value);
+    if (this.callback(value, source && source.id, this)) {
+      this.ports.out.out(value);
     }
   }
 }

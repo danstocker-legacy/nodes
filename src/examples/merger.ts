@@ -3,8 +3,8 @@ import {Logger, Merger, Noop} from "..";
 //@formatter:off
 console.log(`
 Propagation graph:
-Noop --|
-Noop --|--> Merger --> Logger
+Noop:out --|
+Noop:out --|--> in:Merger:out --> in:Logger
 `);
 //@formatter:on
 
@@ -13,13 +13,13 @@ const noop2 = new Noop();
 const merger = new Merger<number>();
 const logger = new Logger();
 
-noop1.edge(merger);
-noop2.edge(merger);
-merger.edge(logger);
+noop1.ports.out.connect(merger.ports.in);
+noop2.ports.out.connect(merger.ports.in);
+merger.ports.out.connect(logger.ports.in);
 
 console.log("feeding 2 to noop1");
-noop1.in(2);
+noop1.ports.in.in(2);
 console.log("feeding 3 to noop2");
-noop2.in(3);
+noop2.ports.in.in(3);
 console.log("feeding 4 to noop2");
-noop2.in(4);
+noop2.ports.in.in(4);

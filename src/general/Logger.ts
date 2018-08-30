@@ -1,7 +1,19 @@
-import {Node} from '../node/Node';
+import {INode, Port} from '../node';
 
-export class Logger extends Node<any, any> {
-  public in(value: any): void {
+type LoggerPorts = {
+  in: Port<any>
+}
+
+export class Logger implements INode {
+  public ports: LoggerPorts;
+
+  constructor() {
+    this.ports = {
+      in: new Port<any>(this)
+    }
+  }
+
+  public in(port: Port<any>, value: any): void {
     console.log(value);
   }
 }

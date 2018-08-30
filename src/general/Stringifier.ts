@@ -1,7 +1,21 @@
-import {Node} from '../node/Node';
+import {INode, Port} from "../node";
 
-export class Stringifier<I> extends Node<I, string> {
-  public in(value: I): void {
-    this.out(String(value));
+type StringifierPorts<I> = {
+  in: Port<I>,
+  out: Port<string>
+}
+
+export class Stringifier<I> implements INode {
+  public ports: StringifierPorts<I>;
+
+  constructor() {
+    this.ports = {
+      in: new Port<I>(this),
+      out: new Port<string>(this)
+    }
+  }
+
+  public in(port: Port<I>, value: I): void {
+    this.ports.out.out(String(value));
   }
 }

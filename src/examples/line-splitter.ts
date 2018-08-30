@@ -5,7 +5,8 @@ console.log(`
 Listing line lengths in file passed to standard input.
 
 Propagation graph:
-StdIn --> Stringifier --> LineSplitter --> Mapper --> Logger
+StdIn:out --> in:Stringifier:out --> in:LineSplitter:out --> in:Mapper:out 
+  --> in:Logger
 `);
 //@formatter:on
 
@@ -15,7 +16,7 @@ const lineSplitter = new LineSplitter();
 const lengthCounter = new Mapper<string, number>(line => line.length);
 const logger = new Logger();
 
-stdIn.edge(stringifier);
-stringifier.edge(lineSplitter);
-lineSplitter.edge(lengthCounter);
-lengthCounter.edge(logger);
+stdIn.ports.out.connect(stringifier.ports.in);
+stringifier.ports.out.connect(lineSplitter.ports.in);
+lineSplitter.ports.out.connect(lengthCounter.ports.in);
+lengthCounter.ports.out.connect(logger.ports.in);

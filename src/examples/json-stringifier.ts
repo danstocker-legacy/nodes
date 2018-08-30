@@ -5,14 +5,14 @@ console.log(`
 Stringifies objects as JSON.
 
 Propagation graph:
-JsonStringifier --> Logger
+JsonStringifier:out --> Logger:in
 `);
 //@formatter:on
 
 const stringifier = new JsonStringifier(true);
 const logger = new Logger();
 
-stringifier.edge(logger);
+stringifier.ports.out.connect(logger.ports.in);
 
 console.log("feeding {foo: \"bar\"} [object] to stringifier");
-stringifier.in({foo: "bar"});
+stringifier.ports.in.in({foo: "bar"});

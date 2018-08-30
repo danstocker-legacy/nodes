@@ -1,18 +1,25 @@
-import {Node} from '../node/Node';
+import {INode, Port} from "../node";
 
 /**
  * Delays output by the specified number of milliseconds.
  */
-export class Delayer<I> extends Node<I, I> {
+export class Delayer<T> implements INode {
+  public readonly ports: {
+    in: Port<T>,
+    out: Port<T>
+  };
   private readonly delay: number;
   private timer: NodeJS.Timer;
 
   constructor(delay) {
-    super();
     this.delay = delay;
+    this.ports = {
+      in: new Port<T>(this),
+      out: new Port<T>(this)
+    };
   }
 
-  public in(value: any): void {
-    this.timer = setTimeout(() => this.out(value), this.delay);
+  public in(port: Port<T>, value: T): void {
+    this.timer = setTimeout(() => this.ports.out.out(value), this.delay);
   }
 }

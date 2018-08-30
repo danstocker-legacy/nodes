@@ -1,19 +1,29 @@
-import {Node} from '../node/Node';
 import {MapperCallback} from "../typedefs";
+import {INode, Port} from "../node";
 
-export class Mapper<I, O> extends Node<I, O> {
+type MapperPorts<I, O> = {
+  in: Port<I>,
+  out: Port<O>
+}
+
+export class Mapper<I, O> implements INode {
+  public ports: MapperPorts<I, O>;
+
   /**
    * Mapper callback. Similar ro callback passed to Array#map().
    */
   private readonly callback: MapperCallback<I, O>;
 
   constructor(callback: MapperCallback<I, O>) {
-    super();
+    this.ports = {
+      in: new Port<I>(this),
+      out: new Port<O>(this)
+    };
     this.callback = callback;
   }
 
-  public in(value: I): void {
+  public in(port:Port<I>, value: I): void {
     const source = this.in['source'];
-    this.out(this.callback(value, source && source.id, this.sources));
+    this.ports.out.out(this.callback(value, source && source.id, this));
   }
 }

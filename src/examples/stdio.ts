@@ -5,11 +5,11 @@ console.log(`
 Piping standard input to standard output.
 
 Propagation graph:
-StdIn --> StdOut
+StdIn:out --> StdOut:in
 `);
 //@formatter:on
 
 const stdIn = new StdIn();
 const stdOut = new StdOut();
 
-stdIn.edge(stdOut);
+stdIn.ports.out.connect(stdOut.ports.in);

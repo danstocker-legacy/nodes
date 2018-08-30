@@ -1,3 +1,3 @@
-import {Node} from "../node/Node";
+import {INode} from "../node";
 
-export type MapperCallback<I, O> = (next: I, i: string, nodes: Array<Node<any, I>>) => O;
+export type MapperCallback<I, O> = (next: I, i: string, node: INode) => O;

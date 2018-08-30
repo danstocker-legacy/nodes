@@ -5,18 +5,18 @@ console.log(`
 Mapping input numbers to their doubles.
 
 Propagation graph:
-Mapper --> Logger
+Mapper:out --> Logger:in
 `);
 //@formatter:on
 
 const mapper = new Mapper<number, number>(value => value * 2);
 const logger = new Logger();
 
-mapper.edge(logger);
+mapper.ports.out.connect(logger.ports.in);
 
 console.log("feeding 1 to mapper");
-mapper.in(1);
+mapper.ports.in.in(1);
 console.log("feeding 2 to mapper");
-mapper.in(2);
+mapper.ports.in.in(2);
 console.log("feeding 3 to mapper");
-mapper.in(3);
+mapper.ports.in.in(3);

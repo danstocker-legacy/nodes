@@ -1,23 +1,28 @@
-import {Node} from '../node/Node';
+import {INode, Port} from "../node";
 
 /**
- * Outputs null on
+ * Outputs null at intervals.
  */
-export class Interval extends Node<null, null> {
+export class Interval implements INode {
+  public readonly ports: {
+    out: Port<null>
+  };
+  public readonly timer: number; // TODO: How coe not NodeJS.Timer?
   private readonly delay: number;
-  private readonly timer: number; // TODO: How coe not NodeJS.Timer?
 
   constructor(delay) {
-    super();
     this.delay = delay;
     this.timer = setInterval(this.onInterval.bind(this), delay);
+    this.ports = {
+      out: new Port<null>(this)
+    };
   }
 
-  public in(value: null) {
+  public in(port: Port<null>, value: null) {
     throw Error("Interval is source-only.");
   }
 
   private onInterval(): void {
-    this.out(null);
+    this.ports.out.out(null);
   }
 }

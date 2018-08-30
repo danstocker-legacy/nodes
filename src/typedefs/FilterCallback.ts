@@ -1,3 +1,3 @@
-import {Node} from "../node/Node";
+import {INode} from "../node";
 
-export type FilterCallback<I> = (next: I, i: string, nodes: Array<Node<any, I>>) => boolean;
+export type FilterCallback<T> = (next: T, i: string, node: INode) => boolean;

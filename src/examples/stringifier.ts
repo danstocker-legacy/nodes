@@ -5,14 +5,14 @@ console.log(`
 Stringifies numbers.
 
 Propagation graph:
-Stringifier --> Logger
+Stringifier:out --> Logger:in
 `);
 //@formatter:on
 
 const stringifier = new Stringifier<number>();
 const logger = new Logger();
 
-stringifier.edge(logger);
+stringifier.ports.out.connect(logger.ports.in);
 
-console.log("feeding 1 [number] to stringifier");
-stringifier.in(1);
+console.log("feeding 1 [number] to stringifier:in");
+stringifier.ports.in.in(1);

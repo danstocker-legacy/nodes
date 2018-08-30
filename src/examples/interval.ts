@@ -1,23 +1,38 @@
-import {Interval, Logger, Node} from "..";
+import {INode, Interval, Logger, Node, Port} from "..";
+import {isNumber} from "util";
 
 //@formatter:off
 console.log(`
 Increments counter at every 500ms intervals up to 10 then stops source stream.
 
 Propagation graph:
-Interval (500ms) --> Custom --> Logger
+Interval:out (500ms) --> in:Custom:out --> in:Logger
 `);
 //@formatter:on
 
-class Custom extends Node<any, number> {
+class Custom implements INode {
+  public ports: {
+    in: Port<null>,
+    out: Port<number>
+  };
   private count: number = 0;
 
-  public in(value: any): void {
-    this.out(this.count++);
-    if (this.count > 10) {
-      const source = this.in['source'];
-      clearInterval(source.timer);
+  constructor() {
+    this.ports = {
+      in: new Port<null>(this),
+      out: new Port<number>(this)
+    };
+  }
+
+  public in(port: Port<null>, value: any): void {
+    if (this.count >= 10) {
+      const peer = port.in["peer"];
+      const node = peer && peer.node;
+      if (node instanceof Interval) {
+        clearInterval(node.timer);
+      }
     }
+    this.ports.out.out(this.count++);
   }
 }
 
@@ -25,5 +40,5 @@ const interval = new Interval(500);
 const custom = new Custom();
 const logger = new Logger();
 
-interval.edge(custom);
-custom.edge(logger);
+interval.ports.out.connect(custom.ports.in);
+custom.ports.out.connect(logger.ports.in);

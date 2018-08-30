@@ -5,9 +5,9 @@ console.log(`
 Sends inputs to output throttled.
 
 Propagation graph:
-Delayer (1500ms) --|
-Delayer (1000ms) --|
-Delayer (500ms)  --|--> Throttler (500ms) --> Logger
+Delayer:out (1500ms) --|
+Delayer:out (1000ms) --|
+Delayer:out (500ms)  --|--> in:Throttler:out (500ms) --> in:Logger
 `);
 //@formatter:on
 
@@ -17,14 +17,14 @@ const delayer3 = new Delayer<string>(500);
 const throttler = new Throttler<string>(500);
 const logger = new Logger();
 
-delayer1.edge(throttler);
-delayer2.edge(throttler);
-delayer3.edge(throttler);
-throttler.edge(logger);
+delayer1.ports.out.connect(throttler.ports.in);
+delayer2.ports.out.connect(throttler.ports.in);
+delayer3.ports.out.connect(throttler.ports.in);
+throttler.ports.out.connect(logger.ports.in);
 
 console.log("feeding \"Hello\" to delayer1");
-delayer1.in("Hello");
+delayer1.ports.in.in("Hello");
 console.log("feeding \"World\" to delayer2");
-delayer2.in("World");
+delayer2.ports.in.in("World");
 console.log("feeding \"!\" to delayer3");
-delayer3.in("!");
+delayer3.ports.in.in("!");

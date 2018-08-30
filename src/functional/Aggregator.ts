@@ -1,10 +1,18 @@
-import {Node} from '../node/Node';
-import {AggregatorCallback} from '../typedefs';
+import {AggregatorCallback} from "../typedefs";
+import {INode, Port} from "../node";
+
+type AggregatorPorts<I, O> = {
+  in: Port<I>,
+  out: Port<O>
+}
 
 /**
  * Aggregates inputs to a single output value as defined by the specified reducer callback.
+ * TODO: Rename to Merger
  */
-export class Aggregator<I, O> extends Node<I, O> {
+export class Aggregator<I, O> implements INode {
+  public ports: AggregatorPorts<I, O>;
+
   /**
    * Aggregator callback. Similar to callback passed to Array#reduce().
    */
@@ -18,32 +26,33 @@ export class Aggregator<I, O> extends Node<I, O> {
   /**
    * Lookup of input values from all sources.
    */
-  private readonly inputs: Object;
+  private readonly inputs: Map<Port<I>, I>;
 
   constructor(callback: AggregatorCallback<I, O>, seed: O) {
-    super();
+    this.ports = {
+      in: new Port<I>(this),
+      out: new Port<O>(this)
+    };
     this.callback = callback;
     this.seed = seed;
-    this.inputs = {};
+    this.inputs = new Map<Port<I>, I>();
   }
 
-  public in(value: I): void {
-    const source = this.in['source'];
-    const sources = this.sources;
+  public in(port: Port<I>, value: I): void {
+    const peer = port.in["peer"];
     const callback = this.callback;
     const inputs = this.inputs;
-    let result = Aggregator.copy(this.seed);
 
     // storing last value
-    inputs[source.id] = value;
+    inputs.set(peer, value);
 
     // calculating aggregate value
-    for (let nodeId in inputs) {
-      const value = inputs[nodeId];
-      result = callback(result, value, nodeId, sources);
+    let result = Aggregator.copy(this.seed);
+    for (let entry of inputs.entries()) {
+      result = callback(result, entry[1], entry[0], this);
     }
 
-    this.out(result);
+    this.ports.out.out(result);
   }
 
   /**
