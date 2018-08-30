@@ -1,4 +1,5 @@
 import {Logger, Merger, Noop} from "..";
+import {reducers} from "../functional/reducers";
 
 //@formatter:off
 console.log(`
@@ -10,7 +11,7 @@ Noop:out --|--> in:Merger:out --> in:Logger
 
 const noop1 = new Noop();
 const noop2 = new Noop();
-const merger = new Merger<number>();
+const merger = new Merger<number, Array<number>>(reducers.array, []);
 const logger = new Logger();
 
 noop1.ports.out.connect(merger.ports.in);

@@ -1,3 +1,3 @@
-export {AggregatorCallback} from './AggregatorCallback'
+export {ReducerCallback} from './ReducerCallback'
 export {FilterCallback} from './FilterCallback'
 export {MapperCallback} from './MapperCallback'

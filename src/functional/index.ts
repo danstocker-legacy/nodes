@@ -1,4 +1,3 @@
-export {Aggregator} from './Aggregator'
+export {Merger} from './Merger'
 export {Filter} from './Filter'
 export {Mapper} from './Mapper'
-export {Merger} from './Merger'

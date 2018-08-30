@@ -47,8 +47,7 @@ General purpose:
 - `JsonStringifier`: converts structure input to string
 
 Functional:
-- `Aggregator`: aggregates input from multiple source nodes
-- `Merger`: a kind of `Aggregator`, merges input values into an array
+- `Merger`: merges input from multiple source nodes
 - `Filter`: forwards values selectively
 - `Mapper`: forwards values with mapping
 
