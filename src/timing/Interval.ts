@@ -10,7 +10,7 @@ export class Interval implements INode {
   public readonly timer: number; // TODO: How coe not NodeJS.Timer?
   private readonly delay: number;
 
-  constructor(delay) {
+  constructor(delay: number) {
     this.ports = {
       out: new Port<null>(this)
     };

@@ -11,7 +11,7 @@ export class Delayer<T> implements INode {
   private readonly delay: number;
   private timer: NodeJS.Timer;
 
-  constructor(delay) {
+  constructor(delay: number) {
     this.delay = delay;
     this.ports = {
       in: new Port<T>(this),

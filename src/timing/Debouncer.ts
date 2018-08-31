@@ -12,7 +12,7 @@ export class Debouncer<T> implements INode {
   private timer: NodeJS.Timer;
   private values: Array<T>;
 
-  constructor(delay) {
+  constructor(delay: number) {
     this.ports = {
       in: new Port<T>(this),
       out: new Port<Array<T>>(this)
