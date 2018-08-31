@@ -3,9 +3,9 @@ import {Stringifier} from "./Stringifier";
 describe("Stringifier", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
-      const noop = new Stringifier();
-      expect(noop.ports.in.node).toBe(noop);
-      expect(noop.ports.out.node).toBe(noop);
+      const stringifier: Stringifier<any> = new Stringifier();
+      expect(stringifier.ports.in.node).toBe(stringifier);
+      expect(stringifier.ports.out.node).toBe(stringifier);
     });
   });
 
