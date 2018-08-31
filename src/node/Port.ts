@@ -2,18 +2,16 @@ import {INode} from "./INode";
 
 export class Port<T> {
   public readonly node: INode;
-  public readonly sources: Array<Port<T>>;
-  public readonly destinations: Array<Port<T>>;
+  public peer: Port<T>;
 
   constructor(node: INode) {
     this.node = node;
-    this.sources = [];
-    this.destinations = [];
   }
 
-  public connect(destination: Port<T>) {
-    this.destinations.push(destination);
-    destination.sources.push(this);
+  public connect(peer: Port<T>) {
+    // TODO: Disconnect peer if already connected
+    this.peer = peer;
+    peer.peer = this;
   }
 
   public in(value: T): void {
@@ -21,12 +19,9 @@ export class Port<T> {
   }
 
   public out(value: T): void {
-    const destinations = this.destinations;
-    const destinationCount = destinations.length;
-    for (let i = 0; i < destinationCount; i++) {
-      const destination = destinations[i];
-      destination.in["source"] = this;
-      destination.in(value);
+    const peer = this.peer;
+    if (peer) {
+      peer.in(value);
     }
   }
 }

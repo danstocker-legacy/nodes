@@ -22,7 +22,7 @@ export class Filter<T> implements INode {
 
   public in(port: Port<T>, value: T): void {
     if (port === this.ports.in) {
-      const source = port.in["source"];
+      const source = port.peer;
       if (this.callback(value, source, port)) {
         this.ports.out.out(value);
       }

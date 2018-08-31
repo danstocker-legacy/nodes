@@ -27,39 +27,29 @@ describe("Port", function () {
       const port = new Port(node);
       expect(port.node).toBe(node);
     });
-
-    it("should initialize sources", function () {
-      const port = new Port(node);
-      expect(port.sources).toEqual([]);
-    });
-
-    it("should initialize destinations", function () {
-      const port = new Port(node);
-      expect(port.destinations).toEqual([]);
-    });
   });
 
   describe("#connect()", function () {
-    let sender: Port<any>;
-    let receiver: Port<any>;
+    let source: Port<any>;
+    let destination: Port<any>;
     let node1: INode;
     let node2: INode;
 
     beforeEach(function () {
       node1 = new Node();
       node2 = new Node();
-      sender = new Port(node1);
-      receiver = new Port(node2);
+      source = new Port(node1);
+      destination = new Port(node2);
     });
 
-    it("should add remote port to destinations", function () {
-      sender.connect(receiver);
-      expect(sender.destinations).toEqual([receiver]);
+    it("should set remote port as peer", function () {
+      source.connect(destination);
+      expect(source.peer).toBe(destination);
     });
 
-    it("should add self to remote port's sources", function () {
-      sender.connect(receiver);
-      expect(receiver.sources).toEqual([sender]);
+    it("should add self as peer on peer", function () {
+      source.connect(destination);
+      expect(destination.peer).toBe(source);
     });
   });
 
@@ -80,28 +70,23 @@ describe("Port", function () {
   });
 
   describe("#out()", function () {
-    let sender: Port<number>;
-    let receiver: Port<number>;
+    let source: Port<number>;
+    let destination: Port<number>;
     let node1: INode;
     let node2: INode;
 
     beforeEach(function () {
       node1 = new Node();
       node2 = new Node();
-      sender = new Port(node1);
-      receiver = new Port(node2);
-      sender.connect(receiver);
+      source = new Port(node1);
+      destination = new Port(node2);
+      source.connect(destination);
     });
 
-    it("should pass value to destinations", function () {
-      spyOn(receiver, "in");
-      sender.out(5);
-      expect(receiver.in).toHaveBeenCalledWith(5);
-    });
-
-    it("should set origin on output's input method", function () {
-      sender.out(5);
-      expect(receiver.in["source"]).toBe(sender);
+    it("should pass value to peer", function () {
+      spyOn(destination, "in");
+      source.out(5);
+      expect(destination.in).toHaveBeenCalledWith(5);
     });
   });
 });

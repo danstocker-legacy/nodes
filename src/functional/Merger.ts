@@ -5,6 +5,7 @@ type ReducerCallback<I, O> = (result: O, next: I, source: Port<I>, port: Port<I>
 /**
  * Mergers inputs to a single output value as defined by the specified reducer
  * callback.
+ * TODO: Revisit
  */
 export class Merger<I, O> implements INode {
   public readonly ports: {
@@ -27,7 +28,7 @@ export class Merger<I, O> implements INode {
 
   public in(port: Port<I>, value: I): void {
     if (port === this.ports.in) {
-      const source = port.in["source"];
+      const source = port.peer;
       const callback = this.callback;
       const inputs = this.inputs;
 
