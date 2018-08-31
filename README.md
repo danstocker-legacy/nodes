@@ -1,63 +1,62 @@
-Cross Stream
-============
+Nodes
+=====
 
-Push event propagation along graph edges
+Nodes is a reactive library for processing streaming data.
 
-With Cross Stream, you plan the flow of data as you would draw a directed 
-graph. Cross Stream's API footprint is small, but it's flexible enough to solve 
-complex problems, from streaming data processing to neural networks.
+In Nodes, the basic processing unit is the *node*, which is similar to a 
+function, in that it takes *inputs* and produces *outputs*. But instead of 
+arguments and return value, it communicates through *ports*. A node may have 
+any number of ports, but most nodes have one input and one output port. Ports
+may be connected between nodes, forming a web, or graph, and defining the 
+flow of data through the system.
 
-The basic unit of Cross Stream is the *node* (`Node`). A node behaves much 
-like a function: it takes an *input*, and generates an *output*. The 
-difference is, you may connect nodes in a declarative manner, (which ends up 
-being your program) then feed in data into the whole graph through relevant 
-input nodes or sources (eg. *stdin*).
+Nodes comes with a set of pre-defined node classes, like Mapper, Filter, etc.
+but the power of this library lies in its extensibility. Any (custom) node 
+has two responsibilities: a) define a set of ports, and b) process and 
+distribute inputs to outputs in a single override method.
 
-A simple example that throttles asynchronous input into batches:
+Composition of nodes is also quite simple with the SuperNode. Any set of  
+interacting nodes might be treated as a single node, provided that relevant  
+input and output ports are assigned.
 
-```typescript
-import {Delayer, Logger, Throttler} from "cross-stream";
-const delayer1 = new Delayer(1500);
-const delayer2 = new Delayer(1000);
-const delayer3 = new Delayer(500);
-const throttler = new Throttler(500);
-const logger = new Logger();
-delayer1.edge(throttler);
-delayer2.edge(throttler);
-delayer3.edge(throttler);
-throttler.edge(logger);
-delayer1.in("Hello");
-delayer2.in("World");
-delayer3.in("!");
-// output:
-// [ '!', 'World' ]
-// [ 'Hello' ]
-```
+Programs written in Nodes are essentially graphs, (or more precisely,  
+orchestrators of graphs) which are, by their nature, easy to visualize and  
+diagnose.
 
-For more examples, look in `src/examples`.
+Nodes is developed in TypeScript.
 
-Bundled nodes
--------------
+Nodes is a Kwaia project.
 
-General purpose:
-- `Noop`: forwards value synchronously
-- `LineSplitter`: splits string into lines
-- `Logger`: logs input to console
-- `Stringifier`: converts input to string
-- `JsonStringifier`: converts structure input to string
+Implementing a node class
+-------------------------
 
-Functional:
-- `Merger`: merges input from multiple source nodes
-- `Filter`: forwards values selectively
-- `Mapper`: forwards values with mapping
+TBD
 
-Timing:
-- `Delayer`: forwards delayed
-- `Debouncer`: forwards accumulated values with debouncing
-- `Interval`: emits at every interval
-- `Throttler`: forwards accumulated values with throttling
+Creating an ad-hoc supernode
+----------------------------
 
-Input / Output:
-- `StdIn`: outputs when `process.stdin` receives data
-- `StdOut`: writes input to `process.stdout`
-- `StdErr`: writes input to `process.stderr`
+TBD
+
+Implementing a supernode class
+------------------------------
+
+TBD
+
+Debugging a Nodes program
+-------------------------
+
+TBD
+
+Examples
+--------
+
+TBD
+
+Planned features
+----------------
+
+- [ ] trail
+- [ ] state snapshot
+- [ ] restore from state snapshot
+- [ ] visual graph snapshot
+- [ ] visual debugging
