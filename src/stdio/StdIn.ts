@@ -12,7 +12,7 @@ export class StdIn implements INode {
     process.stdin.on("readable", this.onReadable.bind(this));
   }
 
-  public in(port: null, value: null) {
+  public in(port: Port<null>, value: null) {
     throw Error("StdIn is source-only.");
   }
 
