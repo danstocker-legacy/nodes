@@ -1,0 +1,42 @@
+import {Delayer} from "./Delayer";
+
+describe("Delayer", function () {
+  describe("constructor", function () {
+    it("should set ports", function () {
+      const delayer: Delayer<any> = new Delayer(1000);
+      expect(delayer.ports.in.node).toBe(delayer);
+      expect(delayer.ports.out.node).toBe(delayer);
+    });
+  });
+
+  describe("#in()", function () {
+    let delayer: Delayer<number>;
+
+    beforeEach(function () {
+      delayer = new Delayer(500);
+      jasmine.clock().install();
+    });
+
+    afterEach(function () {
+      jasmine.clock().uninstall();
+    });
+
+    describe("when delay has not passed", function () {
+      it("should not invoke output", function () {
+        spyOn(delayer.ports.out, "out");
+        delayer.in(delayer.ports.in, 5);
+        jasmine.clock().tick(499);
+        expect(delayer.ports.out.out).not.toHaveBeenCalledWith(5);
+      });
+    });
+
+    describe("when delay passed", function () {
+      it("should pass value to output", function () {
+        spyOn(delayer.ports.out, "out");
+        delayer.in(delayer.ports.in, 5);
+        jasmine.clock().tick(501);
+        expect(delayer.ports.out.out).toHaveBeenCalledWith(5);
+      });
+    });
+  });
+});
