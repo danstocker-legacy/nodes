@@ -11,11 +11,11 @@ export class Interval implements INode {
   private readonly delay: number;
 
   constructor(delay) {
-    this.delay = delay;
-    this.timer = setInterval(this.onInterval.bind(this), delay);
     this.ports = {
       out: new Port<null>(this)
     };
+    this.timer = setInterval(this.onInterval.bind(this), delay);
+    this.delay = delay;
   }
 
   public in(port: Port<null>, value: null) {

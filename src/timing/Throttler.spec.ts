@@ -1,9 +1,9 @@
-import {Debouncer} from "./Debouncer";
+import {Throttler} from "./Throttler";
 
-describe("Debouncer", function () {
+describe("Throttler", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
-      const debouncer: Debouncer<any> = new Debouncer(1000);
+      const debouncer: Throttler<any> = new Throttler(1000);
       expect(debouncer.ports.in.node).toBe(debouncer);
       expect(debouncer.ports.out.node).toBe(debouncer);
     });
@@ -12,7 +12,7 @@ describe("Debouncer", function () {
       let debouncer;
 
       beforeEach(function () {
-        debouncer = new Debouncer(500);
+        debouncer = new Throttler(500);
         jasmine.clock().install();
       });
 
@@ -20,26 +20,15 @@ describe("Debouncer", function () {
         jasmine.clock().uninstall();
       });
 
-      describe("after last input", function () {
+      describe("after delay", function () {
         it("should pass values to output", function () {
           spyOn(debouncer.ports.out, "out");
           debouncer.in(debouncer.ports.in, 5);
+          jasmine.clock().tick(250);
           debouncer.in(debouncer.ports.in, 6);
+          jasmine.clock().tick(249);
           debouncer.in(debouncer.ports.in, 7);
-          jasmine.clock().tick(501);
-          expect(debouncer.ports.out.out).toHaveBeenCalledWith([5, 6, 7]);
-        });
-      });
-
-      describe("on new input within delay", function () {
-        it("should restart timer", function () {
-          spyOn(debouncer.ports.out, "out");
-          debouncer.in(debouncer.ports.in, 5);
-          jasmine.clock().tick(499);
-          debouncer.in(debouncer.ports.in, 6);
-          jasmine.clock().tick(499);
-          debouncer.in(debouncer.ports.in, 7);
-          jasmine.clock().tick(501);
+          jasmine.clock().tick(2);
           expect(debouncer.ports.out.out).toHaveBeenCalledWith([5, 6, 7]);
         });
       });
