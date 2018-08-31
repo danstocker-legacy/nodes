@@ -11,9 +11,9 @@ export class Port<T> {
     this.destinations = [];
   }
 
-  public connect(port: Port<T>) {
-    this.destinations.push(port);
-    port.sources.push(this);
+  public connect(destination: Port<T>) {
+    this.destinations.push(destination);
+    destination.sources.push(this);
   }
 
   public in(value: T): void {
