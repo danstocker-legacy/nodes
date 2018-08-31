@@ -1,6 +1,6 @@
 import {INode, Port} from "../node";
 
-type FilterCallback<T> = (next: T, i: string, node: INode) => boolean;
+type FilterCallback<T> = (next: T, source: Port<T>, port: Port<T>) => boolean;
 
 /**
  * Outputs only those inputs that satisfy the specified filter callback.
@@ -22,8 +22,8 @@ export class Filter<T> implements INode {
 
   public in(port: Port<T>, value: T): void {
     if (port === this.ports.in) {
-      const source = this.in["source"];
-      if (this.callback(value, source && source.id, this)) {
+      const source = port.in["source"];
+      if (this.callback(value, source, port)) {
         this.ports.out.out(value);
       }
     }

@@ -1,6 +1,6 @@
 import {INode, Port} from "../node";
 
-type ReducerCallback<I, O> = (result: O, next: I, i: Port<I>, node: INode) => O;
+type ReducerCallback<I, O> = (result: O, next: I, source: Port<I>, port: Port<I>) => O;
 
 /**
  * Mergers inputs to a single output value as defined by the specified reducer
@@ -35,7 +35,7 @@ export class Merger<I, O> implements INode {
 
       let result = Merger.shallowCopy(this.seed);
       for (let entry of inputs.entries()) {
-        result = callback(result, entry[1], entry[0], this);
+        result = callback(result, entry[1], entry[0], port);
       }
 
       this.ports.out.out(result);
