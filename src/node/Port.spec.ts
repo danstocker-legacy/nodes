@@ -51,6 +51,54 @@ describe("Port", function () {
       source.connect(destination);
       expect(destination.peer).toBe(source);
     });
+
+    describe("when already connected", function () {
+      let node3: INode;
+      let destination2: Port<any>;
+
+      beforeEach(function () {
+        node3 = new Node();
+        destination2 = new Port(node3);
+        source.connect(destination);
+      });
+
+      it("should disconnect peers", function () {
+        source.connect(destination2);
+        expect(destination.peer).toBeUndefined();
+      });
+    });
+  });
+
+  describe("#disconnect()", function () {
+    let source: Port<any>;
+    let destination: Port<any>;
+    let node1: INode;
+    let node2: INode;
+
+    beforeEach(function () {
+      node1 = new Node();
+      node2 = new Node();
+      source = new Port(node1);
+      destination = new Port(node2);
+      source.connect(destination);
+    });
+
+    describe("when disconnecting source", function () {
+      it("should remove peers", function () {
+        source.disconnect();
+        expect(source.peer).toBeUndefined();
+        expect(destination.peer).toBeUndefined();
+      });
+    });
+
+
+    describe("when disconnecting destination", function () {
+      it("should remove peers", function () {
+        destination.disconnect();
+        expect(source.peer).toBeUndefined();
+        expect(destination.peer).toBeUndefined();
+      });
+    });
   });
 
   describe("#in()", function () {

@@ -8,10 +8,19 @@ export class Port<T> {
     this.node = node;
   }
 
-  public connect(peer: Port<T>) {
-    // TODO: Disconnect peer if already connected
+  public connect(peer: Port<T>): void {
+    if (this.peer) {
+      this.disconnect();
+    }
+
     this.peer = peer;
     peer.peer = this;
+  }
+
+  public disconnect(): void {
+    const peer = this.peer;
+    this.peer = undefined;
+    peer.peer = undefined;
   }
 
   public in(value: T): void {
