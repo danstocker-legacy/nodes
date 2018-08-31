@@ -25,8 +25,8 @@ class Custom implements INode {
 
   public in(port: Port<null>, value: any): void {
     if (this.count >= 10) {
-      const origin = port.in["origin"];
-      const sender = origin && origin.node;
+      const source = port.in["source"];
+      const sender = source && source.node;
       if (sender instanceof Interval) {
         clearInterval(sender.timer);
       }

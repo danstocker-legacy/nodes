@@ -28,14 +28,14 @@ describe("Port", function () {
       expect(port.node).toBe(node);
     });
 
-    it("should initialize inputs", function () {
+    it("should initialize sources", function () {
       const port = new Port(node);
-      expect(port.inputs).toEqual([]);
+      expect(port.sources).toEqual([]);
     });
 
-    it("should initialize outputs", function () {
+    it("should initialize destinations", function () {
       const port = new Port(node);
-      expect(port.outputs).toEqual([]);
+      expect(port.destinations).toEqual([]);
     });
   });
 
@@ -52,14 +52,14 @@ describe("Port", function () {
       receiver = new Port(node2);
     });
 
-    it("should add remote port to outputs", function () {
+    it("should add remote port to destinations", function () {
       sender.connect(receiver);
-      expect(sender.outputs).toEqual([receiver]);
+      expect(sender.destinations).toEqual([receiver]);
     });
 
-    it("should add self to remote port's inputs", function () {
+    it("should add self to remote port's sources", function () {
       sender.connect(receiver);
-      expect(receiver.inputs).toEqual([sender]);
+      expect(receiver.sources).toEqual([sender]);
     });
   });
 
@@ -93,7 +93,7 @@ describe("Port", function () {
       sender.connect(receiver);
     });
 
-    it("should pass value to outputs", function () {
+    it("should pass value to destinations", function () {
       spyOn(receiver, "in");
       sender.out(5);
       expect(receiver.in).toHaveBeenCalledWith(5);
@@ -101,7 +101,7 @@ describe("Port", function () {
 
     it("should set origin on output's input method", function () {
       sender.out(5);
-      expect(receiver.in["origin"]).toBe(sender);
+      expect(receiver.in["source"]).toBe(sender);
     });
   });
 });

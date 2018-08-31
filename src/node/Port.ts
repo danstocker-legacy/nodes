@@ -2,19 +2,18 @@ import {INode} from "./INode";
 
 export class Port<T> {
   public readonly node: INode;
-  // TODO: Change terminology? sender / receiver
-  public readonly inputs: Array<Port<T>>;
-  public readonly outputs: Array<Port<T>>;
+  public readonly sources: Array<Port<T>>;
+  public readonly destinations: Array<Port<T>>;
 
   constructor(node: INode) {
     this.node = node;
-    this.inputs = [];
-    this.outputs = [];
+    this.sources = [];
+    this.destinations = [];
   }
 
   public connect(port: Port<T>) {
-    this.outputs.push(port);
-    port.inputs.push(this);
+    this.destinations.push(port);
+    port.sources.push(this);
   }
 
   public in(value: T): void {
@@ -22,12 +21,12 @@ export class Port<T> {
   }
 
   public out(value: T): void {
-    const outputs = this.outputs;
-    const outputCount = outputs.length;
-    for (let i = 0; i < outputCount; i++) {
-      const output = outputs[i];
-      output.in["origin"] = this;
-      output.in(value);
+    const destinations = this.destinations;
+    const destinationCount = destinations.length;
+    for (let i = 0; i < destinationCount; i++) {
+      const destination = destinations[i];
+      destination.in["source"] = this;
+      destination.in(value);
     }
   }
 }
