@@ -1,5 +1,5 @@
 export * from './functional'
-export * from './general'
+export * from './generic'
 export * from './stdio'
 export * from './timing'
 export * from './node'

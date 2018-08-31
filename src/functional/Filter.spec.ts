@@ -1,4 +1,4 @@
-import {Noop} from "../general";
+import {Noop} from "../generic";
 import {Filter} from "./Filter";
 
 describe("Filter", function () {

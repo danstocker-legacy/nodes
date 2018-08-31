@@ -27,6 +27,35 @@ Nodes is developed in TypeScript.
 
 Nodes is a Kwaia project.
 
+Supported processor nodes
+-------------------------
+
+### Generic
+
+- *Noop*: simply forwards input to output
+- *Stringifier*: forwards input to output stringified
+- *JsonStringifier*: forwards object input to output stringified as a JSON
+- *Logger*: logs input to console
+- *LineSplitter*: forwards input to output breaking text up into lines
+
+### Functional
+
+- *Filter*: filters input and forwards to output only when conditions are met
+- *Mapper*: maps input values before forwarding them to output
+
+### Timing
+
+- *Delayer*: forwards input to output delayed
+- *Debouncer*: forwards batches of input to output debounced
+- *Throttler*: forwards batches of input to output throttled
+- *Interval*: emits null on its output at every interval
+
+### StdIO
+
+- *StdIn*: emits buffers received on `process.stdin` to output
+- *StdOut*: forwards input to `process.stdout`
+- *StdErr*: forwards input to `process.stderr`
+
 Implementing a node class
 -------------------------
 

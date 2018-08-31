@@ -1,4 +1,4 @@
-import {Noop} from "../general";
+import {Noop} from "../generic";
 import {Mapper} from "./Mapper";
 
 describe("Mapper", function () {
