@@ -1,6 +1,6 @@
 import {INode, Port} from "../node";
 
-type MapperCallback<I, O> = (next: I, source: Port<I>, port: Port<I>) => O;
+type MapperCallback<I, O> = (next: I, port: Port<I>, node: INode) => O;
 
 export class Mapper<I, O> implements INode {
   public readonly ports: {
@@ -19,8 +19,7 @@ export class Mapper<I, O> implements INode {
 
   public in(port: Port<I>, value: I): void {
     if (port === this.ports.in) {
-      const source = port.peer;
-      this.ports.out.out(this.callback(value, source, port));
+      this.ports.out.out(this.callback(value, port, this));
     }
   }
 }

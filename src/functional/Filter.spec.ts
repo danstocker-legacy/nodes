@@ -25,7 +25,7 @@ describe("Filter", function () {
       filter = new Filter(cb);
       noop.ports.out.connect(filter.ports.in);
       noop.in(noop.ports.in, 5);
-      expect(cb).toHaveBeenCalledWith(5, noop.ports.out, filter.ports.in);
+      expect(cb).toHaveBeenCalledWith(5, filter.ports.in, filter);
     });
 
     it("should send value to output port", function () {
