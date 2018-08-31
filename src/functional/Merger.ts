@@ -33,7 +33,7 @@ export class Merger<I, O> implements INode {
 
       inputs.set(source, value);
 
-      let result = Merger.copy(this.seed);
+      let result = Merger.shallowCopy(this.seed);
       for (let entry of inputs.entries()) {
         result = callback(result, entry[1], entry[0], this);
       }
@@ -42,10 +42,7 @@ export class Merger<I, O> implements INode {
     }
   }
 
-  /**
-   * Shallow copies specified value.
-   */
-  private static copy(value: any): any {
+  private static shallowCopy(value: any): any {
     switch (true) {
       case value instanceof Array:
         return value.concat();
