@@ -1,7 +1,7 @@
-import {Port} from "./Port";
+import {InPort} from "./InPort";
 
 export interface INode {
   readonly ports: Object;
 
-  in(port: Port<any>, value: any);
+  in(port: InPort<any>, value: any);
 }

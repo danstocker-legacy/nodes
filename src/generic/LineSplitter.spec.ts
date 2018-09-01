@@ -17,8 +17,8 @@ describe("LineSplitter", function () {
     });
 
     it("should pass individual lines to output", function () {
-      const spy = spyOn(lineSplitter.ports.out, "out");
-      lineSplitter.ports.in.in("foo\nbar\nbaz");
+      const spy = spyOn(lineSplitter.ports.out, "send");
+      lineSplitter.ports.in.send("foo\nbar\nbaz");
       const calls = spy.calls.all();
       expect(calls.length).toBe(2);
       expect(calls[0].args).toEqual(["foo"]);
@@ -27,12 +27,12 @@ describe("LineSplitter", function () {
 
     describe("on subsequent calls", function () {
       beforeEach(function () {
-        lineSplitter.ports.in.in("foo\nbar\nba");
+        lineSplitter.ports.in.send("foo\nbar\nba");
       });
 
       it("should pick up fragment lines", function () {
-        const spy = spyOn(lineSplitter.ports.out, "out");
-        lineSplitter.ports.in.in("z\nquux\n");
+        const spy = spyOn(lineSplitter.ports.out, "send");
+        lineSplitter.ports.in.send("z\nquux\n");
         const calls = spy.calls.all();
         expect(calls.length).toBe(2);
         expect(calls[0].args).toEqual(["baz"]);

@@ -1,14 +1,16 @@
+import {IPort} from "./IPort";
 import {INode} from "./INode";
+import {InPort} from "./InPort";
 
-export class Port<T> {
+export class OutPort<T> implements IPort<T> {
   public readonly node: INode;
-  public peer: Port<T>;
+  public peer: InPort<T>;
 
   constructor(node: INode) {
     this.node = node;
   }
 
-  public connect(peer: Port<T>): void {
+  public connect(peer: InPort<T>): void {
     if (this.peer) {
       this.disconnect();
     }
@@ -17,20 +19,16 @@ export class Port<T> {
     peer.peer = this;
   }
 
-  public disconnect(): void {
+  public disconnect() {
     const peer = this.peer;
     this.peer = undefined;
     peer.peer = undefined;
   }
 
-  public in(value: T): void {
-    this.node.in(this, value);
-  }
-
-  public out(value: T): void {
+  public send(value: T): void {
     const peer = this.peer;
     if (peer) {
-      peer.in(value);
+      peer.send(value);
     }
   }
 }

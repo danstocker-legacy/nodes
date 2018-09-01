@@ -22,14 +22,14 @@ describe("Throttler", function () {
 
       describe("after delay", function () {
         it("should pass values to output", function () {
-          spyOn(debouncer.ports.out, "out");
+          spyOn(debouncer.ports.out, "send");
           debouncer.in(debouncer.ports.in, 5);
           jasmine.clock().tick(250);
           debouncer.in(debouncer.ports.in, 6);
           jasmine.clock().tick(249);
           debouncer.in(debouncer.ports.in, 7);
           jasmine.clock().tick(2);
-          expect(debouncer.ports.out.out).toHaveBeenCalledWith([5, 6, 7]);
+          expect(debouncer.ports.out.send).toHaveBeenCalledWith([5, 6, 7]);
         });
       });
     });

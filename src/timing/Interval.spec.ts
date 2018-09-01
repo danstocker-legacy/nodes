@@ -22,7 +22,7 @@ describe("Interval", function () {
 
     it("should throw error", function () {
       expect(function () {
-        interval.in(interval.ports.out, null);
+        interval.in(null, null);
       }).toThrow();
     });
   });
@@ -40,9 +40,9 @@ describe("Interval", function () {
     });
 
     it("should send null to output", function () {
-      spyOn(interval.ports.out, "out");
+      spyOn(interval.ports.out, "send");
       jasmine.clock().tick(501);
-      expect(interval.ports.out.out).toHaveBeenCalledWith(null);
+      expect(interval.ports.out.send).toHaveBeenCalledWith(null);
     });
   });
 });

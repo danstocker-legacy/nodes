@@ -1,25 +1,25 @@
-import {INode, Port} from "../node";
+import {INode, InPort, OutPort} from "../node";
 
 export class StdIn implements INode {
   public readonly ports: {
-    out: Port<string | Buffer>
+    out: OutPort<string | Buffer>
   };
 
   constructor() {
     this.ports = {
-      out: new Port<string | Buffer>(this)
+      out: new OutPort(this)
     };
     process.stdin.on("readable", this.onReadable.bind(this));
   }
 
-  public in(port: Port<null>, value: null) {
+  public in(port: InPort<null>, value: null) {
     throw Error("StdIn is source-only.");
   }
 
   private onReadable() {
     const chunk = process.stdin.read();
     if (chunk !== null) {
-      this.ports.out.out(chunk);
+      this.ports.out.send(chunk);
     }
   }
 }

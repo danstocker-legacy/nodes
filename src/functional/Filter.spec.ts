@@ -31,9 +31,9 @@ describe("Filter", function () {
     it("should send value to output port", function () {
       filter = new Filter(next => next % 2 === 1);
       noop.ports.out.connect(filter.ports.in);
-      spyOn(filter.ports.out, "out");
+      spyOn(filter.ports.out, "send");
       noop.in(noop.ports.in, 5);
-      expect(filter.ports.out.out).toHaveBeenCalledWith(5);
+      expect(filter.ports.out.send).toHaveBeenCalledWith(5);
     });
   });
 });

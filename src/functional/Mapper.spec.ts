@@ -31,9 +31,9 @@ describe("Mapper", function () {
     it("should send value to output port", function () {
       mapper = new Mapper(next => "_" + next);
       noop.ports.out.connect(mapper.ports.in);
-      spyOn(mapper.ports.out, "out");
+      spyOn(mapper.ports.out, "send");
       noop.in(noop.ports.in, 5);
-      expect(mapper.ports.out.out).toHaveBeenCalledWith("_5");
+      expect(mapper.ports.out.send).toHaveBeenCalledWith("_5");
     });
   });
 });

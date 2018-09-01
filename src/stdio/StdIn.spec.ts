@@ -17,7 +17,7 @@ describe("StdIn", function () {
 
     it("should throw error", function () {
       expect(function () {
-        stdIn.in(stdIn.ports.out, null);
+        stdIn.in(null, null);
       }).toThrow();
     });
   });
@@ -31,9 +31,9 @@ describe("StdIn", function () {
 
     it("should send chunk to output", function () {
       spyOn(process.stdin, "read").and.returnValue("foo");
-      spyOn(stdIn.ports.out, 'out');
+      spyOn(stdIn.ports.out, "send");
       process.stdin.emit("readable");
-      expect(stdIn.ports.out.out).toHaveBeenCalledWith("foo");
+      expect(stdIn.ports.out.send).toHaveBeenCalledWith("foo");
     });
   });
 });

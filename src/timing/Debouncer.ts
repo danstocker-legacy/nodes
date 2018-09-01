@@ -1,12 +1,12 @@
-import {INode, Port} from "../node";
+import {INode, InPort, OutPort} from "../node";
 
 /**
  * Debounces output by the specified number of milliseconds.
  */
 export class Debouncer<T> implements INode {
   public readonly ports: {
-    in: Port<T>,
-    out: Port<Array<T>>
+    in: InPort<T>,
+    out: OutPort<Array<T>>
   };
   private readonly delay: number;
   private timer: NodeJS.Timer;
@@ -14,15 +14,15 @@ export class Debouncer<T> implements INode {
 
   constructor(delay: number) {
     this.ports = {
-      in: new Port<T>(this),
-      out: new Port<Array<T>>(this)
+      in: new InPort(this),
+      out: new OutPort(this)
     };
     this.delay = delay;
     this.values = [];
     this.onTimeout = this.onTimeout.bind(this);
   }
 
-  public in(port: Port<T>, value: T): void {
+  public in(port: InPort<T>, value: T): void {
     if (port === this.ports.in) {
       this.values.push(value);
 
@@ -39,6 +39,6 @@ export class Debouncer<T> implements INode {
     const values = this.values;
     this.timer = undefined;
     this.values = [];
-    this.ports.out.out(values);
+    this.ports.out.send(values);
   }
 }

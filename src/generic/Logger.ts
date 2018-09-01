@@ -1,17 +1,17 @@
-import {INode, Port} from "../node";
+import {INode, InPort} from "../node";
 
 export class Logger implements INode {
   public readonly ports: {
-    in: Port<any>
+    in: InPort<any>
   };
 
   constructor() {
     this.ports = {
-      in: new Port<any>(this)
+      in: new InPort<any>(this)
     };
   }
 
-  public in(port: Port<any>, value: any): void {
+  public in(port: InPort<any>, value: any): void {
     if (port === this.ports.in) {
       console.log(value);
     }

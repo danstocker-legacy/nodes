@@ -1,12 +1,12 @@
-import {INode, Port} from "../node";
+import {INode, InPort, OutPort} from "../node";
 
 /**
  * Throttles output by the specified number of milliseconds.
  */
 export class Throttler<T> implements INode {
   public readonly ports: {
-    in: Port<T>,
-    out: Port<Array<T>>
+    in: InPort<T>,
+    out: OutPort<Array<T>>
   };
   private readonly delay: number;
   private timer: NodeJS.Timer;
@@ -14,15 +14,15 @@ export class Throttler<T> implements INode {
 
   constructor(delay: number) {
     this.ports = {
-      in: new Port<T>(this),
-      out: new Port<Array<T>>(this)
+      in: new InPort(this),
+      out: new OutPort(this)
     };
     this.delay = delay;
     this.values = [];
     this.onTimeout = this.onTimeout.bind(this);
   }
 
-  public in(port: Port<T>, value: any): void {
+  public in(port: InPort<T>, value: any): void {
     if (port === this.ports.in) {
       this.values.push(value);
 
@@ -38,7 +38,7 @@ export class Throttler<T> implements INode {
     if (values.length) {
       this.timer = setTimeout(this.onTimeout, this.delay);
       this.values = [];
-      this.ports.out.out(values);
+      this.ports.out.send(values);
     } else {
       this.timer = undefined;
     }
