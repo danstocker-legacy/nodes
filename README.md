@@ -32,13 +32,14 @@ Supported processor nodes
 
 ### Generic
 
+- `SuperNode`: Groups nodes into a single node.
 - `Noop`: Forwards input to output.
-- `Stringifier`: Sends string representation of input to output.
-- `JsonStringifier`: Sends object input to output as JSON string.
+- `Splitter`: Forwards input to multiple outputs.
+- `Batcher`: Sends input to output in batches of a given size.
 - `Logger`: Logs input to console.
 - `LineSplitter`: Splits input text and sends individual lines to output.
-- `Splitter`: Forwards input to multiple outputs.
-- `SuperNode`: Groups nodes into a single node.
+- `Stringifier`: Sends string representation of input to output.
+- `JsonStringifier`: Sends object input to output as JSON string.
 
 ### Functional
 
