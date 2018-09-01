@@ -68,6 +68,7 @@ logs the results to console.
 
 ```typescript
 import {LineSplitter, Logger, Mapper, StdIn} from "@kwaia/nodes";
+
 const logger: Logger = new Logger();
 const stdIn: StdIn = new StdIn();
 const mapper: Mapper<string, number> = new Mapper(line => line.length);
@@ -80,7 +81,52 @@ mapper.ports.out.connect(logger.ports.in);
 Implementing a node class
 -------------------------
 
-TBD
+To create a new node class, one must implement the `INode` interface, 
+defining `ports` and implementing `#send()`. The following example implements
+addition of two numeric inputs.
+
+```typescript
+import {INode, InPort, Logger, OutPort} from "@kwaia/nodes";
+
+class Adder implements INode {
+  public readonly ports: {
+    a: InPort<number>,
+    b: InPort<number>,
+    sum: OutPort<number>
+  };
+  private readonly inputs: Map<InPort<number>, number>;
+
+  constructor() {
+    this.ports = {
+      a: new InPort(this),
+      b: new InPort(this),
+      sum: new OutPort(this)
+    };
+    this.inputs = new Map();
+  }
+
+  public send(port: InPort<number>, value: number): void {
+    if (port === this.ports.a || port === this.ports.b) {
+      let sum: number = 0;
+      this.inputs.set(port, value);
+      for (let value of this.inputs.values()) {
+        sum += value;
+      }
+      this.ports.sum.send(sum);
+    }
+  }
+}
+
+const adder = new Adder();
+const logger = new Logger();
+
+adder.ports.sum.connect(logger.ports.in);
+
+adder.ports.a.send(1); // 1
+adder.ports.b.send(1); // 2
+adder.ports.a.send(2); // 3
+adder.ports.b.send(2); // 4
+```
 
 ### Filtering by input node
 
