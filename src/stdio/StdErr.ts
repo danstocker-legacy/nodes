@@ -1,5 +1,8 @@
 import {INode, InPort} from "../node";
 
+/**
+ * Forwards input to `process.stderr`.
+ */
 export class StdErr implements INode {
   public readonly ports: {
     in: InPort<string | Buffer>

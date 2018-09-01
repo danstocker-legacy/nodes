@@ -1,5 +1,8 @@
 import {INode, InPort} from "../node";
 
+/**
+ * Forwards input to `process.stdout`.
+ */
 export class StdOut implements INode {
   public readonly ports: {
     in: InPort<string | Buffer>

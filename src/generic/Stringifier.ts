@@ -1,5 +1,8 @@
 import {INode, InPort, OutPort} from "../node";
 
+/**
+ * Sends string representation of input to output.
+ */
 export class Stringifier<I> implements INode {
   public readonly ports: {
     in: InPort<I>,

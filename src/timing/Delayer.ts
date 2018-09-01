@@ -1,7 +1,7 @@
 import {INode, InPort, OutPort} from "../node";
 
 /**
- * Delays output by the specified number of milliseconds.
+ * Forwards input to output with a delay.
  */
 export class Delayer<T> implements INode {
   public readonly ports: {

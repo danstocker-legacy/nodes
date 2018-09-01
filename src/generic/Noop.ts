@@ -1,5 +1,8 @@
 import {INode, InPort, OutPort} from "../node";
 
+/**
+ * Forwards input to output.
+ */
 export class Noop<T> implements INode {
   public readonly ports: {
     in: InPort<T>,

@@ -1,5 +1,8 @@
 import {INode, InPort} from "../node";
 
+/**
+ * Logs input to console.
+ */
 export class Logger implements INode {
   public readonly ports: {
     in: InPort<any>

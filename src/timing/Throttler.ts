@@ -1,7 +1,7 @@
 import {INode, InPort, OutPort} from "../node";
 
 /**
- * Throttles output by the specified number of milliseconds.
+ * Forwards batches of input values throttled.
  */
 export class Throttler<T> implements INode {
   public readonly ports: {

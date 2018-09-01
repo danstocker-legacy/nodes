@@ -1,5 +1,8 @@
 import {INode, InPort, OutPort} from "../node";
 
+/**
+ * Splits input text and sends individual lines to output.
+ */
 export class LineSplitter implements INode {
   public readonly ports: {
     in: InPort<string>,

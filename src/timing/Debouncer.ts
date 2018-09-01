@@ -1,7 +1,7 @@
 import {INode, InPort, OutPort} from "../node";
 
 /**
- * Debounces output by the specified number of milliseconds.
+ * Forwards batches of input values debounced.
  */
 export class Debouncer<T> implements INode {
   public readonly ports: {
