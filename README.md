@@ -45,6 +45,7 @@ Supported processor nodes
 
 - `Filter`: Outputs only those inputs that satisfy the specified filter callback.
 - `Mapper`: Sends mapped input to output.
+- `ChangeFilter`: Sends input to output when it's different from the last input.
 
 ### Timing
 
@@ -78,6 +79,10 @@ mapper.ports.out.connect(logger.ports.in);
 
 Implementing a node class
 -------------------------
+
+TBD
+
+### Filtering by input node
 
 TBD
 
