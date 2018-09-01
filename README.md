@@ -23,9 +23,9 @@ Programs written in Nodes are essentially graphs, (or more precisely,
 orchestrators of graphs) which are, by their nature, easy to visualize and  
 diagnose.
 
-Nodes is developed in TypeScript.
+Nodes is developed in [TypeScript](http://www.typescriptlang.org/).
 
-Nodes is a Kwaia project.
+Nodes is a [Kwaia](http://kwaia.com) project.
 
 Supported processor nodes
 -------------------------
@@ -58,6 +58,23 @@ Supported processor nodes
 - `StdOut`: Forwards input to `process.stdout`.
 - `StdErr`: Forwards input to `process.stderr`.
 
+Creating a simple graph
+-----------------------
+
+The following example reads from standard input, counts line lengths, and 
+logs the results to console.
+
+```typescript
+import {LineSplitter, Logger, Mapper, StdIn} from "@kwaia/nodes";
+const logger: Logger = new Logger();
+const stdIn: StdIn = new StdIn();
+const mapper: Mapper<string, number> = new Mapper(line => line.length);
+const lineSplitter: LineSplitter = new LineSplitter();
+stdIn.ports.out.connect(lineSplitter.ports.in);
+lineSplitter.ports.out.connect(mapper.ports.in);
+mapper.ports.out.connect(logger.ports.in);
+```
+
 Implementing a node class
 -------------------------
 
@@ -86,8 +103,7 @@ TBD
 Planned features
 ----------------
 
-- [ ] trail
-- [ ] state snapshot
-- [ ] restore from state snapshot
-- [ ] visual graph snapshot
-- [ ] visual debugging
+[ ] Trail: how data got to the current node.
+[ ] State snapshot: saving & restoring overall state of the graph.
+[ ] Visual graph snapshot: generating image of nodes and connections.
+[ ] Visual debugging: annotating graph with traffic statistics.
