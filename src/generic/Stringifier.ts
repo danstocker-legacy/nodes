@@ -13,7 +13,7 @@ export class Stringifier<I> implements INode {
     };
   }
 
-  public in(port: InPort<I>, value: I): void {
+  public send(port: InPort<I>, value: I): void {
     if (port === this.ports.in) {
       this.ports.out.send(String(value));
     }

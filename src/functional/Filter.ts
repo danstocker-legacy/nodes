@@ -20,7 +20,7 @@ export class Filter<T> implements INode {
     this.callback = callback;
   }
 
-  public in(port: InPort<T>, value: T): void {
+  public send(port: InPort<T>, value: T): void {
     if (port === this.ports.in) {
       if (this.callback(value, port, this)) {
         this.ports.out.send(value);

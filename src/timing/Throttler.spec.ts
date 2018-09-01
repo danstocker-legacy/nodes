@@ -8,7 +8,7 @@ describe("Throttler", function () {
       expect(debouncer.ports.out.node).toBe(debouncer);
     });
 
-    describe("#in()", function () {
+    describe("#send()", function () {
       let debouncer;
 
       beforeEach(function () {
@@ -23,11 +23,11 @@ describe("Throttler", function () {
       describe("after delay", function () {
         it("should pass values to output", function () {
           spyOn(debouncer.ports.out, "send");
-          debouncer.in(debouncer.ports.in, 5);
+          debouncer.send(debouncer.ports.in, 5);
           jasmine.clock().tick(250);
-          debouncer.in(debouncer.ports.in, 6);
+          debouncer.send(debouncer.ports.in, 6);
           jasmine.clock().tick(249);
-          debouncer.in(debouncer.ports.in, 7);
+          debouncer.send(debouncer.ports.in, 7);
           jasmine.clock().tick(2);
           expect(debouncer.ports.out.send).toHaveBeenCalledWith([5, 6, 7]);
         });

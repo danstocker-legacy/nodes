@@ -22,7 +22,7 @@ export class Throttler<T> implements INode {
     this.onTimeout = this.onTimeout.bind(this);
   }
 
-  public in(port: InPort<T>, value: any): void {
+  public send(port: InPort<T>, value: any): void {
     if (port === this.ports.in) {
       this.values.push(value);
 

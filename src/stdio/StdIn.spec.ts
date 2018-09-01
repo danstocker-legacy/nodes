@@ -8,7 +8,7 @@ describe("StdIn", function () {
     });
   });
 
-  describe("#in()", function () {
+  describe("#send()", function () {
     let stdIn: StdIn;
 
     beforeEach(function () {
@@ -17,7 +17,7 @@ describe("StdIn", function () {
 
     it("should throw error", function () {
       expect(function () {
-        stdIn.in(null, null);
+        stdIn.send(null, null);
       }).toThrow();
     });
   });

@@ -11,6 +11,6 @@ export class InPort<T> implements IPort<T> {
   }
 
   public send(value: T): void {
-    this.node.in(this, value);
+    this.node.send(this, value);
   }
 }

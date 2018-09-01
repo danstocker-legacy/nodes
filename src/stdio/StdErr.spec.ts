@@ -8,7 +8,7 @@ describe("StdErr", function () {
     });
   });
 
-  describe("#in()", function () {
+  describe("#send()", function () {
     let stdErr: StdErr;
 
     beforeEach(function () {
@@ -17,7 +17,7 @@ describe("StdErr", function () {
 
     it("should pass value to stderr", function () {
       spyOn(process.stderr, "write");
-      stdErr.in(stdErr.ports.in, "5");
+      stdErr.send(stdErr.ports.in, "5");
       expect(process.stderr.write).toHaveBeenCalledWith("5");
     });
   });

@@ -8,7 +8,7 @@ describe("StdOut", function () {
     });
   });
 
-  describe("#in()", function () {
+  describe("#send()", function () {
     let stdOut: StdOut;
 
     beforeEach(function () {
@@ -17,7 +17,7 @@ describe("StdOut", function () {
 
     it("should pass value to stdout", function () {
       spyOn(process.stdout, "write");
-      stdOut.in(stdOut.ports.in, "5");
+      stdOut.send(stdOut.ports.in, "5");
       expect(process.stdout.write).toHaveBeenCalledWith("5");
     });
   });

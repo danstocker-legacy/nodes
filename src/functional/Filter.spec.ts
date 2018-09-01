@@ -12,7 +12,7 @@ describe("Filter", function () {
     });
   });
 
-  describe("#in()", function () {
+  describe("#send()", function () {
     let noop: Noop<number>;
     let filter: Filter<number>;
 
@@ -24,7 +24,7 @@ describe("Filter", function () {
       const cb = jasmine.createSpy();
       filter = new Filter(cb);
       noop.ports.out.connect(filter.ports.in);
-      noop.in(noop.ports.in, 5);
+      noop.send(noop.ports.in, 5);
       expect(cb).toHaveBeenCalledWith(5, filter.ports.in, filter);
     });
 
@@ -32,7 +32,7 @@ describe("Filter", function () {
       filter = new Filter(next => next % 2 === 1);
       noop.ports.out.connect(filter.ports.in);
       spyOn(filter.ports.out, "send");
-      noop.in(noop.ports.in, 5);
+      noop.send(noop.ports.in, 5);
       expect(filter.ports.out.send).toHaveBeenCalledWith(5);
     });
   });

@@ -3,5 +3,5 @@ import {InPort} from "./InPort";
 export interface INode {
   readonly ports: Object;
 
-  in(port: InPort<any>, value: any);
+  send(port: InPort<any>, value: any);
 }

@@ -19,7 +19,7 @@ export class Delayer<T> implements INode {
     };
   }
 
-  public in(port: InPort<T>, value: T): void {
+  public send(port: InPort<T>, value: T): void {
     if (port === this.ports.in) {
       this.timer = setTimeout(() => this.ports.out.send(value), this.delay);
     }

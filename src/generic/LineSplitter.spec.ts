@@ -9,7 +9,7 @@ describe("LineSplitter", function () {
     });
   });
 
-  describe("#in()", function () {
+  describe("#send()", function () {
     let lineSplitter: LineSplitter;
 
     beforeEach(function () {

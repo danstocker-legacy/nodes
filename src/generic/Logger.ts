@@ -11,7 +11,7 @@ export class Logger implements INode {
     };
   }
 
-  public in(port: InPort<any>, value: any): void {
+  public send(port: InPort<any>, value: any): void {
     if (port === this.ports.in) {
       console.log(value);
     }

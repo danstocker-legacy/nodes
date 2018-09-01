@@ -9,17 +9,17 @@ describe("Noop", function () {
     });
   });
 
-  describe("#in()", function () {
+  describe("#send()", function () {
     let noop: Noop<number>;
 
     beforeEach(function () {
       noop = new Noop();
     });
 
-    describe("when ending to in port", function () {
+    describe("when ending to send port", function () {
       it("should send value to out port", function () {
         spyOn(noop.ports.out, "send");
-        noop.in(noop.ports.in, 5);
+        noop.send(noop.ports.in, 5);
         expect(noop.ports.out.send).toHaveBeenCalledWith(5);
       });
     });

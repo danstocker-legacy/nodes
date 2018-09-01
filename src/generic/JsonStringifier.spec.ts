@@ -9,7 +9,7 @@ describe("JsonStringifier", function () {
     });
   });
 
-  describe("#in()", function () {
+  describe("#send()", function () {
     let stringifier: JsonStringifier<Object>;
 
     describe("when pretty is false", function () {
@@ -19,7 +19,7 @@ describe("JsonStringifier", function () {
 
       it("should send stringified value to out port", function () {
         spyOn(stringifier.ports.out, "send");
-        stringifier.in(stringifier.ports.in, {foo: "bar"});
+        stringifier.send(stringifier.ports.in, {foo: "bar"});
         expect(stringifier.ports.out.send).toHaveBeenCalledWith("{\"foo\":\"bar\"}");
       });
     });
@@ -31,7 +31,7 @@ describe("JsonStringifier", function () {
 
       it("should send pretty stringified value to out port", function () {
         spyOn(stringifier.ports.out, "send");
-        stringifier.in(stringifier.ports.in, {foo: "bar"});
+        stringifier.send(stringifier.ports.in, {foo: "bar"});
         expect(stringifier.ports.out.send)
         .toHaveBeenCalledWith("{\n  \"foo\": \"bar\"\n}");
       });

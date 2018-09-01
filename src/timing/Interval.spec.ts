@@ -13,7 +13,7 @@ describe("Interval", function () {
     });
   });
 
-  describe("#in()", function () {
+  describe("#send()", function () {
     let interval: Interval;
 
     beforeEach(function () {
@@ -22,7 +22,7 @@ describe("Interval", function () {
 
     it("should throw error", function () {
       expect(function () {
-        interval.in(null, null);
+        interval.send(null, null);
       }).toThrow();
     });
   });
