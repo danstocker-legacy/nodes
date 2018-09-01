@@ -1,4 +1,5 @@
 import {InPort} from "./InPort";
+import {Ports} from "./Ports";
 
 /**
  * Blueprint for nodes. When creating custom nodes, the implementer has two
@@ -7,7 +8,7 @@ import {InPort} from "./InPort";
  * 2. How and when inputs are translated and sent to outputs.
  */
 export interface INode {
-  readonly ports: Object;
+  readonly ports: Ports;
 
   send(port: InPort<any>, value: any);
 }

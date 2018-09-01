@@ -1,9 +1,10 @@
 import {OutPort} from "./OutPort";
 import {INode} from "./INode";
 import {InPort} from "./InPort";
+import {Ports} from "./Ports";
 
 class Node implements INode {
-  public readonly ports: Object;
+  public readonly ports: Ports;
 
   constructor() {
     this.ports = {};

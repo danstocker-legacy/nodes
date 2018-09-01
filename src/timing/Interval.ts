@@ -1,7 +1,7 @@
 import {INode, InPort, OutPort} from "../node";
 
 /**
- * Outputs null at intervals.
+ * Outputs `null` at intervals.
  */
 export class Interval implements INode {
   public readonly ports: {

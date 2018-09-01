@@ -32,41 +32,43 @@ Supported processor nodes
 
 ### Generic
 
-- *Noop*: simply forwards input to output
-- *Stringifier*: forwards input to output stringified
-- *JsonStringifier*: forwards object input to output stringified as a JSON
-- *Logger*: logs input to console
-- *LineSplitter*: forwards input to output breaking text up into lines
+- `Noop`: Forwards input to output.
+- `Stringifier`: Sends string representation of input to output.
+- `JsonStringifier`: Sends object input to output as JSON string.
+- `Logger`: Logs input to console.
+- `LineSplitter`: Splits input text and sends individual lines to output.
+- `Splitter`: Forwards input to multiple outputs.
+- `SuperNode`: Groups nodes into a single node.
 
 ### Functional
 
-- *Filter*: filters input and forwards to output only when conditions are met
-- *Mapper*: maps input values before forwarding them to output
+- `Filter`: Outputs only those inputs that satisfy the specified filter callback.
+- `Mapper`: Sends mapped input to output.
 
 ### Timing
 
-- *Delayer*: forwards input to output delayed
-- *Debouncer*: forwards batches of input to output debounced
-- *Throttler*: forwards batches of input to output throttled
-- *Interval*: emits null on its output at every interval
+- `Delayer`: Forwards input to output with a delay.
+- `Debouncer`: Forwards batches of input values with debouncing.
+- `Throttler`: Forwards batches of input values with throttling.
+- `Interval`: Outputs `null` at intervals.
 
 ### StdIO
 
-- *StdIn*: emits buffers received on `process.stdin` to output
-- *StdOut*: forwards input to `process.stdout`
-- *StdErr*: forwards input to `process.stderr`
+- `StdIn`: Takes input from `process.stdin` and sends it to output.
+- `StdOut`: Forwards input to `process.stdout`.
+- `StdErr`: Forwards input to `process.stderr`.
 
 Implementing a node class
 -------------------------
 
 TBD
 
-Creating an ad-hoc supernode
+Creating an ad-hoc super-node
 ----------------------------
 
 TBD
 
-Implementing a supernode class
+Implementing a super-node class
 ------------------------------
 
 TBD
