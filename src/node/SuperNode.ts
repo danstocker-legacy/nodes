@@ -1,4 +1,6 @@
-import {INode, InPort, Ports} from "../node";
+import {INode} from "./INode";
+import {InPort} from "./InPort";
+import {Ports} from "./Ports";
 
 /**
  * Groups nodes into a single node.
