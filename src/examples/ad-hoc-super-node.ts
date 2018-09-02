@@ -4,7 +4,7 @@ const jsonStringifier: JsonStringifier<Object> = new JsonStringifier(true);
 const logger: Logger = new Logger();
 jsonStringifier.ports.out.connect(logger.ports.in);
 
-const jsonLogger = new SuperNode({
+const jsonLogger: SuperNode = new SuperNode({
   in: jsonStringifier.ports.in
 });
 

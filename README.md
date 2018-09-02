@@ -149,8 +149,8 @@ class Adder implements INode {
   }
 }
 
-const adder = new Adder();
-const logger = new Logger();
+const adder: Adder = new Adder();
+const logger: Logger = new Logger();
 
 adder.ports.sum.connect(logger.ports.in);
 
@@ -188,7 +188,7 @@ const jsonStringifier: JsonStringifier<Object> = new JsonStringifier(true);
 const logger: Logger = new Logger();
 jsonStringifier.ports.out.connect(logger.ports.in);
 
-const jsonLogger = new SuperNode({
+const jsonLogger: SuperNode = new SuperNode({
   in: jsonStringifier.ports.in
 });
 

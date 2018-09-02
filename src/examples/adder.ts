@@ -29,8 +29,8 @@ class Adder implements INode {
   }
 }
 
-const adder = new Adder();
-const logger = new Logger();
+const adder: Adder = new Adder();
+const logger: Logger = new Logger();
 
 adder.ports.sum.connect(logger.ports.in);
 
