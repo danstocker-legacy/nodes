@@ -100,6 +100,15 @@ lineSplitter.ports.out.connect(mapper.ports.in);
 mapper.ports.out.connect(logger.ports.in);
 ```
 
+### Static vs. dynamic graph
+
+Nodes supports setting up the graph both statically, and dynamically. In a 
+static graph, connections are set up once, before running data through it. 
+Whereas in dynamic graphs, connections may change as the input changes. Most 
+use cases don't justify a dynamic graph, but problems such as neural networks 
+and concept graphs rely heavily on forming new and destroying old connections
+between nodes.
+
 Implementing a node class
 -------------------------
 
