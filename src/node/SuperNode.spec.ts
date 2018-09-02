@@ -1,5 +1,5 @@
+import {Ports} from "./Ports";
 import {SuperNode} from "./SuperNode";
-import {Ports} from "./index";
 
 describe("SuperNode", function () {
   describe("constructor", function () {

@@ -36,11 +36,13 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-notify": "^0.4.5",
     "grunt-ts": "^6.0.0-beta.21",
+    "grunt-tslint": "^5.0.2",
     "jasmine": "^3.2.0",
     "jasmine-spec-reporter": "^4.2.1",
     "typescript": "^3.0.1"
   },
   "dependencies": {
-    "@types/node": "^10.9.2"
+    "@types/node": "^10.9.2",
+    "tslint": "^5.11.0"
   }
 }

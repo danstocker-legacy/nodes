@@ -21,8 +21,8 @@ class Adder implements INode {
     if (port === this.ports.a || port === this.ports.b) {
       let sum: number = 0;
       this.inputs.set(port, value);
-      for (let value of this.inputs.values()) {
-        sum += value;
+      for (const input of this.inputs.values()) {
+        sum += input;
       }
       this.ports.sum.send(sum);
     }
@@ -34,7 +34,7 @@ const logger: Logger = new Logger();
 
 adder.ports.sum.connect(logger.ports.in);
 
-adder.ports.a.send(1);
-adder.ports.b.send(1);
-adder.ports.a.send(2);
-adder.ports.b.send(2);
+adder.ports.a.send(1); // 1
+adder.ports.b.send(1); // 2
+adder.ports.a.send(2); // 3
+adder.ports.b.send(2); // 4

@@ -1,5 +1,5 @@
-import {InPort} from "./InPort";
 import {INode} from "./INode";
+import {InPort} from "./InPort";
 import {Ports} from "./Ports";
 
 class Node implements INode {
@@ -9,6 +9,7 @@ class Node implements INode {
     this.ports = {};
   }
 
+  /* tslint:disable:no-empty */
   public send(port: InPort<any>, value: string) {
   }
 }

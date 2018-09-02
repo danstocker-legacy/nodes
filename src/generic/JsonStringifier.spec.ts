@@ -3,14 +3,14 @@ import {JsonStringifier} from "./JsonStringifier";
 describe("JsonStringifier", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
-      const stringifier: JsonStringifier<Object> = new JsonStringifier();
+      const stringifier: JsonStringifier<object> = new JsonStringifier();
       expect(stringifier.ports.in.node).toBe(stringifier);
       expect(stringifier.ports.out.node).toBe(stringifier);
     });
   });
 
   describe("#send()", function () {
-    let stringifier: JsonStringifier<Object>;
+    let stringifier: JsonStringifier<object>;
 
     describe("when pretty is false", function () {
       beforeEach(function () {

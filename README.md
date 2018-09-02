@@ -93,7 +93,7 @@ import {LineSplitter, Logger, Mapper, StdIn} from "@kwaia/nodes";
 
 const logger: Logger = new Logger();
 const stdIn: StdIn = new StdIn();
-const mapper: Mapper<string, number> = new Mapper(line => line.length);
+const mapper: Mapper<string, number> = new Mapper((line) => line.length);
 const lineSplitter: LineSplitter = new LineSplitter();
 stdIn.ports.out.connect(lineSplitter.ports.in);
 lineSplitter.ports.out.connect(mapper.ports.in);
@@ -141,8 +141,8 @@ class Adder implements INode {
     if (port === this.ports.a || port === this.ports.b) {
       let sum: number = 0;
       this.inputs.set(port, value);
-      for (let value of this.inputs.values()) {
-        sum += value;
+      for (const input of this.inputs.values()) {
+        sum += input;
       }
       this.ports.sum.send(sum);
     }
@@ -184,7 +184,7 @@ within the overall graph by grouping individual nodes. It's possible
 // node node_modules/@kwaia/nodes/examples/ad-hoc-super-node
 import {JsonStringifier, Logger, SuperNode} from "@kwaia/nodes";
 
-const jsonStringifier: JsonStringifier<Object> = new JsonStringifier(true);
+const jsonStringifier: JsonStringifier<object> = new JsonStringifier(true);
 const logger: Logger = new Logger();
 jsonStringifier.ports.out.connect(logger.ports.in);
 
@@ -221,7 +221,7 @@ import {SuperNode, JsonStringifier, Logger} from "@kwaia/nodes";
 
 class JsonLogger extends SuperNode {
   constructor() {
-    const jsonStringifier: JsonStringifier<Object> = new JsonStringifier(true);
+    const jsonStringifier: JsonStringifier<object> = new JsonStringifier(true);
     const logger: Logger = new Logger();
     jsonStringifier.ports.out.connect(logger.ports.in);
 
@@ -231,7 +231,7 @@ class JsonLogger extends SuperNode {
   }
 }
 
-const jsonLogger:JsonLogger = new JsonLogger();
+const jsonLogger: JsonLogger = new JsonLogger();
 jsonLogger.ports.in.send({foo: "bar"});
 ```
 

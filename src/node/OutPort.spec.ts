@@ -1,6 +1,6 @@
-import {OutPort} from "./OutPort";
 import {INode} from "./INode";
 import {InPort} from "./InPort";
+import {OutPort} from "./OutPort";
 import {Ports} from "./Ports";
 
 class Node implements INode {
@@ -10,6 +10,7 @@ class Node implements INode {
     this.ports = {};
   }
 
+  /* tslint:disable:no-empty */
   public send(port: InPort<any>, value: string) {
   }
 }
@@ -97,7 +98,7 @@ describe("OutPort", function () {
 
     beforeEach(function () {
       node1 = new Node();
-      node1 = new Node();
+      node2 = new Node();
       outPort = new OutPort(node1);
       inPort = new InPort(node2);
       outPort.connect(inPort);

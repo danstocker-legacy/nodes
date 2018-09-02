@@ -1,6 +1,6 @@
-import {IPort} from "./IPort";
 import {INode} from "./INode";
 import {InPort} from "./InPort";
+import {IPort} from "./IPort";
 
 /**
  * Output port for nodes.

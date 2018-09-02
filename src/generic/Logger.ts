@@ -16,6 +16,7 @@ export class Logger implements INode {
 
   public send(port: InPort<any>, value: any): void {
     if (port === this.ports.in) {
+      /* tslint:disable:no-console */
       console.log(value);
     }
   }

@@ -29,7 +29,7 @@ describe("Mapper", function () {
     });
 
     it("should send value to output port", function () {
-      mapper = new Mapper(next => "_" + next);
+      mapper = new Mapper((next) => "_" + next);
       noop.ports.out.connect(mapper.ports.in);
       spyOn(mapper.ports.out, "send");
       noop.send(noop.ports.in, 5);

@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node/index";
+import {INode, InPort, OutPort} from "../node";
 
 type EqualsCallback<T> = (a: T, b: T) => boolean;
 

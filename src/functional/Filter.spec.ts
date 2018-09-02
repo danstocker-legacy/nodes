@@ -29,7 +29,7 @@ describe("Filter", function () {
     });
 
     it("should send value to output port", function () {
-      filter = new Filter(next => next % 2 === 1);
+      filter = new Filter((next) => next % 2 === 1);
       noop.ports.out.connect(filter.ports.in);
       spyOn(filter.ports.out, "send");
       noop.send(noop.ports.in, 5);

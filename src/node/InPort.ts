@@ -1,5 +1,5 @@
-import {IPort} from "./IPort";
 import {INode} from "./INode";
+import {IPort} from "./IPort";
 import {OutPort} from "./OutPort";
 
 /**

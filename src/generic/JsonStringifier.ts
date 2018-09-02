@@ -3,7 +3,7 @@ import {INode, InPort, OutPort} from "../node";
 /**
  * Sends object input to output as JSON string.
  */
-export class JsonStringifier<I extends Object> implements INode {
+export class JsonStringifier<I extends object> implements INode {
   public readonly ports: {
     in: InPort<I>,
     out: OutPort<string>
