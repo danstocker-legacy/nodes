@@ -202,15 +202,41 @@ connections outside the super-node. (Except through the super-node's own ports.)
 Implementing a super-node class
 ------------------------------
 
-TBD
+While ad-hoc super-nodes are enough in most (static graph) use cases, it's a 
+good idea to always create a `SuperNode` class in order to separate super-node 
+behavior from the rest of the program.
+
+With a `SuperNode` subclass, super-nodes
+
+1. create their own child nodes,
+2. set up internal connections, and
+3. assign ports
+
+The following example does exactly the same as the ad-hoc version above, but 
+subclasses `SuperNode`.
+
+```typescript
+// node node_modules/@kwaia/nodes/examples/json-logger
+import {SuperNode, JsonStringifier, Logger} from "@kwaia/nodes";
+
+class JsonLogger extends SuperNode {
+  constructor() {
+    const jsonStringifier: JsonStringifier<Object> = new JsonStringifier(true);
+    const logger: Logger = new Logger();
+    jsonStringifier.ports.out.connect(logger.ports.in);
+
+    super({
+      in: jsonStringifier.ports.in
+    });
+  }
+}
+
+const jsonLogger:JsonLogger = new JsonLogger();
+jsonLogger.ports.in.send({foo: "bar"});
+```
 
 Debugging a Nodes program
 -------------------------
-
-TBD
-
-Examples
---------
 
 TBD
 
