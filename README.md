@@ -130,7 +130,12 @@ adder.ports.b.send(2); // 4
 
 ### Filtering by input node
 
-TBD
+When implementing the `send` method, it's important to keep track of what 
+input contributes to what output. (Most nodes have a single input and single 
+output port, but that may not be true of more complex, custom node classes.) 
+As illustrated in the previous example, the very first line in `send` checks 
+what port the value is coming through. In node classes where there are more 
+complex routing rules, a `switch` expression might be a better option.
 
 Creating an ad-hoc super-node
 ----------------------------
