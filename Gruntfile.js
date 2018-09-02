@@ -25,10 +25,16 @@ module.exports = function (grunt) {
       files: "src/**/*.ts"
     },
 
+    exec: {
+      test: {
+        cmd: "./node_modules/jasmine/bin/jasmine.js"
+      }
+    },
+
     watch: {
       ts: {
         files: ["src/**/*.ts"],
-        tasks: ["default"]
+        tasks: ["build-quick"]
       }
     },
 
@@ -48,10 +54,12 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks("grunt-exec");
   grunt.loadNpmTasks("grunt-notify");
   grunt.loadNpmTasks("grunt-ts");
   grunt.loadNpmTasks("grunt-tslint");
-  grunt.registerTask("test", ["tslint", "notify:test"]);
-  grunt.registerTask("build", ["clean:tsc", "tslint", "ts", "notify:build"]);
-  grunt.registerTask("default", ["build", "watch"]);
+  grunt.registerTask("test", ["tslint", "exec:test", "notify:test"]);
+  grunt.registerTask("build", ["clean:tsc", "tslint", "ts", "exec:test", "notify:build"]);
+  grunt.registerTask("build-quick", ["clean:tsc", "ts", "notify:build"]);
+  grunt.registerTask("default", ["build-quick", "watch"]);
 };
