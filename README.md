@@ -15,17 +15,28 @@ but the power of this library lies in its extensibility. Any (custom) node
 has two responsibilities: a) define a set of ports, and b) process and 
 distribute inputs to outputs in a single override method.
 
-Composition of nodes is also quite simple with the SuperNode. Any set of  
-interacting nodes might be treated as a single node, provided that relevant  
+Composition of nodes is also quite simple with the SuperNode. Any set of 
+interacting nodes might be treated as a single node, provided that relevant 
 input and output ports are assigned.
 
-Programs written in Nodes are essentially graphs, (or more precisely,  
-orchestrators of graphs) which are, by their nature, easy to visualize and  
+Programs written in Nodes are essentially graphs, (or more precisely, 
+orchestrators of graphs) which are, by their nature, easy to visualize and 
 diagnose.
 
 Nodes is developed in [TypeScript](http://www.typescriptlang.org/).
 
 Nodes is a [Kwaia](http://kwaia.com) project.
+
+Getting started
+---------------
+
+1. Install via NPM: `npm i @kwaia/nodes`
+2. In your code, import the relevant classes / interfaces.
+
+Eg.
+```typescript
+import {LineSplitter, Logger, Mapper, StdIn} from "@kwaia/nodes";
+```
 
 Supported processor nodes
 -------------------------
@@ -60,8 +71,14 @@ Supported processor nodes
 - `StdOut`: Forwards input to `process.stdout`.
 - `StdErr`: Forwards input to `process.stderr`.
 
-Creating a simple graph
+Orchestrating the graph
 -----------------------
+
+Three steps are required to get a Nodes graph working:
+
+1. Create nodes
+2. Connect ports
+3. Feed data to unconnected input ports
 
 The following example reads from standard input, counts line lengths, and 
 logs the results to console.
