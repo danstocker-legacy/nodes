@@ -243,7 +243,7 @@ TBD
 Planned features
 ----------------
 
-[ ] Trail: how data got to the current node.
-[ ] State snapshot: saving & restoring overall state of the graph.
-[ ] Visual graph snapshot: generating image of nodes and connections.
-[ ] Visual debugging: annotating graph with traffic statistics.
+- [ ] Trail: how data got to the current node.
+- [ ] State snapshot: saving & restoring overall state of the graph.
+- [ ] Visual graph snapshot: generating image of nodes and connections.
+- [ ] Visual debugging: annotating graph with traffic statistics.
