@@ -38,6 +38,10 @@ Eg.
 import {LineSplitter, Logger, Mapper, StdIn} from "@kwaia/nodes";
 ```
 
+All code samples in this document are also included in the npm package under 
+`/examples`. You may run them using the command provided in the first line of
+each code section.
+
 Supported processor nodes
 -------------------------
 
@@ -78,12 +82,13 @@ Three steps are required to get a Nodes graph working:
 
 1. Create nodes
 2. Connect ports
-3. Feed data to unconnected input ports
+3. Feed data to relevant input ports
 
 The following example reads from standard input, counts line lengths, and 
 logs the results to console.
 
 ```typescript
+// node node_modules/@kwaia/nodes/examples/line-length-count
 import {LineSplitter, Logger, Mapper, StdIn} from "@kwaia/nodes";
 
 const logger: Logger = new Logger();
@@ -103,6 +108,7 @@ defining `ports` and implementing `#send()`. The following example implements
 addition of two numeric inputs.
 
 ```typescript
+// node node_modules/@kwaia/nodes/examples/adder
 import {INode, InPort, Logger, OutPort} from "@kwaia/nodes";
 
 class Adder implements INode {
@@ -157,7 +163,32 @@ complex routing rules, a `switch` expression might be a better option.
 Creating an ad-hoc super-node
 ----------------------------
 
-TBD
+The super-node is a graph in its own right. Child nodes, which make up the 
+super-node, may lend their unconnected ports to the super-node, as the 
+super-node's own ports.
+
+Ad-hoc super-nodes present a convenient way of creating functional units 
+within the overall graph by grouping individual nodes. It's possible 
+(and often necessary) to nest super-nodes.
+
+```typescript
+// node node_modules/@kwaia/nodes/examples/ad-hoc-super-node
+import {JsonStringifier, Logger, SuperNode} from "@kwaia/nodes";
+
+const jsonStringifier: JsonStringifier<Object> = new JsonStringifier(true);
+const logger: Logger = new Logger();
+jsonStringifier.ports.out.connect(logger.ports.in);
+
+const jsonLogger = new SuperNode({
+  in: jsonStringifier.ports.in
+});
+
+jsonLogger.ports.in.send({foo: "bar"});
+```
+
+When creating ad-hoc super-nodes, the developer must make sure that child 
+nodes only connect to other child nodes, in other words, there are no 
+connections outside the super-node. (Except through the super-node's own ports.)
 
 Implementing a super-node class
 ------------------------------
