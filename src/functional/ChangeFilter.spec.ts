@@ -14,13 +14,13 @@ describe("ChangeFilter", function () {
 
     beforeEach(function () {
       changeFilter = new ChangeFilter();
-      changeFilter.send(changeFilter.ports.in, 5);
+      changeFilter.send(5, changeFilter.ports.in);
     });
 
     describe("when sending same value", function () {
       it("should not pass value to output", function () {
         spyOn(changeFilter.ports.out, "send");
-        changeFilter.send(changeFilter.ports.in, 5);
+        changeFilter.send(5, changeFilter.ports.in);
         expect(changeFilter.ports.out.send).not.toHaveBeenCalled();
       });
     });
@@ -28,7 +28,7 @@ describe("ChangeFilter", function () {
     describe("when sending different value", function () {
       it("should pass value to output", function () {
         spyOn(changeFilter.ports.out, "send");
-        changeFilter.send(changeFilter.ports.in, 6);
+        changeFilter.send(5, changeFilter.ports.in);
         expect(changeFilter.ports.out.send).toHaveBeenCalledWith(6);
       });
     });
@@ -36,13 +36,13 @@ describe("ChangeFilter", function () {
     describe("with custom equals", function () {
       beforeEach(function () {
         changeFilter = new ChangeFilter((a, b) => (a % 2) === (b % 2));
-        changeFilter.send(changeFilter.ports.in, 5);
+        changeFilter.send(5, changeFilter.ports.in);
       });
 
       describe("when sending equivalent value", function () {
         it("should not pass value to output", function () {
           spyOn(changeFilter.ports.out, "send");
-          changeFilter.send(changeFilter.ports.in, 7);
+          changeFilter.send(7, changeFilter.ports.in);
           expect(changeFilter.ports.out.send).not.toHaveBeenCalled();
         });
       });
@@ -50,7 +50,7 @@ describe("ChangeFilter", function () {
       describe("when sending non-equivalent value", function () {
         it("should pass value to output", function () {
           spyOn(changeFilter.ports.out, "send");
-          changeFilter.send(changeFilter.ports.in, 6);
+          changeFilter.send(6, changeFilter.ports.in);
           expect(changeFilter.ports.out.send).toHaveBeenCalledWith(6);
         });
       });

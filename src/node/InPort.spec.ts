@@ -10,7 +10,7 @@ class Node implements INode {
   }
 
   /* tslint:disable:no-empty */
-  public send(port: InPort<any>, value: string) {
+  public send(value: string, port: InPort<any>) {
   }
 }
 

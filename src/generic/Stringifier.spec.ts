@@ -18,7 +18,7 @@ describe("Stringifier", function () {
 
     it("should send stringified value to out port", function () {
       spyOn(stringifier.ports.out, "send");
-      stringifier.send(stringifier.ports.in, 5);
+      stringifier.send(5, stringifier.ports.in);
       expect(stringifier.ports.out.send).toHaveBeenCalledWith("5");
     });
   });

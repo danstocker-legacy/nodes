@@ -17,7 +17,7 @@ describe("Logger", function () {
 
     it("should pass value to console.log", function () {
       spyOn(console, "log");
-      logger.send(logger.ports.in, 5);
+      logger.send(5, logger.ports.in);
       /* tslint:disable:no-console */
       expect(console.log).toHaveBeenCalledWith(5);
     });

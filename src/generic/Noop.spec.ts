@@ -19,7 +19,7 @@ describe("Noop", function () {
     describe("when ending to send port", function () {
       it("should send value to out port", function () {
         spyOn(noop.ports.out, "send");
-        noop.send(noop.ports.in, 5);
+        noop.send(5, noop.ports.in);
         expect(noop.ports.out.send).toHaveBeenCalledWith(5);
       });
     });

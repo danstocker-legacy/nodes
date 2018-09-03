@@ -18,7 +18,7 @@ export class Interval implements INode {
     this.delay = delay;
   }
 
-  public send(port: InPort<null>, value: null) {
+  public send(value: null, port: InPort<null>) {
     throw Error("Interval is source-only.");
   }
 

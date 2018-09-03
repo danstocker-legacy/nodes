@@ -10,5 +10,5 @@ import {Ports} from "./Ports";
 export interface INode {
   readonly ports: Ports;
 
-  send(port: InPort<any>, value: any);
+  send(value: any, port: InPort<any>);
 }

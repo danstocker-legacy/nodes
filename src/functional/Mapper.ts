@@ -20,7 +20,7 @@ export class Mapper<I, O> implements INode {
     this.callback = callback;
   }
 
-  public send(port: InPort<I>, value: I): void {
+  public send(value: I, port: InPort<I>): void {
     if (port === this.ports.in) {
       this.ports.out.send(this.callback(value, port, this));
     }

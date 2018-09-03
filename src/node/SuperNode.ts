@@ -14,7 +14,7 @@ export class SuperNode implements INode {
     this.ports = ports;
   }
 
-  public send(port: InPort<any>, value: any) {
+  public send(value: any, port: InPort<any>) {
     throw Error("Super-node doesn't process input.");
   }
 }

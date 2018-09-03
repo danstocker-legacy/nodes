@@ -137,7 +137,7 @@ class Adder implements INode {
     };
   }
 
-  public send(port: InPort<number>, value: number): void {
+  public send(value: number, port: InPort<number>): void {
     switch (port) {
       case this.ports.a:
         this.a = value;

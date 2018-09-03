@@ -9,10 +9,10 @@ describe("Throttler", function () {
     });
 
     describe("#send()", function () {
-      let debouncer;
+      let throttler: Throttler<number>;
 
       beforeEach(function () {
-        debouncer = new Throttler(500);
+        throttler = new Throttler(500);
         jasmine.clock().install();
       });
 
@@ -22,14 +22,14 @@ describe("Throttler", function () {
 
       describe("after delay", function () {
         it("should pass values to output", function () {
-          spyOn(debouncer.ports.out, "send");
-          debouncer.send(debouncer.ports.in, 5);
+          spyOn(throttler.ports.out, "send");
+          throttler.send(5, throttler.ports.in);
           jasmine.clock().tick(250);
-          debouncer.send(debouncer.ports.in, 6);
+          throttler.send(6, throttler.ports.in);
           jasmine.clock().tick(249);
-          debouncer.send(debouncer.ports.in, 7);
+          throttler.send(7, throttler.ports.in);
           jasmine.clock().tick(2);
-          expect(debouncer.ports.out.send).toHaveBeenCalledWith([5, 6, 7]);
+          expect(throttler.ports.out.send).toHaveBeenCalledWith([5, 6, 7]);
         });
       });
     });

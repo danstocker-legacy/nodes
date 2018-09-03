@@ -17,6 +17,6 @@ export class InPort<T> implements IPort<T> {
    * Sends data to the current port.
    */
   public send(value: T): void {
-    this.node.send(this, value);
+    this.node.send(value, this);
   }
 }

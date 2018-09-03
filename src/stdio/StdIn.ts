@@ -15,7 +15,7 @@ export class StdIn implements INode {
     process.stdin.on("readable", this.onReadable.bind(this));
   }
 
-  public send(port: InPort<null>, value: null) {
+  public send(value: null, port: InPort<null>) {
     throw Error("StdIn is source-only.");
   }
 

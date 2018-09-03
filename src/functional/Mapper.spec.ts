@@ -24,7 +24,7 @@ describe("Mapper", function () {
       const cb = jasmine.createSpy();
       mapper = new Mapper(cb);
       noop.ports.out.connect(mapper.ports.in);
-      noop.send(noop.ports.in, 5);
+      noop.send(5, noop.ports.in);
       expect(cb).toHaveBeenCalledWith(5, mapper.ports.in, mapper);
     });
 
@@ -32,7 +32,7 @@ describe("Mapper", function () {
       mapper = new Mapper((next) => "_" + next);
       noop.ports.out.connect(mapper.ports.in);
       spyOn(mapper.ports.out, "send");
-      noop.send(noop.ports.in, 5);
+      noop.send(5, noop.ports.in);
       expect(mapper.ports.out.send).toHaveBeenCalledWith("_5");
     });
   });

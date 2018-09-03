@@ -22,7 +22,7 @@ export class Debouncer<T> implements INode {
     this.onTimeout = this.onTimeout.bind(this);
   }
 
-  public send(port: InPort<T>, value: T): void {
+  public send(value: T, port: InPort<T>): void {
     if (port === this.ports.in) {
       this.values.push(value);
 

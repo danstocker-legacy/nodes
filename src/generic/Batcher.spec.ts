@@ -24,9 +24,9 @@ describe("Batcher", function () {
     describe("when buffer is full", function () {
       it("should pass batch to output", function () {
         spyOn(batcher.ports.out, "send");
-        batcher.send(batcher.ports.in, 1);
-        batcher.send(batcher.ports.in, 2);
-        batcher.send(batcher.ports.in, 3);
+        batcher.send(1, batcher.ports.in);
+        batcher.send(2, batcher.ports.in);
+        batcher.send(3, batcher.ports.in);
         expect(batcher.ports.out.send).toHaveBeenCalledWith([1, 2, 3]);
       });
     });

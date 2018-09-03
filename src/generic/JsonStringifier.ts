@@ -18,7 +18,7 @@ export class JsonStringifier<I extends object> implements INode {
     this.pretty = pretty;
   }
 
-  public send(port: InPort<I>, value: I): void {
+  public send(value: I, port: InPort<I>): void {
     if (port === this.ports.in) {
       this.ports.out.send(JSON.stringify(value, null, this.pretty ? 2 : 0));
     }

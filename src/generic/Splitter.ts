@@ -24,7 +24,7 @@ export class Splitter<T> implements INode {
     }
   }
 
-  public send(port: InPort<T>, value: T): void {
+  public send(value: T, port: InPort<T>): void {
     const ports = this.ports;
     const count = this.count;
     if (port === ports.in) {

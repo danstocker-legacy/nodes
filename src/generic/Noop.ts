@@ -16,7 +16,7 @@ export class Noop<T> implements INode {
     };
   }
 
-  public send(port: InPort<T>, value: any): void {
+  public send(value: any, port: InPort<T>): void {
     if (port === this.ports.in) {
       this.ports.out.send(value);
     }
