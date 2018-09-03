@@ -17,7 +17,7 @@ export class LineSplitter implements INode {
     };
   }
 
-  public send(value: string, port: InPort<string>): void {
+  public send(value: string, port: InPort<string>, timestamp?: number): void {
     if (port === this.ports.in) {
       const text = this.fragment + value;
       const lines = text.split("\n");
@@ -26,7 +26,7 @@ export class LineSplitter implements INode {
 
       const lineCount = lines.length;
       for (let i = 0; i < lineCount; i++) {
-        this.ports.out.send(lines[i]);
+        this.ports.out.send(lines[i], timestamp);
       }
     }
   }

@@ -41,8 +41,10 @@ describe("Interval", function () {
 
     it("should send null to output", function () {
       spyOn(interval.ports.out, "send");
+      const BuiltInDate = global.Date;
+      spyOn(global, "Date").and.callFake(() => new BuiltInDate());
       jasmine.clock().tick(501);
-      expect(interval.ports.out.send).toHaveBeenCalledWith(null);
+      expect(interval.ports.out.send).toHaveBeenCalledWith(null, +new Date());
     });
   });
 });

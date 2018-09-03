@@ -33,7 +33,7 @@ describe("Mapper", function () {
       noop.ports.out.connect(mapper.ports.in);
       spyOn(mapper.ports.out, "send");
       noop.send(5, noop.ports.in);
-      expect(mapper.ports.out.send).toHaveBeenCalledWith("_5");
+      expect(mapper.ports.out.send).toHaveBeenCalledWith("_5", undefined);
     });
   });
 });

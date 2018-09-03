@@ -27,7 +27,8 @@ describe("Debouncer", function () {
           debouncer.send(6, debouncer.ports.in);
           debouncer.send(7, debouncer.ports.in);
           jasmine.clock().tick(501);
-          expect(debouncer.ports.out.send).toHaveBeenCalledWith([5, 6, 7]);
+          expect(debouncer.ports.out.send)
+          .toHaveBeenCalledWith([5, 6, 7], undefined);
         });
       });
 
@@ -40,7 +41,8 @@ describe("Debouncer", function () {
           jasmine.clock().tick(499);
           debouncer.send(7, debouncer.ports.in);
           jasmine.clock().tick(501);
-          expect(debouncer.ports.out.send).toHaveBeenCalledWith([5, 6, 7]);
+          expect(debouncer.ports.out.send)
+          .toHaveBeenCalledWith([5, 6, 7], undefined);
         });
       });
     });

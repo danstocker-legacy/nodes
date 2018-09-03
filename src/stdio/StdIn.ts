@@ -22,7 +22,7 @@ export class StdIn implements INode {
   private onReadable() {
     const chunk = process.stdin.read();
     if (chunk !== null) {
-      this.ports.out.send(chunk);
+      this.ports.out.send(chunk, +new Date());
     }
   }
 }

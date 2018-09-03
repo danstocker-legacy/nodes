@@ -17,15 +17,15 @@ class Adder implements INode {
     };
   }
 
-  public send(value: number, port: InPort<number>): void {
+  public send(value: number, port: InPort<number>, timestamp?: number): void {
     switch (port) {
       case this.ports.a:
         this.a = value;
-        this.ports.sum.send(this.a + (this.b || 0));
+        this.ports.sum.send(this.a + (this.b || 0), timestamp);
         break;
       case this.ports.b:
         this.b = value;
-        this.ports.sum.send((this.a || 0) + this.b);
+        this.ports.sum.send((this.a || 0) + this.b, timestamp);
         break;
     }
   }

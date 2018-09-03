@@ -20,12 +20,12 @@ export class Batcher<T> implements INode {
     this.buffer = [];
   }
 
-  public send(value: T, port: InPort<T>): void {
+  public send(value: T, port: InPort<T>, timestamp?: number): void {
     if (port === this.ports.in) {
       const buffer = this.buffer;
       buffer.push(value);
       if (buffer.length === this.length) {
-        this.ports.out.send(buffer);
+        this.ports.out.send(buffer, timestamp);
       }
     }
   }

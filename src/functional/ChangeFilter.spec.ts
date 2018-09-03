@@ -29,7 +29,8 @@ describe("ChangeFilter", function () {
       it("should pass value to output", function () {
         spyOn(changeFilter.ports.out, "send");
         changeFilter.send(6, changeFilter.ports.in);
-        expect(changeFilter.ports.out.send).toHaveBeenCalledWith(6);
+        expect(changeFilter.ports.out.send)
+        .toHaveBeenCalledWith(6, undefined);
       });
     });
 
@@ -51,7 +52,8 @@ describe("ChangeFilter", function () {
         it("should pass value to output", function () {
           spyOn(changeFilter.ports.out, "send");
           changeFilter.send(6, changeFilter.ports.in);
-          expect(changeFilter.ports.out.send).toHaveBeenCalledWith(6);
+          expect(changeFilter.ports.out.send)
+          .toHaveBeenCalledWith(6, undefined);
         });
       });
     });

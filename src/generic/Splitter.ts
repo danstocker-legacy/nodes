@@ -24,14 +24,14 @@ export class Splitter<T> implements INode {
     }
   }
 
-  public send(value: T, port: InPort<T>): void {
+  public send(value: T, port: InPort<T>, timestamp?: number): void {
     const ports = this.ports;
     const count = this.count;
     if (port === ports.in) {
       for (let i = 1; i <= count; i++) {
         const outPort = ports[`out${i}`];
         if (outPort) {
-          outPort.send(value);
+          outPort.send(value, timestamp);
         }
       }
     }

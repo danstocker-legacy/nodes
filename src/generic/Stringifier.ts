@@ -16,9 +16,9 @@ export class Stringifier<I> implements INode {
     };
   }
 
-  public send(value: I, port: InPort<I>): void {
+  public send(value: I, port: InPort<I>, timestamp?: number): void {
     if (port === this.ports.in) {
-      this.ports.out.send(String(value));
+      this.ports.out.send(String(value), timestamp);
     }
   }
 }

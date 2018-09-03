@@ -29,7 +29,8 @@ describe("Throttler", function () {
           jasmine.clock().tick(249);
           throttler.send(7, throttler.ports.in);
           jasmine.clock().tick(2);
-          expect(throttler.ports.out.send).toHaveBeenCalledWith([5, 6, 7]);
+          expect(throttler.ports.out.send)
+          .toHaveBeenCalledWith([5, 6, 7], undefined);
         });
       });
     });

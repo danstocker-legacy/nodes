@@ -26,7 +26,7 @@ describe("Delayer", function () {
         spyOn(delayer.ports.out, "send");
         delayer.send(5, delayer.ports.in);
         jasmine.clock().tick(499);
-        expect(delayer.ports.out.send).not.toHaveBeenCalledWith(5);
+        expect(delayer.ports.out.send).not.toHaveBeenCalledWith(5, undefined);
       });
     });
 
@@ -35,7 +35,7 @@ describe("Delayer", function () {
         spyOn(delayer.ports.out, "send");
         delayer.send(5, delayer.ports.in);
         jasmine.clock().tick(501);
-        expect(delayer.ports.out.send).toHaveBeenCalledWith(5);
+        expect(delayer.ports.out.send).toHaveBeenCalledWith(5, undefined);
       });
     });
   });

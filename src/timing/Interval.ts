@@ -23,6 +23,6 @@ export class Interval implements INode {
   }
 
   private onInterval(): void {
-    this.ports.out.send(null);
+    this.ports.out.send(null, +new Date());
   }
 }

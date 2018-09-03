@@ -26,9 +26,9 @@ describe("Splitter", function () {
       const calls = spy.calls.all();
       expect(calls.length).toBe(2);
       expect(calls[0].object).toBe(splitter.ports.out1);
-      expect(calls[0].args).toEqual([5]);
+      expect(calls[0].args).toEqual([5, undefined]);
       expect(calls[1].object).toBe(splitter.ports.out2);
-      expect(calls[1].args).toEqual([5]);
+      expect(calls[1].args).toEqual([5, undefined]);
     });
   });
 });

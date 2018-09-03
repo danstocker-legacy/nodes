@@ -27,7 +27,8 @@ describe("Batcher", function () {
         batcher.send(1, batcher.ports.in);
         batcher.send(2, batcher.ports.in);
         batcher.send(3, batcher.ports.in);
-        expect(batcher.ports.out.send).toHaveBeenCalledWith([1, 2, 3]);
+        expect(batcher.ports.out.send)
+        .toHaveBeenCalledWith([1, 2, 3], undefined);
       });
     });
   });

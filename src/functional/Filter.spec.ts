@@ -33,7 +33,7 @@ describe("Filter", function () {
       noop.ports.out.connect(filter.ports.in);
       spyOn(filter.ports.out, "send");
       noop.send(5, noop.ports.in);
-      expect(filter.ports.out.send).toHaveBeenCalledWith(5);
+      expect(filter.ports.out.send).toHaveBeenCalledWith(5, undefined);
     });
   });
 });

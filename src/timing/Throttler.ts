@@ -19,28 +19,27 @@ export class Throttler<T> implements INode {
     };
     this.delay = delay;
     this.values = [];
-    this.onTimeout = this.onTimeout.bind(this);
   }
 
-  public send(value: any, port: InPort<T>): void {
+  public send(value: any, port: InPort<T>, timestamp?: number): void {
     if (port === this.ports.in) {
       this.values.push(value);
 
       const timer = this.timer;
       if (!timer) {
-        this.timer = setTimeout(this.onTimeout, this.delay);
-      }
-    }
-  }
+        const onTimeout = () => {
+          const values = this.values;
+          if (values.length) {
+            this.timer = setTimeout(onTimeout, this.delay);
+            this.values = [];
+            this.ports.out.send(values, timestamp);
+          } else {
+            this.timer = undefined;
+          }
+        };
 
-  private onTimeout(): void {
-    const values = this.values;
-    if (values.length) {
-      this.timer = setTimeout(this.onTimeout, this.delay);
-      this.values = [];
-      this.ports.out.send(values);
-    } else {
-      this.timer = undefined;
+        this.timer = setTimeout(onTimeout, this.delay);
+      }
     }
   }
 }

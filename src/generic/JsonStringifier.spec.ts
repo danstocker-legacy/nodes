@@ -20,7 +20,8 @@ describe("JsonStringifier", function () {
       it("should send stringified value to out port", function () {
         spyOn(stringifier.ports.out, "send");
         stringifier.send({foo: "bar"}, stringifier.ports.in);
-        expect(stringifier.ports.out.send).toHaveBeenCalledWith("{\"foo\":\"bar\"}");
+        expect(stringifier.ports.out.send)
+        .toHaveBeenCalledWith("{\"foo\":\"bar\"}", undefined);
       });
     });
 
@@ -33,7 +34,7 @@ describe("JsonStringifier", function () {
         spyOn(stringifier.ports.out, "send");
         stringifier.send({foo: "bar"}, stringifier.ports.in);
         expect(stringifier.ports.out.send)
-        .toHaveBeenCalledWith("{\n  \"foo\": \"bar\"\n}");
+        .toHaveBeenCalledWith("{\n  \"foo\": \"bar\"\n}", undefined);
       });
     });
   });

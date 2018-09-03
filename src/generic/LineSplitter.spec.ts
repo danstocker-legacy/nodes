@@ -21,8 +21,8 @@ describe("LineSplitter", function () {
       lineSplitter.ports.in.send("foo\nbar\nbaz");
       const calls = spy.calls.all();
       expect(calls.length).toBe(2);
-      expect(calls[0].args).toEqual(["foo"]);
-      expect(calls[1].args).toEqual(["bar"]);
+      expect(calls[0].args).toEqual(["foo", undefined]);
+      expect(calls[1].args).toEqual(["bar", undefined]);
     });
 
     describe("on subsequent calls", function () {
@@ -35,8 +35,8 @@ describe("LineSplitter", function () {
         lineSplitter.ports.in.send("z\nquux\n");
         const calls = spy.calls.all();
         expect(calls.length).toBe(2);
-        expect(calls[0].args).toEqual(["baz"]);
-        expect(calls[1].args).toEqual(["quux"]);
+        expect(calls[0].args).toEqual(["baz", undefined]);
+        expect(calls[1].args).toEqual(["quux", undefined]);
       });
     });
   });

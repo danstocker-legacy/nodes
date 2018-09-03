@@ -21,7 +21,7 @@ export class ChangeFilter<T> implements INode {
     this.equals = equals;
   }
 
-  public send(value: T, port: InPort<T>): void {
+  public send(value: T, port: InPort<T>, timestamp?: number): void {
     if (port === this.ports.in) {
       const equals = this.equals;
       const lastValue = this.lastValue;
@@ -30,7 +30,7 @@ export class ChangeFilter<T> implements INode {
         !equals && value !== lastValue
       ) {
         this.lastValue = value;
-        this.ports.out.send(value);
+        this.ports.out.send(value, timestamp);
       }
     }
   }

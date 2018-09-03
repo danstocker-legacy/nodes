@@ -32,8 +32,10 @@ describe("StdIn", function () {
     it("should send chunk to output", function () {
       spyOn(process.stdin, "read").and.returnValue("foo");
       spyOn(stdIn.ports.out, "send");
+      const BuiltInDate = global.Date;
+      spyOn(global, "Date").and.callFake(() => new BuiltInDate());
       process.stdin.emit("readable");
-      expect(stdIn.ports.out.send).toHaveBeenCalledWith("foo");
+      expect(stdIn.ports.out.send).toHaveBeenCalledWith("foo", +new Date());
     });
   });
 });
