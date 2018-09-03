@@ -126,7 +126,8 @@ class Adder implements INode {
     b: InPort<number>,
     sum: OutPort<number>
   };
-  private readonly inputs: Map<InPort<number>, number>;
+  private a: number;
+  private b: number;
 
   constructor() {
     this.ports = {
@@ -134,17 +135,18 @@ class Adder implements INode {
       b: new InPort(this),
       sum: new OutPort(this)
     };
-    this.inputs = new Map();
   }
 
   public send(port: InPort<number>, value: number): void {
-    if (port === this.ports.a || port === this.ports.b) {
-      let sum: number = 0;
-      this.inputs.set(port, value);
-      for (const input of this.inputs.values()) {
-        sum += input;
-      }
-      this.ports.sum.send(sum);
+    switch (port) {
+      case this.ports.a:
+        this.a = value;
+        this.ports.sum.send(this.a + (this.b || 0));
+        break;
+      case this.ports.b:
+        this.b = value;
+        this.ports.sum.send((this.a || 0) + this.b);
+        break;
     }
   }
 }
@@ -154,10 +156,10 @@ const logger: Logger = new Logger();
 
 adder.ports.sum.connect(logger.ports.in);
 
-adder.ports.a.send(1); // 1
-adder.ports.b.send(1); // 2
-adder.ports.a.send(2); // 3
-adder.ports.b.send(2); // 4
+adder.ports.a.send(1); // 1+0=1
+adder.ports.b.send(1); // 1+1=2
+adder.ports.a.send(2); // 2+1=3
+adder.ports.b.send(2); // 2+2=4
 ```
 
 ### Filtering by input node
