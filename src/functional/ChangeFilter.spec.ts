@@ -28,7 +28,7 @@ describe("ChangeFilter", function () {
     describe("when sending different value", function () {
       it("should pass value to output", function () {
         spyOn(changeFilter.ports.out, "send");
-        changeFilter.send(5, changeFilter.ports.in);
+        changeFilter.send(6, changeFilter.ports.in);
         expect(changeFilter.ports.out.send).toHaveBeenCalledWith(6);
       });
     });

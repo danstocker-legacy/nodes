@@ -39,8 +39,8 @@ describe("InPort", function () {
 
     it("should send value to node", function () {
       spyOn(node, "send");
-      port.send(5);
-      expect(node.send).toHaveBeenCalledWith(port, 5);
+      port.send(5, 100);
+      expect(node.send).toHaveBeenCalledWith(5, port, 100);
     });
   });
 });
