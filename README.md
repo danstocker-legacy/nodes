@@ -1,7 +1,10 @@
 Nodes
 =====
 
-Nodes is a reactive library for processing streaming data.
+Nodes is an [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) 
+library which models the processing network as an actual directed graph.
+
+**Nodes is in development. Breaking changes may occur.**
 
 In Nodes, the basic processing unit is the *node*, which is similar to a 
 function, in that it takes *inputs* and produces *outputs*. But instead of 
