@@ -68,8 +68,6 @@ Supported processor nodes
 - `Debouncer`: Forwards batches of input values with debouncing.
 - `Throttler`: Forwards batches of input values with throttling.
 - `Interval`: Outputs `null` at intervals.
-- `Synchronizer`: Forwards all inputs sharing the same timestamp in one go, 
-once they've all been received.
 
 ### StdIO
 
