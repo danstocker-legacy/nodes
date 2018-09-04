@@ -3,6 +3,9 @@ import {InputBuffer} from "./InputBuffer";
 
 type Callback = (inputs: Inputs, ts: number) => void;
 
+/**
+ * Integrates inputs marked with the same timestamp.
+ */
 export class Integrator {
   private readonly cb: Callback;
   private readonly buffer: InputBuffer;

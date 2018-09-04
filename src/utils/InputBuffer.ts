@@ -1,5 +1,8 @@
 import {InPort, Inputs} from "../node";
 
+/**
+ * Stores input values indexed by timestamp and input port.
+ */
 export class InputBuffer {
   public readonly count: number;
   private readonly sets: Map<number, Inputs>;
