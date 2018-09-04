@@ -1,15 +1,15 @@
 import {Noop} from "../generic";
 import {InPort} from "../node";
-import {Synchronizer} from "./Synchronizer";
+import {Integrator} from "./Integrator";
 
-describe("Synchronizer", function () {
+describe("Integrator", function () {
   describe("#next()", function () {
-    let synchronizer: Synchronizer;
+    let integrator: Integrator;
     let cb;
 
     beforeEach(function () {
       cb = jasmine.createSpy();
-      synchronizer = new Synchronizer(2, cb);
+      integrator = new Integrator(2, cb);
     });
 
     describe("on completing input set", function () {
@@ -23,12 +23,12 @@ describe("Synchronizer", function () {
         port1 = new InPort(node1);
         node2 = new Noop();
         port2 = new InPort(node2);
-        synchronizer.next(new Map([[port1, 5]]), 1);
-        synchronizer.next(new Map([[port2, 6]]), 2);
+        integrator.next(new Map([[port1, 5]]), 1);
+        integrator.next(new Map([[port2, 6]]), 2);
       });
 
       it("should invoke callback", function () {
-        synchronizer.next(new Map([[port2, 4]]), 1);
+        integrator.next(new Map([[port2, 4]]), 1);
         expect(cb).toHaveBeenCalledWith(new Map([[port1, 5], [port2, 4]]), 1);
       });
     });

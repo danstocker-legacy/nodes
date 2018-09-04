@@ -3,7 +3,7 @@ import {InputBuffer} from "./InputBuffer";
 
 type Callback = (inputs: Inputs, ts: number) => void;
 
-export class Synchronizer {
+export class Integrator {
   private readonly cb: Callback;
   private readonly buffer: InputBuffer;
 
