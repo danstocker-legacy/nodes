@@ -14,13 +14,13 @@ describe("ChangeFilter", function () {
 
     beforeEach(function () {
       changeFilter = new ChangeFilter();
-      changeFilter.send(5, changeFilter.ports.in);
+      changeFilter.send(new Map([[changeFilter.ports.in, 5]]));
     });
 
     describe("when sending same value", function () {
       it("should not pass value to output", function () {
         spyOn(changeFilter.ports.out, "send");
-        changeFilter.send(5, changeFilter.ports.in);
+        changeFilter.send(new Map([[changeFilter.ports.in, 5]]));
         expect(changeFilter.ports.out.send).not.toHaveBeenCalled();
       });
     });
@@ -28,7 +28,7 @@ describe("ChangeFilter", function () {
     describe("when sending different value", function () {
       it("should pass value to output", function () {
         spyOn(changeFilter.ports.out, "send");
-        changeFilter.send(6, changeFilter.ports.in);
+        changeFilter.send(new Map([[changeFilter.ports.in, 6]]));
         expect(changeFilter.ports.out.send)
         .toHaveBeenCalledWith(6, undefined);
       });
@@ -37,13 +37,13 @@ describe("ChangeFilter", function () {
     describe("with custom equals", function () {
       beforeEach(function () {
         changeFilter = new ChangeFilter((a, b) => (a % 2) === (b % 2));
-        changeFilter.send(5, changeFilter.ports.in);
+        changeFilter.send(new Map([[changeFilter.ports.in, 5]]));
       });
 
       describe("when sending equivalent value", function () {
         it("should not pass value to output", function () {
           spyOn(changeFilter.ports.out, "send");
-          changeFilter.send(7, changeFilter.ports.in);
+          changeFilter.send(new Map([[changeFilter.ports.in, 7]]));
           expect(changeFilter.ports.out.send).not.toHaveBeenCalled();
         });
       });
@@ -51,7 +51,7 @@ describe("ChangeFilter", function () {
       describe("when sending non-equivalent value", function () {
         it("should pass value to output", function () {
           spyOn(changeFilter.ports.out, "send");
-          changeFilter.send(6, changeFilter.ports.in);
+          changeFilter.send(new Map([[changeFilter.ports.in, 6]]));
           expect(changeFilter.ports.out.send)
           .toHaveBeenCalledWith(6, undefined);
         });

@@ -1,4 +1,4 @@
-import {INode, InPort, IPort, OutPort} from "../node";
+import {INode, InPort, Inputs, IPort, OutPort} from "../node";
 
 /**
  * Forwards input to multiple outputs.
@@ -24,15 +24,13 @@ export class Splitter<T> implements INode {
     }
   }
 
-  public send(value: T, port: InPort<T>, timestamp?: number): void {
+  public send(inputs: Inputs, ts?: number): void {
     const ports = this.ports;
     const count = this.count;
-    if (port === ports.in) {
-      for (let i = 1; i <= count; i++) {
-        const outPort = ports[`out${i}`];
-        if (outPort) {
-          outPort.send(value, timestamp);
-        }
+    for (let i = 1; i <= count; i++) {
+      const outPort = ports[`out${i}`];
+      if (outPort) {
+        outPort.send(inputs.get(this.ports.in), ts);
       }
     }
   }

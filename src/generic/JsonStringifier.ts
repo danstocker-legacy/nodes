@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node";
+import {INode, InPort, Inputs, OutPort} from "../node";
 
 /**
  * Sends object input to output as JSON string.
@@ -18,11 +18,9 @@ export class JsonStringifier<I extends object> implements INode {
     this.pretty = pretty;
   }
 
-  public send(value: I, port: InPort<I>, timestamp?: number): void {
-    if (port === this.ports.in) {
-      this.ports.out.send(
-        JSON.stringify(value, null, this.pretty ? 2 : 0),
-        timestamp);
-    }
+  public send(inputs: Inputs, ts?: number): void {
+    this.ports.out.send(
+      JSON.stringify(inputs.get(this.ports.in), null, this.pretty ? 2 : 0),
+      ts);
   }
 }

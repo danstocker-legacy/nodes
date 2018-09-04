@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node";
+import {INode, InPort, Inputs, OutPort} from "../node";
 
 type FilterCallback<T> = (next: T, port: InPort<T>, node: INode) => boolean;
 
@@ -20,11 +20,11 @@ export class Filter<T> implements INode {
     this.callback = callback;
   }
 
-  public send(value: T, port: InPort<T>, timestamp?: number): void {
-    if (port === this.ports.in) {
-      if (this.callback(value, port, this)) {
-        this.ports.out.send(value, timestamp);
-      }
+  public send(inputs: Inputs, ts?: number): void {
+    const ports = this.ports;
+    const value = inputs.get(ports.in);
+    if (this.callback(value, ports.in, this)) {
+      this.ports.out.send(value, ts);
     }
   }
 }

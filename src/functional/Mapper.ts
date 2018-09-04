@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node";
+import {INode, InPort, Inputs, OutPort} from "../node";
 
 type MapperCallback<I, O> = (next: I, port: InPort<I>, node: INode) => O;
 
@@ -20,9 +20,8 @@ export class Mapper<I, O> implements INode {
     this.callback = callback;
   }
 
-  public send(value: I, port: InPort<I>, timestamp?: number): void {
-    if (port === this.ports.in) {
-      this.ports.out.send(this.callback(value, port, this), timestamp);
-    }
+  public send(inputs: Inputs, ts?: number): void {
+    const ports = this.ports;
+    ports.out.send(this.callback(inputs.get(ports.in), ports.in, this), ts);
   }
 }

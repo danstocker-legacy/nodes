@@ -23,9 +23,9 @@ describe("Debouncer", function () {
       describe("after last input", function () {
         it("should pass values to output", function () {
           spyOn(debouncer.ports.out, "send");
-          debouncer.send(5, debouncer.ports.in);
-          debouncer.send(6, debouncer.ports.in);
-          debouncer.send(7, debouncer.ports.in);
+          debouncer.send(new Map([[debouncer.ports.in, 5]]));
+          debouncer.send(new Map([[debouncer.ports.in, 6]]));
+          debouncer.send(new Map([[debouncer.ports.in, 7]]));
           jasmine.clock().tick(501);
           expect(debouncer.ports.out.send)
           .toHaveBeenCalledWith([5, 6, 7], undefined);
@@ -35,11 +35,11 @@ describe("Debouncer", function () {
       describe("on new input within delay", function () {
         it("should restart timer", function () {
           spyOn(debouncer.ports.out, "send");
-          debouncer.send(5, debouncer.ports.in);
+          debouncer.send(new Map([[debouncer.ports.in, 5]]));
           jasmine.clock().tick(499);
-          debouncer.send(6, debouncer.ports.in);
+          debouncer.send(new Map([[debouncer.ports.in, 6]]));
           jasmine.clock().tick(499);
-          debouncer.send(7, debouncer.ports.in);
+          debouncer.send(new Map([[debouncer.ports.in, 7]]));
           jasmine.clock().tick(501);
           expect(debouncer.ports.out.send)
           .toHaveBeenCalledWith([5, 6, 7], undefined);

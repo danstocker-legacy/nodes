@@ -1,4 +1,4 @@
-import {INode, InPort, Logger, OutPort} from "..";
+import {INode, InPort, Inputs, Logger, OutPort} from "..";
 
 class Adder implements INode {
   public readonly ports: {
@@ -17,17 +17,14 @@ class Adder implements INode {
     };
   }
 
-  public send(value: number, port: InPort<number>, timestamp?: number): void {
-    switch (port) {
-      case this.ports.a:
-        this.a = value;
-        this.ports.sum.send(this.a + (this.b || 0), timestamp);
-        break;
-      case this.ports.b:
-        this.b = value;
-        this.ports.sum.send((this.a || 0) + this.b, timestamp);
-        break;
+  public send(inputs: Inputs, ts?: number): void {
+    if (inputs.has(this.ports.a)) {
+      this.a = inputs.get(this.ports.a);
     }
+    if (inputs.has(this.ports.b)) {
+      this.b = inputs.get(this.ports.b);
+    }
+    this.ports.sum.send((this.a || 0) + (this.b || 0), ts);
   }
 }
 

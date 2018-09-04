@@ -1,5 +1,5 @@
 import {INode} from "./INode";
-import {InPort} from "./InPort";
+import {Inputs} from "./Inputs";
 import {Ports} from "./Ports";
 
 /**
@@ -14,7 +14,7 @@ export class SuperNode implements INode {
     this.ports = ports;
   }
 
-  public send(value: any, port: InPort<any>) {
+  public send() {
     throw Error("Super-node doesn't process input.");
   }
 }

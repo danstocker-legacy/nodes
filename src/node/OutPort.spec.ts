@@ -1,5 +1,6 @@
 import {INode} from "./INode";
 import {InPort} from "./InPort";
+import {Inputs} from "./Inputs";
 import {OutPort} from "./OutPort";
 import {Ports} from "./Ports";
 
@@ -11,7 +12,7 @@ class Node implements INode {
   }
 
   /* tslint:disable:no-empty */
-  public send(value: string, port: InPort<any>) {
+  public send(inputs: Inputs) {
   }
 }
 

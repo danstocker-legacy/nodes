@@ -16,7 +16,9 @@ export class InPort<T> implements IPort<T> {
   /**
    * Sends data to the current port.
    */
-  public send(value: T, timestamp?: number): void {
-    this.node.send(value, this, timestamp);
+  public send(value: T, ts?: number): void {
+    const inputs = new Map();
+    inputs.set(this, value);
+    this.node.send(inputs, ts);
   }
 }

@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node";
+import {INode, InPort, Inputs, OutPort} from "../node";
 
 type EqualsCallback<T> = (a: T, b: T) => boolean;
 
@@ -21,17 +21,16 @@ export class ChangeFilter<T> implements INode {
     this.equals = equals;
   }
 
-  public send(value: T, port: InPort<T>, timestamp?: number): void {
-    if (port === this.ports.in) {
-      const equals = this.equals;
-      const lastValue = this.lastValue;
-      if (
-        equals && !equals(value, lastValue) ||
-        !equals && value !== lastValue
-      ) {
-        this.lastValue = value;
-        this.ports.out.send(value, timestamp);
-      }
+  public send(inputs: Inputs, ts?: number): void {
+    const equals = this.equals;
+    const valueBefore = this.lastValue;
+    const valueAfter = inputs.get(this.ports.in);
+    if (
+      equals && !equals(valueAfter, valueBefore) ||
+      !equals && valueAfter !== valueBefore
+    ) {
+      this.lastValue = valueAfter;
+      this.ports.out.send(valueAfter, ts);
     }
   }
 }

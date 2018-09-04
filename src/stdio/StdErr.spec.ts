@@ -17,7 +17,7 @@ describe("StdErr", function () {
 
     it("should pass value to stderr", function () {
       spyOn(process.stderr, "write");
-      stdErr.send("5", stdErr.ports.in);
+      stdErr.send(new Map([[stdErr.ports.in, "5"]]));
       expect(process.stderr.write).toHaveBeenCalledWith("5");
     });
   });

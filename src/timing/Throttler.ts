@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node";
+import {INode, InPort, Inputs, OutPort} from "../node";
 
 /**
  * Forwards batches of input values with throttling.
@@ -21,25 +21,23 @@ export class Throttler<T> implements INode {
     this.values = [];
   }
 
-  public send(value: any, port: InPort<T>, timestamp?: number): void {
-    if (port === this.ports.in) {
-      this.values.push(value);
+  public send(inputs: Inputs, ts?: number): void {
+    this.values.push(inputs.get(this.ports.in));
 
-      const timer = this.timer;
-      if (!timer) {
-        const onTimeout = () => {
-          const values = this.values;
-          if (values.length) {
-            this.timer = setTimeout(onTimeout, this.delay);
-            this.values = [];
-            this.ports.out.send(values, timestamp);
-          } else {
-            this.timer = undefined;
-          }
-        };
+    const timer = this.timer;
+    if (!timer) {
+      const onTimeout = () => {
+        const values = this.values;
+        if (values.length) {
+          this.timer = setTimeout(onTimeout, this.delay);
+          this.values = [];
+          this.ports.out.send(values, ts);
+        } else {
+          this.timer = undefined;
+        }
+      };
 
-        this.timer = setTimeout(onTimeout, this.delay);
-      }
+      this.timer = setTimeout(onTimeout, this.delay);
     }
   }
 }

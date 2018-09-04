@@ -19,7 +19,7 @@ describe("SuperNode", function () {
 
     it("should throw", function () {
       expect(function () {
-        superNode.send(null, null);
+        superNode.send();
       }).toThrow();
     });
   });

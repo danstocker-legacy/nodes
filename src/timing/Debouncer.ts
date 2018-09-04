@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node";
+import {INode, InPort, Inputs, OutPort} from "../node";
 
 /**
  * Forwards batches of input values with debouncing.
@@ -21,23 +21,21 @@ export class Debouncer<T> implements INode {
     this.values = [];
   }
 
-  public send(value: T, port: InPort<T>, timestamp?: number): void {
-    if (port === this.ports.in) {
-      this.values.push(value);
+  public send(inputs: Inputs, ts?: number): void {
+    this.values.push(inputs.get(this.ports.in));
 
-      const timer = this.timer;
-      if (timer) {
-        clearTimeout(timer);
-      }
-
-      const onTimeout = () => {
-        const values = this.values;
-        this.timer = undefined;
-        this.values = [];
-        this.ports.out.send(values, timestamp);
-      };
-
-      this.timer = setTimeout(onTimeout, this.delay);
+    const timer = this.timer;
+    if (timer) {
+      clearTimeout(timer);
     }
+
+    const onTimeout = () => {
+      const values = this.values;
+      this.timer = undefined;
+      this.values = [];
+      this.ports.out.send(values, ts);
+    };
+
+    this.timer = setTimeout(onTimeout, this.delay);
   }
 }

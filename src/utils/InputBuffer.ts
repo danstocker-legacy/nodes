@@ -1,6 +1,4 @@
-import {InPort} from "../node";
-
-export type Inputs = Map<InPort<any>, any>;
+import {InPort, Inputs} from "../node";
 
 export class InputBuffer {
   public readonly count: number;

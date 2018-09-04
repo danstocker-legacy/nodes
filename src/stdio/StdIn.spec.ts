@@ -17,7 +17,7 @@ describe("StdIn", function () {
 
     it("should throw error", function () {
       expect(function () {
-        stdIn.send(null, null);
+        stdIn.send();
       }).toThrow();
     });
   });

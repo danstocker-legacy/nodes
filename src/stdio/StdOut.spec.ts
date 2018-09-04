@@ -17,7 +17,7 @@ describe("StdOut", function () {
 
     it("should pass value to stdout", function () {
       spyOn(process.stdout, "write");
-      stdOut.send("5", stdOut.ports.in);
+      stdOut.send(new Map([[stdOut.ports.in, "5"]]));
       expect(process.stdout.write).toHaveBeenCalledWith("5");
     });
   });

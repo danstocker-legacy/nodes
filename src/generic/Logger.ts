@@ -1,4 +1,4 @@
-import {INode, InPort} from "../node";
+import {INode, InPort, Inputs} from "../node";
 
 /**
  * Logs input to console.
@@ -14,10 +14,8 @@ export class Logger implements INode {
     };
   }
 
-  public send(value: any, port: InPort<any>): void {
-    if (port === this.ports.in) {
-      /* tslint:disable:no-console */
-      console.log(value);
-    }
+  public send(inputs: Inputs, ts?: number): void {
+    /* tslint:disable:no-console */
+    console.log(inputs.get(this.ports.in));
   }
 }

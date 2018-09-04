@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node";
+import {INode, InPort, Inputs, OutPort} from "../node";
 
 /**
  * Sends string representation of input to output.
@@ -16,9 +16,7 @@ export class Stringifier<I> implements INode {
     };
   }
 
-  public send(value: I, port: InPort<I>, timestamp?: number): void {
-    if (port === this.ports.in) {
-      this.ports.out.send(String(value), timestamp);
-    }
+  public send(inputs: Inputs, ts?: number): void {
+    this.ports.out.send(String(inputs.get(this.ports.in)), ts);
   }
 }

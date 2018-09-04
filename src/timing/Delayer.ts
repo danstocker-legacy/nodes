@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node";
+import {INode, InPort, Inputs, OutPort} from "../node";
 
 /**
  * Forwards input to output with a delay.
@@ -19,11 +19,9 @@ export class Delayer<T> implements INode {
     };
   }
 
-  public send(value: T, port: InPort<T>, timestamp?: number): void {
-    if (port === this.ports.in) {
-      this.timer = setTimeout(
-        () => this.ports.out.send(value, timestamp),
-        this.delay);
-    }
+  public send(inputs: Inputs, ts?: number): void {
+    this.timer = setTimeout(
+      () => this.ports.out.send(inputs.get(this.ports.in), ts),
+      this.delay);
   }
 }

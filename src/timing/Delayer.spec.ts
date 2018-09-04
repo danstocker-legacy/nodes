@@ -24,7 +24,7 @@ describe("Delayer", function () {
     describe("when delay has not passed", function () {
       it("should not invoke output", function () {
         spyOn(delayer.ports.out, "send");
-        delayer.send(5, delayer.ports.in);
+        delayer.send(new Map([[delayer.ports.in, 5]]));
         jasmine.clock().tick(499);
         expect(delayer.ports.out.send).not.toHaveBeenCalledWith(5, undefined);
       });
@@ -33,7 +33,7 @@ describe("Delayer", function () {
     describe("when delay passed", function () {
       it("should pass value to output", function () {
         spyOn(delayer.ports.out, "send");
-        delayer.send(5, delayer.ports.in);
+        delayer.send(new Map([[delayer.ports.in, 5]]));
         jasmine.clock().tick(501);
         expect(delayer.ports.out.send).toHaveBeenCalledWith(5, undefined);
       });

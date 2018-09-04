@@ -1,4 +1,4 @@
-import {INode, InPort} from "../node";
+import {INode, InPort, Inputs} from "../node";
 
 /**
  * Forwards input to `process.stderr`.
@@ -14,9 +14,7 @@ export class StdErr implements INode {
     };
   }
 
-  public send(value: string | Buffer, port: InPort<string | Buffer>): void {
-    if (port === this.ports.in) {
-      process.stderr.write(value);
-    }
+  public send(inputs: Inputs): void {
+    process.stderr.write(inputs.get(this.ports.in));
   }
 }

@@ -22,7 +22,7 @@ describe("Splitter", function () {
 
     it("should forward input to all outputs", function () {
       const spy = spyOn(OutPort.prototype, "send");
-      splitter.send(5, splitter.ports.in);
+      splitter.send(new Map([[splitter.ports.in, 5]]));
       const calls = spy.calls.all();
       expect(calls.length).toBe(2);
       expect(calls[0].object).toBe(splitter.ports.out1);

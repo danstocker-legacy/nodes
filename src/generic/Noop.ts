@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node";
+import {INode, InPort, Inputs, OutPort} from "../node";
 
 /**
  * Forwards input to output.
@@ -16,9 +16,7 @@ export class Noop<T> implements INode {
     };
   }
 
-  public send(value: any, port: InPort<T>, timestamp?: number): void {
-    if (port === this.ports.in) {
-      this.ports.out.send(value, timestamp);
-    }
+  public send(inputs: Inputs, ts?: number): void {
+    this.ports.out.send(inputs.get(this.ports.in), ts);
   }
 }

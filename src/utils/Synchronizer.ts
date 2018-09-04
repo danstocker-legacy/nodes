@@ -1,4 +1,5 @@
-import {InputBuffer, Inputs} from "./InputBuffer";
+import {Inputs} from "../node";
+import {InputBuffer} from "./InputBuffer";
 
 type Callback = (inputs: Inputs, ts: number) => void;
 

@@ -23,11 +23,11 @@ describe("Throttler", function () {
       describe("after delay", function () {
         it("should pass values to output", function () {
           spyOn(throttler.ports.out, "send");
-          throttler.send(5, throttler.ports.in);
+          throttler.send(new Map([[throttler.ports.in, 5]]));
           jasmine.clock().tick(250);
-          throttler.send(6, throttler.ports.in);
+          throttler.send(new Map([[throttler.ports.in, 6]]));
           jasmine.clock().tick(249);
-          throttler.send(7, throttler.ports.in);
+          throttler.send(new Map([[throttler.ports.in, 7]]));
           jasmine.clock().tick(2);
           expect(throttler.ports.out.send)
           .toHaveBeenCalledWith([5, 6, 7], undefined);

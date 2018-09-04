@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node";
+import {INode, InPort, Inputs, OutPort} from "../node";
 
 /**
  * Sends input to output in batches of a given size.
@@ -20,13 +20,11 @@ export class Batcher<T> implements INode {
     this.buffer = [];
   }
 
-  public send(value: T, port: InPort<T>, timestamp?: number): void {
-    if (port === this.ports.in) {
-      const buffer = this.buffer;
-      buffer.push(value);
-      if (buffer.length === this.length) {
-        this.ports.out.send(buffer, timestamp);
-      }
+  public send(inputs: Inputs, ts?: number): void {
+    const buffer = this.buffer;
+    buffer.push(inputs.get(this.ports.in));
+    if (buffer.length === this.length) {
+      this.ports.out.send(buffer, ts);
     }
   }
 }

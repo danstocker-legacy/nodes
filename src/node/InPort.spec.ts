@@ -1,5 +1,6 @@
 import {INode} from "./INode";
 import {InPort} from "./InPort";
+import {Inputs} from "./Inputs";
 import {Ports} from "./Ports";
 
 class Node implements INode {
@@ -10,7 +11,7 @@ class Node implements INode {
   }
 
   /* tslint:disable:no-empty */
-  public send(value: string, port: InPort<any>) {
+  public send(inputs: Inputs) {
   }
 }
 
@@ -40,7 +41,7 @@ describe("InPort", function () {
     it("should send value to node", function () {
       spyOn(node, "send");
       port.send(5, 100);
-      expect(node.send).toHaveBeenCalledWith(5, port, 100);
+      expect(node.send).toHaveBeenCalledWith(new Map([[port, 5]]), 100);
     });
   });
 });
