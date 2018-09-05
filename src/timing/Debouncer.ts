@@ -21,7 +21,7 @@ export class Debouncer<T> implements INode {
     this.values = [];
   }
 
-  public send(inputs: Inputs, ts?: number): void {
+  public send(inputs: Inputs, tag?: number): void {
     this.values.push(inputs.get(this.ports.in));
 
     const timer = this.timer;
@@ -33,7 +33,7 @@ export class Debouncer<T> implements INode {
       const values = this.values;
       this.timer = undefined;
       this.values = [];
-      this.ports.out.send(values, ts);
+      this.ports.out.send(values, tag);
     };
 
     this.timer = setTimeout(onTimeout, this.delay);

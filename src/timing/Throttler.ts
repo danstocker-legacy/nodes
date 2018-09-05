@@ -21,7 +21,7 @@ export class Throttler<T> implements INode {
     this.values = [];
   }
 
-  public send(inputs: Inputs, ts?: number): void {
+  public send(inputs: Inputs, tag?: number): void {
     this.values.push(inputs.get(this.ports.in));
 
     const timer = this.timer;
@@ -31,7 +31,7 @@ export class Throttler<T> implements INode {
         if (values.length) {
           this.timer = setTimeout(onTimeout, this.delay);
           this.values = [];
-          this.ports.out.send(values, ts);
+          this.ports.out.send(values, tag);
         } else {
           this.timer = undefined;
         }

@@ -12,18 +12,18 @@ export class InputBuffer {
     this.sets = new Map();
   }
 
-  public setValue(ts: number, port: InPort<any>, value: any): void {
+  public setValue(tag: number, port: InPort<any>, value: any): void {
     const sets = this.sets;
-    let inputs = sets.get(ts);
+    let inputs = sets.get(tag);
     if (!inputs) {
       inputs = new Map();
-      sets.set(ts, inputs);
+      sets.set(tag, inputs);
     }
     inputs.set(port, value);
   }
 
-  public deleteInputs(ts: number): void {
-    this.sets.delete(ts);
+  public deleteInputs(tag: number): void {
+    this.sets.delete(tag);
   }
 
   public getCompleteInputs(): Inputs {

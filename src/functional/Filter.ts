@@ -20,11 +20,11 @@ export class Filter<T> implements INode {
     this.callback = callback;
   }
 
-  public send(inputs: Inputs, ts?: number): void {
+  public send(inputs: Inputs, tag?: number): void {
     const ports = this.ports;
     const value = inputs.get(ports.in);
     if (this.callback(value, ports.in, this)) {
-      this.ports.out.send(value, ts);
+      this.ports.out.send(value, tag);
     }
   }
 }

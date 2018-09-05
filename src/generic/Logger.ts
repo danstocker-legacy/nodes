@@ -14,7 +14,7 @@ export class Logger implements INode {
     };
   }
 
-  public send(inputs: Inputs, ts?: number): void {
+  public send(inputs: Inputs, tag?: number): void {
     /* tslint:disable:no-console */
     console.log(inputs.get(this.ports.in));
   }

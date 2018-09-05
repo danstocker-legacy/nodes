@@ -16,7 +16,7 @@ export class Stringifier<I> implements INode {
     };
   }
 
-  public send(inputs: Inputs, ts?: number): void {
-    this.ports.out.send(String(inputs.get(this.ports.in)), ts);
+  public send(inputs: Inputs, tag?: number): void {
+    this.ports.out.send(String(inputs.get(this.ports.in)), tag);
   }
 }

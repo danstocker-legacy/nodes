@@ -1,7 +1,7 @@
 import {Inputs} from "../node";
 import {InputBuffer} from "./InputBuffer";
 
-type Callback = (inputs: Inputs, ts: number) => void;
+type Callback = (inputs: Inputs, tag: number) => void;
 
 /**
  * Integrates inputs marked with the same timestamp.
@@ -15,16 +15,16 @@ export class InputSynchronizer {
     this.buffer = new InputBuffer(count);
   }
 
-  public send(inputs: Inputs, ts: number): void {
+  public send(inputs: Inputs, tag: number): void {
     const buffer = this.buffer;
     for (const [port, value] of inputs.entries()) {
-      buffer.setValue(ts, port, value);
+      buffer.setValue(tag, port, value);
     }
 
     const completeInputs = buffer.getCompleteInputs();
     if (completeInputs) {
-      buffer.deleteInputs(ts);
-      this.cb(completeInputs, ts);
+      buffer.deleteInputs(tag);
+      this.cb(completeInputs, tag);
     }
   }
 }

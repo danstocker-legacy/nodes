@@ -17,14 +17,14 @@ class Adder implements INode {
     };
   }
 
-  public send(inputs: Inputs, ts?: number): void {
+  public send(inputs: Inputs, tag?: number): void {
     if (inputs.has(this.ports.a)) {
       this.a = inputs.get(this.ports.a);
     }
     if (inputs.has(this.ports.b)) {
       this.b = inputs.get(this.ports.b);
     }
-    this.ports.sum.send((this.a || 0) + (this.b || 0), ts);
+    this.ports.sum.send((this.a || 0) + (this.b || 0), tag);
   }
 }
 
