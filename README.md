@@ -58,6 +58,7 @@ Supported processor nodes
 - `LineSplitter`: Splits input text and sends individual lines to output.
 - `Stringifier`: Sends string representation of input to output.
 - `JsonStringifier`: Sends object input to output as JSON string.
+- `Tagger`: Forwards input to output with the tag changed.
 
 ### Functional
 

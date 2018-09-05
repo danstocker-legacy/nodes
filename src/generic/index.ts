@@ -5,3 +5,4 @@ export {Logger} from "./Logger";
 export {Noop} from "./Noop";
 export {Splitter} from "./Splitter";
 export {Stringifier} from "./Stringifier";
+export {Tagger} from "./Tagger";
