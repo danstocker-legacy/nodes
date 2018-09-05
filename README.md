@@ -2,7 +2,7 @@ Nodes
 =====
 
 Nodes is an [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) 
-library which models the processing network as an actual directed graph.
+library that models the processing network as an actual directed graph.
 
 **Nodes is in development. Breaking changes may occur.**
 
@@ -18,8 +18,8 @@ but the power of this library lies in its extensibility. Any (custom) node
 has two responsibilities: a) define a set of ports, and b) process and 
 distribute inputs to outputs in a single override method.
 
-Composition of nodes is also quite simple with the SuperNode. Any set of 
-interacting nodes might be treated as a single node, provided that relevant 
+Composition of nodes is also quite simple with the `SuperNode`. Any set of
+interacting nodes can be treated as a single node, provided that relevant
 input and output ports are assigned.
 
 Programs written in Nodes are essentially graphs, (or more precisely, 
@@ -247,5 +247,6 @@ Planned features
 
 - [ ] Trail: how data got to the current node.
 - [ ] State snapshot: saving & restoring overall state of the graph.
+- [ ] Error handling: error ports for built-in nodes.
 - [ ] Visual graph snapshot: generating image of nodes and connections.
 - [ ] Visual debugging: annotating graph with traffic statistics.
