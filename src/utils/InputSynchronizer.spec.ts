@@ -3,7 +3,7 @@ import {InPort} from "../node";
 import {InputSynchronizer} from "./InputSynchronizer";
 
 describe("InputSynchronizer", function () {
-  describe("#next()", function () {
+  describe("#send()", function () {
     let inputSynchronizer: InputSynchronizer;
     let cb;
 
@@ -23,12 +23,12 @@ describe("InputSynchronizer", function () {
         port1 = new InPort(node1);
         node2 = new Noop();
         port2 = new InPort(node2);
-        inputSynchronizer.next(new Map([[port1, 5]]), 1);
-        inputSynchronizer.next(new Map([[port2, 6]]), 2);
+        inputSynchronizer.send(new Map([[port1, 5]]), 1);
+        inputSynchronizer.send(new Map([[port2, 6]]), 2);
       });
 
       it("should invoke callback", function () {
-        inputSynchronizer.next(new Map([[port2, 4]]), 1);
+        inputSynchronizer.send(new Map([[port2, 4]]), 1);
         expect(cb).toHaveBeenCalledWith(new Map([[port1, 5], [port2, 4]]), 1);
       });
     });

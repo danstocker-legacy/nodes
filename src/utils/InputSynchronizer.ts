@@ -15,7 +15,7 @@ export class InputSynchronizer {
     this.buffer = new InputBuffer(count);
   }
 
-  public next(inputs: Inputs, ts: number): void {
+  public send(inputs: Inputs, ts: number): void {
     const buffer = this.buffer;
     for (const [port, value] of inputs.entries()) {
       buffer.setValue(ts, port, value);
