@@ -39,7 +39,7 @@ export class OutPort<T> implements IPort<T> {
   /**
    * Sends value to te current port. To be called by INode classes only.
    */
-  public send(value: T, tag?: number): void {
+  public send(value: T, tag?: string): void {
     const peer = this.peer;
     if (peer) {
       peer.send(value, tag);

@@ -40,8 +40,8 @@ describe("InPort", function () {
 
     it("should send value to node", function () {
       spyOn(node, "send");
-      port.send(5, 100);
-      expect(node.send).toHaveBeenCalledWith(new Map([[port, 5]]), 100);
+      port.send(5, "100");
+      expect(node.send).toHaveBeenCalledWith(new Map([[port, 5]]), "100");
     });
   });
 });

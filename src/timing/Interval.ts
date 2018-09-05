@@ -1,4 +1,4 @@
-import {INode, InPort, OutPort} from "../node";
+import {INode, OutPort} from "../node";
 
 /**
  * Outputs `null` at intervals.
@@ -23,6 +23,6 @@ export class Interval implements INode {
   }
 
   private onInterval(): void {
-    this.ports.out.send(null, +new Date());
+    this.ports.out.send(null, String(+new Date()));
   }
 }

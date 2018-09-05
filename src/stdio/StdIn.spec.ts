@@ -35,7 +35,7 @@ describe("StdIn", function () {
       const BuiltInDate = global.Date;
       spyOn(global, "Date").and.callFake(() => new BuiltInDate());
       process.stdin.emit("readable");
-      expect(stdIn.ports.out.send).toHaveBeenCalledWith("foo", +new Date());
+      expect(stdIn.ports.out.send).toHaveBeenCalledWith("foo", String(+new Date()));
     });
   });
 });

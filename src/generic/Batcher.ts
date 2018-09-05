@@ -20,7 +20,7 @@ export class Batcher<T> implements INode {
     this.buffer = [];
   }
 
-  public send(inputs: Inputs, tag?: number): void {
+  public send(inputs: Inputs, tag?: string): void {
     const buffer = this.buffer;
     buffer.push(inputs.get(this.ports.in));
     if (buffer.length === this.length) {

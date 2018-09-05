@@ -140,7 +140,7 @@ class Adder implements INode {
     };
   }
 
-  public send(inputs: Inputs, tag?: number): void {
+  public send(inputs: Inputs, tag?: string): void {
     if (inputs.has(this.ports.a)) {
       this.a = inputs.get(this.ports.a);
     }

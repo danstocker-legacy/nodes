@@ -5,14 +5,14 @@ import {InPort, Inputs} from "../node";
  */
 export class InputBuffer {
   public readonly count: number;
-  private readonly sets: Map<number, Inputs>;
+  private readonly sets: Map<string, Inputs>;
 
   constructor(count: number) {
     this.count = count;
     this.sets = new Map();
   }
 
-  public setValue(tag: number, port: InPort<any>, value: any): void {
+  public setValue(tag: string, port: InPort<any>, value: any): void {
     const sets = this.sets;
     let inputs = sets.get(tag);
     if (!inputs) {
@@ -22,7 +22,7 @@ export class InputBuffer {
     inputs.set(port, value);
   }
 
-  public deleteInputs(tag: number): void {
+  public deleteInputs(tag: string): void {
     this.sets.delete(tag);
   }
 

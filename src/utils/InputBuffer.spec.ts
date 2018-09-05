@@ -23,8 +23,8 @@ describe("InputBuffer", function () {
         const node2 = new Noop();
         const port1 = new InPort<number>(node1);
         const port2 = new InPort<number>(node2);
-        inputBuffer.setValue(1, port1, 5);
-        inputBuffer.setValue(2, port2, 6);
+        inputBuffer.setValue("1", port1, 5);
+        inputBuffer.setValue("2", port2, 6);
       });
 
       it("should return undefined", function () {
@@ -43,9 +43,9 @@ describe("InputBuffer", function () {
         port1 = new InPort(node1);
         node2 = new Noop();
         port2 = new InPort(node2);
-        inputBuffer.setValue(1, port1, 5);
-        inputBuffer.setValue(2, port2, 6);
-        inputBuffer.setValue(1, port2, 4);
+        inputBuffer.setValue("1", port1, 5);
+        inputBuffer.setValue("2", port2, 6);
+        inputBuffer.setValue("1", port2, 4);
       });
 
       it("should return undefined", function () {

@@ -107,8 +107,8 @@ describe("OutPort", function () {
 
     it("should send value to input node", function () {
       spyOn(inPort, "send");
-      outPort.send(5, 100);
-      expect(inPort.send).toHaveBeenCalledWith(5, 100);
+      outPort.send(5, "100");
+      expect(inPort.send).toHaveBeenCalledWith(5, "100");
     });
   });
 });

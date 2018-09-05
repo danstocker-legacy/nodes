@@ -7,5 +7,5 @@ export interface IPort<T> {
   readonly node: INode;
   peer: IPort<T>;
 
-  send(value: T, tag?: number): void;
+  send(value: T, tag?: string): void;
 }

@@ -24,7 +24,7 @@ export class Splitter<T> implements INode {
     }
   }
 
-  public send(inputs: Inputs, tag?: number): void {
+  public send(inputs: Inputs, tag?: string): void {
     const ports = this.ports;
     const count = this.count;
     for (let i = 1; i <= count; i++) {
