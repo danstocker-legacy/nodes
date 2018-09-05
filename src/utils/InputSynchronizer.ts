@@ -1,17 +1,17 @@
 import {Inputs} from "../node";
 import {InputBuffer} from "./InputBuffer";
 
-type Callback = (inputs: Inputs, tag: string) => void;
+type InputSynchronizerCallback = (inputs: Inputs, tag: string) => void;
 
 /**
  * Integrates inputs marked with the same timestamp.
  */
 export class InputSynchronizer {
-  private readonly cb: Callback;
+  private readonly callback: InputSynchronizerCallback;
   private readonly buffer: InputBuffer;
 
-  constructor(count: number, cb: Callback) {
-    this.cb = cb;
+  constructor(count: number, callback: InputSynchronizerCallback) {
+    this.callback = callback;
     this.buffer = new InputBuffer(count);
   }
 
@@ -24,7 +24,7 @@ export class InputSynchronizer {
     const completeInputs = buffer.getCompleteInputs();
     if (completeInputs) {
       buffer.deleteInputs(tag);
-      this.cb(completeInputs, tag);
+      this.callback(completeInputs, tag);
     }
   }
 }
