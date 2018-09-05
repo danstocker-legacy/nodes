@@ -1,2 +1,2 @@
 export {InputBuffer} from "./InputBuffer";
-export {Integrator} from "./Integrator";
+export {InputSynchronizer} from "./InputSynchronizer";

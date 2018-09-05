@@ -6,7 +6,7 @@ type Callback = (inputs: Inputs, ts: number) => void;
 /**
  * Integrates inputs marked with the same timestamp.
  */
-export class Integrator {
+export class InputSynchronizer {
   private readonly cb: Callback;
   private readonly buffer: InputBuffer;
 
