@@ -117,8 +117,11 @@ Implementing a node class
 -------------------------
 
 To create a new node class, one must implement the `INode` interface, 
-defining `ports` and implementing `#send()`. The following example implements
-addition of two numeric inputs.
+defining `ports` and implementing `#send()`. In the case of nodes with more 
+than one input port, it is important that the `#send()` implementation 
+handles missing values and buffers intermediate ones.
+
+The following example implements addition of two numeric inputs.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/adder
@@ -162,15 +165,6 @@ adder.ports.b.send(1); // 1+1=2
 adder.ports.a.send(2); // 2+1=3
 adder.ports.b.send(2); // 2+2=4
 ```
-
-### Filtering by input node
-
-When implementing the `send` method, it's important to keep track of what 
-input contributes to what output. (Most nodes have a single input and single 
-output port, but that may not be true of more complex, custom node classes.) 
-As illustrated in the previous example, the very first line in `send` checks 
-what port the value is coming through. In node classes where there are more 
-complex routing rules, a `switch` expression might be a better option.
 
 Creating an ad-hoc super-node
 ----------------------------
