@@ -1,3 +1,4 @@
+export * from "./base";
 export {INode} from "./INode";
 export {InPort} from "./InPort";
 export {Inputs} from "./Inputs";
