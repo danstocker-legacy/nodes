@@ -1,12 +1,11 @@
-import {InPort, Inputs, InputTracker, Logger, Node, OutPort} from "..";
+import {InPort, Inputs, InputTrackerNode, Logger, Node, OutPort} from "..";
 
-class Adder extends Node {
+class Adder extends InputTrackerNode {
   public readonly ports: {
     a: InPort<number>,
     b: InPort<number>,
     sum: OutPort<number>
   };
-  private readonly inputTracker: InputTracker;
 
   constructor() {
     super();
@@ -15,14 +14,11 @@ class Adder extends Node {
       b: new InPort(this),
       sum: new OutPort()
     };
-    this.inputTracker = new InputTracker((inputs: Inputs) => {
-      const sum = (inputs.get(this.ports.a) || 0) + (inputs.get(this.ports.b) || 0);
-      this.ports.sum.send(sum);
-    });
   }
 
   protected process(inputs: Inputs, tag?: string): void {
-    this.inputTracker.send(inputs, tag);
+    const sum = (inputs.get(this.ports.a) || 0) + (inputs.get(this.ports.b) || 0);
+    this.ports.sum.send(sum);
   }
 }
 
