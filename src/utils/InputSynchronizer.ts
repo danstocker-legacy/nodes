@@ -11,7 +11,7 @@ export class InputSynchronizer implements IQuasiNode {
   private readonly callback: InputSynchronizerCallback;
   private readonly buffer: InputBuffer;
 
-  constructor(count: number, callback: InputSynchronizerCallback) {
+  constructor(callback: InputSynchronizerCallback, count: number) {
     this.callback = callback;
     this.buffer = new InputBuffer(count);
   }

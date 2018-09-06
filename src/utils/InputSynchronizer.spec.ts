@@ -9,7 +9,7 @@ describe("InputSynchronizer", function () {
 
     beforeEach(function () {
       cb = jasmine.createSpy();
-      inputSynchronizer = new InputSynchronizer(2, cb);
+      inputSynchronizer = new InputSynchronizer(cb, 2);
     });
 
     describe("on completing input set", function () {
