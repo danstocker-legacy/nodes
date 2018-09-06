@@ -1,11 +1,9 @@
 import {INode} from "./INode";
 import {Inputs} from "./Inputs";
-import {IPort} from "./IPort";
+import {Ports} from "./Ports";
 
 export abstract class Node implements INode {
-  public readonly ports: {
-    [key: string]: IPort<any>
-  };
+  public readonly ports: Ports;
 
   public send(inputs: Inputs, tag?: string): void {
     this.process(inputs, tag);
