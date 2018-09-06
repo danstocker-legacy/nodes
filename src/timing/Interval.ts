@@ -1,9 +1,9 @@
-import {INode, OutPort} from "../node";
+import {Node, OutPort} from "../node";
 
 /**
  * Outputs `null` at intervals.
  */
-export class Interval implements INode {
+export class Interval extends Node {
   public readonly ports: {
     out: OutPort<null>
   };
@@ -11,6 +11,7 @@ export class Interval implements INode {
   private readonly delay: number;
 
   constructor(delay: number) {
+    super();
     this.ports = {
       out: new OutPort()
     };
@@ -18,7 +19,7 @@ export class Interval implements INode {
     this.delay = delay;
   }
 
-  public send() {
+  protected process() {
     throw Error("Interval is source-only.");
   }
 

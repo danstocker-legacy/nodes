@@ -1,22 +1,23 @@
-import {INode, InPort, Inputs, OutPort} from "../node";
+import {InPort, Inputs, Node, OutPort} from "../node";
 
 /**
  * Forwards input to output.
  */
-export class Noop<T> implements INode {
+export class Noop<T> extends Node {
   public readonly ports: {
     in: InPort<T>,
     out: OutPort<T>
   };
 
   constructor() {
+    super();
     this.ports = {
       in: new InPort(this),
       out: new OutPort()
     };
   }
 
-  public send(inputs: Inputs, tag?: string): void {
+  protected process(inputs: Inputs, tag?: string): void {
     this.ports.out.send(inputs.get(this.ports.in), tag);
   }
 }

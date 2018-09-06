@@ -1,21 +1,22 @@
-import {INode, InPort, OutPort} from "../node";
+import {Node, OutPort} from "../node";
 
 /**
  * Takes input from `process.stdin` and sends it to output.
  */
-export class StdIn implements INode {
+export class StdIn extends Node {
   public readonly ports: {
     out: OutPort<string | Buffer>
   };
 
   constructor() {
+    super();
     this.ports = {
       out: new OutPort()
     };
     process.stdin.on("readable", this.onReadable.bind(this));
   }
 
-  public send() {
+  protected process() {
     throw Error("StdIn is source-only.");
   }
 

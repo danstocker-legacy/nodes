@@ -125,9 +125,9 @@ The following example implements addition of two numeric inputs.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/adder
-import {INode, InPort, Inputs, Logger, OutPort} from "@kwaia/nodes";
+import {InPort, Inputs, Logger, Node, OutPort} from "@kwaia/nodes";
 
-class Adder implements INode {
+class Adder extends Node {
   public readonly ports: {
     a: InPort<number>,
     b: InPort<number>,
@@ -137,6 +137,7 @@ class Adder implements INode {
   private b: number;
 
   constructor() {
+    super();
     this.ports = {
       a: new InPort(this),
       b: new InPort(this),
@@ -144,7 +145,7 @@ class Adder implements INode {
     };
   }
 
-  public send(inputs: Inputs, tag?: string): void {
+  protected process(inputs: Inputs, tag?: string): void {
     if (inputs.has(this.ports.a)) {
       this.a = inputs.get(this.ports.a);
     }

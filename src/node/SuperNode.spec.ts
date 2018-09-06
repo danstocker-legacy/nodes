@@ -19,7 +19,7 @@ describe("SuperNode", function () {
 
     it("should throw", function () {
       expect(function () {
-        superNode.send();
+        superNode.send(new Map());
       }).toThrow();
     });
   });

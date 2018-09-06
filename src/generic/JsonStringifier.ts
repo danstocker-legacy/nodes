@@ -1,9 +1,9 @@
-import {INode, InPort, Inputs, OutPort} from "../node";
+import {InPort, Inputs, Node, OutPort} from "../node";
 
 /**
  * Sends object input to output as JSON string.
  */
-export class JsonStringifier<I extends object> implements INode {
+export class JsonStringifier<I extends object> extends Node {
   public readonly ports: {
     in: InPort<I>,
     out: OutPort<string>
@@ -11,6 +11,7 @@ export class JsonStringifier<I extends object> implements INode {
   private readonly pretty: boolean;
 
   constructor(pretty: boolean = false) {
+    super();
     this.ports = {
       in: new InPort(this),
       out: new OutPort()
@@ -18,7 +19,7 @@ export class JsonStringifier<I extends object> implements INode {
     this.pretty = pretty;
   }
 
-  public send(inputs: Inputs, tag?: string): void {
+  protected process(inputs: Inputs, tag?: string): void {
     this.ports.out.send(
       JSON.stringify(inputs.get(this.ports.in), null, this.pretty ? 2 : 0),
       tag);

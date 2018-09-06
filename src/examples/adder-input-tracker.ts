@@ -1,6 +1,6 @@
-import {INode, InPort, Inputs, InputTracker, Logger, OutPort} from "..";
+import {InPort, Inputs, InputTracker, Logger, Node, OutPort} from "..";
 
-class Adder implements INode {
+class Adder extends Node {
   public readonly ports: {
     a: InPort<number>,
     b: InPort<number>,
@@ -9,6 +9,7 @@ class Adder implements INode {
   private readonly inputTracker: InputTracker;
 
   constructor() {
+    super();
     this.ports = {
       a: new InPort(this),
       b: new InPort(this),
@@ -20,7 +21,7 @@ class Adder implements INode {
     });
   }
 
-  public send(inputs: Inputs, tag?: string): void {
+  protected process(inputs: Inputs, tag?: string): void {
     this.inputTracker.send(inputs, tag);
   }
 }

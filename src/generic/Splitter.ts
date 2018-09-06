@@ -1,9 +1,9 @@
-import {INode, InPort, Inputs, IPort, OutPort} from "../node";
+import {InPort, Inputs, IPort, Node, OutPort} from "../node";
 
 /**
  * Forwards input to multiple outputs.
  */
-export class Splitter<T> implements INode {
+export class Splitter<T> extends Node {
   public readonly ports: {
     in: InPort<T>,
     [out: string]: IPort<T>
@@ -14,6 +14,7 @@ export class Splitter<T> implements INode {
    * @param count Number of outputs.
    */
   constructor(count: number = 2) {
+    super();
     this.ports = {
       in: new InPort(this)
     };
@@ -24,7 +25,7 @@ export class Splitter<T> implements INode {
     }
   }
 
-  public send(inputs: Inputs, tag?: string): void {
+  protected process(inputs: Inputs, tag?: string): void {
     const ports = this.ports;
     const count = this.count;
     for (let i = 1; i <= count; i++) {

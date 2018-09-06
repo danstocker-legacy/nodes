@@ -1,9 +1,9 @@
-import {INode, InPort, Inputs, OutPort} from "../node";
+import {InPort, Inputs, Node, OutPort} from "../node";
 
 /**
  * Forwards batches of input values with debouncing.
  */
-export class Debouncer<T> implements INode {
+export class Debouncer<T> extends Node {
   public readonly ports: {
     in: InPort<T>,
     out: OutPort<Array<T>>
@@ -13,6 +13,7 @@ export class Debouncer<T> implements INode {
   private values: Array<T>;
 
   constructor(delay: number) {
+    super();
     this.ports = {
       in: new InPort(this),
       out: new OutPort()
@@ -21,7 +22,7 @@ export class Debouncer<T> implements INode {
     this.values = [];
   }
 
-  public send(inputs: Inputs, tag?: string): void {
+  protected process(inputs: Inputs, tag?: string): void {
     this.values.push(inputs.get(this.ports.in));
 
     const timer = this.timer;

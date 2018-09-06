@@ -1,17 +1,19 @@
 import {INode} from "./INode";
 import {InPort} from "./InPort";
 import {Inputs} from "./Inputs";
+import {Node} from "./Node";
 import {Ports} from "./Ports";
 
-class Node implements INode {
+class MyNode extends Node {
   public readonly ports: Ports;
 
   constructor() {
+    super();
     this.ports = {};
   }
 
   /* tslint:disable:no-empty */
-  public send(inputs: Inputs) {
+  protected process(inputs: Inputs) {
   }
 }
 
@@ -20,7 +22,7 @@ describe("InPort", function () {
     let node: INode;
 
     beforeEach(function () {
-      node = new Node();
+      node = new MyNode();
     });
 
     it("should set node property", function () {
@@ -34,7 +36,7 @@ describe("InPort", function () {
     let port: InPort<number>;
 
     beforeEach(function () {
-      node = new Node();
+      node = new MyNode();
       port = new InPort(node);
     });
 

@@ -22,7 +22,7 @@ describe("Interval", function () {
 
     it("should throw error", function () {
       expect(function () {
-        interval.send();
+        interval.send(new Map());
       }).toThrow();
     });
   });

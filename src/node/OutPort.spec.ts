@@ -1,18 +1,20 @@
 import {INode} from "./INode";
 import {InPort} from "./InPort";
 import {Inputs} from "./Inputs";
+import {Node} from "./Node";
 import {OutPort} from "./OutPort";
 import {Ports} from "./Ports";
 
-class Node implements INode {
+class MyNode extends Node {
   public readonly ports: Ports;
 
   constructor() {
+    super();
     this.ports = {};
   }
 
   /* tslint:disable:no-empty */
-  public send(inputs: Inputs) {
+  protected process(inputs: Inputs) {
   }
 }
 
@@ -24,8 +26,8 @@ describe("OutPort", function () {
     let inPort: InPort<number>;
 
     beforeEach(function () {
-      node1 = new Node();
-      node2 = new Node();
+      node1 = new MyNode();
+      node2 = new MyNode();
       outPort = new OutPort();
       inPort = new InPort(node1);
     });
@@ -40,7 +42,7 @@ describe("OutPort", function () {
       let inPort2: InPort<number>;
 
       beforeEach(function () {
-        node3 = new Node();
+        node3 = new MyNode();
         inPort2 = new InPort(node3);
         outPort.connect(inPort);
       });
@@ -54,8 +56,8 @@ describe("OutPort", function () {
     let inPort: InPort<number>;
 
     beforeEach(function () {
-      node1 = new Node();
-      node2 = new Node();
+      node1 = new MyNode();
+      node2 = new MyNode();
       outPort = new OutPort();
       inPort = new InPort(node1);
       outPort.connect(inPort);
@@ -74,8 +76,8 @@ describe("OutPort", function () {
     let inPort: InPort<number>;
 
     beforeEach(function () {
-      node1 = new Node();
-      node2 = new Node();
+      node1 = new MyNode();
+      node2 = new MyNode();
       outPort = new OutPort();
       inPort = new InPort(node2);
       outPort.connect(inPort);

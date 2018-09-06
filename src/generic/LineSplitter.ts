@@ -1,9 +1,9 @@
-import {INode, InPort, Inputs, OutPort} from "../node";
+import {InPort, Inputs, Node, OutPort} from "../node";
 
 /**
  * Splits input text and sends individual lines to output.
  */
-export class LineSplitter implements INode {
+export class LineSplitter extends Node {
   public readonly ports: {
     in: InPort<string>,
     out: OutPort<string>
@@ -11,13 +11,14 @@ export class LineSplitter implements INode {
   private fragment: string = "";
 
   constructor() {
+    super();
     this.ports = {
       in: new InPort(this),
       out: new OutPort()
     };
   }
 
-  public send(inputs: Inputs, tag?: string): void {
+  protected process(inputs: Inputs, tag?: string): void {
     const text = this.fragment + inputs.get(this.ports.in);
     const lines = text.split("\n");
 
