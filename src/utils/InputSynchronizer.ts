@@ -1,12 +1,13 @@
 import {Inputs} from "../node";
 import {InputBuffer} from "./InputBuffer";
+import {IQuasiNode} from "./IQuasiNode";
 
 type InputSynchronizerCallback = (inputs: Inputs, tag: string) => void;
 
 /**
- * Integrates inputs marked with the same timestamp.
+ * Synchronizes inputs of the same tag into a single Input object.
  */
-export class InputSynchronizer {
+export class InputSynchronizer implements IQuasiNode {
   private readonly callback: InputSynchronizerCallback;
   private readonly buffer: InputBuffer;
 
