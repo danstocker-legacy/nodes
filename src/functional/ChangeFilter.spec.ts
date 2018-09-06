@@ -5,7 +5,7 @@ describe("ChangeFilter", function () {
     it("should initialize ports", function () {
       const changeFilter: ChangeFilter<number> = new ChangeFilter();
       expect(changeFilter.ports.in.node).toBe(changeFilter);
-      expect(changeFilter.ports.out.node).toBe(changeFilter);
+      expect(changeFilter.ports.out).toBeDefined();
     });
   });
 

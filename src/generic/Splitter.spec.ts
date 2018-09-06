@@ -7,8 +7,8 @@ describe("Splitter", function () {
       const splitter: Splitter<number> = new Splitter();
       expect(splitter.ports).toEqual({
         in: new InPort(splitter),
-        out1: new OutPort(splitter),
-        out2: new OutPort(splitter)
+        out1: new OutPort(),
+        out2: new OutPort()
       });
     });
   });

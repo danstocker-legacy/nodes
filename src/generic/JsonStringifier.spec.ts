@@ -5,7 +5,7 @@ describe("JsonStringifier", function () {
     it("should initialize ports", function () {
       const stringifier: JsonStringifier<object> = new JsonStringifier();
       expect(stringifier.ports.in.node).toBe(stringifier);
-      expect(stringifier.ports.out.node).toBe(stringifier);
+      expect(stringifier.ports.out).toBeDefined();
     });
   });
 

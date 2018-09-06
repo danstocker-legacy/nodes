@@ -12,7 +12,7 @@ export class Interval implements INode {
 
   constructor(delay: number) {
     this.ports = {
-      out: new OutPort(this)
+      out: new OutPort()
     };
     this.timer = setInterval(this.onInterval.bind(this), delay);
     this.delay = delay;

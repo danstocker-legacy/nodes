@@ -14,7 +14,7 @@ export class Batcher<T> implements INode {
   constructor(length: number) {
     this.ports = {
       in: new InPort(this),
-      out: new OutPort(this)
+      out: new OutPort()
     };
     this.length = length;
     this.buffer = [];

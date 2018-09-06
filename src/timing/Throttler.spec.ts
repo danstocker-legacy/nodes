@@ -5,7 +5,7 @@ describe("Throttler", function () {
     it("should initialize ports", function () {
       const debouncer: Throttler<any> = new Throttler(1000);
       expect(debouncer.ports.in.node).toBe(debouncer);
-      expect(debouncer.ports.out.node).toBe(debouncer);
+      expect(debouncer.ports.out).toBeDefined();
     });
 
     describe("#send()", function () {

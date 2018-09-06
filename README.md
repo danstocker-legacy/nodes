@@ -140,7 +140,7 @@ class Adder implements INode {
     this.ports = {
       a: new InPort(this),
       b: new InPort(this),
-      sum: new OutPort(this)
+      sum: new OutPort()
     };
   }
 

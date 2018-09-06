@@ -5,7 +5,7 @@ describe("LineSplitter", function () {
     it("should initialize ports", function () {
       const lineSplitter = new LineSplitter();
       expect(lineSplitter.ports.in.node).toBe(lineSplitter);
-      expect(lineSplitter.ports.out.node).toBe(lineSplitter);
+      expect(lineSplitter.ports.out).toBeDefined();
     });
   });
 

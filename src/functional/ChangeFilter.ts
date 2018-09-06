@@ -16,7 +16,7 @@ export class ChangeFilter<T> implements INode {
   constructor(equals?: EqualsCallback<T>) {
     this.ports = {
       in: new InPort(this),
-      out: new OutPort(this)
+      out: new OutPort()
     };
     this.equals = equals;
   }

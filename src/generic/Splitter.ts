@@ -20,7 +20,7 @@ export class Splitter<T> implements INode {
     this.count = count;
     const ports = this.ports;
     for (let i = 1; i <= count; i++) {
-      ports[`out${i}`] = new OutPort(this);
+      ports[`out${i}`] = new OutPort();
     }
   }
 

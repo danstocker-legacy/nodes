@@ -5,7 +5,7 @@ describe("Debouncer", function () {
     it("should initialize ports", function () {
       const debouncer: Debouncer<any> = new Debouncer(1000);
       expect(debouncer.ports.in.node).toBe(debouncer);
-      expect(debouncer.ports.out.node).toBe(debouncer);
+      expect(debouncer.ports.out).toBeDefined();
     });
 
     describe("#send()", function () {

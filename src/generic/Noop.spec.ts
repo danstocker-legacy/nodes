@@ -5,7 +5,7 @@ describe("Noop", function () {
     it("should initialize ports", function () {
       const noop = new Noop();
       expect(noop.ports.in.node).toBe(noop);
-      expect(noop.ports.out.node).toBe(noop);
+      expect(noop.ports.out).toBeDefined();
     });
   });
 

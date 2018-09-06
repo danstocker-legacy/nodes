@@ -13,7 +13,7 @@ export class JsonStringifier<I extends object> implements INode {
   constructor(pretty: boolean = false) {
     this.ports = {
       in: new InPort(this),
-      out: new OutPort(this)
+      out: new OutPort()
     };
     this.pretty = pretty;
   }

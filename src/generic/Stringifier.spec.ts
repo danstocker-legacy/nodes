@@ -5,7 +5,7 @@ describe("Stringifier", function () {
     it("should initialize ports", function () {
       const stringifier: Stringifier<any> = new Stringifier();
       expect(stringifier.ports.in.node).toBe(stringifier);
-      expect(stringifier.ports.out.node).toBe(stringifier);
+      expect(stringifier.ports.out).toBeDefined();
     });
   });
 

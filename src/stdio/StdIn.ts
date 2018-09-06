@@ -10,7 +10,7 @@ export class StdIn implements INode {
 
   constructor() {
     this.ports = {
-      out: new OutPort(this)
+      out: new OutPort()
     };
     process.stdin.on("readable", this.onReadable.bind(this));
   }

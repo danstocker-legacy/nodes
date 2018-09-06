@@ -15,7 +15,7 @@ export class Mapper<I, O> implements INode {
   constructor(callback: MapperCallback<I, O>) {
     this.ports = {
       in: new InPort(this),
-      out: new OutPort(this)
+      out: new OutPort()
     };
     this.callback = callback;
   }

@@ -17,19 +17,6 @@ class Node implements INode {
 }
 
 describe("OutPort", function () {
-  describe("constructor", function () {
-    let node: INode;
-
-    beforeEach(function () {
-      node = new Node();
-    });
-
-    it("should set node property", function () {
-      const port: OutPort<number> = new OutPort(node);
-      expect(port.node).toBe(node);
-    });
-  });
-
   describe("#connect()", function () {
     let node1: INode;
     let node2: INode;
@@ -39,14 +26,13 @@ describe("OutPort", function () {
     beforeEach(function () {
       node1 = new Node();
       node2 = new Node();
-      outPort = new OutPort(node1);
+      outPort = new OutPort();
       inPort = new InPort(node1);
     });
 
     it("should set peer", function () {
       outPort.connect(inPort);
       expect(outPort.peer).toBe(inPort);
-      expect(inPort.peer).toBe(outPort);
     });
 
     describe("when already connected", function () {
@@ -57,11 +43,6 @@ describe("OutPort", function () {
         node3 = new Node();
         inPort2 = new InPort(node3);
         outPort.connect(inPort);
-      });
-
-      it("should disconnect first", function () {
-        outPort.connect(inPort2);
-        expect(inPort.peer).toBeUndefined();
       });
     });
   });
@@ -75,7 +56,7 @@ describe("OutPort", function () {
     beforeEach(function () {
       node1 = new Node();
       node2 = new Node();
-      outPort = new OutPort(node1);
+      outPort = new OutPort();
       inPort = new InPort(node1);
       outPort.connect(inPort);
     });
@@ -83,11 +64,6 @@ describe("OutPort", function () {
     it("should reset peer on self", function () {
       outPort.disconnect();
       expect(outPort.peer).toBeUndefined();
-    });
-
-    it("should reset peer on peer", function () {
-      outPort.disconnect();
-      expect(inPort.peer).toBeUndefined();
     });
   });
 
@@ -100,7 +76,7 @@ describe("OutPort", function () {
     beforeEach(function () {
       node1 = new Node();
       node2 = new Node();
-      outPort = new OutPort(node1);
+      outPort = new OutPort();
       inPort = new InPort(node2);
       outPort.connect(inPort);
     });

@@ -12,7 +12,7 @@ export class Noop<T> implements INode {
   constructor() {
     this.ports = {
       in: new InPort(this),
-      out: new OutPort(this)
+      out: new OutPort()
     };
   }
 

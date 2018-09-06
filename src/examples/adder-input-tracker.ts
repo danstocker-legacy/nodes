@@ -12,7 +12,7 @@ class Adder implements INode {
     this.ports = {
       a: new InPort(this),
       b: new InPort(this),
-      sum: new OutPort(this)
+      sum: new OutPort()
     };
     this.inputTracker = new InputTracker((inputs: Inputs) => {
       const sum = (inputs.get(this.ports.a) || 0) + (inputs.get(this.ports.b) || 0);

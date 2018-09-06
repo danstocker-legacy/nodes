@@ -15,7 +15,7 @@ export class Debouncer<T> implements INode {
   constructor(delay: number) {
     this.ports = {
       in: new InPort(this),
-      out: new OutPort(this)
+      out: new OutPort()
     };
     this.delay = delay;
     this.values = [];

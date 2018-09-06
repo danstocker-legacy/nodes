@@ -5,7 +5,7 @@ describe("Delayer", function () {
     it("should set ports", function () {
       const delayer: Delayer<any> = new Delayer(1000);
       expect(delayer.ports.in.node).toBe(delayer);
-      expect(delayer.ports.out.node).toBe(delayer);
+      expect(delayer.ports.out).toBeDefined();
     });
   });
 

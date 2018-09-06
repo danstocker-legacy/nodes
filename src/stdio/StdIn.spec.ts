@@ -4,7 +4,7 @@ describe("StdIn", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const stdIn = new StdIn();
-      expect(stdIn.ports.out.node).toBe(stdIn);
+      expect(stdIn.ports.out).toBeDefined();
     });
   });
 

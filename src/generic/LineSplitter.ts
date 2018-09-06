@@ -13,7 +13,7 @@ export class LineSplitter implements INode {
   constructor() {
     this.ports = {
       in: new InPort(this),
-      out: new OutPort(this)
+      out: new OutPort()
     };
   }
 

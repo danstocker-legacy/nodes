@@ -15,7 +15,7 @@ export class Tagger<T> implements INode {
   constructor(callback: TaggerCallback<T>) {
     this.ports = {
       in: new InPort(this),
-      out: new OutPort(this)
+      out: new OutPort()
     };
     this.callback = callback;
   }

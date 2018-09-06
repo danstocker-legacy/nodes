@@ -15,7 +15,7 @@ export class Delayer<T> implements INode {
     this.delay = delay;
     this.ports = {
       in: new InPort(this),
-      out: new OutPort(this)
+      out: new OutPort()
     };
   }
 

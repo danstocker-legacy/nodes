@@ -4,7 +4,7 @@ describe("Interval", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const interval: Interval = new Interval(1000);
-      expect(interval.ports.out.node).toBe(interval);
+      expect(interval.ports.out).toBeDefined();
     });
 
     it("should start timer", function () {
