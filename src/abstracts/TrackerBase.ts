@@ -1,8 +1,7 @@
-import {Inputs} from "../node/Inputs";
-import {Node} from "../node/Node";
+import {Inputs, Node} from "../node";
 
 /**
- * Invokes #process with last values on each input port.
+ * Invokes #process() with last values on each input port.
  */
 export abstract class TrackerBase extends Node {
   private readonly inputs: Inputs;
