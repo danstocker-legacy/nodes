@@ -1,4 +1,4 @@
-import {InPort, Inputs, IPort, Node, OutPort} from "../node";
+import {InPort, Inputs, IPort, Node, OutPort} from "../node/index";
 
 /**
  * Forwards input to multiple outputs.

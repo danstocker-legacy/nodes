@@ -1,4 +1,4 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, Node, OutPort} from "../node/index";
 
 /**
  * Splits input text and sends individual lines to output.

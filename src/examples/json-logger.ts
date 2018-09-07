@@ -1,5 +1,6 @@
-import {JsonStringifier, Logger} from "../generic";
+import {Logger} from "../generic";
 import {SuperNode} from "../node";
+import {JsonStringifier} from "../string";
 
 class JsonLogger extends SuperNode {
   constructor() {

@@ -1,4 +1,4 @@
-import {Noop} from "../generic";
+import {Noop} from "../forwarders";
 import {InPort} from "../node";
 import {InputBuffer} from "./InputBuffer";
 

@@ -1,4 +1,4 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, Node, OutPort} from "../node/index";
 
 /**
  * Sends object input to output as JSON string.
