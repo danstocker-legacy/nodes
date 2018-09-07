@@ -1,4 +1,4 @@
-import {InPort, Inputs, Node, OutPort} from "../node/index";
+import {InPort, Inputs, Node, OutPort} from "../node";
 
 /**
  * Sends string representation of input to output.

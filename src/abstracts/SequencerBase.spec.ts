@@ -1,5 +1,4 @@
-import {InPort} from "../node/InPort";
-import {Inputs} from "../node/Inputs";
+import {InPort, Inputs} from "../node";
 import {SequencerBase} from "./SequencerBase";
 
 describe("SequencerBase", function () {

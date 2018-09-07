@@ -1,4 +1,4 @@
-import {InPort, Inputs, Node, OutPort} from "../node/index";
+import {InPort, Inputs, Node, OutPort} from "../node";
 
 /**
  * Sends input to output in batches of a given size.

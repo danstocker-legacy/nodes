@@ -1,5 +1,3 @@
-import {INode} from "./INode";
-
 /**
  * Blueprint for ports.
  */

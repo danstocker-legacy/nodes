@@ -1,4 +1,4 @@
-import {InPort, OutPort} from "../node/index";
+import {InPort, OutPort} from "../node";
 import {Splitter} from "./Splitter";
 
 describe("Splitter", function () {
