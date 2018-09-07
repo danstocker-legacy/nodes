@@ -1,7 +1,7 @@
 import {InPort, Inputs, Node} from "../node";
 import {InputBuffer} from "../utils";
 
-export abstract class InputSyncerNode extends Node {
+export abstract class SyncerBase extends Node {
   private buffer: InputBuffer;
 
   protected constructor() {

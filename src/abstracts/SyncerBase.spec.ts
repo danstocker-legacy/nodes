@@ -1,11 +1,11 @@
 import {InPort} from "../node/InPort";
 import {Inputs} from "../node/Inputs";
-import {InputSyncerNode} from "./InputSyncerNode";
+import {SyncerBase} from "./SyncerBase";
 
-describe("InputSyncerNode", function () {
+describe("SyncerBase", function () {
   const process = jasmine.createSpy();
 
-  class MyNode extends InputSyncerNode {
+  class MyNode extends SyncerBase {
     public ports: {
       a: InPort<number>,
       b: InPort<number>
