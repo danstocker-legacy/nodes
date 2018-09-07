@@ -4,7 +4,7 @@ import {Node} from "../Node";
 /**
  * Invokes #process with last values on each input port.
  */
-export abstract class InputTrackerNode extends Node {
+export abstract class TrackerBase extends Node {
   private readonly inputs: Inputs;
 
   protected constructor() {

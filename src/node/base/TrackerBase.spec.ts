@@ -1,12 +1,12 @@
 import {InPort} from "../InPort";
 import {Inputs} from "../Inputs";
 import {OutPort} from "../OutPort";
-import {InputTrackerNode} from "./InputTrackerNode";
+import {TrackerBase} from "./TrackerBase";
 
-describe("InputTrackerNode", function () {
+describe("TrackerBase", function () {
   const process = jasmine.createSpy();
 
-  class MyNode extends InputTrackerNode {
+  class MyNode extends TrackerBase {
     public ports: {
       a: InPort<number>,
       b: InPort<number>
