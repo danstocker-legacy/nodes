@@ -1,7 +1,7 @@
-import {InPort} from "../InPort";
-import {Inputs} from "../Inputs";
-import {IPort} from "../IPort";
-import {Node} from "../Node";
+import {InPort} from "../node/InPort";
+import {Inputs} from "../node/Inputs";
+import {IPort} from "../node/IPort";
+import {Node} from "../node/Node";
 
 type Sequences = Map<InPort<any>, Array<string>>;
 

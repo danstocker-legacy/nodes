@@ -1,7 +1,5 @@
-import {InputBuffer} from "../../utils";
-import {InPort} from "../InPort";
-import {Inputs} from "../Inputs";
-import {Node} from "../Node";
+import {InPort, Inputs, Node} from "../node";
+import {InputBuffer} from "../utils";
 
 export abstract class InputSyncerNode extends Node {
   private buffer: InputBuffer;

@@ -1,5 +1,5 @@
-import {Inputs} from "../Inputs";
-import {Node} from "../Node";
+import {Inputs} from "../node/Inputs";
+import {Node} from "../node/Node";
 
 /**
  * Invokes #process with last values on each input port.

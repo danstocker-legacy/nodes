@@ -1,6 +1,6 @@
-import {InPort} from "../InPort";
-import {Inputs} from "../Inputs";
-import {OutPort} from "../OutPort";
+import {InPort} from "../node/InPort";
+import {Inputs} from "../node/Inputs";
+import {OutPort} from "../node/OutPort";
 import {TrackerBase} from "./TrackerBase";
 
 describe("TrackerBase", function () {

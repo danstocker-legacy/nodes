@@ -1,5 +1,5 @@
-import {InPort} from "../InPort";
-import {Inputs} from "../Inputs";
+import {InPort} from "../node/InPort";
+import {Inputs} from "../node/Inputs";
 import {InputSyncerNode} from "./InputSyncerNode";
 
 describe("InputSyncerNode", function () {
