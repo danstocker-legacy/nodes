@@ -12,7 +12,7 @@ class MyNode extends Node {
     this.ports = {};
   }
 
-  /* tslint:disable:no-empty */
+  // tslint:disable:no-empty
   protected process(inputs: Inputs) {
   }
 }

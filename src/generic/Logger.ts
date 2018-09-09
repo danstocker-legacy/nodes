@@ -16,7 +16,7 @@ export class Logger extends Node {
   }
 
   protected process(inputs: Inputs, tag?: string): void {
-    /* tslint:disable:no-console */
+    // tslint:disable:no-console
     console.log(inputs.get(this.ports.in));
   }
 }
