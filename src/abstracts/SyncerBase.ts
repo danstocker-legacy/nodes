@@ -1,34 +1,43 @@
-import {InPort, Inputs, Node} from "../node";
-import {InputBuffer} from "../utils";
+import {InPort, Inputs, IPort, Node} from "../node";
 
 export abstract class SyncerBase extends Node {
-  private buffer: InputBuffer;
+  private readonly buffer: Map<string, Inputs>;
+  private count: number;
 
   protected constructor() {
     super();
+    this.buffer = new Map();
+    this.count = 0;
   }
 
-  public send(inputs: Inputs, tag?: string): void {
-    const buffer = this.buffer = this.buffer || new InputBuffer(this.getInPortCount());
+  public send(inputs: Inputs, tag: string): void {
+    const buffer = this.buffer;
+    const count = this.count;
     for (const [port, value] of inputs.entries()) {
-      buffer.setValue(tag, port, value);
-    }
+      // associating value with port and tag
+      let values = buffer.get(tag);
+      if (!values) {
+        buffer.set(tag, values = new Map());
+      }
+      values.set(port, value);
 
-    const completeInputs = buffer.getCompleteInputs();
-    if (completeInputs) {
-      buffer.deleteInputs(tag);
-      this.process(completeInputs, tag);
-    }
-  }
-
-  private getInPortCount(): number {
-    const ports = this.ports;
-    let result = 0;
-    for (const name in ports) {
-      if (ports[name] instanceof InPort) {
-        result++;
+      if (values.size === count) {
+        // got all inputs for current tag
+        buffer.delete(tag);
+        this.process(values, tag);
       }
     }
-    return result;
+  }
+
+  protected onPortOpen<T>(name: string, port: IPort<T>): void {
+    if (port instanceof InPort) {
+      this.count++;
+    }
+  }
+
+  protected onPortClose<T>(name: string, port: IPort<T>): void {
+    if (port instanceof InPort) {
+      this.count--;
+    }
   }
 }

@@ -6,4 +6,3 @@ export * from "./io";
 export * from "./node";
 export * from "./string";
 export * from "./timing";
-export * from "./utils";
