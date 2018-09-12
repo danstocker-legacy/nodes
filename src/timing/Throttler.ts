@@ -14,10 +14,8 @@ export class Throttler<T> extends Node {
 
   constructor(delay: number) {
     super();
-    this.ports = {
-      in: new InPort(this),
-      out: new OutPort()
-    };
+    this.openPort("in", new InPort(this));
+    this.openPort("out", new OutPort());
     this.delay = delay;
     this.values = [];
   }

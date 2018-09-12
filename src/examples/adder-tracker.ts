@@ -9,11 +9,9 @@ class Adder extends TrackerBase {
 
   constructor() {
     super();
-    this.ports = {
-      a: new InPort(this),
-      b: new InPort(this),
-      sum: new OutPort()
-    };
+    this.openPort("a", new InPort(this));
+    this.openPort("b", new InPort(this));
+    this.openPort("sum", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {

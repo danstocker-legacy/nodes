@@ -10,9 +10,7 @@ export class Logger extends Node {
 
   constructor() {
     super();
-    this.ports = {
-      in: new InPort<any>(this)
-    };
+    this.openPort("in", new InPort(this));
   }
 
   protected process(inputs: Inputs, tag?: string): void {

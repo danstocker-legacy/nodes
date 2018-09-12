@@ -11,10 +11,8 @@ export class Stringifier<I> extends Node {
 
   constructor() {
     super();
-    this.ports = {
-      in: new InPort(this),
-      out: new OutPort()
-    };
+    this.openPort("in", new InPort(this));
+    this.openPort("out", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {

@@ -12,10 +12,8 @@ export class JsonStringifier<I extends object> extends Node {
 
   constructor(pretty: boolean = false) {
     super();
-    this.ports = {
-      in: new InPort(this),
-      out: new OutPort()
-    };
+    this.openPort("in", new InPort(this));
+    this.openPort("out", new OutPort());
     this.pretty = pretty;
   }
 

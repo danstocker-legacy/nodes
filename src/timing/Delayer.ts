@@ -14,10 +14,8 @@ export class Delayer<T> extends Node {
   constructor(delay: number) {
     super();
     this.delay = delay;
-    this.ports = {
-      in: new InPort(this),
-      out: new OutPort()
-    };
+    this.openPort("in", new InPort(this));
+    this.openPort("out", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {

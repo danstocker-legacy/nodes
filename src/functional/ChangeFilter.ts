@@ -15,10 +15,8 @@ export class ChangeFilter<T> extends Node {
 
   constructor(equals?: EqualsCallback<T>) {
     super();
-    this.ports = {
-      in: new InPort(this),
-      out: new OutPort()
-    };
+    this.openPort("in", new InPort(this));
+    this.openPort("out", new OutPort());
     this.equals = equals;
   }
 

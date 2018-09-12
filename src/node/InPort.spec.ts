@@ -9,7 +9,6 @@ class MyNode extends Node {
 
   constructor() {
     super();
-    this.ports = {};
   }
 
   // tslint:disable:no-empty

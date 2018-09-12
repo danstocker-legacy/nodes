@@ -10,9 +10,7 @@ export class StdErr extends Node {
 
   constructor() {
     super();
-    this.ports = {
-      in: new InPort(this)
-    };
+    this.openPort("in", new InPort(this));
   }
 
   protected process(inputs: Inputs): void {

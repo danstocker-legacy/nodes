@@ -12,9 +12,7 @@ export class Interval extends Node {
 
   constructor(delay: number) {
     super();
-    this.ports = {
-      out: new OutPort()
-    };
+    this.openPort("out", new OutPort());
     this.timer = setInterval(this.onInterval.bind(this), delay);
     this.delay = delay;
   }

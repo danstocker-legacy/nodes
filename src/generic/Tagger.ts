@@ -14,10 +14,8 @@ export class Tagger<T> extends Node {
 
   constructor(callback: TaggerCallback<T>) {
     super();
-    this.ports = {
-      in: new InPort(this),
-      out: new OutPort()
-    };
+    this.openPort("in", new InPort(this));
+    this.openPort("out", new OutPort());
     this.callback = callback;
   }
 

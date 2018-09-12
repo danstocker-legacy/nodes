@@ -15,13 +15,10 @@ export class Splitter<T> extends Node {
    */
   constructor(count: number = 2) {
     super();
-    this.ports = {
-      in: new InPort(this)
-    };
+    this.openPort("in", new InPort(this));
     this.count = count;
-    const ports = this.ports;
     for (let i = 1; i <= count; i++) {
-      ports[`out${i}`] = new OutPort();
+      this.openPort(`out${i}`, new OutPort());
     }
   }
 

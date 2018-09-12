@@ -12,15 +12,20 @@ describe("Node", function () {
 
     constructor() {
       super();
-      this.ports = {
-        foo: new InPort(this)
-      };
+      this.openPort("foo", new InPort(this));
     }
 
     protected process(inputs: Inputs, tag?: string): void {
       process(inputs, tag);
     }
   }
+
+  describe("constructor", function () {
+    it("should initialize ports property", function () {
+      const node = new MyNode();
+      expect(node.ports).toBeDefined();
+    });
+  });
 
   describe("#send()", function () {
     let node: MyNode;
