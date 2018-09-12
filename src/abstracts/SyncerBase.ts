@@ -1,4 +1,4 @@
-import {InPort, Inputs, IPort, Node, Ports} from "../node";
+import {Inputs, IPort, Node, Ports} from "../node";
 
 /**
  * Pre-processes inputs, releasing only complete input sets to #process().
@@ -30,13 +30,13 @@ export abstract class SyncerBase extends Node {
     }
   }
 
-  protected onPortOpen<T>(name: string, port: IPort<T>, ports: Ports): void {
+  protected onPortOpen(name: string, port: IPort<any>, ports: Ports): void {
     if (ports === this.in) {
       this.count++;
     }
   }
 
-  protected onPortClose<T>(name: string, port: IPort<T>, ports: Ports): void {
+  protected onPortClose(name: string, port: IPort<any>, ports: Ports): void {
     if (ports === this.in) {
       this.count--;
     }

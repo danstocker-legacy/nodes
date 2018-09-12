@@ -7,14 +7,14 @@ describe("SequencerBase", function () {
   class Sequencer extends SequencerBase {
     public readonly in: {
       ref: InPort<string>,
-      in1: InPort<number>,
-      in2: InPort<number>
+      1: InPort<number>,
+      2: InPort<number>
     };
 
     constructor() {
       super();
-      this.openInPort("in1", new InPort(this));
-      this.openInPort("in2", new InPort(this));
+      this.openInPort("1", new InPort(this));
+      this.openInPort("2", new InPort(this));
       this.openInPort("ref", new InPort(this));
     }
 
@@ -49,7 +49,7 @@ describe("SequencerBase", function () {
 
       it("should not invoke #process()", function () {
         process.calls.reset();
-        node.send(new Map([[node.in.in1, 1]]), "2");
+        node.send(new Map([[node.in[1], 1]]), "2");
         expect(process).not.toHaveBeenCalled();
       });
     });
@@ -59,16 +59,16 @@ describe("SequencerBase", function () {
         node.send(new Map([[node.in.ref, null]]), "1");
         node.send(new Map([[node.in.ref, null]]), "2");
         node.send(new Map([[node.in.ref, null]]), "3");
-        node.send(new Map([[node.in.in1, 2]]), "2");
+        node.send(new Map([[node.in[1], 2]]), "2");
       });
 
       it("should invoke #process() on cached inputs", function () {
         process.calls.reset();
-        node.send(new Map([[node.in.in1, 1]]), "1");
+        node.send(new Map([[node.in[1], 1]]), "1");
         const args = process.calls.allArgs();
         expect(args.length).toBe(2);
-        expect(args[0]).toEqual([new Map([[node.in.in1, 1]]), "1"]);
-        expect(args[1]).toEqual([new Map([[node.in.in1, 2]]), "2"]);
+        expect(args[0]).toEqual([new Map([[node.in[1], 1]]), "1"]);
+        expect(args[1]).toEqual([new Map([[node.in[1], 2]]), "2"]);
       });
     });
   });

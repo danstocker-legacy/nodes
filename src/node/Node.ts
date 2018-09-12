@@ -61,10 +61,10 @@ export abstract class Node implements INode {
   protected abstract process(inputs: Inputs, tag?: string): void;
 
   // tslint:disable:no-empty
-  protected onPortOpen<T>(name: string, port: IPort<T>, ports: Ports): void {
+  protected onPortOpen(name: string, port: IPort<any>, ports: Ports): void {
   }
 
   // tslint:disable:no-empty
-  protected onPortClose<T>(name: string, port: IPort<T>, ports: Ports): void {
+  protected onPortClose(name: string, port: IPort<any>, ports: Ports): void {
   }
 }
