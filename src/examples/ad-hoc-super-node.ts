@@ -2,10 +2,10 @@ import {JsonStringifier, Logger, SuperNode} from "..";
 
 const jsonStringifier: JsonStringifier<object> = new JsonStringifier(true);
 const logger: Logger = new Logger();
-jsonStringifier.ports.out.connect(logger.ports.in);
+jsonStringifier.out.$.connect(logger.in.$);
 
 const jsonLogger: SuperNode = new SuperNode({
-  in: jsonStringifier.ports.in
-});
+  $: jsonStringifier.in.$
+}, {});
 
-jsonLogger.ports.in.send({foo: "bar"});
+jsonLogger.in.$.send({foo: "bar"});

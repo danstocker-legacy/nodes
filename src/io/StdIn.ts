@@ -4,13 +4,13 @@ import {Node, OutPort} from "../node";
  * Takes input from `process.stdin` and sends it to output.
  */
 export class StdIn extends Node {
-  public readonly ports: {
-    out: OutPort<string | Buffer>
+  public readonly out: {
+    $: OutPort<string | Buffer>
   };
 
   constructor() {
     super();
-    this.openPort("out", new OutPort());
+    this.openPort("$", new OutPort());
     process.stdin.on("readable", this.onReadable.bind(this));
   }
 
@@ -21,7 +21,7 @@ export class StdIn extends Node {
   private onReadable() {
     const chunk = process.stdin.read();
     if (chunk !== null) {
-      this.ports.out.send(chunk, String(+new Date()));
+      this.out.$.send(chunk, String(+new Date()));
     }
   }
 }

@@ -4,8 +4,8 @@ describe("ChangeFilter", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const changeFilter: ChangeFilter<number> = new ChangeFilter();
-      expect(changeFilter.ports.in.node).toBe(changeFilter);
-      expect(changeFilter.ports.out).toBeDefined();
+      expect(changeFilter.in.$.node).toBe(changeFilter);
+      expect(changeFilter.out.$).toBeDefined();
     });
   });
 
@@ -14,22 +14,22 @@ describe("ChangeFilter", function () {
 
     beforeEach(function () {
       changeFilter = new ChangeFilter();
-      changeFilter.send(new Map([[changeFilter.ports.in, 5]]));
+      changeFilter.send(new Map([[changeFilter.in.$, 5]]));
     });
 
     describe("when sending same value", function () {
       it("should not pass value to output", function () {
-        spyOn(changeFilter.ports.out, "send");
-        changeFilter.send(new Map([[changeFilter.ports.in, 5]]));
-        expect(changeFilter.ports.out.send).not.toHaveBeenCalled();
+        spyOn(changeFilter.out.$, "send");
+        changeFilter.send(new Map([[changeFilter.in.$, 5]]));
+        expect(changeFilter.out.$.send).not.toHaveBeenCalled();
       });
     });
 
     describe("when sending different value", function () {
       it("should pass value to output", function () {
-        spyOn(changeFilter.ports.out, "send");
-        changeFilter.send(new Map([[changeFilter.ports.in, 6]]));
-        expect(changeFilter.ports.out.send)
+        spyOn(changeFilter.out.$, "send");
+        changeFilter.send(new Map([[changeFilter.in.$, 6]]));
+        expect(changeFilter.out.$.send)
         .toHaveBeenCalledWith(6, undefined);
       });
     });
@@ -37,22 +37,22 @@ describe("ChangeFilter", function () {
     describe("with custom equals", function () {
       beforeEach(function () {
         changeFilter = new ChangeFilter((a, b) => (a % 2) === (b % 2));
-        changeFilter.send(new Map([[changeFilter.ports.in, 5]]));
+        changeFilter.send(new Map([[changeFilter.in.$, 5]]));
       });
 
       describe("when sending equivalent value", function () {
         it("should not pass value to output", function () {
-          spyOn(changeFilter.ports.out, "send");
-          changeFilter.send(new Map([[changeFilter.ports.in, 7]]));
-          expect(changeFilter.ports.out.send).not.toHaveBeenCalled();
+          spyOn(changeFilter.out.$, "send");
+          changeFilter.send(new Map([[changeFilter.in.$, 7]]));
+          expect(changeFilter.out.$.send).not.toHaveBeenCalled();
         });
       });
 
       describe("when sending non-equivalent value", function () {
         it("should pass value to output", function () {
-          spyOn(changeFilter.ports.out, "send");
-          changeFilter.send(new Map([[changeFilter.ports.in, 6]]));
-          expect(changeFilter.ports.out.send)
+          spyOn(changeFilter.out.$, "send");
+          changeFilter.send(new Map([[changeFilter.in.$, 6]]));
+          expect(changeFilter.out.$.send)
           .toHaveBeenCalledWith(6, undefined);
         });
       });

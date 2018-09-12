@@ -4,8 +4,8 @@ import {Node, OutPort} from "../node";
  * Outputs `null` at intervals.
  */
 export class Interval extends Node {
-  public readonly ports: {
-    out: OutPort<null>
+  public readonly out: {
+    $: OutPort<null>
   };
   public readonly timer: number; // TODO: How coe not NodeJS.Timer?
   private readonly delay: number;
@@ -14,7 +14,7 @@ export class Interval extends Node {
     super();
     this.timer = setInterval(this.onInterval.bind(this), delay);
     this.delay = delay;
-    this.openPort("out", new OutPort());
+    this.openPort("$", new OutPort());
   }
 
   protected process() {
@@ -22,6 +22,6 @@ export class Interval extends Node {
   }
 
   private onInterval(): void {
-    this.ports.out.send(null, String(+new Date()));
+    this.out.$.send(null, String(+new Date()));
   }
 }

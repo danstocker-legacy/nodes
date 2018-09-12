@@ -7,11 +7,18 @@ import {Ports} from "./Ports";
  * that orchestrate their sub-node components.
  */
 export class SuperNode extends Node {
-  public readonly ports: Ports;
-
-  constructor(ports: Ports) {
+  constructor(inPorts?: Ports, outPorts?: Ports) {
     super();
-    this.ports = ports;
+    if (inPorts) {
+      // tslint:disable:forin
+      for (const name in inPorts) {
+        this.openPort(name, inPorts[name]);
+      }
+      // tslint:disable:forin
+      for (const name in outPorts) {
+        this.openPort(name, outPorts[name]);
+      }
+    }
   }
 
   protected process() {

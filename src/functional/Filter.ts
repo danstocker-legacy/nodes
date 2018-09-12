@@ -6,24 +6,25 @@ type FilterCallback<T> = (next: T, port: InPort<T>, node: INode) => boolean;
  * Outputs only those inputs that satisfy the specified filter callback.
  */
 export class Filter<T> extends Node {
-  public readonly ports: {
-    in: InPort<T>,
-    out: OutPort<T>
+  public readonly in: {
+    $: InPort<T>
+  };
+  public readonly out: {
+    $: OutPort<T>
   };
   private readonly callback: FilterCallback<T>;
 
   constructor(callback: FilterCallback<T>) {
     super();
     this.callback = callback;
-    this.openPort("in", new InPort(this));
-    this.openPort("out", new OutPort());
+    this.openPort("$", new InPort(this));
+    this.openPort("$", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {
-    const ports = this.ports;
-    const value = inputs.get(ports.in);
-    if (this.callback(value, ports.in, this)) {
-      this.ports.out.send(value, tag);
+    const value = inputs.get(this.in.$);
+    if (this.callback(value, this.in.$, this)) {
+      this.out.$.send(value, tag);
     }
   }
 }

@@ -1,9 +1,11 @@
 import {InPort, Inputs, Logger, OutPort, TrackerBase} from "..";
 
 class Adder extends TrackerBase {
-  public readonly ports: {
+  public readonly in: {
     a: InPort<number>,
-    b: InPort<number>,
+    b: InPort<number>
+  };
+  public readonly out: {
     sum: OutPort<number>
   };
 
@@ -15,17 +17,17 @@ class Adder extends TrackerBase {
   }
 
   protected process(inputs: Inputs, tag?: string): void {
-    const sum = (inputs.get(this.ports.a) || 0) + (inputs.get(this.ports.b) || 0);
-    this.ports.sum.send(sum);
+    const sum = (inputs.get(this.in.a) || 0) + (inputs.get(this.in.b) || 0);
+    this.out.sum.send(sum);
   }
 }
 
 const adder: Adder = new Adder();
 const logger: Logger = new Logger();
 
-adder.ports.sum.connect(logger.ports.in);
+adder.out.sum.connect(logger.in.$);
 
-adder.ports.a.send(1); // 1+0=1
-adder.ports.b.send(1); // 1+1=2
-adder.ports.a.send(2); // 2+1=3
-adder.ports.b.send(2); // 2+2=4
+adder.in.a.send(1); // 1+0=1
+adder.in.b.send(1); // 1+1=2
+adder.in.a.send(2); // 2+1=3
+adder.in.b.send(2); // 2+2=4

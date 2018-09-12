@@ -1,11 +1,13 @@
-import {InPort, Inputs, IPort, Node} from "../node";
+import {InPort, Inputs, IPort, Node, OutPort} from "../node";
 
 type Sequences = Map<InPort<any>, Array<string>>;
 
 export abstract class SequencerBase extends Node {
-  public readonly ports: {
-    ref: InPort<string>,
-    [key: string]: IPort<any>
+  public readonly in: {
+    ref: InPort<string>
+  };
+  public readonly out: {
+    [key: string]: OutPort<any>
   };
   private readonly buffer: Map<InPort<any>, Map<string, any>>;
   private readonly sequences: Sequences;
@@ -19,7 +21,7 @@ export abstract class SequencerBase extends Node {
   public send(inputs: Inputs, tag: string): void {
     const sequences = this.sequences;
     for (const [port, value] of inputs.entries()) {
-      if (port === this.ports.ref) {
+      if (port === this.in.ref) {
         // value was sent to reference port
         // adding tag to all ports
         for (const tags of sequences.values()) {
@@ -43,7 +45,7 @@ export abstract class SequencerBase extends Node {
   }
 
   protected onPortOpen<T>(name: string, port: IPort<T>): void {
-    if (port instanceof InPort && port !== this.ports.ref) {
+    if (port instanceof InPort && port !== this.in.ref) {
       this.sequences.set(port as InPort<T>, []);
     }
   }

@@ -7,8 +7,8 @@ describe("Mapper", function () {
 
     it("should initialize ports", function () {
       const mapper: Mapper<any, any> = new Mapper(cb);
-      expect(mapper.ports.in.node).toBe(mapper);
-      expect(mapper.ports.out).toBeDefined();
+      expect(mapper.in.$.node).toBe(mapper);
+      expect(mapper.out.$).toBeDefined();
     });
   });
 
@@ -23,17 +23,17 @@ describe("Mapper", function () {
     it("should invoke callback", function () {
       const cb = jasmine.createSpy();
       mapper = new Mapper(cb);
-      noop.ports.out.connect(mapper.ports.in);
-      noop.send(new Map([[noop.ports.in, 5]]));
-      expect(cb).toHaveBeenCalledWith(5, mapper.ports.in, mapper);
+      noop.out.$.connect(mapper.in.$);
+      noop.send(new Map([[noop.in.$, 5]]));
+      expect(cb).toHaveBeenCalledWith(5, mapper.in.$, mapper);
     });
 
     it("should send value to output port", function () {
       mapper = new Mapper((next) => "_" + next);
-      noop.ports.out.connect(mapper.ports.in);
-      spyOn(mapper.ports.out, "send");
-      noop.send(new Map([[noop.ports.in, 5]]));
-      expect(mapper.ports.out.send).toHaveBeenCalledWith("_5", undefined);
+      noop.out.$.connect(mapper.in.$);
+      spyOn(mapper.out.$, "send");
+      noop.send(new Map([[noop.in.$, 5]]));
+      expect(mapper.out.$.send).toHaveBeenCalledWith("_5", undefined);
     });
   });
 });

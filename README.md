@@ -99,9 +99,9 @@ const logger: Logger = new Logger();
 const stdIn: StdIn = new StdIn();
 const mapper: Mapper<string, number> = new Mapper((line) => line.length);
 const lineSplitter: LineSplitter = new LineSplitter();
-stdIn.ports.out.connect(lineSplitter.ports.in);
-lineSplitter.ports.out.connect(mapper.ports.in);
-mapper.ports.out.connect(logger.ports.in);
+stdIn.out.$.connect(lineSplitter.in.$);
+lineSplitter.out.$.connect(mapper.in.$);
+mapper.out.$.connect(logger.in.$);
 ```
 
 ### Static vs. dynamic graph
@@ -128,9 +128,11 @@ The following example implements addition of two numeric inputs.
 import {InPort, Inputs, Logger, Node, OutPort} from "@kwaia/nodes";
 
 class Adder extends Node {
-  public readonly ports: {
+  public readonly in: {
     a: InPort<number>,
-    b: InPort<number>,
+    b: InPort<number>
+  };
+  public readonly out: {
     sum: OutPort<number>
   };
   private a: number;
@@ -144,25 +146,25 @@ class Adder extends Node {
   }
 
   protected process(inputs: Inputs, tag?: string): void {
-    if (inputs.has(this.ports.a)) {
-      this.a = inputs.get(this.ports.a);
+    if (inputs.has(this.in.a)) {
+      this.a = inputs.get(this.in.a);
     }
-    if (inputs.has(this.ports.b)) {
-      this.b = inputs.get(this.ports.b);
+    if (inputs.has(this.in.b)) {
+      this.b = inputs.get(this.in.b);
     }
-    this.ports.sum.send((this.a || 0) + (this.b || 0), tag);
+    this.out.sum.send((this.a || 0) + (this.b || 0), tag);
   }
 }
 
 const adder: Adder = new Adder();
 const logger: Logger = new Logger();
 
-adder.ports.sum.connect(logger.ports.in);
+adder.out.sum.connect(logger.in.$);
 
-adder.ports.a.send(1); // 1+0=1
-adder.ports.b.send(1); // 1+1=2
-adder.ports.a.send(2); // 2+1=3
-adder.ports.b.send(2); // 2+2=4
+adder.in.a.send(1); // 1+0=1
+adder.in.b.send(1); // 1+1=2
+adder.in.a.send(2); // 2+1=3
+adder.in.b.send(2); // 2+2=4
 ```
 
 Creating an ad-hoc super-node
@@ -182,13 +184,13 @@ import {JsonStringifier, Logger, SuperNode} from "@kwaia/nodes";
 
 const jsonStringifier: JsonStringifier<object> = new JsonStringifier(true);
 const logger: Logger = new Logger();
-jsonStringifier.ports.out.connect(logger.ports.in);
+jsonStringifier.out.$.connect(logger.in.$);
 
 const jsonLogger: SuperNode = new SuperNode({
-  in: jsonStringifier.ports.in
+  in: jsonStringifier.in.$
 });
 
-jsonLogger.ports.in.send({foo: "bar"});
+jsonLogger.in.$.send({foo: "bar"});
 ```
 
 When creating ad-hoc super-nodes, the developer must make sure that child 
@@ -219,16 +221,16 @@ class JsonLogger extends SuperNode {
   constructor() {
     const jsonStringifier: JsonStringifier<object> = new JsonStringifier(true);
     const logger: Logger = new Logger();
-    jsonStringifier.ports.out.connect(logger.ports.in);
+    jsonStringifier.out.$.connect(logger.in.$);
 
     super({
-      in: jsonStringifier.ports.in
+      in: jsonStringifier.in.$
     });
   }
 }
 
 const jsonLogger: JsonLogger = new JsonLogger();
-jsonLogger.ports.in.send({foo: "bar"});
+jsonLogger.in.$.send({foo: "bar"});
 ```
 
 Debugging a Nodes program

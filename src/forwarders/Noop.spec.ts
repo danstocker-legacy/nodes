@@ -4,8 +4,8 @@ describe("Noop", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const noop = new Noop();
-      expect(noop.ports.in.node).toBe(noop);
-      expect(noop.ports.out).toBeDefined();
+      expect(noop.in.$.node).toBe(noop);
+      expect(noop.out.$).toBeDefined();
     });
   });
 
@@ -18,9 +18,9 @@ describe("Noop", function () {
 
     describe("when ending to send port", function () {
       it("should send value to out port", function () {
-        spyOn(noop.ports.out, "send");
-        noop.send(new Map([[noop.ports.in, 5]]));
-        expect(noop.ports.out.send).toHaveBeenCalledWith(5, undefined);
+        spyOn(noop.out.$, "send");
+        noop.send(new Map([[noop.in.$, 5]]));
+        expect(noop.out.$.send).toHaveBeenCalledWith(5, undefined);
       });
     });
   });

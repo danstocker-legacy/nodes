@@ -4,7 +4,7 @@ describe("Interval", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const interval: Interval = new Interval(1000);
-      expect(interval.ports.out).toBeDefined();
+      expect(interval.out.$).toBeDefined();
     });
 
     it("should start timer", function () {
@@ -40,11 +40,11 @@ describe("Interval", function () {
     });
 
     it("should send null to output", function () {
-      spyOn(interval.ports.out, "send");
+      spyOn(interval.out.$, "send");
       const BuiltInDate = global.Date;
       spyOn(global, "Date").and.callFake(() => new BuiltInDate());
       jasmine.clock().tick(501);
-      expect(interval.ports.out.send).toHaveBeenCalledWith(null, String(+new Date()));
+      expect(interval.out.$.send).toHaveBeenCalledWith(null, String(+new Date()));
     });
   });
 });

@@ -1,18 +1,16 @@
-import {Logger} from "../generic";
-import {SuperNode} from "../node";
-import {JsonStringifier} from "../string";
+import {JsonStringifier, Logger, SuperNode} from "..";
 
 class JsonLogger extends SuperNode {
   constructor() {
     const jsonStringifier: JsonStringifier<object> = new JsonStringifier(true);
     const logger: Logger = new Logger();
-    jsonStringifier.ports.out.connect(logger.ports.in);
+    jsonStringifier.out.$.connect(logger.in.$);
 
     super({
-      in: jsonStringifier.ports.in
-    });
+      $: jsonStringifier.in.$
+    }, {});
   }
 }
 
 const jsonLogger: JsonLogger = new JsonLogger();
-jsonLogger.ports.in.send({foo: "bar"});
+jsonLogger.in.$.send({foo: "bar"});

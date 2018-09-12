@@ -4,7 +4,7 @@ describe("Logger", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const logger: Logger = new Logger();
-      expect(logger.ports.in.node).toBe(logger);
+      expect(logger.in.$.node).toBe(logger);
     });
   });
 
@@ -17,7 +17,7 @@ describe("Logger", function () {
 
     it("should pass value to console.log", function () {
       spyOn(console, "log");
-      logger.send(new Map([[logger.ports.in, 5]]));
+      logger.send(new Map([[logger.in.$, 5]]));
       // tslint:disable:no-console
       expect(console.log).toHaveBeenCalledWith(5);
     });

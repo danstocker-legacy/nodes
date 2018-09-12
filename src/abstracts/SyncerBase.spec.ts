@@ -5,7 +5,7 @@ describe("SyncerBase", function () {
   const process = jasmine.createSpy();
 
   class MyNode extends SyncerBase {
-    public ports: {
+    public in: {
       a: InPort<number>,
       b: InPort<number>
     };
@@ -31,31 +31,31 @@ describe("SyncerBase", function () {
     describe("when there are no complete input sets", function () {
       it("should not invoke #process()", function () {
         process.calls.reset();
-        node.send(new Map([[node.ports.a, 5]]), "1");
+        node.send(new Map([[node.in.a, 5]]), "1");
         expect(process).not.toHaveBeenCalled();
 
         process.calls.reset();
-        node.send(new Map([[node.ports.b, 4]]), "2");
+        node.send(new Map([[node.in.b, 4]]), "2");
         expect(process).not.toHaveBeenCalled();
       });
     });
 
     describe("on completing an input set", function () {
       beforeEach(function () {
-        node.send(new Map([[node.ports.a, 5]]), "1");
-        node.send(new Map([[node.ports.b, 4]]), "2");
+        node.send(new Map([[node.in.a, 5]]), "1");
+        node.send(new Map([[node.in.b, 4]]), "2");
       });
 
       it("should invoke #process() with complete input set", function () {
         process.calls.reset();
-        node.send(new Map([[node.ports.a, 3]]), "2");
+        node.send(new Map([[node.in.a, 3]]), "2");
         expect(process).toHaveBeenCalledWith(
-          new Map([[node.ports.a, 3], [node.ports.b, 4]]), "2");
+          new Map([[node.in.a, 3], [node.in.b, 4]]), "2");
 
         process.calls.reset();
-        node.send(new Map([[node.ports.b, 2]]), "1");
+        node.send(new Map([[node.in.b, 2]]), "1");
         expect(process).toHaveBeenCalledWith(
-          new Map([[node.ports.a, 5], [node.ports.b, 2]]), "1");
+          new Map([[node.in.a, 5], [node.in.b, 2]]), "1");
       });
     });
   });

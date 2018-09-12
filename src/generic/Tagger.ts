@@ -6,22 +6,24 @@ type TaggerCallback<T> = (value: T, tag?: string) => string;
  * Forwards input to output with the tag changed.
  */
 export class Tagger<T> extends Node {
-  public readonly ports: {
-    in: InPort<T>,
-    out: OutPort<T>
+  public readonly in: {
+    $: InPort<T>
+  };
+  public readonly out: {
+    $: OutPort<T>
   };
   private readonly callback: TaggerCallback<T>;
 
   constructor(callback: TaggerCallback<T>) {
     super();
     this.callback = callback;
-    this.openPort("in", new InPort(this));
-    this.openPort("out", new OutPort());
+    this.openPort("$", new InPort(this));
+    this.openPort("$", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {
-    const value = inputs.get(this.ports.in);
+    const value = inputs.get(this.in.$);
     tag = this.callback(value, tag);
-    this.ports.out.send(value, tag);
+    this.out.$.send(value, tag);
   }
 }

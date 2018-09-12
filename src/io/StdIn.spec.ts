@@ -4,7 +4,7 @@ describe("StdIn", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const stdIn = new StdIn();
-      expect(stdIn.ports.out).toBeDefined();
+      expect(stdIn.out.$).toBeDefined();
     });
   });
 
@@ -31,11 +31,11 @@ describe("StdIn", function () {
 
     it("should send chunk to output", function () {
       spyOn(process.stdin, "read").and.returnValue("foo");
-      spyOn(stdIn.ports.out, "send");
+      spyOn(stdIn.out.$, "send");
       const BuiltInDate = global.Date;
       spyOn(global, "Date").and.callFake(() => new BuiltInDate());
       process.stdin.emit("readable");
-      expect(stdIn.ports.out.send).toHaveBeenCalledWith("foo", String(+new Date()));
+      expect(stdIn.out.$.send).toHaveBeenCalledWith("foo", String(+new Date()));
     });
   });
 });

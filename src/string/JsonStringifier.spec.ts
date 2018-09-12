@@ -4,8 +4,8 @@ describe("JsonStringifier", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const stringifier: JsonStringifier<object> = new JsonStringifier();
-      expect(stringifier.ports.in.node).toBe(stringifier);
-      expect(stringifier.ports.out).toBeDefined();
+      expect(stringifier.in.$.node).toBe(stringifier);
+      expect(stringifier.out).toBeDefined();
     });
   });
 
@@ -18,9 +18,9 @@ describe("JsonStringifier", function () {
       });
 
       it("should send stringified value to out port", function () {
-        spyOn(stringifier.ports.out, "send");
-        stringifier.send(new Map([[stringifier.ports.in, {foo: "bar"}]]));
-        expect(stringifier.ports.out.send)
+        spyOn(stringifier.out.$, "send");
+        stringifier.send(new Map([[stringifier.in.$, {foo: "bar"}]]));
+        expect(stringifier.out.$.send)
         .toHaveBeenCalledWith("{\"foo\":\"bar\"}", undefined);
       });
     });
@@ -31,9 +31,9 @@ describe("JsonStringifier", function () {
       });
 
       it("should send pretty stringified value to out port", function () {
-        spyOn(stringifier.ports.out, "send");
-        stringifier.send(new Map([[stringifier.ports.in, {foo: "bar"}]]));
-        expect(stringifier.ports.out.send)
+        spyOn(stringifier.out.$, "send");
+        stringifier.send(new Map([[stringifier.in.$, {foo: "bar"}]]));
+        expect(stringifier.out.$.send)
         .toHaveBeenCalledWith("{\n  \"foo\": \"bar\"\n}", undefined);
       });
     });

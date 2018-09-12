@@ -1,12 +1,22 @@
-import {Ports} from "./Ports";
+import {Noop} from "../forwarders";
 import {SuperNode} from "./SuperNode";
 
 describe("SuperNode", function () {
   describe("constructor", function () {
     it("should set ports", function () {
-      const ports: Ports = {};
-      const superNode: SuperNode = new SuperNode(ports);
-      expect(superNode.ports).toBe(ports);
+      const node1 = new Noop<number>();
+      const node2 = new Noop<number>();
+      const superNode = new SuperNode({
+        $: node1.in.$
+      }, {
+        $: node2.out.$
+      });
+      expect(superNode.in).toEqual({
+        $: node1.in.$
+      });
+      expect(superNode.out).toEqual({
+        $: node2.out.$
+      });
     });
   });
 
@@ -14,7 +24,7 @@ describe("SuperNode", function () {
     let superNode: SuperNode;
 
     beforeEach(function () {
-      superNode = new SuperNode({});
+      superNode = new SuperNode({}, {});
     });
 
     it("should throw", function () {

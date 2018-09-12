@@ -4,8 +4,8 @@ describe("Throttler", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const debouncer: Throttler<any> = new Throttler(1000);
-      expect(debouncer.ports.in.node).toBe(debouncer);
-      expect(debouncer.ports.out).toBeDefined();
+      expect(debouncer.in.$.node).toBe(debouncer);
+      expect(debouncer.out.$).toBeDefined();
     });
 
     describe("#send()", function () {
@@ -22,14 +22,14 @@ describe("Throttler", function () {
 
       describe("after delay", function () {
         it("should pass values to output", function () {
-          spyOn(throttler.ports.out, "send");
-          throttler.send(new Map([[throttler.ports.in, 5]]));
+          spyOn(throttler.out.$, "send");
+          throttler.send(new Map([[throttler.in.$, 5]]));
           jasmine.clock().tick(250);
-          throttler.send(new Map([[throttler.ports.in, 6]]));
+          throttler.send(new Map([[throttler.in.$, 6]]));
           jasmine.clock().tick(249);
-          throttler.send(new Map([[throttler.ports.in, 7]]));
+          throttler.send(new Map([[throttler.in.$, 7]]));
           jasmine.clock().tick(2);
-          expect(throttler.ports.out.send)
+          expect(throttler.out.$.send)
           .toHaveBeenCalledWith([5, 6, 7], undefined);
         });
       });

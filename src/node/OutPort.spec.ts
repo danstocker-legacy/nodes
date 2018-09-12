@@ -3,10 +3,10 @@ import {InPort} from "./InPort";
 import {Inputs} from "./Inputs";
 import {Node} from "./Node";
 import {OutPort} from "./OutPort";
-import {Ports} from "./Ports";
 
 class MyNode extends Node {
-  public readonly ports: Ports;
+  public readonly in: { [key: string]: InPort<any> };
+  public readonly out: { [key: string]: OutPort<any> };
 
   constructor() {
     super();

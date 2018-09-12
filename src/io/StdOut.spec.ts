@@ -4,7 +4,7 @@ describe("StdOut", function () {
   describe("constructor", function () {
     it("should intialize ports", function () {
       const stdOut: StdOut = new StdOut();
-      expect(stdOut.ports.in.node).toBe(stdOut);
+      expect(stdOut.in.$.node).toBe(stdOut);
     });
   });
 
@@ -17,7 +17,7 @@ describe("StdOut", function () {
 
     it("should pass value to stdout", function () {
       spyOn(process.stdout, "write");
-      stdOut.send(new Map([[stdOut.ports.in, "5"]]));
+      stdOut.send(new Map([[stdOut.in.$, "5"]]));
       expect(process.stdout.write).toHaveBeenCalledWith("5");
     });
   });

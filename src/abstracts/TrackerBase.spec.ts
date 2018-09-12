@@ -5,7 +5,7 @@ describe("TrackerBase", function () {
   const process = jasmine.createSpy();
 
   class MyNode extends TrackerBase {
-    public ports: {
+    public in: {
       a: InPort<number>,
       b: InPort<number>
     };
@@ -31,29 +31,29 @@ describe("TrackerBase", function () {
     describe("on first input", function () {
       it("should forward single input", function () {
         process.calls.reset();
-        node.send(new Map([[node.ports.a, 5]]), "1");
-        expect(process).toHaveBeenCalledWith(new Map([[node.ports.a, 5]]), "1");
+        node.send(new Map([[node.in.a, 5]]), "1");
+        expect(process).toHaveBeenCalledWith(new Map([[node.in.a, 5]]), "1");
       });
     });
 
     describe("on subsequent input", function () {
       beforeEach(function () {
-        node.send(new Map([[node.ports.a, 5]]), "1");
+        node.send(new Map([[node.in.a, 5]]), "1");
       });
 
       describe("from same port", function () {
         it("should replace last input", function () {
           process.calls.reset();
-          node.send(new Map([[node.ports.a, 3]]), "2");
-          expect(process).toHaveBeenCalledWith(new Map([[node.ports.a, 3]]), "2");
+          node.send(new Map([[node.in.a, 3]]), "2");
+          expect(process).toHaveBeenCalledWith(new Map([[node.in.a, 3]]), "2");
         });
       });
 
       describe("from different port", function () {
         it("should include last input(s)", function () {
           process.calls.reset();
-          node.send(new Map([[node.ports.b, 4]]), "2");
-          expect(process).toHaveBeenCalledWith(new Map([[node.ports.a, 5], [node.ports.b, 4]]), "2");
+          node.send(new Map([[node.in.b, 4]]), "2");
+          expect(process).toHaveBeenCalledWith(new Map([[node.in.a, 5], [node.in.b, 4]]), "2");
         });
       });
     });

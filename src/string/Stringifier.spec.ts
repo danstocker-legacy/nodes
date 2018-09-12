@@ -4,8 +4,8 @@ describe("Stringifier", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const stringifier: Stringifier<any> = new Stringifier();
-      expect(stringifier.ports.in.node).toBe(stringifier);
-      expect(stringifier.ports.out).toBeDefined();
+      expect(stringifier.in.$.node).toBe(stringifier);
+      expect(stringifier.out.$).toBeDefined();
     });
   });
 
@@ -17,9 +17,9 @@ describe("Stringifier", function () {
     });
 
     it("should send stringified value to out port", function () {
-      spyOn(stringifier.ports.out, "send");
-      stringifier.send(new Map([[stringifier.ports.in, 5]]));
-      expect(stringifier.ports.out.send).toHaveBeenCalledWith("5", undefined);
+      spyOn(stringifier.out.$, "send");
+      stringifier.send(new Map([[stringifier.in.$, 5]]));
+      expect(stringifier.out.$.send).toHaveBeenCalledWith("5", undefined);
     });
   });
 });

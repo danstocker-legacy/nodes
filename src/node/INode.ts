@@ -8,7 +8,8 @@ import {Ports} from "./Ports";
  * 2. How and when inputs are processed and sent to outputs.
  */
 export interface INode {
-  readonly ports: Ports;
+  readonly in: Ports;
+  readonly out: Ports;
 
   send(inputs: Inputs, tag?: string): void;
 }

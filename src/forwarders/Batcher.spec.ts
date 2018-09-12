@@ -4,8 +4,8 @@ describe("Batcher", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const batcher: Batcher<number> = new Batcher(3);
-      expect(batcher.ports.in.node).toBe(batcher);
-      expect(batcher.ports.out).toBeDefined();
+      expect(batcher.in.$.node).toBe(batcher);
+      expect(batcher.out.$).toBeDefined();
     });
 
     it("should set length property", function () {
@@ -23,11 +23,11 @@ describe("Batcher", function () {
 
     describe("when buffer is full", function () {
       it("should pass batch to output", function () {
-        spyOn(batcher.ports.out, "send");
-        batcher.send(new Map([[batcher.ports.in, 1]]));
-        batcher.send(new Map([[batcher.ports.in, 2]]));
-        batcher.send(new Map([[batcher.ports.in, 3]]));
-        expect(batcher.ports.out.send)
+        spyOn(batcher.out.$, "send");
+        batcher.send(new Map([[batcher.in.$, 1]]));
+        batcher.send(new Map([[batcher.in.$, 2]]));
+        batcher.send(new Map([[batcher.in.$, 3]]));
+        expect(batcher.out.$.send)
         .toHaveBeenCalledWith([1, 2, 3], undefined);
       });
     });

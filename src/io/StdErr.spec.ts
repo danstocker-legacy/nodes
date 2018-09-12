@@ -4,7 +4,7 @@ describe("StdErr", function () {
   describe("constructor", function () {
     it("should intialize ports", function () {
       const stdErr: StdErr = new StdErr();
-      expect(stdErr.ports.in.node).toBe(stdErr);
+      expect(stdErr.in.$.node).toBe(stdErr);
     });
   });
 
@@ -17,7 +17,7 @@ describe("StdErr", function () {
 
     it("should pass value to stderr", function () {
       spyOn(process.stderr, "write");
-      stdErr.send(new Map([[stdErr.ports.in, "5"]]));
+      stdErr.send(new Map([[stdErr.in.$, "5"]]));
       expect(process.stderr.write).toHaveBeenCalledWith("5");
     });
   });

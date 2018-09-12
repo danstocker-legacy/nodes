@@ -6,7 +6,7 @@ describe("Node", function () {
   const process = jasmine.createSpy();
 
   class MyNode extends Node {
-    public readonly ports: {
+    public readonly in: {
       foo: InPort<number>
     };
 
@@ -21,9 +21,10 @@ describe("Node", function () {
   }
 
   describe("constructor", function () {
-    it("should initialize ports property", function () {
+    it("should initialize in & out properties", function () {
       const node = new MyNode();
-      expect(node.ports).toBeDefined();
+      expect(node.in).toBeDefined();
+      expect(node.out).toBeDefined();
     });
   });
 
