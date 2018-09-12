@@ -5,10 +5,7 @@ import {Inputs} from "./Inputs";
 import {IPort} from "./IPort";
 import {OutPort} from "./OutPort";
 import {OutPorts} from "./OutPorts";
-
-type Ports = {
-  [key: string]: IPort<any>
-};
+import {Ports} from "./Ports";
 
 export abstract class Node implements INode {
   public readonly in: InPorts;
@@ -69,15 +66,5 @@ export abstract class Node implements INode {
 
   // tslint:disable:no-empty
   protected onPortClose<T>(name: string, port: IPort<T>, ports: Ports): void {
-  }
-
-  private getPorts<T>(port: IPort<T>): Ports {
-    let result: { [key: string]: IPort<T> };
-    if (port instanceof InPort) {
-      result = this.in;
-    } else if (port instanceof OutPort) {
-      result = this.out;
-    }
-    return result;
   }
 }
