@@ -8,16 +8,15 @@ export abstract class SequencerBase extends Node {
     [key: string]: IPort<any>
   };
   private readonly buffer: Map<InPort<any>, Map<string, any>>;
-  private sequences: Sequences;
+  private readonly sequences: Sequences;
 
   protected constructor() {
     super();
     this.buffer = new Map();
+    this.sequences = new Map();
   }
 
   public send(inputs: Inputs, tag: string): void {
-    this.sequences = this.sequences || this.createSequences();
-
     for (const [port, value] of inputs.entries()) {
       if (port === this.ports.ref) {
         // value was sent to reference port
@@ -37,16 +36,16 @@ export abstract class SequencerBase extends Node {
     }
   }
 
-  private createSequences(): Sequences {
-    const inPorts = this.getInPorts();
-    const refPort = this.ports.ref;
-    const result = new Map();
-    for (const port of inPorts) {
-      if (port !== refPort) {
-        result.set(port, []);
-      }
+  protected onPortOpen<T>(name: string, port: IPort<T>): void {
+    if (port instanceof InPort && port !== this.ports.ref) {
+      this.sequences.set(port as InPort<T>, []);
     }
-    return result;
+  }
+
+  protected onPortClose<T>(name: string, port: IPort<T>): void {
+    if (port instanceof InPort) {
+      this.sequences.delete(port as InPort<T>);
+    }
   }
 
   private setInputValue<T>(port: InPort<T>, tag: string, value: T): void {

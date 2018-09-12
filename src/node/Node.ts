@@ -43,28 +43,4 @@ export abstract class Node implements INode {
   // tslint:disable:no-empty
   protected onPortClose<T>(name: string, port: IPort<T>): void {
   }
-
-  /** @deprecated */
-  protected getInPorts(): Array<InPort<any>> {
-    const ports = this.ports;
-    const result = [];
-    for (const name in ports) {
-      if (ports[name] instanceof InPort) {
-        result.push(ports[name]);
-      }
-    }
-    return result;
-  }
-
-  /** @deprecated */
-  protected getOutPorts(): Array<OutPort<any>> {
-    const ports = this.ports;
-    const result = [];
-    for (const name in ports) {
-      if (ports[name] instanceof OutPort) {
-        result.push(ports[name]);
-      }
-    }
-    return result;
-  }
 }
