@@ -17,21 +17,27 @@ export abstract class SequencerBase extends Node {
   }
 
   public send(inputs: Inputs, tag: string): void {
+    const sequences = this.sequences;
     for (const [port, value] of inputs.entries()) {
       if (port === this.ports.ref) {
         // value was sent to reference port
-        this.addTag(tag);
-      }
-      this.setInputValue(port, tag, value);
-    }
+        // adding tag to all ports
+        for (const tags of sequences.values()) {
+          tags.push(tag);
+        }
+      } else {
+        // associating value with port and tag
+        const values = this.getValues(port);
+        const sequence = sequences.get(port);
+        values.set(tag, value);
 
-    for (const port of this.sequences.keys()) {
-      const nextTag = this.getNextTag(port);
-      if (this.hasInputValue(port, nextTag)) {
-        // value on current port for next tag found
-        this.deleteNextTag(port);
-        const value = this.getInputValue(port, nextTag);
-        this.process(new Map([[port, value]]), tag);
+        // releasing next available values on current port
+        while (values.has(sequence[0])) {
+          const nextTag = sequence.shift();
+          const nextValue = values.get(nextTag);
+          values.delete(nextTag);
+          this.process(new Map([[port, nextValue]]), nextTag);
+        }
       }
     }
   }
@@ -48,40 +54,12 @@ export abstract class SequencerBase extends Node {
     }
   }
 
-  private setInputValue<T>(port: InPort<T>, tag: string, value: T): void {
+  private getValues<T>(port: InPort<T>): Map<string, T> {
     const buffer = this.buffer;
     let values = buffer.get(port);
     if (!values) {
       buffer.set(port, values = new Map());
     }
-    values.set(tag, value);
-  }
-
-  private hasInputValue<T>(port: InPort<T>, tag: string): boolean {
-    const values = this.buffer.get(port);
-    return values && values.has(tag);
-  }
-
-  private getInputValue<T>(port: InPort<T>, tag: string): T {
-    const values = this.buffer.get(port);
-    return values && values.get(tag);
-  }
-
-  private addTag(tag: string): void {
-    for (const tags of this.sequences.values()) {
-      tags.push(tag);
-    }
-  }
-
-  private getNextTag<T>(port: InPort<T>): string {
-    const tags = this.sequences.get(port);
-    return tags && tags[0];
-  }
-
-  private deleteNextTag<T>(port: InPort<T>): void {
-    const tags = this.sequences.get(port);
-    if (tags) {
-      tags.shift();
-    }
+    return values;
   }
 }

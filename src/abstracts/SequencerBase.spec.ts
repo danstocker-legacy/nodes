@@ -59,12 +59,16 @@ describe("SequencerBase", function () {
         node.send(new Map([[node.ports.ref, null]]), "1");
         node.send(new Map([[node.ports.ref, null]]), "2");
         node.send(new Map([[node.ports.ref, null]]), "3");
+        node.send(new Map([[node.ports.in1, 2]]), "2");
       });
 
-      it("should invoke #process()", function () {
+      it("should invoke #process() on cached inputs", function () {
         process.calls.reset();
         node.send(new Map([[node.ports.in1, 1]]), "1");
-        expect(process).toHaveBeenCalledWith(new Map([[node.ports.in1, 1]]), "1");
+        const args = process.calls.allArgs();
+        expect(args.length).toBe(2);
+        expect(args[0]).toEqual([new Map([[node.ports.in1, 1]]), "1"]);
+        expect(args[1]).toEqual([new Map([[node.ports.in1, 2]]), "2"]);
       });
     });
   });
