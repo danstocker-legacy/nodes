@@ -18,9 +18,9 @@ export class Splitter<T> extends Node {
   constructor(count: number = 2) {
     super();
     this.count = count;
-    this.openPort("$", new InPort(this));
+    this.openInPort("$", new InPort(this));
     for (let i = 1; i <= count; i++) {
-      this.openPort(`out${i}`, new OutPort());
+      this.openOutPort(`out${i}`, new OutPort());
     }
   }
 

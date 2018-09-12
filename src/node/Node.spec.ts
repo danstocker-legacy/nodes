@@ -12,7 +12,7 @@ describe("Node", function () {
 
     constructor() {
       super();
-      this.openPort("foo", new InPort(this));
+      this.openInPort("foo", new InPort(this));
     }
 
     protected process(inputs: Inputs, tag?: string): void {

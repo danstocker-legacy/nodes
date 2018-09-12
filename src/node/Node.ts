@@ -1,17 +1,13 @@
 import {INode} from "./INode";
 import {InPort} from "./InPort";
+import {InPorts} from "./InPorts";
 import {Inputs} from "./Inputs";
 import {IPort} from "./IPort";
 import {OutPort} from "./OutPort";
+import {OutPorts} from "./OutPorts";
 
 type Ports = {
   [key: string]: IPort<any>
-};
-type InPorts = {
-  [key: string]: InPort<any>
-};
-type OutPorts = {
-  [key: string]: OutPort<any>
 };
 
 export abstract class Node implements INode {
@@ -27,8 +23,8 @@ export abstract class Node implements INode {
     this.process(inputs, tag);
   }
 
-  protected openPort<T>(name: string, port: IPort<T>): void {
-    const ports = this.getPorts(port);
+  protected openInPort<T>(name: string, port: InPort<T>): void {
+    const ports = this.in;
     const portBefore = ports[name];
     if (portBefore) {
       throw new Error(`Port "${name}" already open`);
@@ -37,14 +33,33 @@ export abstract class Node implements INode {
     this.onPortOpen(name, port, ports);
   }
 
-  // protected closePort<T>(name: string, port:IPort<T>): void {
-  //   const portBefore = this.ports[name];
-  //   if (portBefore) {
-  //     const ports = this.getPorts(portBefore);
-  //     delete ports[name];
-  //     this.onPortClose(name, portBefore, ports);
-  //   }
-  // }
+  protected openOutPort<T>(name: string, port: OutPort<T>): void {
+    const ports = this.out;
+    const portBefore = ports[name];
+    if (portBefore) {
+      throw new Error(`Port "${name}" already open`);
+    }
+    ports[name] = port;
+    this.onPortOpen(name, port, ports);
+  }
+
+  protected closeInPort<T>(name: string): void {
+    const ports = this.in;
+    const portBefore = ports[name];
+    if (portBefore) {
+      delete ports[name];
+      this.onPortClose(name, portBefore, ports);
+    }
+  }
+
+  protected closeOutPort<T>(name: string): void {
+    const ports = this.out;
+    const portBefore = ports[name];
+    if (portBefore) {
+      delete ports[name];
+      this.onPortClose(name, portBefore, ports);
+    }
+  }
 
   protected abstract process(inputs: Inputs, tag?: string): void;
 

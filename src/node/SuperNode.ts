@@ -1,5 +1,6 @@
+import {InPorts} from "./InPorts";
 import {Node} from "./Node";
-import {Ports} from "./Ports";
+import {OutPorts} from "./OutPorts";
 
 /**
  * Groups nodes into a single node.
@@ -7,16 +8,16 @@ import {Ports} from "./Ports";
  * that orchestrate their sub-node components.
  */
 export class SuperNode extends Node {
-  constructor(inPorts?: Ports, outPorts?: Ports) {
+  constructor(inPorts?: InPorts, outPorts?: OutPorts) {
     super();
     if (inPorts) {
       // tslint:disable:forin
       for (const name in inPorts) {
-        this.openPort(name, inPorts[name]);
+        this.openInPort(name, inPorts[name]);
       }
       // tslint:disable:forin
       for (const name in outPorts) {
-        this.openPort(name, outPorts[name]);
+        this.openOutPort(name, outPorts[name]);
       }
     }
   }

@@ -18,8 +18,8 @@ export class Debouncer<T> extends Node {
     super();
     this.delay = delay;
     this.values = [];
-    this.openPort("$", new InPort(this));
-    this.openPort("$", new OutPort());
+    this.openInPort("$", new InPort(this));
+    this.openOutPort("$", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {

@@ -140,9 +140,9 @@ class Adder extends Node {
 
   constructor() {
     super();
-    this.openPort("a", new InPort(this));
-    this.openPort("b", new InPort(this));
-    this.openPort("sum", new OutPort());
+    this.openInPort("a", new InPort(this));
+    this.openInPort("b", new InPort(this));
+    this.openOutPort("sum", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {

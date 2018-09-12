@@ -12,8 +12,8 @@ describe("TrackerBase", function () {
 
     constructor() {
       super();
-      this.openPort("a", new InPort(this));
-      this.openPort("b", new InPort(this));
+      this.openInPort("a", new InPort(this));
+      this.openInPort("b", new InPort(this));
     }
 
     public process(inputs: Inputs, tag?: string): void {

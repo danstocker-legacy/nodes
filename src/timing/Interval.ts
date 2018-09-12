@@ -14,7 +14,7 @@ export class Interval extends Node {
     super();
     this.timer = setInterval(this.onInterval.bind(this), delay);
     this.delay = delay;
-    this.openPort("$", new OutPort());
+    this.openOutPort("$", new OutPort());
   }
 
   protected process() {

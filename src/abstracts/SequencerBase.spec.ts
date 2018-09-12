@@ -13,9 +13,9 @@ describe("SequencerBase", function () {
 
     constructor() {
       super();
-      this.openPort("in1", new InPort(this));
-      this.openPort("in2", new InPort(this));
-      this.openPort("ref", new InPort(this));
+      this.openInPort("in1", new InPort(this));
+      this.openInPort("in2", new InPort(this));
+      this.openInPort("ref", new InPort(this));
     }
 
     protected process(inputs: Inputs, tag: string): void {

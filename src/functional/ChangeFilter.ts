@@ -18,8 +18,8 @@ export class ChangeFilter<T> extends Node {
   constructor(equals?: EqualsCallback<T>) {
     super();
     this.equals = equals;
-    this.openPort("$", new InPort(this));
-    this.openPort("$", new OutPort());
+    this.openInPort("$", new InPort(this));
+    this.openOutPort("$", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {

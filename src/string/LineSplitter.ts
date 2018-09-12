@@ -14,8 +14,8 @@ export class LineSplitter extends Node {
 
   constructor() {
     super();
-    this.openPort("$", new InPort(this));
-    this.openPort("$", new OutPort());
+    this.openInPort("$", new InPort(this));
+    this.openOutPort("$", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {

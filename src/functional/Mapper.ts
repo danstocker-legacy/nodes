@@ -17,8 +17,8 @@ export class Mapper<I, O> extends Node {
   constructor(callback: MapperCallback<I, O>) {
     super();
     this.callback = callback;
-    this.openPort("$", new InPort(this));
-    this.openPort("$", new OutPort());
+    this.openInPort("$", new InPort(this));
+    this.openOutPort("$", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {

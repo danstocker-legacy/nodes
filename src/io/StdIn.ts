@@ -10,7 +10,7 @@ export class StdIn extends Node {
 
   constructor() {
     super();
-    this.openPort("$", new OutPort());
+    this.openOutPort("$", new OutPort());
     process.stdin.on("readable", this.onReadable.bind(this));
   }
 

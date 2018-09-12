@@ -17,8 +17,8 @@ export class Batcher<T> extends Node {
     super();
     this.length = length;
     this.buffer = [];
-    this.openPort("$", new InPort(this));
-    this.openPort("$", new OutPort());
+    this.openInPort("$", new InPort(this));
+    this.openOutPort("$", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {

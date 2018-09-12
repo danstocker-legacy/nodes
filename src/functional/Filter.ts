@@ -17,8 +17,8 @@ export class Filter<T> extends Node {
   constructor(callback: FilterCallback<T>) {
     super();
     this.callback = callback;
-    this.openPort("$", new InPort(this));
-    this.openPort("$", new OutPort());
+    this.openInPort("$", new InPort(this));
+    this.openOutPort("$", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {
