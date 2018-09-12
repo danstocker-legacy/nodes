@@ -1,5 +1,8 @@
 import {InPort, Inputs, IPort, Node} from "../node";
 
+/**
+ * Pre-processes inputs, releasing only complete input sets to #process().
+ */
 export abstract class SyncerBase extends Node {
   private readonly buffer: Map<string, Inputs>;
   private count: number;
@@ -13,19 +16,17 @@ export abstract class SyncerBase extends Node {
   public send(inputs: Inputs, tag: string): void {
     const buffer = this.buffer;
     const count = this.count;
-    for (const [port, value] of inputs.entries()) {
-      // associating value with port and tag
-      let values = buffer.get(tag);
-      if (!values) {
-        buffer.set(tag, values = new Map());
-      }
-      values.set(port, value);
+    const values = this.getValues(tag);
 
-      if (values.size === count) {
-        // got all inputs for current tag
-        buffer.delete(tag);
-        this.process(values, tag);
-      }
+    // associating input values with port and tag
+    for (const [port, value] of inputs.entries()) {
+      values.set(port, value);
+    }
+
+    if (values.size === count) {
+      // got all inputs for current tag
+      buffer.delete(tag);
+      this.process(values, tag);
     }
   }
 
@@ -39,5 +40,14 @@ export abstract class SyncerBase extends Node {
     if (port instanceof InPort) {
       this.count--;
     }
+  }
+
+  private getValues(tag: string): Inputs {
+    const buffer = this.buffer;
+    let values = buffer.get(tag);
+    if (!values) {
+      buffer.set(tag, values = new Map());
+    }
+    return values;
   }
 }
