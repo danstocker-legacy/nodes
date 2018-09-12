@@ -15,9 +15,9 @@ export class ChangeFilter<T> extends Node {
 
   constructor(equals?: EqualsCallback<T>) {
     super();
+    this.equals = equals;
     this.openPort("in", new InPort(this));
     this.openPort("out", new OutPort());
-    this.equals = equals;
   }
 
   protected process(inputs: Inputs, tag?: string): void {

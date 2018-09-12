@@ -6,7 +6,7 @@ import {InPort, Inputs, IPort, Node, OutPort} from "../node";
 export class Splitter<T> extends Node {
   public readonly ports: {
     in: InPort<T>,
-    [out: string]: IPort<T>
+    [key: string]: IPort<T>
   };
   private readonly count: number;
 
@@ -15,8 +15,8 @@ export class Splitter<T> extends Node {
    */
   constructor(count: number = 2) {
     super();
-    this.openPort("in", new InPort(this));
     this.count = count;
+    this.openPort("in", new InPort(this));
     for (let i = 1; i <= count; i++) {
       this.openPort(`out${i}`, new OutPort());
     }

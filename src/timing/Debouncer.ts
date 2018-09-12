@@ -14,10 +14,10 @@ export class Debouncer<T> extends Node {
 
   constructor(delay: number) {
     super();
-    this.openPort("in", new InPort(this));
-    this.openPort("out", new OutPort());
     this.delay = delay;
     this.values = [];
+    this.openPort("in", new InPort(this));
+    this.openPort("out", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {

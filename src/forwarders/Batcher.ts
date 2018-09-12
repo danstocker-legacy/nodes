@@ -13,10 +13,10 @@ export class Batcher<T> extends Node {
 
   constructor(length: number) {
     super();
-    this.openPort("in", new InPort(this));
-    this.openPort("out", new OutPort());
     this.length = length;
     this.buffer = [];
+    this.openPort("in", new InPort(this));
+    this.openPort("out", new OutPort());
   }
 
   protected process(inputs: Inputs, tag?: string): void {

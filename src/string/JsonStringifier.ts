@@ -12,9 +12,9 @@ export class JsonStringifier<I extends object> extends Node {
 
   constructor(pretty: boolean = false) {
     super();
+    this.pretty = pretty;
     this.openPort("in", new InPort(this));
     this.openPort("out", new OutPort());
-    this.pretty = pretty;
   }
 
   protected process(inputs: Inputs, tag?: string): void {
