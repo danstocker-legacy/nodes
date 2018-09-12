@@ -20,7 +20,7 @@ export class Splitter<T> extends Node {
     this.count = count;
     this.openInPort("$", new InPort(this));
     for (let i = 1; i <= count; i++) {
-      this.openOutPort(`out${i}`, new OutPort());
+      this.openOutPort(`${i}`, new OutPort());
     }
   }
 
@@ -28,7 +28,7 @@ export class Splitter<T> extends Node {
     const ports = this.out;
     const count = this.count;
     for (let i = 1; i <= count; i++) {
-      const outPort = ports[`out${i}`];
+      const outPort = ports[`${i}`];
       if (outPort) {
         outPort.send(inputs.get(this.in.$), tag);
       }

@@ -1,4 +1,4 @@
-import {InPort, OutPort} from "../node/index";
+import {InPort, OutPort} from "../node";
 import {Splitter} from "./Splitter";
 
 describe("Splitter", function () {
@@ -9,8 +9,8 @@ describe("Splitter", function () {
         $: new InPort(splitter)
       });
       expect(splitter.out).toEqual({
-        out1: new OutPort(),
-        out2: new OutPort()
+        1: new OutPort(),
+        2: new OutPort()
       });
     });
   });
@@ -27,9 +27,9 @@ describe("Splitter", function () {
       splitter.send(new Map([[splitter.in.$, 5]]));
       const calls = spy.calls.all();
       expect(calls.length).toBe(2);
-      expect(calls[0].object).toBe(splitter.out.out1);
+      expect(calls[0].object).toBe(splitter.out[1]);
       expect(calls[0].args).toEqual([5, undefined]);
-      expect(calls[1].object).toBe(splitter.out.out2);
+      expect(calls[1].object).toBe(splitter.out[2]);
       expect(calls[1].args).toEqual([5, undefined]);
     });
   });
