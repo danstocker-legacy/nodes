@@ -1,7 +1,7 @@
 import {Inputs, IPort, Node, Ports} from "../node";
 
 /**
- * Pre-processes inputs, releasing only complete input sets to #process().
+ * Pre-processes input so values with the same tag stay together.
  */
 export abstract class SyncerBase extends Node {
   private readonly buffer: Map<string, Inputs>;

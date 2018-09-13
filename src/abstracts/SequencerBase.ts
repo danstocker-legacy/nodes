@@ -1,7 +1,10 @@
-import {InPort, Inputs, IPort, Node, OutPort, Ports} from "../node";
+import {InPort, Inputs, IPort, Node, Ports} from "../node";
 
 type Sequences = Map<InPort<any>, Array<string>>;
 
+/**
+ * Pre-processes input so it's following a reference order.
+ */
 export abstract class SequencerBase extends Node {
   public readonly in: {
     ref: InPort<string>

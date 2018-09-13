@@ -41,23 +41,41 @@ each code section.
 Built-in nodes
 --------------
 
-### Generic
+Nodes comes with a number of useful node types:
 
-- `SuperNode`: Groups nodes into a single node.
-- `Noop`: Forwards input to output.
-- `Splitter`: Forwards input to multiple outputs.
-- `Batcher`: Sends input to output in batches of a given size.
+### Utilities
+
 - `Logger`: Logs input to console.
-- `LineSplitter`: Splits input text and sends individual lines to output.
-- `Stringifier`: Sends string representation of input to output.
-- `JsonStringifier`: Sends object input to output as JSON string.
 - `Tagger`: Forwards input to output with the tag changed.
+
+### Forwarders
+
+Input values of these nodes are sent to the output unchanged.
+
+- `Batcher`: Sends input to output in batches of a given size.
+- `Noop`: Forwards input to output.
+- `Sequencer`: Forwards input following a reference order.
+- `Splitter`: Forwards input to multiple outputs.
+- `Syncer`: Synchronizes inputs from multiple ports into a map on a single 
+port.
 
 ### Functional
 
+- `ChangeFilter`: Sends input to output when it's different from the last input.
 - `Filter`: Outputs only those inputs that satisfy the specified filter callback.
 - `Mapper`: Sends mapped input to output.
-- `ChangeFilter`: Sends input to output when it's different from the last input.
+
+### Input / output
+
+- `StdErr`: Forwards input to `process.stderr`.
+- `StdIn`: Takes input from `process.stdin` and sends it to output.
+- `StdOut`: Forwards input to `process.stdout`.
+
+### String
+
+- `JsonStringifier`: Sends object input to output as JSON string.
+- `LineSplitter`: Splits input text and sends individual lines to output.
+- `Stringifier`: Sends string representation of input to output.
 
 ### Timing
 
@@ -66,20 +84,20 @@ Built-in nodes
 - `Throttler`: Forwards batches of input values with throttling.
 - `Interval`: Outputs `null` at intervals.
 
-### StdIO
+### Abstract / base classes
 
-- `StdIn`: Takes input from `process.stdin` and sends it to output.
-- `StdOut`: Forwards input to `process.stdout`.
-- `StdErr`: Forwards input to `process.stderr`.
+- `SequencerBase`: Pre-processes input so it's following a reference order.
+- `SuperNode`: Groups nodes into a single node.
+- `SyncerBase`: Pre-processes input so values with the same tag stay together.
 
-Orchestrating the graph
------------------------
+Building a graph
+----------------
 
 Three steps are required to get a Nodes graph working:
 
-1. Create nodes
-2. Connect ports
-3. Feed data to relevant input ports
+1. Creating nodes
+2. Connecting ports
+3. Feeding data to relevant input ports
 
 The following example reads from standard input, counts line lengths, and 
 logs the results to console.
