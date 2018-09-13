@@ -4,27 +4,20 @@ Nodes
 Nodes is an [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) 
 library that models the processing network as an actual directed graph.
 
-**Nodes is in development. Breaking changes may occur.**
+**We're getting close to a stable API. Breaking changes are not expected.**
 
-In Nodes, the basic processing unit is the *node*, which is similar to a 
-function, in that it takes *inputs* and produces *outputs*. But instead of 
-arguments and return value, it communicates through *ports*. A node may have 
-any number of ports, but most nodes have one input and one output port. Ports
-may be connected between nodes, forming a web, or graph, and defining the 
-flow of data through the system.
+In *Nodes*, you build and maintain a network of function-like objects, and 
+**push** streams of data through it.
 
-Nodes comes with a set of pre-defined node classes, like Mapper, Filter, etc.
-but the power of this library lies in its extensibility. Any (custom) node 
-has two responsibilities: a) define a set of ports, and b) process and 
-distribute inputs to outputs in a single override method.
+Nodes supports classic FRP concepts like map / reduce; asynchronous features 
+such as debouncing / throttling, and concurrency resolution with 
+synchronization and sequencing (serialization).
 
-Composition of nodes is also quite simple with the `SuperNode`. Any set of
-interacting nodes can be treated as a single node, provided that relevant
-input and output ports are assigned.
-
-Programs written in Nodes are essentially graphs, (or more precisely, 
-orchestrators of graphs) which are, by their nature, easy to visualize and 
-diagnose.
+The basic building block of a Nodes program is the 'functionesque' *node*, 
+which communicates through *ports*, and its primary function is to translate 
+inputs to outputs. (Secondary and tertiary functions are: making & destroying
+connections, and opening / closing ports, depending on how dynamic the network
+is expected to be by the application.) Nodes may be composed into *super-nodes*.
 
 Nodes is developed in [TypeScript](http://www.typescriptlang.org/).
 
@@ -45,8 +38,8 @@ All code samples in this document are also included in the npm package under
 `/examples`. You may run them using the command provided in the first line of
 each code section.
 
-Supported processor nodes
--------------------------
+Built-in nodes
+--------------
 
 ### Generic
 
