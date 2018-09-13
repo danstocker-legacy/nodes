@@ -4,7 +4,8 @@ Nodes
 Nodes is an [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) 
 library that models the processing network as an actual directed graph.
 
-**We're getting close to a stable API. Breaking changes are not expected.**
+**We're getting close to a stable API. Breaking changes are not expected 
+anymore.**
 
 In *Nodes*, you build and maintain a network of function-like objects, and 
 **push** streams of data through it.
@@ -127,12 +128,18 @@ between nodes.
 Implementing a node class
 -------------------------
 
-To create a new node class, one must implement the `INode` interface, 
-defining `ports` and implementing `#send()`. In the case of nodes with more 
-than one input port, it is important that the `#send()` implementation 
-handles missing values and buffers intermediate ones.
+To create a new node type, subclass `Node`, or one of the other base classes:
+`TrackerBase`, `SequencerBase`, or `SyncerBase`.
 
-The following example implements addition of two numeric inputs.
+1. First, define port layout (public object properties `in` and `out`)
+2. Then in the constructor, initialize these ports. Make sure this is the 
+last thing the constructor does.
+3. Optionally, handle port addition and removal by overriding `#onPortOpen()`
+and `#onPortClose()`.
+4. Implement `#process()`. This is where you define how nd when outputs are 
+invoked in response to inputs.
+
+The following example implements a node that adds two numeric inputs together.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/adder
@@ -164,6 +171,51 @@ class Adder extends Node {
       this.b = inputs.get(this.in.b);
     }
     this.out.sum.send((this.a || 0) + (this.b || 0), tag);
+  }
+}
+
+const adder: Adder = new Adder();
+const logger: Logger = new Logger();
+
+adder.out.sum.connect(logger.in.$);
+
+adder.in.a.send(1); // 1+0=1
+adder.in.b.send(1); // 1+1=2
+adder.in.a.send(2); // 2+1=3
+adder.in.b.send(2); // 2+2=4
+```
+
+### Using `TrackerBase`
+
+`TrackerBase` makes sure you always have the last value from each input port
+available in your `#process()` implementation. This makes writing classic 
+*reactive* nodes easier.
+
+Consider how much more concise and maintainable the above `Adder` node becomes 
+as a `TrackerBase` subclass:
+
+```typescript
+import {InPort, Inputs, Logger, OutPort, TrackerBase} from "@kwaia/nodes";
+
+class Adder extends TrackerBase {
+  public readonly in: {
+    a: InPort<number>,
+    b: InPort<number>
+  };
+  public readonly out: {
+    sum: OutPort<number>
+  };
+
+  constructor() {
+    super();
+    this.openInPort("a", new InPort(this));
+    this.openInPort("b", new InPort(this));
+    this.openOutPort("sum", new OutPort());
+  }
+
+  protected process(inputs: Inputs, tag?: string): void {
+    const sum = (inputs.get(this.in.a) || 0) + (inputs.get(this.in.b) || 0);
+    this.out.sum.send(sum);
   }
 }
 
