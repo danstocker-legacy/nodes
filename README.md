@@ -116,6 +116,27 @@ lineSplitter.out.$.connect(mapper.in.$);
 mapper.out.$.connect(logger.in.$);
 ```
 
+### Feeding data to a node
+
+Once a graph is set up like above, nodes are ready to accept input. Data mey 
+be fed into the graph explicitly, or, connecting up output-only nodes like 
+`StdIn` on `Interval`.
+
+`InPort#send()` takes a second argument, `tag`, which identifies the origin 
+of the input, and is used to synchronize individual impulses throughout the 
+entire network. Tags usually take the value of a timestamp, or a unique 
+identifier of the piece of data being processed. Tags are heavily relied on 
+in the case of `Tagger`, `SyncerBase`, `Syncer`, `SequencerBase`, and 
+`Sequencer`.
+
+```typescript
+// explicit: sends in "foo" with tag "1"
+node.in.$.send("foo", "1");
+
+// implicit: sends in the output of StdIn, with the current timestamp
+new StdIn().out.$.connect(node.in.$);
+```
+
 ### Static vs. dynamic graph
 
 Nodes supports setting up the graph both statically, and dynamically. In a 
