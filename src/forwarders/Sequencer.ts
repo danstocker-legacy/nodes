@@ -17,7 +17,6 @@ export class Sequencer extends SequencerBase {
   constructor(count: number = 1) {
     super();
     this.lookup = new Map();
-    this.openInPort("ref", new InPort(this));
     for (let i = 1; i <= count; i++) {
       const inPort = new InPort(this);
       const outPort = new OutPort();

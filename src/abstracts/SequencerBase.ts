@@ -16,6 +16,7 @@ export abstract class SequencerBase extends Node {
     super();
     this.buffer = new Map();
     this.sequences = new Map();
+    this.openInPort("ref", new InPort(this));
   }
 
   public send(inputs: Inputs, tag: string): void {
