@@ -4,11 +4,7 @@ type Sequences = Map<InPort<any>, Array<string>>;
 
 export abstract class SequencerBase extends Node {
   public readonly in: {
-    ref: InPort<string>,
-    [key: string]: InPort<any>
-  };
-  public readonly out: {
-    [key: string]: OutPort<any>
+    ref: InPort<string>
   };
   private readonly buffer: Map<InPort<any>, Map<string, any>>;
   private readonly sequences: Sequences;
