@@ -29,8 +29,8 @@ class Adder extends Node {
   }
 }
 
-const adder: Adder = new Adder();
-const logger: Logger = new Logger();
+const adder = new Adder();
+const logger = new Logger();
 
 adder.out.sum.connect(logger.in.$);
 

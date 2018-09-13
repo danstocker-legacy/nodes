@@ -107,10 +107,10 @@ logs the results to console.
 // node node_modules/@kwaia/nodes/examples/line-length-count
 import {LineSplitter, Logger, Mapper, StdIn} from "@kwaia/nodes";
 
-const logger: Logger = new Logger();
-const stdIn: StdIn = new StdIn();
-const mapper: Mapper<string, number> = new Mapper((line) => line.length);
-const lineSplitter: LineSplitter = new LineSplitter();
+const logger = new Logger();
+const stdIn = new StdIn();
+const mapper = new Mapper<string, number>((line) => line.length);
+const lineSplitter = new LineSplitter();
 stdIn.out.$.connect(lineSplitter.in.$);
 lineSplitter.out.$.connect(mapper.in.$);
 mapper.out.$.connect(logger.in.$);
@@ -118,7 +118,7 @@ mapper.out.$.connect(logger.in.$);
 
 ### Feeding data to a node
 
-Once a graph is set up like above, nodes are ready to accept input. Data mey 
+Once a graph is set up like above, nodes are ready to accept input. Data may 
 be fed into the graph explicitly, or, connecting up output-only nodes like 
 `StdIn` on `Interval`.
 
@@ -195,8 +195,8 @@ class Adder extends Node {
   }
 }
 
-const adder: Adder = new Adder();
-const logger: Logger = new Logger();
+const adder = new Adder();
+const logger = new Logger();
 
 adder.out.sum.connect(logger.in.$);
 
@@ -241,8 +241,8 @@ class Adder extends TrackerBase {
   }
 }
 
-const adder: Adder = new Adder();
-const logger: Logger = new Logger();
+const adder = new Adder();
+const logger = new Logger();
 
 adder.out.sum.connect(logger.in.$);
 
@@ -254,7 +254,7 @@ adder.in.b.send(2); // 2+2=4
 
 ### Using `SyncerBase`
 
-When working with asynchronous processes, especially ones that involve paths 
+When working with asynchronous networks, especially ones that involve paths 
 that run parallel, then come back together, synchronizing inputs may very 
 well be the most important thing to do. For any custom node type that relies 
 on multiple inputs, `SyncerBase` is a fitting foundation. The `#process()` 
@@ -294,8 +294,8 @@ class Adder extends SyncerBase {
   }
 }
 
-const adder: Adder = new Adder();
-const logger: Logger = new Logger();
+const adder = new Adder();
+const logger = new Logger();
 
 adder.out.sum.connect(logger.in.$);
 
@@ -320,11 +320,11 @@ within the overall graph by grouping individual nodes. It's possible
 // node node_modules/@kwaia/nodes/examples/ad-hoc-super-node
 import {JsonStringifier, Logger, SuperNode} from "@kwaia/nodes";
 
-const jsonStringifier: JsonStringifier<object> = new JsonStringifier(true);
-const logger: Logger = new Logger();
+const jsonStringifier = new JsonStringifier<object>(true);
+const logger = new Logger();
 jsonStringifier.out.$.connect(logger.in.$);
 
-const jsonLogger: SuperNode = new SuperNode({
+const jsonLogger = new SuperNode({
   in: jsonStringifier.in.$
 });
 
@@ -357,8 +357,8 @@ import {SuperNode, JsonStringifier, Logger} from "@kwaia/nodes";
 
 class JsonLogger extends SuperNode {
   constructor() {
-    const jsonStringifier: JsonStringifier<object> = new JsonStringifier(true);
-    const logger: Logger = new Logger();
+    const jsonStringifier = new JsonStringifier<object>(true);
+    const logger = new Logger();
     jsonStringifier.out.$.connect(logger.in.$);
 
     super({
@@ -367,7 +367,7 @@ class JsonLogger extends SuperNode {
   }
 }
 
-const jsonLogger: JsonLogger = new JsonLogger();
+const jsonLogger = new JsonLogger();
 jsonLogger.in.$.send({foo: "bar"});
 ```
 

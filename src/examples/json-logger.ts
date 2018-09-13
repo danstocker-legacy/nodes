@@ -2,8 +2,8 @@ import {JsonStringifier, Logger, SuperNode} from "..";
 
 class JsonLogger extends SuperNode {
   constructor() {
-    const jsonStringifier: JsonStringifier<object> = new JsonStringifier(true);
-    const logger: Logger = new Logger();
+    const jsonStringifier = new JsonStringifier<object>(true);
+    const logger = new Logger();
     jsonStringifier.out.$.connect(logger.in.$);
 
     super({
@@ -12,5 +12,5 @@ class JsonLogger extends SuperNode {
   }
 }
 
-const jsonLogger: JsonLogger = new JsonLogger();
+const jsonLogger = new JsonLogger();
 jsonLogger.in.$.send({foo: "bar"});

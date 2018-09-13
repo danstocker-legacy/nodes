@@ -1,10 +1,10 @@
 import {JsonStringifier, Logger, SuperNode} from "..";
 
-const jsonStringifier: JsonStringifier<object> = new JsonStringifier(true);
-const logger: Logger = new Logger();
+const jsonStringifier = new JsonStringifier<object>(true);
+const logger = new Logger();
 jsonStringifier.out.$.connect(logger.in.$);
 
-const jsonLogger: SuperNode = new SuperNode({
+const jsonLogger = new SuperNode({
   $: jsonStringifier.in.$
 }, {});
 
