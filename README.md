@@ -216,6 +216,7 @@ Consider how much more concise and maintainable the above `Adder` node becomes
 as a `TrackerBase` subclass:
 
 ```typescript
+// node node_modules/@kwaia/nodes/examples/adder-tracker
 import {InPort, Inputs, Logger, OutPort, TrackerBase} from "@kwaia/nodes";
 
 class Adder extends TrackerBase {
@@ -249,6 +250,59 @@ adder.in.a.send(1); // 1+0=1
 adder.in.b.send(1); // 1+1=2
 adder.in.a.send(2); // 2+1=3
 adder.in.b.send(2); // 2+2=4
+```
+
+### Using `SyncerBase`
+
+When working with asynchronous processes, especially ones that involve paths 
+that run parallel, then come back together, synchronizing inputs may very 
+well be the most important thing to do. For any custom node type that relies 
+on multiple inputs, `SyncerBase` is a fitting foundation. The `#process()` 
+method of `SyncerBase` always receives its `inputs` argument with *all* 
+inputs that correspond to any given tag.
+
+Nodes that are based on `SyncerBase` are nearly identical to those based on 
+`TrackerBase`, except for the base class and tags, because both rely on the 
+presence of all inputs in `#process()`. `SyncerBase`, however, requires tags 
+to be present in calls to `#send()`, and output only once for each tag.
+
+Our usual `Adder` node, implemented on top of `SyncerBase`:
+
+```typescript
+// node node_modules/@kwaia/nodes/examples/adder-syncer
+import {InPort, Inputs, Logger, OutPort, SyncerBase} from "@kwaia/nodes";
+
+class Adder extends SyncerBase {
+  public readonly in: {
+    a: InPort<number>,
+    b: InPort<number>
+  };
+  public readonly out: {
+    sum: OutPort<number>
+  };
+
+  constructor() {
+    super();
+    this.openInPort("a", new InPort(this));
+    this.openInPort("b", new InPort(this));
+    this.openOutPort("sum", new OutPort());
+  }
+
+  protected process(inputs: Inputs, tag: string): void {
+    const sum = (inputs.get(this.in.a) || 0) + (inputs.get(this.in.b) || 0);
+    this.out.sum.send(sum);
+  }
+}
+
+const adder: Adder = new Adder();
+const logger: Logger = new Logger();
+
+adder.out.sum.connect(logger.in.$);
+
+adder.in.a.send(1, "1");
+adder.in.b.send(1, "1"); // 1+1=2
+adder.in.a.send(2, "2");
+adder.in.b.send(2, "2"); // 2+2=4
 ```
 
 Creating an ad-hoc super-node
