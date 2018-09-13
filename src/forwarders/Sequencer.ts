@@ -1,6 +1,9 @@
 import {SequencerBase} from "../abstracts";
 import {InPort, Inputs, OutPort} from "../node";
 
+/**
+ * Forwards inputs in the order of tags.
+ */
 export class Sequencer extends SequencerBase {
   public readonly in: {
     ref: InPort<string>,
