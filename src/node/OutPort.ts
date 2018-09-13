@@ -8,11 +8,22 @@ export class OutPort<T> implements IPort<T> {
   public peer: InPort<T>;
 
   public connect(peer: InPort<T>): void {
-    this.peer = peer;
+    const peerBefore = this.peer;
+    if (peerBefore) {
+      this.disconnect();
+    }
+    if (peer) {
+      this.peer = peer;
+      peer.node.onConnect(this, peer);
+    }
   }
 
   public disconnect() {
-    this.peer = undefined;
+    const peerBefore = this.peer;
+    if (peerBefore) {
+      this.peer = undefined;
+      peerBefore.node.onDisconnect(this, peerBefore);
+    }
   }
 
   public send(value: T, tag?: string): void {

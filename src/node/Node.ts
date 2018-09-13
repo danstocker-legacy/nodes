@@ -20,6 +20,14 @@ export abstract class Node implements INode {
     this.process(inputs, tag);
   }
 
+  // tslint:disable:no-empty
+  public onConnect<T>(outPort: OutPort<T>, inPort: InPort<T>): void {
+  }
+
+  // tslint:disable:no-empty
+  public onDisconnect<T>(outPort: OutPort<T>, inPort: InPort<T>): void {
+  }
+
   protected openInPort<T>(name: string, port: InPort<T>): void {
     const ports = this.in;
     const portBefore = ports[name];

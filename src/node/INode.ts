@@ -1,5 +1,7 @@
+import {InPort} from "./InPort";
 import {InPorts} from "./InPorts";
 import {Inputs} from "./Inputs";
+import {OutPort} from "./OutPort";
 import {OutPorts} from "./OutPorts";
 
 /**
@@ -13,4 +15,10 @@ export interface INode {
   readonly out: OutPorts;
 
   send(inputs: Inputs, tag?: string): void;
+
+  /** Should only be called by OutPort#connect() */
+  onConnect<T>(outPort: OutPort<T>, inPort: InPort<T>): void;
+
+  /** Should only be called by OutPort#disconnect() */
+  onDisconnect<T>(outPort: OutPort<T>, inPort: InPort<T>): void;
 }

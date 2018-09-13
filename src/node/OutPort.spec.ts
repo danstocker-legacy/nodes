@@ -19,16 +19,14 @@ class MyNode extends Node {
 
 describe("OutPort", function () {
   describe("#connect()", function () {
-    let node1: INode;
-    let node2: INode;
+    let node: INode;
     let outPort: OutPort<number>;
     let inPort: InPort<number>;
 
     beforeEach(function () {
-      node1 = new MyNode();
-      node2 = new MyNode();
+      node = new MyNode();
       outPort = new OutPort();
-      inPort = new InPort(node1);
+      inPort = new InPort(node);
     });
 
     it("should set peer", function () {
@@ -36,29 +34,39 @@ describe("OutPort", function () {
       expect(outPort.peer).toBe(inPort);
     });
 
+    it("should invoke #onConnect() on peer node", function () {
+      spyOn(node, "onConnect");
+      outPort.connect(inPort);
+      expect(node.onConnect).toHaveBeenCalledWith(outPort, inPort);
+    });
+
     describe("when already connected", function () {
-      let node3: INode;
+      let node2: INode;
       let inPort2: InPort<number>;
 
       beforeEach(function () {
-        node3 = new MyNode();
-        inPort2 = new InPort(node3);
+        node2 = new MyNode();
+        inPort2 = new InPort(node2);
         outPort.connect(inPort);
+      });
+
+      it("should disconnect first", function () {
+        spyOn(outPort, "disconnect");
+        outPort.connect(inPort2);
+        expect(outPort.disconnect).toHaveBeenCalled();
       });
     });
   });
 
   describe("#disconnect()", function () {
-    let node1: INode;
-    let node2: INode;
+    let node: INode;
     let outPort: OutPort<number>;
     let inPort: InPort<number>;
 
     beforeEach(function () {
-      node1 = new MyNode();
-      node2 = new MyNode();
+      node = new MyNode();
       outPort = new OutPort();
-      inPort = new InPort(node1);
+      inPort = new InPort(node);
       outPort.connect(inPort);
     });
 
@@ -66,19 +74,23 @@ describe("OutPort", function () {
       outPort.disconnect();
       expect(outPort.peer).toBeUndefined();
     });
+
+    it("should invoke #onDisconnect() on peer node", function () {
+      spyOn(node, "onDisconnect");
+      outPort.disconnect();
+      expect(node.onDisconnect).toHaveBeenCalledWith(outPort, inPort);
+    });
   });
 
   describe("#send()", function () {
-    let node1: INode;
-    let node2: INode;
+    let node: INode;
     let outPort: OutPort<number>;
     let inPort: InPort<number>;
 
     beforeEach(function () {
-      node1 = new MyNode();
-      node2 = new MyNode();
+      node = new MyNode();
       outPort = new OutPort();
-      inPort = new InPort(node2);
+      inPort = new InPort(node);
       outPort.connect(inPort);
     });
 
