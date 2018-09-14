@@ -1,21 +1,20 @@
-import {Inputs, IPort, Node, Ports} from "../node";
+import {InPort, Inputs, IPort, Node, Ports} from "../node";
 
 /**
  * Pre-processes input so values with the same tag stay together.
  */
 export abstract class SyncerBase extends Node {
   private readonly buffer: Map<string, Inputs>;
-  private count: number;
+  private readonly inPorts: Set<InPort<any>>;
 
   protected constructor() {
     super();
     this.buffer = new Map();
-    this.count = 0;
+    this.inPorts = new Set();
   }
 
   public send(inputs: Inputs, tag: string): void {
     const buffer = this.buffer;
-    const count = this.count;
     const values = this.getValues(tag);
 
     // associating input values with port and tag
@@ -23,7 +22,7 @@ export abstract class SyncerBase extends Node {
       values.set(port, value);
     }
 
-    if (values.size === count) {
+    if (values.size >= this.inPorts.size) {
       // got all inputs for current tag
       buffer.delete(tag);
       this.process(values, tag);
@@ -32,13 +31,20 @@ export abstract class SyncerBase extends Node {
 
   protected onPortOpen(name: string, port: IPort<any>, ports: Ports): void {
     if (ports === this.in) {
-      this.count++;
+      for (const inputs of this.buffer.values()) {
+        inputs.set(port as InPort<any>, undefined);
+      }
+      this.inPorts.add(port as InPort<any>);
     }
   }
 
   protected onPortClose(name: string, port: IPort<any>, ports: Ports): void {
     if (ports === this.in) {
-      this.count--;
+      for (const inputs of this.buffer.values()) {
+        inputs.delete(port as InPort<any>);
+      }
+      this.inPorts.delete(port as InPort<any>);
+      this.processTags();
     }
   }
 
@@ -49,5 +55,13 @@ export abstract class SyncerBase extends Node {
       buffer.set(tag, values = new Map());
     }
     return values;
+  }
+
+  private processTags(): void {
+    for (const [tag, inputs] of this.buffer.entries()) {
+      if (inputs.size >= this.inPorts.size) {
+        this.process(inputs, tag);
+      }
+    }
   }
 }

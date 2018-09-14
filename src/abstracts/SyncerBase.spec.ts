@@ -58,5 +58,21 @@ describe("SyncerBase", function () {
           new Map([[node.in.a, 5], [node.in.b, 2]]), "1");
       });
     });
+
+    describe("on closing port", function () {
+      describe("when closed port is the one w/o value yet", function () {
+        beforeEach(function () {
+          node.send(new Map([[node.in.a, 5]]), "1");
+        });
+
+        it("should process inputs", function () {
+          spyOn(node, "process");
+          // @ts-ignore
+          node.closeInPort("b");
+          expect(node.process).toHaveBeenCalledWith(
+            new Map([[node.in.a, 5]]), "1");
+        });
+      });
+    });
   });
 });
