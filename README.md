@@ -124,7 +124,7 @@ be fed into the graph explicitly, or, connecting up output-only nodes like
 
 `InPort#send()` takes a second argument, `tag`, which identifies the origin 
 of the input, and is used to synchronize individual impulses throughout the 
-entire network. Tags usually take the value of a timestamp, or a unique 
+entire graph. Tags usually take the value of a timestamp, or a unique 
 identifier of the piece of data being processed. Tags are heavily relied on 
 in the case of `Tagger`, `SyncerBase`, `Syncer`, `SequencerBase`, and 
 `Sequencer`.
@@ -137,14 +137,13 @@ node.in.$.send("foo", "1");
 new StdIn().out.$.connect(node.in.$);
 ```
 
-### Static vs. dynamic graph
+### Tagging practices
 
-Nodes supports setting up the graph both statically, and dynamically. In a 
-static graph, connections are set up once, before running data through it. 
-Whereas in dynamic graphs, connections may change as the input changes. Most 
-use cases don't justify a dynamic graph, but problems such as neural networks 
-and concept graphs rely heavily on forming new and destroying old connections
-between nodes.
+TODO
+
+1. Timestamp
+2. Record ID
+3. Composite tags
 
 Implementing a node class
 -------------------------
@@ -254,19 +253,20 @@ adder.in.b.send(2); // 2+2=4
 
 ### Using `SyncerBase`
 
-When working with asynchronous networks, especially ones that involve paths 
-that run parallel, then come back together, synchronizing inputs may very 
-well be the most important thing to do. For any custom node type that relies 
-on multiple inputs, `SyncerBase` is a fitting foundation. The `#process()` 
-method of `SyncerBase` always receives its `inputs` argument with *all* 
-inputs that correspond to any given tag.
+When paths fork and join in a graph, synchronizing inputs becomes crucial. 
+For custom nodes that rely on multiple inputs, Nodes provides `SyncerBase` 
+as a foundation. The `#process()` method of `SyncerBase` always receives its 
+`inputs` argument with *all* inputs that correspond to any given tag.
 
-Nodes that are based on `SyncerBase` are nearly identical to those based on 
-`TrackerBase`, except for the base class and tags, because both rely on the 
-presence of all inputs in `#process()`. `SyncerBase`, however, requires tags 
-to be present in calls to `#send()`, and output only once for each tag.
+    `SyncerBase` is currently only recommended as a static node as cached
+    input values may be purged on closing ports.
 
-Our usual `Adder` node, implemented on top of `SyncerBase`:
+Nodes based on `SyncerBase` are nearly identical to those based on 
+`TrackerBase`, except for the base class, as well as tags to be passed to 
+`#send()`, as both rely on the presence of all inputs in `#process()`. 
+`SyncerBase` outputs only once for each tag.
+
+Our usual `Adder` node, implemented as a subclass of `SyncerBase`:
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/adder-syncer
@@ -303,6 +303,72 @@ adder.in.a.send(1, "1");
 adder.in.b.send(1, "1"); // 1+1=2
 adder.in.a.send(2, "2");
 adder.in.b.send(2, "2"); // 2+2=4
+```
+
+### Using `SequencerBase`
+
+With ordinary functions, we expect outputs to be produced in the same order as 
+inputs go in. To make sure this happens regardless of input order, Nodes 
+comes with `SequencerBase`.
+
+    `SequencerBase` is currently only recommended as a static node as cached
+    input values may be purged on closing ports.
+
+Nodes based on `SequencerBase` are nearly identical to those based on 
+`TrackerBase`, except for the base class, the input port `ref`, (reference) and 
+tags to be passed to `#send()`. `SequencerBase` outputs in the order 
+specified by tags sent in on the reference input port, which is why it's 
+important to have `ref` connected to the right source before sending to any 
+of the other input ports.
+
+Notice the extra inputs sent to `ref`, as well as the order of outputs near the
+end of the example below, which implements `Adder` derived from 
+`SequencerBase`. 
+
+```typescript
+import {InPort, Inputs, Logger, OutPort, SequencerBase} from "@kwaia/nodes";
+
+class Adder extends SequencerBase {
+  public readonly in: {
+    ref: InPort<string>,
+    a: InPort<number>,
+    b: InPort<number>
+  };
+  public readonly out: {
+    sum: OutPort<number>
+  };
+  private a: number;
+  private b: number;
+
+  constructor() {
+    super();
+    this.openInPort("a", new InPort(this));
+    this.openInPort("b", new InPort(this));
+    this.openOutPort("sum", new OutPort());
+  }
+
+  protected process(inputs: Inputs, tag?: string): void {
+    if (inputs.has(this.in.a)) {
+      this.a = inputs.get(this.in.a);
+    }
+    if (inputs.has(this.in.b)) {
+      this.b = inputs.get(this.in.b);
+    }
+    this.out.sum.send((this.a || 0) + (this.b || 0), tag);
+  }
+}
+
+const adder = new Adder();
+const logger = new Logger();
+
+adder.out.sum.connect(logger.in.$);
+
+adder.in.ref.send(null, "1");
+adder.in.ref.send(null, "2");
+adder.in.a.send(1, "2"); // third: 1+1=2
+adder.in.b.send(1, "1"); // first: 0+1=1
+adder.in.a.send(2, "1"); // second: 2+1=3
+adder.in.b.send(2, "2"); // last: 1+2=3
 ```
 
 Creating an ad-hoc super-node
