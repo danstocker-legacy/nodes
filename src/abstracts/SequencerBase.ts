@@ -4,6 +4,8 @@ type Sequences = Map<InPort<any>, Array<string>>;
 
 /**
  * Pre-processes input so it's following a reference order.
+ * Not recommended for use with dynamic graphs as cached values may be
+ * purged on closing ports.
  */
 export abstract class SequencerBase extends Node {
   public readonly in: {
@@ -47,12 +49,14 @@ export abstract class SequencerBase extends Node {
 
   protected onPortOpen(name: string, port: IPort<any>, ports: Ports): void {
     if (ports === this.in && port !== this.in.ref) {
+      this.buffer.set(port as InPort<any>, new Map());
       this.sequences.set(port as InPort<any>, []);
     }
   }
 
   protected onPortClose(name: string, port: IPort<any>, ports: Ports): void {
     if (ports === this.in) {
+      this.buffer.delete(port as InPort<any>);
       this.sequences.delete(port as InPort<any>);
     }
   }

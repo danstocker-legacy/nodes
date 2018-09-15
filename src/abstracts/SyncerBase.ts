@@ -2,6 +2,8 @@ import {InPort, Inputs, IPort, Node, Ports} from "../node";
 
 /**
  * Pre-processes input so values with the same tag stay together.
+ * Not recommended for use with dynamic graphs as cached values may be
+ * purged on closing ports.
  */
 export abstract class SyncerBase extends Node {
   private readonly buffer: Map<string, Inputs>;
