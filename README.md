@@ -4,21 +4,22 @@ Nodes
 Nodes is an [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) 
 library that models the processing network as an actual directed graph.
 
-**We're getting close to a stable API. Breaking changes are not expected 
-anymore.**
+**We're getting close to a stable public API. Breaking changes are not expected 
+going forward.**
 
 In *Nodes*, you build and maintain a network of function-like objects, and 
 **push** streams of data through it.
 
-Nodes supports classic FRP concepts like map / reduce; asynchronous features 
+Nodes supports classic FRP concepts like map / reduce, asynchronous features 
 such as debouncing / throttling, and concurrency resolution with 
 synchronization and sequencing (serialization).
 
-The basic building block of a Nodes program is the 'functionesque' *node*, 
-which communicates through *ports*, and its primary function is to translate 
-inputs to outputs. (Secondary and tertiary functions are: making & destroying
-connections, and opening / closing ports, depending on how dynamic the network
-is expected to be by the application.) Nodes may be composed into *super-nodes*.
+The basic building block of a Nodes program is the *node*, which communicates 
+through *ports*, and like a function, its primary function is to translate 
+inputs to outputs. (Secondary and tertiary functions are: connecting / 
+disconnecting, and opening / closing ports, depending on how dynamic the 
+network is expected to be by the application.) Nodes may be composed into 
+*super-nodes*.
 
 Nodes is developed in [TypeScript](http://www.typescriptlang.org/).
 
@@ -42,7 +43,7 @@ each code section.
 Built-in nodes
 --------------
 
-Nodes comes with a number of useful node types:
+Nodes comes with a number of built-in node types:
 
 ### Utilities
 
@@ -98,7 +99,26 @@ Three steps are required to get a Nodes graph working:
 
 1. Creating nodes
 2. Connecting ports
-3. Feeding data to relevant input ports
+3. Feeding data to nodes
+
+### Creating nodes
+
+To create a node, instantiate a node class.
+
+Example: `const logger = new Logger()`.
+
+### Connecting ports
+
+Input and output ports of a node are accessible via the node's `in` and `out`
+properties. Default ports are named `$` by convention. Connections can be made
+by passing an input port to output ports' `#connect()` method.
+
+Example: `stdIn.out.$.connect(logger.in.$);`
+
+### Feeding data to nodes
+
+To feed data to a node, one must either invoke `#send()` explicitly, or 
+connect to an output-only (*source*) node, such as `StdIn` or `Interval`.
 
 The following example reads from standard input, counts line lengths, and 
 logs the results to console.
@@ -116,18 +136,13 @@ lineSplitter.out.$.connect(mapper.in.$);
 mapper.out.$.connect(logger.in.$);
 ```
 
-### Feeding data to a node
+`InPort#send()` takes a second argument, `tag`, which identifies an original 
+input, and is used to synchronize individual impulses throughout the 
+entire graph. Tags are expected by node classes like `Tagger`, `SyncerBase`,
+`Syncer`, `SequencerBase`, and `Sequencer`.
 
-Once a graph is set up like above, nodes are ready to accept input. Data may 
-be fed into the graph explicitly, or, connecting up output-only nodes like 
-`StdIn` on `Interval`.
-
-`InPort#send()` takes a second argument, `tag`, which identifies the origin 
-of the input, and is used to synchronize individual impulses throughout the 
-entire graph. Tags usually take the value of a timestamp, or a unique 
-identifier of the piece of data being processed. Tags are heavily relied on 
-in the case of `Tagger`, `SyncerBase`, `Syncer`, `SequencerBase`, and 
-`Sequencer`.
+Tags usually take the value of a timestamp, a unique identifier or a 
+combination thereof.
 
 ```typescript
 // explicit: sends in "foo" with tag "1"
@@ -137,29 +152,23 @@ node.in.$.send("foo", "1");
 new StdIn().out.$.connect(node.in.$);
 ```
 
-### Tagging practices
-
-TODO
-
-1. Timestamp
-2. Record ID
-3. Composite tags
-
 Implementing a node class
 -------------------------
 
 To create a new node type, subclass `Node`, or one of the other base classes:
-`TrackerBase`, `SequencerBase`, or `SyncerBase`.
+`TrackerBase`, `SequencerBase`, or `SyncerBase`. (More about these below.)
 
 1. First, define port layout (public object properties `in` and `out`)
 2. Then in the constructor, initialize these ports. Make sure this is the 
 last thing the constructor does.
-3. Optionally, handle port addition and removal by overriding `#onPortOpen()`
-and `#onPortClose()`.
-4. Implement `#process()`. This is where you define how nd when outputs are 
+3. Optionally, handle port addition / removal, connecting / disconnecting by 
+overriding `#onPortOpen()`, `#onPortClose()`, `#onConnect()`, and 
+`#onDisconnect()`.
+4. Implement `#process()`. This is where you define how and when outputs are 
 invoked in response to inputs.
 
-The following example implements a node that adds two numeric inputs together.
+The following example implements a plain `Node` that adds two numeric inputs 
+together.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/adder
@@ -262,11 +271,12 @@ as a foundation. The `#process()` method of `SyncerBase` always receives its
     input values may be purged on closing ports.
 
 Nodes based on `SyncerBase` are nearly identical to those based on 
-`TrackerBase`, except for the base class, as well as tags to be passed to 
+`TrackerBase`, except for the base class, and tags which are to be passed to 
 `#send()`, as both rely on the presence of all inputs in `#process()`. 
 `SyncerBase` outputs only once for each tag.
 
-Our usual `Adder` node, implemented as a subclass of `SyncerBase`:
+Notice how `Adder`, as a subclass of `SyncerBase`, outputs only twice in our 
+example as opposed to four above.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/adder-syncer
@@ -326,6 +336,7 @@ end of the example below, which implements `Adder` derived from
 `SequencerBase`. 
 
 ```typescript
+// node node_modules/@kwaia/nodes/examples/adder-sequencer
 import {InPort, Inputs, Logger, OutPort, SequencerBase} from "@kwaia/nodes";
 
 class Adder extends SequencerBase {
@@ -374,13 +385,12 @@ adder.in.b.send(2, "2"); // last: 1+2=3
 Creating an ad-hoc super-node
 ----------------------------
 
-The super-node is a graph in its own right. Child nodes, which make up the 
-super-node, may lend their unconnected ports to the super-node, as the 
-super-node's own ports.
+The super-node is a node with internal structure made up of primitive nodes. 
+Super-nodes do not open ports themselves, but inherit ports from their 
+children.
 
-Ad-hoc super-nodes present a convenient way of creating functional units 
-within the overall graph by grouping individual nodes. It's possible 
-(and often necessary) to nest super-nodes.
+Ad-hoc super-nodes present a convenient way of re-using larger functional 
+units of the program. Super-nodes may be nested.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/ad-hoc-super-node
@@ -398,8 +408,9 @@ jsonLogger.in.$.send({foo: "bar"});
 ```
 
 When creating ad-hoc super-nodes, the developer must make sure that child 
-nodes only connect to other child nodes, in other words, there are no 
-connections outside the super-node. (Except through the super-node's own ports.)
+nodes only connect to sibling nodes, in other words, there are no 
+connections outside the super-node. (Except through ports shared with the 
+super-node.)
 
 Implementing a super-node class
 ------------------------------
@@ -437,15 +448,10 @@ const jsonLogger = new JsonLogger();
 jsonLogger.in.$.send({foo: "bar"});
 ```
 
-Debugging a Nodes program
--------------------------
-
-TBD
-
 Planned features
 ----------------
 
-- [ ] Trail: how data got to the current node.
+- [ ] Trail: how inputs arrived at the current node.
 - [ ] State snapshot: saving & restoring overall state of the graph.
 - [ ] Error handling: error ports for built-in nodes.
 - [ ] Visual graph snapshot: generating image of nodes and connections.
