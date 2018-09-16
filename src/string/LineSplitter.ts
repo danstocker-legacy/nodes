@@ -2,6 +2,7 @@ import {InPort, Inputs, Node, OutPort} from "../node";
 
 /**
  * Splits input text and sends individual lines to output.
+ * Tags output with line index appended to input tag.
  */
 export class LineSplitter extends Node {
   public readonly in: {
@@ -26,7 +27,7 @@ export class LineSplitter extends Node {
 
     const lineCount = lines.length;
     for (let i = 0; i < lineCount; i++) {
-      this.out.$.send(lines[i], tag);
+      this.out.$.send(lines[i], `${tag}|${i}`);
     }
   }
 }

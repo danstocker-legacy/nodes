@@ -2,6 +2,7 @@ import {Node, OutPort} from "../node";
 
 /**
  * Takes input from `process.stdin` and sends it to output.
+ * Tags output with Unix timestamp.
  */
 export class StdIn extends Node {
   public readonly out: {
@@ -21,7 +22,7 @@ export class StdIn extends Node {
   private onReadable() {
     const chunk = process.stdin.read();
     if (chunk !== null) {
-      this.out.$.send(chunk, String(+new Date()));
+      this.out.$.send(chunk, `${+new Date()}`);
     }
   }
 }

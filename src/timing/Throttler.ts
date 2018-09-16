@@ -2,6 +2,7 @@ import {InPort, Inputs, Node, OutPort} from "../node";
 
 /**
  * Forwards batches of input values with throttling.
+ * Batches will be tagged with tag of last input in batch.
  */
 export class Throttler<T> extends Node {
   public readonly in: {

@@ -44,7 +44,8 @@ describe("Interval", function () {
       const BuiltInDate = global.Date;
       spyOn(global, "Date").and.callFake(() => new BuiltInDate());
       jasmine.clock().tick(501);
-      expect(interval.out.$.send).toHaveBeenCalledWith(null, String(+new Date()));
+      const timestamp = +new Date();
+      expect(interval.out.$.send).toHaveBeenCalledWith(timestamp, `${timestamp}`);
     });
   });
 });

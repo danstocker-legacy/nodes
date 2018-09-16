@@ -1,11 +1,11 @@
 import {Node, OutPort} from "../node";
 
 /**
- * Outputs `null` at intervals.
+ * Outputs Unix timestamp at intervals. Tags output with unix timestamp.
  */
 export class Interval extends Node {
   public readonly out: {
-    $: OutPort<null>
+    $: OutPort<number>
   };
   public readonly timer: number; // TODO: How coe not NodeJS.Timer?
   private readonly delay: number;
@@ -22,6 +22,7 @@ export class Interval extends Node {
   }
 
   private onInterval(): void {
-    this.out.$.send(null, String(+new Date()));
+    const timestamp = +new Date();
+    this.out.$.send(timestamp, `${timestamp}`);
   }
 }
