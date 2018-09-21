@@ -1,14 +1,23 @@
-import {JsonStringifier, Logger, SuperNode} from "..";
+import {InPort, Inputs, JsonStringifier, Logger, Node} from "..";
 
-class JsonLogger extends SuperNode {
+class JsonLogger extends Node {
+  public readonly in: {
+    $: InPort<object>
+  };
+  private readonly jsonStringifier: JsonStringifier<object>;
+
   constructor() {
-    const jsonStringifier = new JsonStringifier<object>(true);
+    super();
+    const jsonStringifier = new JsonStringifier(true);
     const logger = new Logger();
+    this.jsonStringifier = jsonStringifier;
     jsonStringifier.out.$.connect(logger.in.$);
+    this.openInPort("$", new InPort(this));
+  }
 
-    super({
-      $: jsonStringifier.in.$
-    }, {});
+  protected process(inputs: Inputs, tag?: string): void {
+    const value = inputs.get(this.in.$);
+    this.jsonStringifier.in.$.send(value, tag);
   }
 }
 

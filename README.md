@@ -4,9 +4,6 @@ Nodes
 Nodes is an [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) 
 library that models the processing network as an actual directed graph.
 
-**We're getting close to a stable public API. Breaking changes are not expected 
-going forward.**
-
 In *Nodes*, you build and maintain a network of function-like objects, and 
 **push** streams of data through it.
 
@@ -115,6 +112,9 @@ by passing an input port to output ports' `#connect()` method.
 
 Example: `stdIn.out.$.connect(logger.in.$);`
 
+Connections may be made from either side, but it's customary to put the 
+output port on the left hand side of `#connect()`.
+
 ### Feeding data to nodes
 
 To feed data to a node, one must either invoke `#send()` explicitly, or 
@@ -142,13 +142,13 @@ entire graph. Tags are expected by node classes like `Tagger`, `SyncerBase`,
 `Syncer`, `SequencerBase`, and `Sequencer`.
 
 Tags usually take the value of a timestamp, a unique identifier or a 
-combination thereof.
+combination of these.
 
 ```typescript
 // explicit: sends in "foo" with tag "1"
 node.in.$.send("foo", "1");
 
-// implicit: sends in the output of StdIn, with the current timestamp
+// implicit: sends in the output of StdIn, with the current timestamp as tag
 new StdIn().out.$.connect(node.in.$);
 ```
 
@@ -166,6 +166,12 @@ overriding `#onPortOpen()`, `#onPortClose()`, `#onConnect()`, and
 `#onDisconnect()`.
 4. Implement `#process()`. This is where you define how and when outputs are 
 invoked in response to inputs.
+
+When initializing ports, instantiate `InPort<T>` or `OutPort<T>` passing the 
+parent node as argument.
+
+In some cases, like custom super-nodes, connections can be made in the node's
+constructor. (See section "Custom super-nodes")
 
 The following example implements a plain `Node` that adds two numeric inputs 
 together.
@@ -382,10 +388,10 @@ adder.in.a.send(2, "1"); // second: 2+1=3
 adder.in.b.send(2, "2"); // last: 1+2=3
 ```
 
-Creating an ad-hoc super-node
-----------------------------
+Ad-hoc super-nodes
+------------------
 
-The super-node is a node with internal structure made up of primitive nodes. 
+A super-node is a node with internal structure made up of primitive nodes. 
 Super-nodes do not open ports themselves, but inherit ports from their 
 children.
 
@@ -412,35 +418,51 @@ nodes only connect to sibling nodes, in other words, there are no
 connections outside the super-node. (Except through ports shared with the 
 super-node.)
 
-Implementing a super-node class
-------------------------------
+Custom super-nodes
+------------------
 
-While ad-hoc super-nodes are enough in most (static graph) use cases, it's a 
-good idea to always create a `SuperNode` class in order to separate super-node 
-behavior from the rest of the program.
+Ad-hoc super-nodes are sufficient in most (static graph) use cases, but if 
+we intend to create complex, or reusable super-nodes, it's a better option to
+subclass `Node`.
 
-With a `SuperNode` subclass, super-nodes
+Custom super-nodes have to:
 
 1. create their own child nodes,
-2. set up internal connections, and
-3. assign ports
+2. set up internal connections,
+3. assign output ports, and
+4. direct input values to child nodes' ports in `#process()`
+
+In the case of super-node classes, `#process()` sends input values of the 
+super-node to input ports of child nodes, instead of sending processed values
+to output ports. This allows super-nodes to be based on either of the 
+available base classes: `Node`, `TrackerBase`, `SyncerBase`, and 
+`SequencerBase`.
 
 The following example does exactly the same as the ad-hoc version above, but 
-subclasses `SuperNode`.
+as a super-node class in its own right.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/json-logger
-import {SuperNode, JsonStringifier, Logger} from "@kwaia/nodes";
+import {InPort, Inputs, JsonStringifier, Logger, Node} from "@kwaia/nodes";
 
-class JsonLogger extends SuperNode {
+class JsonLogger extends Node {
+  public readonly in: {
+    $: InPort<object>
+  };
+  private readonly jsonStringifier: JsonStringifier<object>;
+
   constructor() {
-    const jsonStringifier = new JsonStringifier<object>(true);
+    super();
+    const jsonStringifier = new JsonStringifier(true);
     const logger = new Logger();
+    this.jsonStringifier = jsonStringifier;
     jsonStringifier.out.$.connect(logger.in.$);
+    this.openInPort("$", new InPort(this));
+  }
 
-    super({
-      in: jsonStringifier.in.$
-    });
+  protected process(inputs: Inputs, tag?: string): void {
+    const value = inputs.get(this.in.$);
+    this.jsonStringifier.in.$.send(value, tag);
   }
 }
 
