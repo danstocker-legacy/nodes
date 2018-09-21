@@ -48,6 +48,7 @@ Nodes comes with a number of built-in node types:
 ### Utilities
 
 - `Logger`: Logs input to console.
+- `SuperNode`: Groups nodes into a single node.
 - `Tagger`: Forwards input to output with the tag changed.
 
 ### Forwarders
@@ -57,7 +58,6 @@ Input values of these nodes are sent to the output unchanged.
 - `Batcher`: Sends input to output in batches of a given size.
 - `Noop`: Forwards input to output.
 - `Sequencer`: Forwards input following a reference order.
-- `Splitter`: Forwards input to multiple outputs.
 - `Syncer`: Synchronizes inputs from multiple ports into a map on a single 
 port.
 
@@ -89,7 +89,6 @@ port.
 ### Abstract / base classes
 
 - `SequencerBase`: Pre-processes input so it's following a reference order.
-- `SuperNode`: Groups nodes into a single node.
 - `SyncerBase`: Pre-processes input so values with the same tag stay together.
 
 Building a graph
