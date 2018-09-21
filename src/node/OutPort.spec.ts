@@ -31,30 +31,13 @@ describe("OutPort", function () {
 
     it("should set peer", function () {
       outPort.connect(inPort);
-      expect(outPort.peer).toBe(inPort);
+      expect(outPort.peers).toEqual(new Set([inPort]));
     });
 
     it("should invoke #onConnect() on peer node", function () {
       spyOn(node, "onConnect");
       outPort.connect(inPort);
       expect(node.onConnect).toHaveBeenCalledWith(outPort, inPort);
-    });
-
-    describe("when already connected", function () {
-      let node2: INode;
-      let inPort2: InPort<number>;
-
-      beforeEach(function () {
-        node2 = new MyNode();
-        inPort2 = new InPort(node2);
-        outPort.connect(inPort);
-      });
-
-      it("should disconnect first", function () {
-        spyOn(outPort, "disconnect");
-        outPort.connect(inPort2);
-        expect(outPort.disconnect).toHaveBeenCalled();
-      });
     });
   });
 
@@ -71,13 +54,13 @@ describe("OutPort", function () {
     });
 
     it("should reset peer on self", function () {
-      outPort.disconnect();
-      expect(outPort.peer).toBeUndefined();
+      outPort.disconnect(inPort);
+      expect(outPort.peers).toEqual(new Set());
     });
 
     it("should invoke #onDisconnect() on peer node", function () {
       spyOn(node, "onDisconnect");
-      outPort.disconnect();
+      outPort.disconnect(inPort);
       expect(node.onDisconnect).toHaveBeenCalledWith(outPort, inPort);
     });
   });

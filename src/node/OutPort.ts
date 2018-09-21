@@ -5,30 +5,30 @@ import {IPort} from "./IPort";
  * Output port for nodes.
  */
 export class OutPort<T> implements IPort<T> {
-  public peer: InPort<T>;
+  public readonly peers: Set<InPort<T>>;
+
+  constructor() {
+    this.peers = new Set();
+  }
 
   public connect(peer: InPort<T>): void {
-    const peerBefore = this.peer;
-    if (peerBefore) {
-      this.disconnect();
-    }
-    if (peer) {
-      this.peer = peer;
+    const peers = this.peers;
+    if (!peers.has(peer)) {
+      peers.add(peer);
       peer.node.onConnect(this, peer);
     }
   }
 
-  public disconnect() {
-    const peerBefore = this.peer;
-    if (peerBefore) {
-      this.peer = undefined;
-      peerBefore.node.onDisconnect(this, peerBefore);
+  public disconnect(peer: InPort<T>) {
+    const peers = this.peers;
+    if (peers.has(peer)) {
+      peers.delete(peer);
+      peer.node.onDisconnect(this, peer);
     }
   }
 
   public send(value: T, tag?: string): void {
-    const peer = this.peer;
-    if (peer) {
+    for (const peer of this.peers.values()) {
       peer.send(value, tag);
     }
   }
