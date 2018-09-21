@@ -19,7 +19,7 @@ export class Syncer extends SyncerBase {
     for (let i = 1; i <= count; i++) {
       this.openInPort(`${i}`, new InPort(this));
     }
-    this.openOutPort("$", new OutPort());
+    this.openOutPort("$", new OutPort(this));
   }
 
   protected onPortOpen<T>(name: string, port: IPort<T>, ports: Ports): void {

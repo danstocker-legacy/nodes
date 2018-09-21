@@ -11,7 +11,7 @@ describe("Syncer", function () {
         3: new InPort(node)
       });
       expect(node.out).toEqual({
-        $: new OutPort()
+        $: new OutPort(node)
       });
     });
 
@@ -23,7 +23,7 @@ describe("Syncer", function () {
           2: new InPort(node)
         });
         expect(node.out).toEqual({
-          $: new OutPort()
+          $: new OutPort(node)
         });
       });
     });

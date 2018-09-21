@@ -13,7 +13,7 @@ class Adder extends TrackerBase {
     super();
     this.openInPort("a", new InPort(this));
     this.openInPort("b", new InPort(this));
-    this.openOutPort("sum", new OutPort());
+    this.openOutPort("sum", new OutPort(this));
   }
 
   protected process(inputs: Inputs, tag?: string): void {

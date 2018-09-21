@@ -18,7 +18,7 @@ export class Tagger<T> extends Node {
     super();
     this.callback = callback;
     this.openInPort("$", new InPort(this));
-    this.openOutPort("$", new OutPort());
+    this.openOutPort("$", new OutPort(this));
   }
 
   protected process(inputs: Inputs, tag?: string): void {

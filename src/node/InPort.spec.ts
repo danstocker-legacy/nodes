@@ -26,8 +26,71 @@ describe("InPort", function () {
     });
 
     it("should set node property", function () {
-      const port: InPort<number> = new InPort(node);
+      const port = new InPort<number>(node);
       expect(port.node).toBe(node);
+    });
+  });
+
+  describe("#connect()", function () {
+    let node1: INode;
+    let node2: INode;
+    let outPort: OutPort<number>;
+    let inPort: InPort<number>;
+
+    beforeEach(function () {
+      node1 = new MyNode();
+      node2 = new MyNode();
+      outPort = new OutPort(node1);
+      inPort = new InPort(node2);
+    });
+
+    it("should set peer", function () {
+      inPort.connect(outPort);
+      expect(inPort.peer).toBe(outPort);
+    });
+
+    it("should invoke #connect() on peer", function () {
+      spyOn(outPort, "connect");
+      inPort.connect(outPort);
+      expect(outPort.connect).toHaveBeenCalledWith(inPort);
+    });
+
+    it("should invoke #onConnect() on node", function () {
+      spyOn(node2, "onConnect");
+      inPort.connect(outPort);
+      expect(node2.onConnect).toHaveBeenCalledWith(outPort, inPort);
+    });
+  });
+
+  describe("#disconnect()", function () {
+    let node1: INode;
+    let node2: INode;
+    let outPort: OutPort<number>;
+    let inPort: InPort<number>;
+
+    beforeEach(function () {
+      node1 = new MyNode();
+      node2 = new MyNode();
+      outPort = new OutPort(node1);
+      inPort = new InPort(node2);
+      inPort.connect(outPort);
+    });
+
+    it("should reset peer on self", function () {
+      inPort.disconnect();
+      expect(inPort.peer).toBeUndefined();
+    });
+
+    it("should invoke #disconnect() on peer", function () {
+      spyOn(outPort, "disconnect");
+      inPort.disconnect();
+      expect(outPort.disconnect).toHaveBeenCalledWith(inPort);
+    });
+
+    it("should invoke #onDisconnect() on peer node", function () {
+      spyOn(node2, "onDisconnect");
+      inPort.disconnect();
+      expect(node2.onDisconnect).toHaveBeenCalledWith(outPort, inPort);
     });
   });
 

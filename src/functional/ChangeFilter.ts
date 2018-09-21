@@ -19,7 +19,7 @@ export class ChangeFilter<T> extends Node {
     super();
     this.equals = equals;
     this.openInPort("$", new InPort(this));
-    this.openOutPort("$", new OutPort());
+    this.openOutPort("$", new OutPort(this));
   }
 
   protected process(inputs: Inputs, tag?: string): void {

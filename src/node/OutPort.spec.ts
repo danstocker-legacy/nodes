@@ -18,15 +18,30 @@ class MyNode extends Node {
 }
 
 describe("OutPort", function () {
-  describe("#connect()", function () {
+  describe("constructor", function () {
     let node: INode;
+
+    beforeEach(function () {
+      node = new MyNode();
+    });
+
+    it("should set node property", function () {
+      const port = new OutPort<number>(node);
+      expect(port.node).toBe(node);
+    });
+  });
+
+  describe("#connect()", function () {
+    let node1: INode;
+    let node2: INode;
     let outPort: OutPort<number>;
     let inPort: InPort<number>;
 
     beforeEach(function () {
-      node = new MyNode();
-      outPort = new OutPort();
-      inPort = new InPort(node);
+      node1 = new MyNode();
+      node2 = new MyNode();
+      outPort = new OutPort(node1);
+      inPort = new InPort(node2);
     });
 
     it("should set peer", function () {
@@ -34,34 +49,60 @@ describe("OutPort", function () {
       expect(outPort.peers).toEqual(new Set([inPort]));
     });
 
-    it("should invoke #onConnect() on peer node", function () {
-      spyOn(node, "onConnect");
+    it("should invoke #connect() on peer", function () {
+      spyOn(inPort, "connect");
       outPort.connect(inPort);
-      expect(node.onConnect).toHaveBeenCalledWith(outPort, inPort);
+      expect(inPort.connect).toHaveBeenCalledWith(outPort);
+    });
+
+    it("should invoke #onConnect() on node", function () {
+      spyOn(node1, "onConnect");
+      outPort.connect(inPort);
+      expect(node1.onConnect).toHaveBeenCalledWith(outPort, inPort);
     });
   });
 
   describe("#disconnect()", function () {
-    let node: INode;
+    let node1: INode;
+    let node2: INode;
+    let node3: MyNode;
     let outPort: OutPort<number>;
-    let inPort: InPort<number>;
+    let inPort1: InPort<number>;
+    let inPort2: InPort<number>;
 
     beforeEach(function () {
-      node = new MyNode();
-      outPort = new OutPort();
-      inPort = new InPort(node);
-      outPort.connect(inPort);
+      node1 = new MyNode();
+      node2 = new MyNode();
+      node3 = new MyNode();
+      outPort = new OutPort(node1);
+      inPort1 = new InPort(node2);
+      inPort2 = new InPort(node3);
+      outPort.connect(inPort1);
+      outPort.connect(inPort2);
     });
 
     it("should reset peer on self", function () {
-      outPort.disconnect(inPort);
-      expect(outPort.peers).toEqual(new Set());
+      outPort.disconnect(inPort1);
+      expect(outPort.peers).toEqual(new Set([inPort2]));
     });
 
-    it("should invoke #onDisconnect() on peer node", function () {
-      spyOn(node, "onDisconnect");
-      outPort.disconnect(inPort);
-      expect(node.onDisconnect).toHaveBeenCalledWith(outPort, inPort);
+    it("should invoke #disconnect() on peer", function () {
+      spyOn(inPort1, "disconnect");
+      outPort.disconnect(inPort1);
+      expect(inPort1.disconnect).toHaveBeenCalled();
+    });
+
+    it("should invoke #onDisconnect() on node", function () {
+      spyOn(node1, "onDisconnect");
+      outPort.disconnect(inPort1);
+      expect(node1.onDisconnect).toHaveBeenCalledWith(outPort, inPort1);
+    });
+
+    describe("when peer is omitted", function () {
+      it("should disconnect all peers", function () {
+        outPort.disconnect();
+        expect(outPort.peers).toEqual(new Set());
+      });
     });
   });
 
@@ -72,7 +113,7 @@ describe("OutPort", function () {
 
     beforeEach(function () {
       node = new MyNode();
-      outPort = new OutPort();
+      outPort = new OutPort(node);
       inPort = new InPort(node);
       outPort.connect(inPort);
     });

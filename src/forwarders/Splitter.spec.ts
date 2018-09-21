@@ -9,8 +9,8 @@ describe("Splitter", function () {
         $: new InPort(splitter)
       });
       expect(splitter.out).toEqual({
-        1: new OutPort(),
-        2: new OutPort()
+        1: new OutPort(splitter),
+        2: new OutPort(splitter)
       });
     });
   });

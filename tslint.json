@@ -5,14 +5,14 @@
   ],
   "jsRules": {},
   "rules": {
-    "trailing-comma": false,
     "array-type": [
       true,
       "generic"
     ],
+    "interface-over-type-literal": false,
     "only-arrow-functions": false,
     "space-before-function-paren": false,
-    "interface-over-type-literal": false
+    "trailing-comma": false
   },
   "rulesDirectory": []
 }

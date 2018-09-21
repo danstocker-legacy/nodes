@@ -12,9 +12,9 @@ describe("Sequencer", function () {
         3: new InPort(node)
       });
       expect(node.out).toEqual({
-        1: new OutPort(),
-        2: new OutPort(),
-        3: new OutPort()
+        1: new OutPort(node),
+        2: new OutPort(node),
+        3: new OutPort(node)
       });
     });
 
@@ -26,7 +26,7 @@ describe("Sequencer", function () {
           1: new InPort(node)
         });
         expect(node.out).toEqual({
-          1: new OutPort()
+          1: new OutPort(node)
         });
       });
     });

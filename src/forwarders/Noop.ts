@@ -14,7 +14,7 @@ export class Noop<T> extends Node {
   constructor() {
     super();
     this.openInPort("$", new InPort(this));
-    this.openOutPort("$", new OutPort());
+    this.openOutPort("$", new OutPort(this));
   }
 
   protected process(inputs: Inputs, tag?: string): void {
