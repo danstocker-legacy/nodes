@@ -1,6 +1,6 @@
-import {InPorts} from "./InPorts";
-import {Node} from "./Node";
-import {OutPorts} from "./OutPorts";
+import {InPorts} from "../node/InPorts";
+import {Node} from "../node/Node";
+import {OutPorts} from "../node/OutPorts";
 
 /**
  * Groups nodes into a single node.

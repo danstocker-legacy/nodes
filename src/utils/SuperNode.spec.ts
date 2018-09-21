@@ -1,4 +1,4 @@
-import {Noop} from "../forwarders";
+import {Noop} from "../forwarders/index";
 import {SuperNode} from "./SuperNode";
 
 describe("SuperNode", function () {

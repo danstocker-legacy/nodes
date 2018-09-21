@@ -7,4 +7,3 @@ export {Node} from "./Node";
 export {OutPorts} from "./OutPorts";
 export {OutPort} from "./OutPort";
 export {Ports} from "./Ports";
-export {SuperNode} from "./SuperNode";
