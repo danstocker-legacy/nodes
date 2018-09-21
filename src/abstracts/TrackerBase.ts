@@ -1,7 +1,7 @@
 import {Inputs, Node} from "../node";
 
 /**
- * Invokes #process() with last values on each input port.
+ * Pre-processes input so last values are always accessible.
  */
 export abstract class TrackerBase extends Node {
   private readonly inputs: Inputs;

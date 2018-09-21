@@ -90,6 +90,7 @@ port.
 
 - `SequencerBase`: Pre-processes input so it's following a reference order.
 - `SyncerBase`: Pre-processes input so values with the same tag stay together.
+- `TrackerBase`: Pre-processes input so last values are always accessible.
 
 Building a graph
 ----------------
