@@ -60,6 +60,23 @@ describe("InPort", function () {
       inPort.connect(outPort);
       expect(node2.onConnect).toHaveBeenCalledWith(outPort, inPort);
     });
+
+    describe("when alredy connected", function () {
+      let node3: MyNode;
+      let outPort2: OutPort<number>;
+
+      beforeEach(function () {
+        node3 = new MyNode();
+        outPort2 = new OutPort(node3);
+        inPort.connect(outPort2);
+      });
+
+      it("should throw", function () {
+        expect(function () {
+          inPort.connect(outPort);
+        }).toThrow();
+      });
+    });
   });
 
   describe("#disconnect()", function () {

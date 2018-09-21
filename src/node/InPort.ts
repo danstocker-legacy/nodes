@@ -13,14 +13,13 @@ export class InPort<T> implements IPort<T> {
     this.node = node;
   }
 
-  /**
-   * TODO: Throw when already connected?
-   */
   public connect(peer: OutPort<T>): void {
     if (!this.peer) {
       this.peer = peer;
       peer.connect(this);
       this.node.onConnect(peer, this);
+    } else if (peer !== this.peer) {
+      throw new Error("Input port already connected.");
     }
   }
 
