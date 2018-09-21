@@ -3,16 +3,16 @@ import {Debouncer} from "./Debouncer";
 describe("Debouncer", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
-      const debouncer: Debouncer<any> = new Debouncer(1000);
-      expect(debouncer.in.$.node).toBe(debouncer);
-      expect(debouncer.out.$).toBeDefined();
+      const node = new Debouncer<any>(1000);
+      expect(node.in.$.node).toBe(node);
+      expect(node.out.$).toBeDefined();
     });
 
     describe("#send()", function () {
-      let debouncer: Debouncer<number>;
+      let node: Debouncer<number>;
 
       beforeEach(function () {
-        debouncer = new Debouncer(500);
+        node = new Debouncer(500);
         jasmine.clock().install();
       });
 
@@ -22,26 +22,26 @@ describe("Debouncer", function () {
 
       describe("after last input", function () {
         it("should pass values to output", function () {
-          spyOn(debouncer.out.$, "send");
-          debouncer.send(new Map([[debouncer.in.$, 5]]));
-          debouncer.send(new Map([[debouncer.in.$, 6]]));
-          debouncer.send(new Map([[debouncer.in.$, 7]]));
+          spyOn(node.out.$, "send");
+          node.send(new Map([[node.in.$, 5]]));
+          node.send(new Map([[node.in.$, 6]]));
+          node.send(new Map([[node.in.$, 7]]));
           jasmine.clock().tick(501);
-          expect(debouncer.out.$.send)
+          expect(node.out.$.send)
           .toHaveBeenCalledWith([5, 6, 7], undefined);
         });
       });
 
       describe("on new input within delay", function () {
         it("should restart timer", function () {
-          spyOn(debouncer.out.$, "send");
-          debouncer.send(new Map([[debouncer.in.$, 5]]));
+          spyOn(node.out.$, "send");
+          node.send(new Map([[node.in.$, 5]]));
           jasmine.clock().tick(499);
-          debouncer.send(new Map([[debouncer.in.$, 6]]));
+          node.send(new Map([[node.in.$, 6]]));
           jasmine.clock().tick(499);
-          debouncer.send(new Map([[debouncer.in.$, 7]]));
+          node.send(new Map([[node.in.$, 7]]));
           jasmine.clock().tick(501);
-          expect(debouncer.out.$.send)
+          expect(node.out.$.send)
           .toHaveBeenCalledWith([5, 6, 7], undefined);
         });
       });

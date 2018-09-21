@@ -3,21 +3,21 @@ import {StdOut} from "./StdOut";
 describe("StdOut", function () {
   describe("constructor", function () {
     it("should intialize ports", function () {
-      const stdOut: StdOut = new StdOut();
-      expect(stdOut.in.$.node).toBe(stdOut);
+      const node: StdOut = new StdOut();
+      expect(node.in.$.node).toBe(node);
     });
   });
 
   describe("#send()", function () {
-    let stdOut: StdOut;
+    let node: StdOut;
 
     beforeEach(function () {
-      stdOut = new StdOut();
+      node = new StdOut();
     });
 
     it("should pass value to stdout", function () {
       spyOn(process.stdout, "write");
-      stdOut.send(new Map([[stdOut.in.$, "5"]]));
+      node.send(new Map([[node.in.$, "5"]]));
       expect(process.stdout.write).toHaveBeenCalledWith("5");
     });
   });

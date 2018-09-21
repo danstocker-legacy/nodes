@@ -3,36 +3,36 @@ import {Interval} from "./Interval";
 describe("Interval", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
-      const interval: Interval = new Interval(1000);
-      expect(interval.out.$).toBeDefined();
+      const node: Interval = new Interval(1000);
+      expect(node.out.$).toBeDefined();
     });
 
     it("should start timer", function () {
-      const interval: Interval = new Interval(1000);
-      expect(interval.timer).toBeDefined();
+      const node: Interval = new Interval(1000);
+      expect(node.timer).toBeDefined();
     });
   });
 
   describe("#send()", function () {
-    let interval: Interval;
+    let node: Interval;
 
     beforeEach(function () {
-      interval = new Interval(500);
+      node = new Interval(500);
     });
 
     it("should throw error", function () {
       expect(function () {
-        interval.send(new Map());
+        node.send(new Map());
       }).toThrow();
     });
   });
 
   describe("#onInterval()", function () {
-    let interval: Interval;
+    let node: Interval;
 
     beforeEach(function () {
       jasmine.clock().install();
-      interval = new Interval(500);
+      node = new Interval(500);
     });
 
     afterEach(function () {
@@ -40,12 +40,12 @@ describe("Interval", function () {
     });
 
     it("should send null to output", function () {
-      spyOn(interval.out.$, "send");
+      spyOn(node.out.$, "send");
       const BuiltInDate = global.Date;
       spyOn(global, "Date").and.callFake(() => new BuiltInDate());
       jasmine.clock().tick(501);
       const timestamp = +new Date();
-      expect(interval.out.$.send).toHaveBeenCalledWith(timestamp, `${timestamp}`);
+      expect(node.out.$.send).toHaveBeenCalledWith(timestamp, `${timestamp}`);
     });
   });
 });

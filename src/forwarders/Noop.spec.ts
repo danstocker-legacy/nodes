@@ -3,24 +3,24 @@ import {Noop} from "./Noop";
 describe("Noop", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
-      const noop = new Noop();
-      expect(noop.in.$.node).toBe(noop);
-      expect(noop.out.$).toBeDefined();
+      const node = new Noop();
+      expect(node.in.$.node).toBe(node);
+      expect(node.out.$).toBeDefined();
     });
   });
 
   describe("#send()", function () {
-    let noop: Noop<number>;
+    let node: Noop<number>;
 
     beforeEach(function () {
-      noop = new Noop();
+      node = new Noop();
     });
 
     describe("when ending to send port", function () {
       it("should send value to out port", function () {
-        spyOn(noop.out.$, "send");
-        noop.send(new Map([[noop.in.$, 5]]));
-        expect(noop.out.$.send).toHaveBeenCalledWith(5, undefined);
+        spyOn(node.out.$, "send");
+        node.send(new Map([[node.in.$, 5]]));
+        expect(node.out.$.send).toHaveBeenCalledWith(5, undefined);
       });
     });
   });

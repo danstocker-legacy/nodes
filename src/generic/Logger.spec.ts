@@ -3,21 +3,21 @@ import {Logger} from "./Logger";
 describe("Logger", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
-      const logger: Logger = new Logger();
-      expect(logger.in.$.node).toBe(logger);
+      const node: Logger = new Logger();
+      expect(node.in.$.node).toBe(node);
     });
   });
 
   describe("#send()", function () {
-    let logger: Logger;
+    let node: Logger;
 
     beforeEach(function () {
-      logger = new Logger();
+      node = new Logger();
     });
 
     it("should pass value to console.log", function () {
       spyOn(console, "log");
-      logger.send(new Map([[logger.in.$, 5]]));
+      node.send(new Map([[node.in.$, 5]]));
       // tslint:disable:no-console
       expect(console.log).toHaveBeenCalledWith(5);
     });

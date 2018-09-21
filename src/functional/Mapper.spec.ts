@@ -6,9 +6,9 @@ describe("Mapper", function () {
     const cb = (next: any) => !!next;
 
     it("should initialize ports", function () {
-      const mapper: Mapper<any, any> = new Mapper(cb);
-      expect(mapper.in.$.node).toBe(mapper);
-      expect(mapper.out.$).toBeDefined();
+      const node = new Mapper<any, any>(cb);
+      expect(node.in.$.node).toBe(node);
+      expect(node.out.$).toBeDefined();
     });
   });
 

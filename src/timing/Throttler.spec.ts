@@ -3,16 +3,16 @@ import {Throttler} from "./Throttler";
 describe("Throttler", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
-      const debouncer: Throttler<any> = new Throttler(1000);
-      expect(debouncer.in.$.node).toBe(debouncer);
-      expect(debouncer.out.$).toBeDefined();
+      const node = new Throttler<any>(1000);
+      expect(node.in.$.node).toBe(node);
+      expect(node.out.$).toBeDefined();
     });
 
     describe("#send()", function () {
-      let throttler: Throttler<number>;
+      let node: Throttler<number>;
 
       beforeEach(function () {
-        throttler = new Throttler(500);
+        node = new Throttler(500);
         jasmine.clock().install();
       });
 
@@ -22,14 +22,14 @@ describe("Throttler", function () {
 
       describe("after delay", function () {
         it("should pass values to output", function () {
-          spyOn(throttler.out.$, "send");
-          throttler.send(new Map([[throttler.in.$, 5]]));
+          spyOn(node.out.$, "send");
+          node.send(new Map([[node.in.$, 5]]));
           jasmine.clock().tick(250);
-          throttler.send(new Map([[throttler.in.$, 6]]));
+          node.send(new Map([[node.in.$, 6]]));
           jasmine.clock().tick(249);
-          throttler.send(new Map([[throttler.in.$, 7]]));
+          node.send(new Map([[node.in.$, 7]]));
           jasmine.clock().tick(2);
-          expect(throttler.out.$.send)
+          expect(node.out.$.send)
           .toHaveBeenCalledWith([5, 6, 7], undefined);
         });
       });

@@ -3,22 +3,22 @@ import {LineSplitter} from "./LineSplitter";
 describe("LineSplitter", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
-      const lineSplitter = new LineSplitter();
-      expect(lineSplitter.in.$.node).toBe(lineSplitter);
-      expect(lineSplitter.out.$).toBeDefined();
+      const node = new LineSplitter();
+      expect(node.in.$.node).toBe(node);
+      expect(node.out.$).toBeDefined();
     });
   });
 
   describe("#send()", function () {
-    let lineSplitter: LineSplitter;
+    let node: LineSplitter;
 
     beforeEach(function () {
-      lineSplitter = new LineSplitter();
+      node = new LineSplitter();
     });
 
     it("should pass individual lines to output", function () {
-      const spy = spyOn(lineSplitter.out.$, "send");
-      lineSplitter.in.$.send("foo\nbar\nbaz", "1");
+      const spy = spyOn(node.out.$, "send");
+      node.in.$.send("foo\nbar\nbaz", "1");
       const calls = spy.calls.all();
       expect(calls.length).toBe(2);
       expect(calls[0].args).toEqual(["foo", "1|0"]);
@@ -27,12 +27,12 @@ describe("LineSplitter", function () {
 
     describe("on subsequent calls", function () {
       beforeEach(function () {
-        lineSplitter.in.$.send("foo\nbar\nba");
+        node.in.$.send("foo\nbar\nba");
       });
 
       it("should pick up fragment lines", function () {
-        const spy = spyOn(lineSplitter.out.$, "send");
-        lineSplitter.in.$.send("z\nquux\n", "1");
+        const spy = spyOn(node.out.$, "send");
+        node.in.$.send("z\nquux\n", "1");
         const calls = spy.calls.all();
         expect(calls.length).toBe(2);
         expect(calls[0].args).toEqual(["baz", "1|0"]);
