@@ -1,11 +1,7 @@
-import {InPorts} from "../node/InPorts";
-import {Node} from "../node/Node";
-import {OutPorts} from "../node/OutPorts";
+import {InPorts, Node, OutPorts} from "../node";
 
 /**
- * Groups nodes into a single node.
- * Instantiate directly for ad-hoc super-nodes, subclass for super-nodes
- * that orchestrate their sub-node components.
+ * Groups nodes into a single ad-hoc node.
  */
 export class SuperNode extends Node {
   constructor(inPorts?: InPorts, outPorts?: OutPorts) {
