@@ -1,10 +1,10 @@
-import {INode} from "./INode";
+import {Node} from "./Node";
 
 /**
  * Blueprint for ports.
  */
 export interface IPort<T> {
-  readonly node: INode;
+  readonly node: Node;
 
   send(value: T, tag?: string): void;
 

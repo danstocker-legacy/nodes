@@ -1,4 +1,3 @@
-import {INode} from "./INode";
 import {InPort} from "./InPort";
 import {InPorts} from "./InPorts";
 import {Inputs} from "./Inputs";
@@ -7,7 +6,7 @@ import {OutPort} from "./OutPort";
 import {OutPorts} from "./OutPorts";
 import {Ports} from "./Ports";
 
-export abstract class Node implements INode {
+export abstract class Node {
   public readonly in: InPorts;
   public readonly out: OutPorts;
 

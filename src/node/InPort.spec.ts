@@ -1,4 +1,3 @@
-import {INode} from "./INode";
 import {InPort} from "./InPort";
 import {Inputs} from "./Inputs";
 import {Node} from "./Node";
@@ -19,7 +18,7 @@ class MyNode extends Node {
 
 describe("InPort", function () {
   describe("constructor", function () {
-    let node: INode;
+    let node: Node;
 
     beforeEach(function () {
       node = new MyNode();
@@ -32,8 +31,8 @@ describe("InPort", function () {
   });
 
   describe("#connect()", function () {
-    let node1: INode;
-    let node2: INode;
+    let node1: Node;
+    let node2: Node;
     let outPort: OutPort<number>;
     let inPort: InPort<number>;
 
@@ -80,8 +79,8 @@ describe("InPort", function () {
   });
 
   describe("#disconnect()", function () {
-    let node1: INode;
-    let node2: INode;
+    let node1: Node;
+    let node2: Node;
     let outPort: OutPort<number>;
     let inPort: InPort<number>;
 
@@ -112,7 +111,7 @@ describe("InPort", function () {
   });
 
   describe("#send()", function () {
-    let node: INode;
+    let node: Node;
     let port: InPort<number>;
 
     beforeEach(function () {

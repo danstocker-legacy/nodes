@@ -1,6 +1,6 @@
-import {INode, InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, Node, OutPort} from "../node";
 
-type FilterCallback<T> = (next: T, port: InPort<T>, node: INode) => boolean;
+type FilterCallback<T> = (next: T, port: InPort<T>, node: Node) => boolean;
 
 /**
  * Outputs only those inputs that satisfy the specified filter callback.
