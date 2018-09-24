@@ -7,16 +7,15 @@ library that models the processing network as an actual directed graph.
 In *Nodes*, you build and maintain a network of function-like objects, and 
 **push** streams of data through it.
 
-Nodes supports classic FRP concepts like map / reduce, asynchronous features 
-such as debouncing / throttling, and concurrency resolution with 
+Nodes supports classic FRP concepts like mapping / filtering, asynchronous 
+features such as debouncing / throttling, and concurrency resolution with 
 synchronization and sequencing (serialization).
 
 The basic building block of a Nodes program is the *node*, which communicates 
-through *ports*, and like a function, its primary function is to translate 
-inputs to outputs. (Secondary and tertiary functions are: connecting / 
-disconnecting, and opening / closing ports, depending on how dynamic the 
-network is expected to be by the application.) Nodes may be composed into 
-*super-nodes*.
+through *ports*, and its primary function is to translate inputs to outputs. 
+(Secondary and tertiary functions are: connecting / disconnecting, and 
+opening / closing ports, depending on how dynamic the network is expected to 
+be by the application.) Nodes may be composed into *super-nodes*.
 
 Nodes is developed in [TypeScript](http://www.typescriptlang.org/).
 
@@ -60,11 +59,15 @@ port.
 
 ### Functional
 
+Nodes that perform purely functional operations.
+
 - `ChangeFilter`: Sends input to output when it's different from the last input.
 - `Filter`: Outputs only those inputs that satisfy the specified filter callback.
 - `Mapper`: Sends mapped input to output.
 
 ### Input / output
+
+Source and sink nodes.
 
 - `StdErr`: Forwards input to `process.stderr`.
 - `StdIn`: Takes input from `process.stdin` and sends it to output.
@@ -72,19 +75,25 @@ port.
 
 ### String
 
+String manipulation.
+
 - `JsonStringifier`: Sends object input to output as JSON string.
 - `LineSplitter`: Splits input text and sends individual lines to output.
 - `Stringifier`: Sends string representation of input to output.
 
 ### Timing
 
+Tools for asynchronous data flow.
+
 - `Delayer`: Forwards input to output with a delay.
 - `Debouncer`: Forwards batches of input values with debouncing.
 - `Throttler`: Forwards batches of input values with throttling.
-- `Interval`: Outputs `null` at intervals.
+- `Interval`: Outputs Unix timestamp at intervals.
 
 ### Abstract / base classes
 
+
+- `Node`: General purpose 
 - `SequencerBase`: Pre-processes input so it's following a reference order.
 - `SyncerBase`: Pre-processes input so values with the same tag stay together.
 - `TrackerBase`: Pre-processes input so last values are always accessible.
