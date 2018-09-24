@@ -5,7 +5,7 @@ import {InPort, Inputs, IPort, Node, Ports} from "../node";
  * Not recommended for use with dynamic graphs as cached values may be
  * purged on closing ports.
  */
-export abstract class SyncerBase extends Node {
+export abstract class Syncer extends Node {
   private readonly buffer: Map<string, Inputs>;
   private readonly inPorts: Set<InPort<any>>;
 

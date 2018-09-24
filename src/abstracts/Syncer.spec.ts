@@ -1,10 +1,10 @@
 import {InPort, Inputs} from "../node";
-import {SyncerBase} from "./SyncerBase";
+import {Syncer} from "./Syncer";
 
-describe("SyncerBase", function () {
+describe("Syncer", function () {
   const process = jasmine.createSpy();
 
-  class MyNode extends SyncerBase {
+  class MySyncer extends Syncer {
     public in: {
       a: InPort<number>,
       b: InPort<number>
@@ -22,10 +22,10 @@ describe("SyncerBase", function () {
   }
 
   describe("#send()", function () {
-    let node: MyNode;
+    let node: MySyncer;
 
     beforeEach(function () {
-      node = new MyNode();
+      node = new MySyncer();
     });
 
     describe("when there are no complete input sets", function () {

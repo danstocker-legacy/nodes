@@ -1,6 +1,6 @@
-import {InPort, Inputs, Logger, OutPort, SyncerBase} from "..";
+import {InPort, Inputs, Logger, OutPort, Syncer} from "..";
 
-class Adder extends SyncerBase {
+class Adder extends Syncer {
   public readonly in: {
     a: InPort<number>,
     b: InPort<number>

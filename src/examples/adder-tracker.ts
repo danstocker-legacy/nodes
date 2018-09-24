@@ -1,6 +1,6 @@
-import {InPort, Inputs, Logger, OutPort, TrackerBase} from "..";
+import {InPort, Inputs, Logger, OutPort, Tracker} from "..";
 
-class Adder extends TrackerBase {
+class Adder extends Tracker {
   public readonly in: {
     a: InPort<number>,
     b: InPort<number>

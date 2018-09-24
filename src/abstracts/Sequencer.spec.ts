@@ -1,10 +1,10 @@
 import {InPort, Inputs} from "../node";
-import {SequencerBase} from "./SequencerBase";
+import {Sequencer} from "./Sequencer";
 
-describe("SequencerBase", function () {
+describe("Sequencer", function () {
   const process = jasmine.createSpy();
 
-  class Sequencer extends SequencerBase {
+  class MySequencer extends Sequencer {
     public readonly in: {
       ref: InPort<string>,
       1: InPort<number>,
@@ -23,10 +23,10 @@ describe("SequencerBase", function () {
   }
 
   describe("#send()", function () {
-    let node: Sequencer;
+    let node: MySequencer;
 
     beforeEach(function () {
-      node = new Sequencer();
+      node = new MySequencer();
     });
 
     describe("when only ref received data", function () {
