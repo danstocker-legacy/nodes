@@ -4,7 +4,7 @@ import {InPort, Inputs, OutPort} from "../node";
 /**
  * Forwards input following a reference order.
  */
-export class Sequencer extends SequencerBase {
+export class AdHocSequencer extends SequencerBase {
   public readonly in: {
     ref: InPort<string>,
     [key: string]: InPort<any>

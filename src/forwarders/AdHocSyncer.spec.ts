@@ -1,10 +1,10 @@
 import {InPort, OutPort} from "../node";
-import {Syncer} from "./Syncer";
+import {AdHocSyncer} from "./AdHocSyncer";
 
-describe("Syncer", function () {
+describe("AdHocSyncer", function () {
   describe("constructor", function () {
     it("should open ports", function () {
-      const node = new Syncer(3);
+      const node = new AdHocSyncer(3);
       expect(node.in).toEqual({
         1: new InPort(node),
         2: new InPort(node),
@@ -17,7 +17,7 @@ describe("Syncer", function () {
 
     describe("on missing argument", function () {
       it("should default to 2", function () {
-        const node = new Syncer();
+        const node = new AdHocSyncer();
         expect(node.in).toEqual({
           1: new InPort(node),
           2: new InPort(node)
@@ -30,10 +30,10 @@ describe("Syncer", function () {
   });
 
   describe("#send()", function () {
-    let node: Syncer;
+    let node: AdHocSyncer;
 
     beforeEach(function () {
-      node = new Syncer();
+      node = new AdHocSyncer();
     });
 
     describe("when there are no complete input sets", function () {

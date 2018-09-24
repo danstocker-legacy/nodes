@@ -53,8 +53,8 @@ Input values of these nodes are sent to the output unchanged.
 
 - `Batcher`: Sends input to output in batches of a given size.
 - `Noop`: Forwards input to output.
-- `Sequencer`: Forwards input following a reference order.
-- `Syncer`: Synchronizes inputs from multiple ports into a map on a single 
+- `AdHocSequencer`: Forwards input following a reference order.
+- `AdHocSyncer`: Synchronizes inputs from multiple ports into a map on a single 
 port.
 
 ### Functional
@@ -148,7 +148,7 @@ mapper.out.$.connect(logger.in.$);
 `InPort#send()` takes a second argument, `tag`, which identifies an original 
 input, and is used to synchronize individual impulses throughout the 
 entire graph. Tags are expected by node classes like `Tagger`, `SyncerBase`,
-`Syncer`, `SequencerBase`, and `Sequencer`.
+`AdHocSyncer`, `SequencerBase`, and `AdHocSequencer`.
 
 Tags usually take the value of a timestamp, a unique identifier or a 
 combination of these.

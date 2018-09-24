@@ -1,4 +1,4 @@
 export {Batcher} from "./Batcher";
 export {Noop} from "./Noop";
-export {Sequencer} from "./Sequencer";
-export {Syncer} from "./Syncer";
+export {AdHocSequencer} from "./AdHocSequencer";
+export {AdHocSyncer} from "./AdHocSyncer";

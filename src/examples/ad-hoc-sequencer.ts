@@ -1,7 +1,7 @@
-import {Sequencer} from "../forwarders";
+import {AdHocSequencer} from "../forwarders";
 import {Logger} from "../utils";
 
-const sequencer = new Sequencer();
+const sequencer = new AdHocSequencer();
 const logger = new Logger();
 
 sequencer.out[1].connect(logger.in.$);
