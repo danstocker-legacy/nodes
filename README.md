@@ -408,7 +408,7 @@ Ad-hoc super-nodes present a convenient way of re-using larger functional
 units of the program. Super-nodes may be nested.
 
 ```typescript
-// node node_modules/@kwaia/nodes/examples/ad-hoc-super-node
+// node node_modules/@kwaia/nodes/examples/super-node
 import {JsonStringifier, Logger, SuperNode} from "@kwaia/nodes";
 
 const jsonStringifier = new JsonStringifier<object>(true);
