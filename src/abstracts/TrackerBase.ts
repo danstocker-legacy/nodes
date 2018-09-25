@@ -3,7 +3,7 @@ import {Inputs, Node} from "../node";
 /**
  * Pre-processes input so last values are always accessible.
  */
-export abstract class Tracker extends Node {
+export abstract class TrackerBase extends Node {
   private readonly inputs: Inputs;
 
   protected constructor() {

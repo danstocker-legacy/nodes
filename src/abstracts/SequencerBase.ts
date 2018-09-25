@@ -7,7 +7,7 @@ type Sequences = Map<InPort<any>, Array<string>>;
  * Not recommended for use with dynamic graphs as cached values may be
  * purged on closing ports.
  */
-export abstract class Sequencer extends Node {
+export abstract class SequencerBase extends Node {
   public readonly in: {
     ref: InPort<string>
   };

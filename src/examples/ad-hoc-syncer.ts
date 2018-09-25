@@ -1,8 +1,8 @@
-import {AdHocSyncer} from "../forwarders";
+import {Syncer} from "../forwarders";
 import {JsonStringifier} from "../string";
 import {Logger} from "../utils";
 
-const syncer = new AdHocSyncer(2);
+const syncer = new Syncer(2);
 const jsonStringifier = new JsonStringifier(true);
 const logger = new Logger();
 

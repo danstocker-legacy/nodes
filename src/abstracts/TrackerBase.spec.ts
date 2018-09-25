@@ -1,10 +1,10 @@
 import {InPort, Inputs} from "../node";
-import {Tracker} from "./Tracker";
+import {TrackerBase} from "./TrackerBase";
 
-describe("Tracker", function () {
+describe("TrackerBase", function () {
   const process = jasmine.createSpy();
 
-  class MyTracker extends Tracker {
+  class MyTracker extends TrackerBase {
     public in: {
       a: InPort<number>,
       b: InPort<number>

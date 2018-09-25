@@ -1,10 +1,10 @@
 import {InPort, Inputs} from "../node";
-import {Syncer} from "./Syncer";
+import {SyncerBase} from "./SyncerBase";
 
-describe("Syncer", function () {
+describe("SyncerBase", function () {
   const process = jasmine.createSpy();
 
-  class MySyncer extends Syncer {
+  class MySyncer extends SyncerBase {
     public in: {
       a: InPort<number>,
       b: InPort<number>

@@ -1,10 +1,10 @@
 import {InPort, OutPort} from "../node";
-import {AdHocSequencer} from "./AdHocSequencer";
+import {Sequencer} from "./Sequencer";
 
-describe("AdHocSequencer", function () {
+describe("Sequencer", function () {
   describe("constructor", function () {
     it("should open ports", function () {
-      const node = new AdHocSequencer(3);
+      const node = new Sequencer(3);
       expect(node.in).toEqual({
         ref: new InPort(node),
         1: new InPort(node),
@@ -20,7 +20,7 @@ describe("AdHocSequencer", function () {
 
     describe("on missing argument", function () {
       it("should default to 1", function () {
-        const node = new AdHocSequencer();
+        const node = new Sequencer();
         expect(node.in).toEqual({
           ref: new InPort(node),
           1: new InPort(node)
@@ -33,10 +33,10 @@ describe("AdHocSequencer", function () {
   });
 
   describe("#send()", function () {
-    let node: AdHocSequencer;
+    let node: Sequencer;
 
     beforeEach(function () {
-      node = new AdHocSequencer(2);
+      node = new Sequencer(2);
     });
 
     describe("on passing input matching next tag", function () {

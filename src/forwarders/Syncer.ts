@@ -1,10 +1,10 @@
-import {Syncer} from "../abstracts";
+import {SyncerBase} from "../abstracts";
 import {InPort, Inputs, IPort, OutPort, Ports} from "../node";
 
 /**
  * Synchronizes inputs from multiple ports into a map on a single port.
  */
-export class AdHocSyncer extends Syncer {
+export class Syncer extends SyncerBase {
   public readonly in: {
     [key: string]: InPort<any>
   };

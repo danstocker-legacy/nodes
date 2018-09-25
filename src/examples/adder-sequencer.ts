@@ -1,6 +1,6 @@
-import {InPort, Inputs, Logger, OutPort, Sequencer} from "..";
+import {InPort, Inputs, Logger, OutPort, SequencerBase} from "..";
 
-class Adder extends Sequencer {
+class Adder extends SequencerBase {
   public readonly in: {
     ref: InPort<string>,
     a: InPort<number>,

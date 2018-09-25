@@ -1,3 +1,3 @@
-export {Sequencer} from "./Sequencer";
-export {Syncer} from "./Syncer";
-export {Tracker} from "./Tracker";
+export {SequencerBase} from "./SequencerBase";
+export {SyncerBase} from "./SyncerBase";
+export {TrackerBase} from "./TrackerBase";

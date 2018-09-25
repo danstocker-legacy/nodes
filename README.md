@@ -53,8 +53,8 @@ Input values of these nodes are sent to the output unchanged.
 
 - `Batcher`: Sends input to output in batches of a given size.
 - `Noop`: Forwards input to output.
-- `AdHocSequencer`: Forwards input following a reference order.
-- `AdHocSyncer`: Synchronizes inputs from multiple ports into a map on a single 
+- `Sequencer`: Forwards input following a reference order.
+- `Syncer`: Synchronizes inputs from multiple ports into a map on a single 
 port.
 
 ### Functional
@@ -94,9 +94,9 @@ Tools for asynchronous data flow.
 
 
 - `Node`: General purpose 
-- `Sequencer`: Pre-processes input so it's following a reference order.
-- `Syncer`: Pre-processes input so values with the same tag stay together.
-- `Tracker`: Pre-processes input so last values are always accessible.
+- `SequencerBase`: Pre-processes input so it's following a reference order.
+- `SyncerBase`: Pre-processes input so values with the same tag stay together.
+- `TrackerBase`: Pre-processes input so last values are always accessible.
 
 Building a graph
 ----------------
@@ -147,8 +147,8 @@ mapper.out.$.connect(logger.in.$);
 
 `InPort#send()` takes a second argument, `tag`, which identifies an original 
 input, and is used to synchronize individual impulses throughout the 
-entire graph. Tags are expected by node classes like `Tagger`, `Syncer`,
-`AdHocSyncer`, `Sequencer`, and `AdHocSequencer`.
+entire graph. Tags are expected by node classes like `Tagger`, `SyncerBase`,
+`Syncer`, `SequencerBase`, and `Sequencer`.
 
 Tags usually take the value of a timestamp, a unique identifier or a 
 combination of these.
@@ -165,7 +165,7 @@ Implementing a node class
 -------------------------
 
 To create a new node type, subclass `Node`, or one of the other base classes:
-`Tracker`, `Sequencer`, or `Syncer`. (More about these below.)
+`TrackerBase`, `SequencerBase`, or `SyncerBase`. (More about these below.)
 
 1. First, define port layout (public object properties `in` and `out`)
 2. Then in the constructor, initialize these ports. Make sure this is the 
@@ -229,20 +229,20 @@ adder.in.a.send(2); // 2+1=3
 adder.in.b.send(2); // 2+2=4
 ```
 
-### Using `Tracker`
+### Using `TrackerBase`
 
-`Tracker` makes sure you always have the last value from each input port
+`TrackerBase` makes sure you always have the last value from each input port
 available in your `#process()` implementation. This makes writing classic 
 *reactive* nodes easier.
 
 Consider how much more concise and maintainable the above `Adder` node becomes 
-as a `Tracker` subclass:
+as a `TrackerBase` subclass:
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/adder-tracker
-import {InPort, Inputs, Logger, OutPort, Tracker} from "@kwaia/nodes";
+import {InPort, Inputs, Logger, OutPort, TrackerBase} from "@kwaia/nodes";
 
-class Adder extends Tracker {
+class Adder extends TrackerBase {
   public readonly in: {
     a: InPort<number>,
     b: InPort<number>
@@ -275,29 +275,29 @@ adder.in.a.send(2); // 2+1=3
 adder.in.b.send(2); // 2+2=4
 ```
 
-### Using `Syncer`
+### Using `SyncerBase`
 
 When paths fork and join in a graph, synchronizing inputs becomes crucial. 
-For custom nodes that rely on multiple inputs, Nodes provides `Syncer` 
-as a foundation. The `#process()` method of `Syncer` always receives its 
+For custom nodes that rely on multiple inputs, Nodes provides `SyncerBase` 
+as a foundation. The `#process()` method of `SyncerBase` always receives its 
 `inputs` argument with *all* inputs that correspond to any given tag.
 
-    `Syncer` is currently only recommended as a static node as cached
+    `SyncerBase` is currently only recommended as a static node as cached
     input values may be purged on closing ports.
 
-Nodes based on `Syncer` are nearly identical to those based on 
-`Tracker`, except for the base class, and tags which are to be passed to 
+Nodes based on `SyncerBase` are nearly identical to those based on 
+`TrackerBase`, except for the base class, and tags which are to be passed to 
 `#send()`, as both rely on the presence of all inputs in `#process()`. 
-`Syncer` outputs only once for each tag.
+`SyncerBase` outputs only once for each tag.
 
-Notice how `Adder`, as a subclass of `Syncer`, outputs only twice in our 
+Notice how `Adder`, as a subclass of `SyncerBase`, outputs only twice in our 
 example as opposed to four above.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/adder-syncer
-import {InPort, Inputs, Logger, OutPort, Syncer} from "@kwaia/nodes";
+import {InPort, Inputs, Logger, OutPort, SyncerBase} from "@kwaia/nodes";
 
-class Adder extends Syncer {
+class Adder extends SyncerBase {
   public readonly in: {
     a: InPort<number>,
     b: InPort<number>
@@ -330,31 +330,31 @@ adder.in.a.send(2, "2");
 adder.in.b.send(2, "2"); // 2+2=4
 ```
 
-### Using `Sequencer`
+### Using `SequencerBase`
 
 With ordinary functions, we expect outputs to be produced in the same order as 
 inputs go in. To make sure this happens regardless of input order, Nodes 
-comes with `Sequencer`.
+comes with `SequencerBase`.
 
-    `Sequencer` is currently only recommended as a static node as cached
+    `SequencerBase` is currently only recommended as a static node as cached
     input values may be purged on closing ports.
 
-Nodes based on `Sequencer` are nearly identical to those based on 
-`Tracker`, except for the base class, the input port `ref`, (reference) and 
-tags to be passed to `#send()`. `Sequencer` outputs in the order 
+Nodes based on `SequencerBase` are nearly identical to those based on 
+`TrackerBase`, except for the base class, the input port `ref`, (reference) and 
+tags to be passed to `#send()`. `SequencerBase` outputs in the order 
 specified by tags sent in on the reference input port, which is why it's 
 important to have `ref` connected to the right source before sending to any 
 of the other input ports.
 
 Notice the extra inputs sent to `ref`, as well as the order of outputs near the
 end of the example below, which implements `Adder` derived from 
-`Sequencer`. 
+`SequencerBase`. 
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/adder-sequencer
-import {InPort, Inputs, Logger, OutPort, Sequencer} from "@kwaia/nodes";
+import {InPort, Inputs, Logger, OutPort, SequencerBase} from "@kwaia/nodes";
 
-class Adder extends Sequencer {
+class Adder extends SequencerBase {
   public readonly in: {
     ref: InPort<string>,
     a: InPort<number>,
@@ -444,7 +444,7 @@ Custom super-nodes have to:
 In the case of super-node classes, `#process()` sends input values of the 
 super-node to input ports of child nodes, instead of sending processed values
 to output ports. This allows super-nodes to be based on either of the 
-available base classes: `Node`, `Tracker`, `Syncer`, and `Sequencer`.
+available base classes: `Node`, `TrackerBase`, `SyncerBase`, and `SequencerBase`.
 
 The following example does exactly the same as the ad-hoc version above, but 
 as a super-node class in its own right.
