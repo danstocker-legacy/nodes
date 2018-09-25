@@ -1,9 +1,9 @@
-import {Node, OutPort} from "../node";
+import {NodeBase, OutPort} from "../node";
 
 /**
  * Outputs Unix timestamp at intervals. Tags output with unix timestamp.
  */
-export class Interval extends Node {
+export class Interval extends NodeBase {
   public readonly out: {
     $: OutPort<number>
   };

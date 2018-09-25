@@ -1,15 +1,15 @@
 import {IPort} from "./IPort";
-import {Node} from "./Node";
+import {NodeBase} from "./NodeBase";
 import {OutPort} from "./OutPort";
 
 /**
  * Input port for nodes.
  */
 export class InPort<T> implements IPort<T> {
-  public readonly node: Node;
+  public readonly node: NodeBase;
   public peer: OutPort<T>;
 
-  constructor(node: Node) {
+  constructor(node: NodeBase) {
     this.node = node;
   }
 

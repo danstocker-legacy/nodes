@@ -1,11 +1,11 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
-type MapperCallback<I, O> = (next: I, port: InPort<I>, node: Node) => O;
+type MapperCallback<I, O> = (next: I, port: InPort<I>, node: NodeBase) => O;
 
 /**
  * Sends mapped input to output.
  */
-export class Mapper<I, O> extends Node {
+export class Mapper<I, O> extends NodeBase {
   public readonly in: {
     $: InPort<I>
   };

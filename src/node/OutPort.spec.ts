@@ -1,9 +1,9 @@
 import {InPort} from "./InPort";
 import {Inputs} from "./Inputs";
-import {Node} from "./Node";
+import {NodeBase} from "./NodeBase";
 import {OutPort} from "./OutPort";
 
-class MyNode extends Node {
+class MyNode extends NodeBase {
   public readonly in: { [key: string]: InPort<any> };
   public readonly out: { [key: string]: OutPort<any> };
 
@@ -18,7 +18,7 @@ class MyNode extends Node {
 
 describe("OutPort", function () {
   describe("constructor", function () {
-    let node: Node;
+    let node: NodeBase;
 
     beforeEach(function () {
       node = new MyNode();
@@ -31,8 +31,8 @@ describe("OutPort", function () {
   });
 
   describe("#connect()", function () {
-    let node1: Node;
-    let node2: Node;
+    let node1: NodeBase;
+    let node2: NodeBase;
     let outPort: OutPort<number>;
     let inPort: InPort<number>;
 
@@ -62,8 +62,8 @@ describe("OutPort", function () {
   });
 
   describe("#disconnect()", function () {
-    let node1: Node;
-    let node2: Node;
+    let node1: NodeBase;
+    let node2: NodeBase;
     let node3: MyNode;
     let outPort: OutPort<number>;
     let inPort1: InPort<number>;
@@ -106,7 +106,7 @@ describe("OutPort", function () {
   });
 
   describe("#send()", function () {
-    let node: Node;
+    let node: NodeBase;
     let outPort: OutPort<number>;
     let inPort: InPort<number>;
 

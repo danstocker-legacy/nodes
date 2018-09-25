@@ -1,9 +1,9 @@
-import {InPort, Inputs, Node} from "../node";
+import {InPort, Inputs, NodeBase} from "../node";
 
 /**
  * Logs input to console.
  */
-export class Logger extends Node {
+export class Logger extends NodeBase {
   public readonly in: {
     $: InPort<any>
   };

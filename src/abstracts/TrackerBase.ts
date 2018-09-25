@@ -1,9 +1,9 @@
-import {Inputs, Node} from "../node";
+import {Inputs, NodeBase} from "../node";
 
 /**
  * Pre-processes input so last values are always accessible.
  */
-export abstract class TrackerBase extends Node {
+export abstract class TrackerBase extends NodeBase {
   private readonly inputs: Inputs;
 
   protected constructor() {

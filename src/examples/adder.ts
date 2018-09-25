@@ -1,6 +1,6 @@
-import {InPort, Inputs, Logger, Node, OutPort} from "..";
+import {InPort, Inputs, Logger, NodeBase, OutPort} from "..";
 
-class Adder extends Node {
+class Adder extends NodeBase {
   public readonly in: {
     a: InPort<number>,
     b: InPort<number>

@@ -1,10 +1,10 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Forwards batches of input values with debouncing.
  * Batches will be tagged with tag of last input in batch.
  */
-export class Debouncer<T> extends Node {
+export class Debouncer<T> extends NodeBase {
   public readonly in: {
     $: InPort<T>
   };

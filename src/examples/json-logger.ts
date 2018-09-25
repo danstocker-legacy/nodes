@@ -1,6 +1,6 @@
-import {InPort, Inputs, JsonStringifier, Logger, Node} from "..";
+import {InPort, Inputs, JsonStringifier, Logger, NodeBase} from "..";
 
-class JsonLogger extends Node {
+class JsonLogger extends NodeBase {
   public readonly in: {
     $: InPort<object>
   };

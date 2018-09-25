@@ -1,11 +1,11 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
-type FilterCallback<T> = (next: T, port: InPort<T>, node: Node) => boolean;
+type FilterCallback<T> = (next: T, port: InPort<T>, node: NodeBase) => boolean;
 
 /**
  * Outputs only those inputs that satisfy the specified filter callback.
  */
-export class Filter<T> extends Node {
+export class Filter<T> extends NodeBase {
   public readonly in: {
     $: InPort<T>
   };

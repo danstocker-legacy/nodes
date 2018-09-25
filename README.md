@@ -93,7 +93,7 @@ Tools for asynchronous data flow.
 ### Abstract / base classes
 
 
-- `Node`: General purpose 
+- `NodeBase`: General purpose 
 - `SequencerBase`: Pre-processes input so it's following a reference order.
 - `SyncerBase`: Pre-processes input so values with the same tag stay together.
 - `TrackerBase`: Pre-processes input so last values are always accessible.
@@ -164,7 +164,7 @@ new StdIn().out.$.connect(node.in.$);
 Implementing a node class
 -------------------------
 
-To create a new node type, subclass `Node`, or one of the other base classes:
+To create a new node type, subclass `NodeBase`, or one of the other base classes:
 `TrackerBase`, `SequencerBase`, or `SyncerBase`. (More about these below.)
 
 1. First, define port layout (public object properties `in` and `out`)
@@ -182,14 +182,14 @@ parent node as argument.
 In some cases, like custom super-nodes, connections can be made in the node's
 constructor. (See section "Custom super-nodes")
 
-The following example implements a plain `Node` that adds two numeric inputs 
+The following example implements a plain `NodeBase` that adds two numeric inputs 
 together.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/adder
-import {InPort, Inputs, Logger, Node, OutPort} from "@kwaia/nodes";
+import {InPort, Inputs, Logger, NodeBase, OutPort} from "@kwaia/nodes";
 
-class Adder extends Node {
+class Adder extends NodeBase {
   public readonly in: {
     a: InPort<number>,
     b: InPort<number>
@@ -432,7 +432,7 @@ Custom super-nodes
 
 Ad-hoc super-nodes are sufficient in most (static graph) use cases, but if 
 we intend to create complex, or reusable super-nodes, it's a better option to
-subclass `Node`.
+subclass `NodeBase`.
 
 Custom super-nodes have to:
 
@@ -444,16 +444,16 @@ Custom super-nodes have to:
 In the case of super-node classes, `#process()` sends input values of the 
 super-node to input ports of child nodes, instead of sending processed values
 to output ports. This allows super-nodes to be based on either of the 
-available base classes: `Node`, `TrackerBase`, `SyncerBase`, and `SequencerBase`.
+available base classes: `NodeBase`, `TrackerBase`, `SyncerBase`, and `SequencerBase`.
 
 The following example does exactly the same as the ad-hoc version above, but 
 as a super-node class in its own right.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/json-logger
-import {InPort, Inputs, JsonStringifier, Logger, Node} from "@kwaia/nodes";
+import {InPort, Inputs, JsonStringifier, Logger, NodeBase} from "@kwaia/nodes";
 
-class JsonLogger extends Node {
+class JsonLogger extends NodeBase {
   public readonly in: {
     $: InPort<object>
   };

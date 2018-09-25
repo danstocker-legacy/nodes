@@ -1,11 +1,11 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 type EqualsCallback<T> = (a: T, b: T) => boolean;
 
 /**
  * Sends input to output when it's different from the last input.
  */
-export class ChangeFilter<T> extends Node {
+export class ChangeFilter<T> extends NodeBase {
   public readonly in: {
     $: InPort<T>
   };

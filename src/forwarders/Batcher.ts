@@ -1,9 +1,9 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Sends input to output in batches of a given size.
  */
-export class Batcher<T> extends Node {
+export class Batcher<T> extends NodeBase {
   public readonly in: {
     $: InPort<T>
   };

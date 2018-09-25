@@ -1,9 +1,9 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Sends object input to output as JSON string.
  */
-export class JsonStringifier<I extends object> extends Node {
+export class JsonStringifier<I extends object> extends NodeBase {
   public readonly in: {
     $: InPort<I>
   };

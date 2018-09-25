@@ -6,7 +6,7 @@ import {OutPort} from "./OutPort";
 import {OutPorts} from "./OutPorts";
 import {Ports} from "./Ports";
 
-export abstract class Node {
+export abstract class NodeBase {
   public readonly in: InPorts;
   public readonly out: OutPorts;
 

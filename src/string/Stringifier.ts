@@ -1,9 +1,9 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Sends string representation of input to output.
  */
-export class Stringifier<I> extends Node {
+export class Stringifier<I> extends NodeBase {
   public readonly in: {
     $: InPort<I>
   };

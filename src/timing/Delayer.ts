@@ -1,9 +1,9 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Forwards input to output with a delay.
  */
-export class Delayer<T> extends Node {
+export class Delayer<T> extends NodeBase {
   public readonly in: {
     $: InPort<T>
   };

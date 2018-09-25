@@ -1,10 +1,10 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Splits input text and sends individual lines to output.
  * Tags output with line index appended to input tag.
  */
-export class LineSplitter extends Node {
+export class LineSplitter extends NodeBase {
   public readonly in: {
     $: InPort<string>
   };

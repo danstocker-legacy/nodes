@@ -1,4 +1,4 @@
-import {InPort, Inputs, IPort, Node, Ports} from "../node";
+import {InPort, Inputs, IPort, NodeBase, Ports} from "../node";
 
 type Sequences = Map<InPort<any>, Array<string>>;
 
@@ -7,7 +7,7 @@ type Sequences = Map<InPort<any>, Array<string>>;
  * Not recommended for use with dynamic graphs as cached values may be
  * purged on closing ports.
  */
-export abstract class SequencerBase extends Node {
+export abstract class SequencerBase extends NodeBase {
   public readonly in: {
     ref: InPort<string>
   };

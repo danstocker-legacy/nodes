@@ -1,11 +1,11 @@
-import {InPort, Inputs, Node, OutPort} from "../node";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 type TaggerCallback<T> = (value: T, tag?: string) => string;
 
 /**
  * Forwards input to output with the tag changed.
  */
-export class Tagger<T> extends Node {
+export class Tagger<T> extends NodeBase {
   public readonly in: {
     $: InPort<T>
   };

@@ -1,11 +1,11 @@
 import {InPort} from "./InPort";
 import {Inputs} from "./Inputs";
-import {Node} from "./Node";
+import {NodeBase} from "./NodeBase";
 
-describe("Node", function () {
+describe("NodeBase", function () {
   const process = jasmine.createSpy();
 
-  class MyNode extends Node {
+  class MyNode extends NodeBase {
     public readonly in: {
       foo: InPort<number>
     };

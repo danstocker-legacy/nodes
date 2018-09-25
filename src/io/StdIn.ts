@@ -1,10 +1,10 @@
-import {Node, OutPort} from "../node";
+import {NodeBase, OutPort} from "../node";
 
 /**
  * Takes input from `process.stdin` and sends it to output.
  * Tags output with Unix timestamp.
  */
-export class StdIn extends Node {
+export class StdIn extends NodeBase {
   public readonly out: {
     $: OutPort<string | Buffer>
   };
