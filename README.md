@@ -180,7 +180,7 @@ The example below re-creates `Noop` as an ad-hoc node.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/noop-ad-hoc
-import {Logger, Node} from "..";
+import {Logger, Node} from "@kwaia/nodes";
 
 const noop = new Node((inputs) => noop.out[1].send(inputs[1]));
 const logger = new Logger();
@@ -372,7 +372,7 @@ comes with `SequencerBase`.
     input values may be purged on closing ports.
 
 Nodes based on `SequencerBase` are nearly identical to those based on 
-`TrackerBase`, except for the base class, the input port `ref`, (reference) and 
+`NodeBase`, except for the base class, the input port `ref`, (reference) and 
 tags to be passed to `#send()`. `SequencerBase` outputs in the order 
 specified by tags sent in on the reference input port, which is why it's 
 important to have `ref` connected to the right source before sending to any 
