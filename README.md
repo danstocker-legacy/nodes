@@ -174,7 +174,7 @@ The callback passed in will receive a lookup object of input values, indexed
 by port name, and the tag, and is not expected to return any value.
 
 Once an ad-hoc node is created, its ports will be numbered, starting from 1. 
-Accessing ports follows array index notation, eg. `node.in[1]`.
+Accessing ports follows array index notation, eg. `node.in[0]`.
 
 The example below re-creates `Noop` as an ad-hoc node.
 
@@ -182,11 +182,11 @@ The example below re-creates `Noop` as an ad-hoc node.
 // node node_modules/@kwaia/nodes/examples/noop-ad-hoc
 import {Logger, Node} from "@kwaia/nodes";
 
-const noop = new Node((inputs) => noop.out[1].send(inputs[1]));
+const noop = new Node((inputs) => noop.out[0].send(inputs[0]));
 const logger = new Logger();
 
-noop.out[1].connect(logger.in.$);
-noop.in[1].send("foo"); // "foo"
+noop.out[0].connect(logger.in.$);
+noop.in[0].send("foo"); // "foo"
 ```
 
 Do not subclass `Node`, instead, subclass `NodeBase`, as illustrated in the 
