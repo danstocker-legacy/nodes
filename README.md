@@ -173,7 +173,7 @@ default to 1.
 The callback passed in will receive a lookup object of input values, indexed 
 by port name, and the tag, and is not expected to return any value.
 
-Once an ad-hoc node is created, its ports will be numbered, starting from 1. 
+Once an ad-hoc node is created, its ports will be numbered, starting from 0. 
 Accessing ports follows array index notation, eg. `node.in[0]`.
 
 The example below re-creates `Noop` as an ad-hoc node.
