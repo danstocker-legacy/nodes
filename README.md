@@ -44,6 +44,7 @@ Nodes comes with a number of built-in node types:
 ### Utilities
 
 - `Logger`: Logs input to console.
+- `Node`: Ad-hoc node defined by process callback and number of ports.
 - `SuperNode`: Groups nodes into a single node.
 - `Tagger`: Forwards input to output with the tag changed.
 
@@ -161,11 +162,39 @@ node.in.$.send("foo", "1");
 new StdIn().out.$.connect(node.in.$);
 ```
 
+Ad-hoc nodes
+------------
+
+For prototyping purposes, and one-off solutions, we can create custom nodes 
+without any subclassing. The ad-hoc `Node` class takes a callback, and two 
+port counts on instantiation: one for input, one for output. Both counts 
+default to 1.
+
+The callback passed in will receive a lookup object of input values, indexed 
+by port name, and the tag, and is not expected to return any value.
+
+Once an ad-hoc node is created, its ports will be numbered, starting from 1. 
+Accessing ports follows array index notation, eg. `node.in[1]`.
+
+The example below re-creates `Noop` as an ad-hoc node.
+
+```typescript
+// node node_modules/@kwaia/nodes/examples/noop-ad-hoc
+import {Logger, Node} from "..";
+
+const noop = new Node((inputs) => noop.out[1].send(inputs[1]));
+const logger = new Logger();
+
+noop.out[1].connect(logger.in.$);
+noop.in[1].send("foo"); // "foo"
+```
+
 Implementing a node class
 -------------------------
 
-To create a new node type, subclass `NodeBase`, or one of the other base classes:
-`TrackerBase`, `SequencerBase`, or `SyncerBase`. (More about these below.)
+To create a new node type, subclass `NodeBase`, or one of the other base 
+classes: `TrackerBase`, `SequencerBase`, or `SyncerBase`. (More about these
+below.)
 
 1. First, define port layout (public object properties `in` and `out`)
 2. Then in the constructor, initialize these ports. Make sure this is the 

@@ -1,7 +1,7 @@
 import {Logger, Node} from "..";
 
-const node = new Node((inputs) => node.out[1].send(inputs[1]));
+const noop = new Node((inputs) => noop.out[1].send(inputs[1]));
 const logger = new Logger();
 
-node.out[1].connect(logger.in.$);
-node.in[1].send("foo");
+noop.out[1].connect(logger.in.$);
+noop.in[1].send("foo"); // "foo"
