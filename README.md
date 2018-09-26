@@ -189,6 +189,9 @@ noop.out[1].connect(logger.in.$);
 noop.in[1].send("foo"); // "foo"
 ```
 
+Do not subclass `Node`, instead, subclass `NodeBase`, as illustrated in the 
+next section.
+
 Implementing a node class
 -------------------------
 
