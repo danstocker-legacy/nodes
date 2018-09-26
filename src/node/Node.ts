@@ -18,10 +18,10 @@ export class Node extends NodeBase {
   constructor(callback: ProcessCallback, inCount: number = 1, outCount: number = 1) {
     super();
     this.callback = callback;
-    for (let i = 1; i <= inCount; i++) {
+    for (let i = 0; i < inCount; i++) {
       this.openInPort(`${i}`, new InPort<any>(this));
     }
-    for (let i = 1; i <= outCount; i++) {
+    for (let i = 0; i < outCount; i++) {
       this.openOutPort(`${i}`, new OutPort<any>(this));
     }
   }

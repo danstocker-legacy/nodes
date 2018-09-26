@@ -16,7 +16,7 @@ export class Syncer extends SyncerBase {
   constructor(count: number = 2) {
     super();
     this.lookup = new Map();
-    for (let i = 1; i <= count; i++) {
+    for (let i = 0; i < count; i++) {
       this.openInPort(`${i}`, new InPort(this));
     }
     this.openOutPort("$", new OutPort(this));
