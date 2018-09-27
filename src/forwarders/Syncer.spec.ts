@@ -54,7 +54,7 @@ describe("Syncer", function () {
       it("should forward synced inputs", function () {
         spyOn(node.out.$, "send");
         node.send(new Map([[node.in[1] as InPort<number>, 4]]), "2");
-        expect(node.out.$.send).toHaveBeenCalledWith({0: 2, 1: 4}, "2");
+        expect(node.out.$.send).toHaveBeenCalledWith([2, 4], "2");
       });
     });
   });

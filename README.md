@@ -55,8 +55,8 @@ Input values of these nodes are sent to the output unchanged.
 - `Batcher`: Sends input to output in batches of a given size.
 - `Noop`: Forwards input to output.
 - `Sequencer`: Forwards input following a reference order.
-- `Syncer`: Synchronizes inputs from multiple ports into a map on a single 
-port.
+- `Syncer`: Synchronizes input values from multiple ports into an array on a 
+single port.
 
 ### Functional
 
