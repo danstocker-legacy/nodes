@@ -57,6 +57,15 @@ describe("SyncerBase", function () {
         expect(process).toHaveBeenCalledWith(
           new Map([[node.in.a, 5], [node.in.b, 2]]), "1");
       });
+
+      it("should maintain port order", function () {
+        process.calls.reset();
+        node.send(new Map([[node.in.a, 3]]), "2");
+        const args = process.calls.allArgs();
+        expect(args.length).toBe(1);
+        const inputs: Inputs = args[0][0];
+        expect(Array.from(inputs.values())).toEqual([3, 4]);
+      });
     });
 
     describe("on closing port", function () {

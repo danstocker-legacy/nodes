@@ -27,7 +27,7 @@ export abstract class SyncerBase extends NodeBase {
     if (values.size >= this.inPorts.size) {
       // got all inputs for current tag
       buffer.delete(tag);
-      this.process(values, tag);
+      this.process(this.consolidateInputs(values), tag);
     }
   }
 
@@ -62,8 +62,16 @@ export abstract class SyncerBase extends NodeBase {
   private processTags(): void {
     for (const [tag, inputs] of this.buffer.entries()) {
       if (inputs.size >= this.inPorts.size) {
-        this.process(inputs, tag);
+        this.process(this.consolidateInputs(inputs), tag);
       }
     }
+  }
+
+  private consolidateInputs(inputs: Inputs): Inputs {
+    const result = new Map();
+    for (const port of this.inPorts.values()) {
+      result.set(port, inputs.get(port));
+    }
+    return result;
   }
 }
