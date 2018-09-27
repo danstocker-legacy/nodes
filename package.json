@@ -1,7 +1,7 @@
 {
   "name": "@kwaia/nodes",
-  "version": "1.0.3",
-  "description": "Reactive graph",
+  "version": "1.0.4",
+  "description": "FRP library that thinks in graphs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
