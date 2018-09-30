@@ -1,3 +1,4 @@
+export {INode} from "./INode";
 export {InPorts} from "./InPorts";
 export {InPort} from "./InPort";
 export {Inputs} from "./Inputs";
