@@ -27,77 +27,19 @@ Getting started
 1. Install via NPM: `npm i @kwaia/nodes`
 2. In your code, import the relevant classes / interfaces.
 
-Eg.
+**Hello world**
+
 ```typescript
-import {LineSplitter, Logger, Mapper, StdIn} from "@kwaia/nodes";
+// node node_modules/@kwaia/nodes/examples/helloworld
+import {Logger} from "@kwaia/nodes";
+
+const logger = new Logger();
+logger.in.$.send("Hello World");
 ```
 
 All code samples in this document are also included in the npm package under 
 `/examples`. You may run them using the command provided in the first line of
 each code section.
-
-Built-in nodes
---------------
-
-Nodes comes with a number of built-in node types:
-
-### Utilities
-
-- `Logger`: Logs input to console.
-- `Node`: Ad-hoc node defined by process callback and number of ports.
-- `SuperNode`: Groups nodes into a single node.
-- `Tagger`: Forwards input to output with the tag changed.
-
-### Forwarders
-
-Input values of these nodes are sent to the output unchanged.
-
-- `Batcher`: Sends input to output in batches of a given size.
-- `Noop`: Forwards input to output.
-- `Sequencer`: Forwards input following a reference order.
-- `Syncer`: Synchronizes input values from multiple ports into an array on a 
-single port.
-
-### Functional
-
-Nodes that perform purely functional operations.
-
-- `ChangeFilter`: Sends input to output when it's different from the last input.
-- `Filter`: Outputs only those inputs that satisfy the specified filter callback.
-- `Mapper`: Sends mapped input to output.
-
-### Input / output
-
-Source and sink nodes.
-
-- `StdErr`: Forwards input to `process.stderr`.
-- `StdIn`: Takes input from `process.stdin` and sends it to output.
-- `StdOut`: Forwards input to `process.stdout`.
-
-### String
-
-String manipulation.
-
-- `JsonStringifier`: Sends object input to output as JSON string.
-- `LineSplitter`: Splits input text and sends individual lines to output.
-- `Stringifier`: Sends string representation of input to output.
-
-### Timing
-
-Tools for asynchronous data flow.
-
-- `Delayer`: Forwards input to output with a delay.
-- `Debouncer`: Forwards batches of input values with debouncing.
-- `Throttler`: Forwards batches of input values with throttling.
-- `Interval`: Outputs Unix timestamp at intervals.
-
-### Abstract / base classes
-
-
-- `NodeBase`: General purpose 
-- `SequencerBase`: Pre-processes input so it's following a reference order.
-- `SyncerBase`: Pre-processes input so values with the same tag stay together.
-- `TrackerBase`: Pre-processes input so last values are always accessible.
 
 Building a graph
 ----------------
@@ -161,6 +103,69 @@ node.in.$.send("foo", "1");
 // implicit: sends in the output of StdIn, with the current timestamp as tag
 new StdIn().out.$.connect(node.in.$);
 ```
+
+Built-in nodes
+--------------
+
+Nodes comes with a number of built-in node types:
+
+### Utilities
+
+- `Logger`: Logs input to console.
+- `Node`: Ad-hoc node defined by process callback and number of ports.
+- `SuperNode`: Groups nodes into a single node.
+- `Tagger`: Forwards input to output with the tag changed.
+
+### Forwarders
+
+Input values of these nodes are sent to the output unchanged.
+
+- `Batcher`: Sends input to output in batches of a given size.
+- `Noop`: Forwards input to output.
+- `Sequencer`: Forwards input following a reference order.
+- `Syncer`: Synchronizes input values from multiple ports into an array on a 
+single port.
+
+### Functional
+
+Nodes that perform purely functional operations.
+
+- `ChangeFilter`: Sends input to output when it's different from the last input.
+- `Filter`: Outputs only those inputs that satisfy the specified filter callback.
+- `Mapper`: Sends mapped input to output.
+
+### Input / output
+
+Source and sink nodes.
+
+- `StdErr`: Forwards input to `process.stderr`.
+- `StdIn`: Takes input from `process.stdin` and sends it to output.
+- `StdOut`: Forwards input to `process.stdout`.
+
+### String
+
+String manipulation.
+
+- `JsonStringifier`: Sends object input to output as JSON string.
+- `LineSplitter`: Splits input text and sends individual lines to output.
+- `Stringifier`: Sends string representation of input to output.
+
+### Timing
+
+Tools for asynchronous data flow.
+
+- `Delayer`: Forwards input to output with a delay.
+- `Debouncer`: Forwards batches of input values with debouncing.
+- `Throttler`: Forwards batches of input values with throttling.
+- `Interval`: Outputs Unix timestamp at intervals.
+
+### Abstract / base classes
+
+
+- `NodeBase`: General purpose 
+- `SequencerBase`: Pre-processes input so it's following a reference order.
+- `SyncerBase`: Pre-processes input so values with the same tag stay together.
+- `TrackerBase`: Pre-processes input so last values are always accessible.
 
 Ad-hoc nodes
 ------------
