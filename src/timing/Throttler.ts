@@ -1,3 +1,4 @@
+import {push} from "../functional";
 import {ReducerCallback} from "../functional/ReducerCallback";
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
 import {shallowCopy} from "../utils/utils";
@@ -7,13 +8,6 @@ import {shallowCopy} from "../utils/utils";
  * Batches will be tagged with tag of last input in batch.
  */
 export class Throttler<I> extends NodeBase {
-  private static defaultInitial: Array<any> = [];
-
-  private static defaultCallback(current: Array<any>, next: any): Array<any> {
-    current.push(next);
-    return current;
-  }
-
   public readonly in: {
     $: InPort<I>
   };
@@ -29,8 +23,8 @@ export class Throttler<I> extends NodeBase {
 
   constructor(
     delay: number,
-    callback: ReducerCallback<I, any> = Throttler.defaultCallback,
-    initial: any = Throttler.defaultInitial
+    callback: ReducerCallback<I, any> = push,
+    initial: any = []
   ) {
     super();
     this.delay = delay;

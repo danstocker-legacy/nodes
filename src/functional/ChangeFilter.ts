@@ -1,6 +1,5 @@
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
-
-type EqualsCallback<T> = (a: T, b: T) => boolean;
+import {EqualsCallback} from "./EqualsCallback";
 
 /**
  * Sends input to output when it's different from the last input.

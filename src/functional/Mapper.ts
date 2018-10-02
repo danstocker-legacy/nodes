@@ -1,6 +1,5 @@
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
-
-type MapperCallback<I, O> = (next: I, port: InPort<I>, node: NodeBase) => O;
+import {MapperCallback} from "./MapperCallback";
 
 /**
  * Sends mapped input to output.
