@@ -1,30 +1,48 @@
+import {ReducerCallback} from "../functional/ReducerCallback";
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
+import {shallowCopy} from "../utils/utils";
 
 /**
  * Forwards batches of input values with debouncing.
  * Batches will be tagged with tag of last input in batch.
  */
-export class Debouncer<T> extends NodeBase {
+export class Debouncer<I> extends NodeBase {
+  private static defaultInitial: Array<any> = [];
+
+  private static defaultCallback(current: Array<any>, next: any): Array<any> {
+    current.push(next);
+    return current;
+  }
+
   public readonly in: {
-    $: InPort<T>
+    $: InPort<I>
   };
   public readonly out: {
-    $: OutPort<Array<T>>
+    $: OutPort<any>
   };
   private readonly delay: number;
+  private readonly callback: ReducerCallback<I, any>;
+  private readonly initial: any;
   private timer: NodeJS.Timer;
-  private values: Array<T>;
+  private reduced: any;
 
-  constructor(delay: number) {
+  constructor(
+    delay: number,
+    callback: ReducerCallback<I, any> = Debouncer.defaultCallback,
+    initial: any = Debouncer.defaultInitial
+  ) {
     super();
     this.delay = delay;
-    this.values = [];
+    this.callback = callback;
+    this.initial = initial;
+    this.reduced = shallowCopy(this.initial);
     this.openInPort("$", new InPort(this));
     this.openOutPort("$", new OutPort(this));
   }
 
   protected process(inputs: Inputs, tag?: string): void {
-    this.values.push(inputs.get(this.in.$));
+    const next = inputs.get(this.in.$);
+    this.reduced = this.callback(this.reduced, next, this.in.$, this);
 
     const timer = this.timer;
     if (timer) {
@@ -32,10 +50,10 @@ export class Debouncer<T> extends NodeBase {
     }
 
     const onTimeout = () => {
-      const values = this.values;
+      const reduced = this.reduced;
       this.timer = undefined;
-      this.values = [];
-      this.out.$.send(values, tag);
+      this.reduced = shallowCopy(this.initial);
+      this.out.$.send(reduced, tag);
     };
 
     this.timer = setTimeout(onTimeout, this.delay);
