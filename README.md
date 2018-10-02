@@ -37,6 +37,15 @@ const logger = new Logger();
 logger.in.$.send("Hello World");
 ```
 
+**Hello world (JS)**
+
+```ecmascript 6
+const Logger = require("@kwaia/nodes").Logger;
+
+const logger = new Logger();
+logger.in.$.send("Hello World");
+```
+
 All code samples in this document are also included in the npm package under 
 `/examples`. You may run them using the command provided in the first line of
 each code section.
