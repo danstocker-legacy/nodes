@@ -23,3 +23,11 @@ export function join(current: string, next: string): string {
 export function sum(current: number, next: number): number {
   return current + next;
 }
+
+export function min(current: number, next: number): number {
+  return next < current ? next : current;
+}
+
+export function max(current: number, next: number): number {
+  return next > current ? next : current;
+}

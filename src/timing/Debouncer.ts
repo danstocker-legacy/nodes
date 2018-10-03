@@ -29,7 +29,7 @@ export class Debouncer<I> extends NodeBase {
     this.delay = delay;
     this.callback = callback;
     this.initial = initial;
-    this.reduced = shallowCopy(this.initial);
+    this.reduced = shallowCopy(initial);
     this.openInPort("$", new InPort(this));
     this.openOutPort("$", new OutPort(this));
   }

@@ -31,7 +31,7 @@ export class Throttler<I> extends NodeBase {
     this.reduced = [];
     this.callback = callback;
     this.initial = initial;
-    this.reduced = shallowCopy(this.initial);
+    this.reduced = shallowCopy(initial);
     this.count = 0;
     this.openInPort("$", new InPort(this));
     this.openOutPort("$", new OutPort(this));

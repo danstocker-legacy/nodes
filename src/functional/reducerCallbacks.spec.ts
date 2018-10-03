@@ -1,4 +1,13 @@
-import {concat, join, last, push, sum, unshift} from "./reducerCallbacks";
+import {
+  concat,
+  join,
+  last,
+  max,
+  min,
+  push,
+  sum,
+  unshift
+} from "./reducerCallbacks";
 
 describe("push()", function () {
   it("should push items into array", function () {
@@ -39,5 +48,19 @@ describe("sum()", function () {
   it("should return joined string", function () {
     const input = [1, 2, 3, 4, 5];
     expect(input.reduce(sum, 0)).toEqual(15);
+  });
+});
+
+describe("min()", function () {
+  it("should return minimum item", function () {
+    const input = [1, 2, 3, 4, 5];
+    expect(input.reduce(min, Infinity)).toEqual(1);
+  });
+});
+
+describe("max()", function () {
+  it("should return maximum item", function () {
+    const input = [1, 2, 3, 4, 5];
+    expect(input.reduce(max, -Infinity)).toEqual(5);
   });
 });

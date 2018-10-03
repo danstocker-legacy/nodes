@@ -142,6 +142,7 @@ Nodes that perform purely functional operations.
 - `ChangeFilter`: Sends input to output when it's different from the last input.
 - `Filter`: Outputs only those inputs that satisfy the specified filter callback.
 - `Mapper`: Sends mapped input to output.
+- `Reducer`: Outputs aggregated input values between changes in reference.
 
 ### Input / output
 
