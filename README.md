@@ -531,7 +531,8 @@ Planned features
 - [ ] Additional source and sink nodes (eg. networking).
 - [ ] Connecting node ports to network ports.
 - [ ] Trail: how inputs arrived at the current node.
-- [ ] State snapshot: saving & restoring overall state of the graph.
+- [ ] GraphML support: saving & restoring overall state of the graph.
+- [ ] Warnings / errors on congestion in `SyncerBase` & `SequencerBase`.
 - [ ] Error handling: error ports for built-in nodes.
 - [ ] Visual graph snapshot: generating image of nodes and connections.
 - [ ] Visual debugging: annotating graph with traffic statistics.
