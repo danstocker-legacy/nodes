@@ -528,6 +528,8 @@ jsonLogger.in.$.send({foo: "bar"});
 Planned features
 ----------------
 
+- [ ] Additional source and sink nodes (eg. networking).
+- [ ] Connecting node ports to network ports.
 - [ ] Trail: how inputs arrived at the current node.
 - [ ] State snapshot: saving & restoring overall state of the graph.
 - [ ] Error handling: error ports for built-in nodes.
