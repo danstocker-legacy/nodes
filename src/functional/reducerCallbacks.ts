@@ -31,3 +31,13 @@ export function min(current: number, next: number): number {
 export function max(current: number, next: number): number {
   return next > current ? next : current;
 }
+
+export function merge(current: object, next: object): object {
+  const keys = Object.keys(next);
+  const keyCount = keys.length;
+  for (let i = 0; i < keyCount; i++) {
+    const key = keys[i];
+    current[key] = next[key];
+  }
+  return current;
+}

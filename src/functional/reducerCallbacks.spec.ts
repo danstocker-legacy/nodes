@@ -3,6 +3,7 @@ import {
   join,
   last,
   max,
+  merge,
   min,
   push,
   sum,
@@ -62,5 +63,16 @@ describe("max()", function () {
   it("should return maximum item", function () {
     const input = [1, 2, 3, 4, 5];
     expect(input.reduce(max, -Infinity)).toEqual(5);
+  });
+});
+
+describe("merge()", function () {
+  it("should return merged object", function () {
+    const input = [{foo: 1}, {bar: 2}, {baz: 3}];
+    expect(input.reduce(merge, {})).toEqual({
+      bar: 2,
+      baz: 3,
+      foo: 1
+    });
   });
 });
