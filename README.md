@@ -7,7 +7,7 @@ library that models the processing network as an actual directed graph.
 In *Nodes*, you build and maintain a network of function-like objects, and 
 **push** streams of data through it.
 
-Nodes supports classic FRP concepts like mapping / filtering, asynchronous 
+Nodes supports classic FRP concepts like map / filter / reduce, asynchronous 
 features such as debouncing / throttling, and concurrency resolution with 
 synchronization and sequencing (serialization).
 
@@ -185,7 +185,7 @@ without any subclassing. The ad-hoc `Node` class takes a callback, and two
 port counts on instantiation: one for input, one for output. Both counts 
 default to 1.
 
-The callback passed in will receive a lookup object of input values, indexed 
+The callback passed in will receive a lookup object of input values - indexed 
 by port name, and the tag, and is not expected to return any value.
 
 Once an ad-hoc node is created, its ports will be numbered, starting from 0. 
@@ -528,7 +528,7 @@ jsonLogger.in.$.send({foo: "bar"});
 Planned features
 ----------------
 
-- [ ] Additional source and sink nodes (eg. networking).
+- [ ] Additional source and sink nodes (eg. networking, filesystem).
 - [ ] Connecting node ports to network ports.
 - [ ] Trail: how inputs arrived at the current node.
 - [ ] GraphML support: saving & restoring overall state of the graph.
