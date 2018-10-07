@@ -1,10 +1,6 @@
 import {InPort, OutPort} from "../node";
 import {HashMapper} from "./HashMapper";
 
-/**
- * Special mapper that adds field names to an array of values.
- * TODO: Tentative. Contender: mapper callback "hash".
- */
 describe("HashMapper", function () {
   describe("constructor", function () {
     it("should open ports", function () {
