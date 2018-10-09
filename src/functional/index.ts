@@ -4,5 +4,6 @@ export {Filter} from "./Filter";
 export {Mapper} from "./Mapper";
 export {Reducer} from "./Reducer";
 export {Selector} from "./Selector";
+export * from "./equalsCallbacks";
 export * from "./mapperCallbacks";
 export * from "./reducerCallbacks";
