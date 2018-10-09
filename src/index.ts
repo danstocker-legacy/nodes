@@ -1,4 +1,5 @@
 export * from "./abstracts";
+export * from "./control";
 export * from "./forwarders";
 export * from "./functional";
 export * from "./io";
