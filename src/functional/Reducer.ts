@@ -1,7 +1,7 @@
 import {SyncerBase} from "../abstracts";
+import {ReducerCallback} from "../callbacks/ReducerCallback";
 import {InPort, Inputs, OutPort} from "../node";
 import {shallowCopy} from "../utils/utils";
-import {ReducerCallback} from "./ReducerCallback";
 
 /**
  * Outputs aggregated input values between changes in reference.

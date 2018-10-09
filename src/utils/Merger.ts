@@ -1,6 +1,6 @@
 import {SyncerBase} from "../abstracts";
-import {push} from "../functional";
-import {ReducerCallback} from "../functional/ReducerCallback";
+import {push} from "../callbacks";
+import {ReducerCallback} from "../callbacks/ReducerCallback";
 import {InPort, Inputs, OutPort} from "../node";
 import {shallowCopy} from "./utils";
 

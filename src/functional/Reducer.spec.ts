@@ -1,6 +1,5 @@
-import {InPort, OutPort} from "../node";
+import {sum} from "../callbacks";
 import {Reducer} from "./Reducer";
-import {sum} from "./reducerCallbacks";
 
 describe("Reducer", function () {
   describe("constructor", function () {

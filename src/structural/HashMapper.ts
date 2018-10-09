@@ -1,4 +1,4 @@
-import {InPort, Inputs, NodeBase, OutPort} from "../node/index";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Special mapper that adds field names to an array of values.

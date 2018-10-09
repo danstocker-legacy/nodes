@@ -2,6 +2,7 @@ import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Sends input to output in batches of a given size.
+ * TODO: Add optional ReduceCallback ctr argument.
  */
 export class Batcher<T> extends NodeBase {
   public readonly in: {

@@ -1,5 +1,5 @@
-import {reference} from "../flow";
-import {EqualsCallback} from "../flow/EqualsCallback";
+import {reference} from "../callbacks";
+import {EqualsCallback} from "./EqualsCallback";
 import {FilterCallback} from "./FilterCallback";
 
 export function change<T>(callback: EqualsCallback<T> = reference): FilterCallback<T> {

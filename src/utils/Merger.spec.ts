@@ -1,5 +1,4 @@
-import {sum} from "../functional";
-import {InPort, OutPort} from "../node";
+import {sum} from "../callbacks";
 import {Merger} from "./Merger";
 
 describe("Merger", function () {
