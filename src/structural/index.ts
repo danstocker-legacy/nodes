@@ -1,0 +1,1 @@
+export {HashMapper} from "./HashMapper";

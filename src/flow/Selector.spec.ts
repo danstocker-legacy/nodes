@@ -1,4 +1,4 @@
-import {InPort, OutPort} from "../node";
+import {InPort, OutPort} from "../node/index";
 import {Selector} from "./Selector";
 
 describe("Selector", function () {

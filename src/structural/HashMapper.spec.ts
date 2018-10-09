@@ -1,4 +1,4 @@
-import {InPort, OutPort} from "../node";
+import {InPort, OutPort} from "../node/index";
 import {HashMapper} from "./HashMapper";
 
 describe("HashMapper", function () {

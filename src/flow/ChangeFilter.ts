@@ -1,4 +1,4 @@
-import {InPort, Inputs, NodeBase, OutPort} from "../node";
+import {InPort, Inputs, NodeBase, OutPort} from "../node/index";
 import {EqualsCallback} from "./EqualsCallback";
 import {reference} from "./equalsCallbacks";
 

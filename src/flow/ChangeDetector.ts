@@ -1,6 +1,6 @@
-import {reference} from "../functional";
-import {EqualsCallback} from "../functional/EqualsCallback";
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
+import {EqualsCallback} from "./EqualsCallback";
+import {reference} from "./equalsCallbacks";
 
 /**
  * Sends 1 to output when current input is different from previous, 0 otherwise.
