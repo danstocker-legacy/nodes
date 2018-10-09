@@ -1,6 +1,6 @@
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
 import {EqualsCallback} from "./EqualsCallback";
-import {byRef} from "./equalsCallbacks";
+import {reference} from "./equalsCallbacks";
 
 /**
  * Sends input to output when it's different from the last input.
@@ -15,7 +15,7 @@ export class ChangeFilter<T> extends NodeBase {
   private readonly equals?: EqualsCallback<T>;
   private lastValue: T;
 
-  constructor(equals: EqualsCallback<T> = byRef) {
+  constructor(equals: EqualsCallback<T> = reference) {
     super();
     this.equals = equals;
     this.openInPort("$", new InPort(this));

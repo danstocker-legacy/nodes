@@ -1,4 +1,4 @@
-import {byRef} from "../functional";
+import {reference} from "../functional";
 import {EqualsCallback} from "../functional/EqualsCallback";
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
@@ -15,7 +15,7 @@ export class ChangeDetector<T> extends NodeBase {
   private readonly equals?: EqualsCallback<T>;
   private lastValue: T;
 
-  constructor(equals: EqualsCallback<T> = byRef) {
+  constructor(equals: EqualsCallback<T> = reference) {
     super();
     this.equals = equals;
     this.openInPort("$", new InPort(this));
