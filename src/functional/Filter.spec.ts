@@ -7,7 +7,7 @@ describe("Filter", function () {
 
     it("should initialize ports", function () {
       const node = new Filter<any>(cb);
-      expect(node.in.$.node).toBe(node);
+      expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
   });

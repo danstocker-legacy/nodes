@@ -4,7 +4,7 @@ describe("Batcher", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const node: Batcher<number> = new Batcher(3);
-      expect(node.in.$.node).toBe(node);
+      expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
 

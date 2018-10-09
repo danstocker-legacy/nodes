@@ -5,12 +5,8 @@ describe("HashMapper", function () {
   describe("constructor", function () {
     it("should open ports", function () {
       const node = new HashMapper([]);
-      expect(node.in).toEqual({
-        $: new InPort(node)
-      });
-      expect(node.out).toEqual({
-        $: new OutPort(node)
-      });
+      expect(node.in.$).toBeDefined();
+      expect(node.out.$).toBeDefined();
     });
   });
 

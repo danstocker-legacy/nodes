@@ -4,7 +4,7 @@ describe("Stringifier", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const node: Stringifier<any> = new Stringifier();
-      expect(node.in.$.node).toBe(node);
+      expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
   });

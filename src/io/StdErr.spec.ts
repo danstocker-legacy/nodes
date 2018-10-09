@@ -4,7 +4,7 @@ describe("StdErr", function () {
   describe("constructor", function () {
     it("should intialize ports", function () {
       const node = new StdErr();
-      expect(node.in.$.node).toBe(node);
+      expect(node.in.$).toBeDefined();
     });
   });
 

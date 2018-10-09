@@ -4,7 +4,7 @@ describe("Logger", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const node: Logger = new Logger();
-      expect(node.in.$.node).toBe(node);
+      expect(node.in.$).toBeDefined();
     });
   });
 

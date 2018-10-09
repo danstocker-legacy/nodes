@@ -5,13 +5,9 @@ describe("Selector", function () {
   describe("constructor", function () {
     it("should open ports", function () {
       const node = new Selector();
-      expect(node.in).toEqual({
-        $: new InPort(node),
-        ref: new InPort(node)
-      });
-      expect(node.out).toEqual({
-        $: new OutPort(node)
-      });
+      expect(node.in.$).toBeDefined();
+      expect(node.in.ref).toBeDefined();
+      expect(node.out.$).toBeDefined();
     });
   });
 

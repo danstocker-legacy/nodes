@@ -5,26 +5,18 @@ describe("Syncer", function () {
   describe("constructor", function () {
     it("should open ports", function () {
       const node = new Syncer(3);
-      expect(node.in).toEqual({
-        0: new InPort(node),
-        1: new InPort(node),
-        2: new InPort(node)
-      });
-      expect(node.out).toEqual({
-        $: new OutPort(node)
-      });
+      expect(node.in[0]).toBeDefined();
+      expect(node.in[1]).toBeDefined();
+      expect(node.in[2]).toBeDefined();
+      expect(node.out.$).toBeDefined();
     });
 
     describe("on missing argument", function () {
       it("should default to 2", function () {
         const node = new Syncer();
-        expect(node.in).toEqual({
-          0: new InPort(node),
-          1: new InPort(node)
-        });
-        expect(node.out).toEqual({
-          $: new OutPort(node)
-        });
+        expect(node.in[0]).toBeDefined();
+        expect(node.in[1]).toBeDefined();
+        expect(node.out.$).toBeDefined();
       });
     });
   });

@@ -4,8 +4,8 @@ describe("Delayer", function () {
   describe("constructor", function () {
     it("should set ports", function () {
       const node = new Delayer<any>(1000);
-      expect(node.in.$.node).toBe(node);
-      expect(node.out).toBeDefined();
+      expect(node.in.$).toBeDefined();
+      expect(node.out.$).toBeDefined();
     });
   });
 

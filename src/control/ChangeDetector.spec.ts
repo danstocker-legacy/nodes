@@ -4,8 +4,8 @@ describe("ChangeDetector", function () {
   describe("constructor", function () {
     it("should open ports", function () {
       const node = new ChangeDetector();
-      expect(node.in.$).not.toBeUndefined();
-      expect(node.out.$).not.toBeUndefined();
+      expect(node.in.$).toBeDefined();
+      expect(node.out.$).toBeDefined();
     });
   });
 

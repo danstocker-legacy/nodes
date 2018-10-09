@@ -6,23 +6,17 @@ describe("Merger", function () {
   describe("constructor", function () {
     it("should open ports", function () {
       const node = new Merger<number>(3);
-      expect(node.in).toEqual({
-        0: new InPort(node),
-        1: new InPort(node),
-        2: new InPort(node)
-      });
-      expect(node.out).toEqual({
-        $: new OutPort(node)
-      });
+      expect(node.in[0]).toBeDefined();
+      expect(node.in[1]).toBeDefined();
+      expect(node.in[2]).toBeDefined();
+      expect(node.out.$).toBeDefined();
     });
 
     describe("when count is omitted", function () {
       it("should open 2 input ports", function () {
         const node = new Merger<number>();
-        expect(node.in).toEqual({
-          0: new InPort(node),
-          1: new InPort(node)
-        });
+        expect(node.in[0]).toBeDefined();
+        expect(node.in[1]).toBeDefined();
       });
     });
   });

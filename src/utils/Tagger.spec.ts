@@ -4,7 +4,7 @@ describe("Tagger", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const node = new Tagger(() => "");
-      expect(node.in.$.node).toBe(node);
+      expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
   });
