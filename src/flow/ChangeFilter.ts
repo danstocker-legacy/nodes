@@ -1,9 +1,10 @@
-import {InPort, Inputs, NodeBase, OutPort} from "../node/index";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 import {EqualsCallback} from "./EqualsCallback";
 import {reference} from "./equalsCallbacks";
 
 /**
  * Sends input to output when it's different from the last input.
+ * @deprecated Use `new Filter(change())` instead.
  */
 export class ChangeFilter<T> extends NodeBase {
   public readonly in: {
