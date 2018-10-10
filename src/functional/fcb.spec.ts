@@ -1,11 +1,11 @@
+import {fcb} from "./fcb";
 import {FilterCallback} from "./FilterCallback";
-import {change} from "./filterCallbacks";
 
 describe("change()", function () {
   let callback: FilterCallback<number>;
 
   beforeEach(function () {
-    callback = change();
+    callback = fcb.change();
     callback(1);
   });
 
