@@ -1,4 +1,4 @@
-import {hash, stringify} from "./mapperCallbacks";
+import {hash, jsonStringify, stringify} from "./mapperCallbacks";
 
 describe("hash()", function () {
   it("should convert array to hash", function () {
@@ -23,5 +23,21 @@ describe("stringify()", function () {
         return "foo";
       }
     })).toBe("foo");
+  });
+});
+
+describe("jsonStringify()", function () {
+  it("should return input JSON as string", function () {
+    expect(jsonStringify({
+      1: "foo",
+      2: 1,
+      3: true,
+      4: null,
+      5: [1, 2],
+      6: {
+        foo: 1
+      },
+      7: undefined
+    })).toBe(`{"1":"foo","2":1,"3":true,"4":null,"5":[1,2],"6":{"foo":1}}`);
   });
 });
