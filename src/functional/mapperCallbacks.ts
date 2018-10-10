@@ -14,3 +14,7 @@ export function hash(fields: Array<string>): (next: Array<any>) => { [key: strin
     return result;
   };
 }
+
+export function stringify<T>(next: T) {
+  return String(next);
+}
