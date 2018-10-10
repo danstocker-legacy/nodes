@@ -6,6 +6,5 @@ export * from "./functional";
 export * from "./io";
 export * from "./node";
 export * from "./string";
-export * from "./structural";
 export * from "./timing";
 export * from "./utils";
