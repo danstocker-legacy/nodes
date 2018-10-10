@@ -34,10 +34,16 @@ export function addKeys(fields: Array<string>): (next: Array<any>) => { [key: st
   };
 }
 
+/**
+ * Returns string representation of input.
+ */
 export function stringify(next: any): string {
   return String(next);
 }
 
+/**
+ * Encodes the input as JSON string.
+ */
 export function jsonStringify(next: any): string {
   return JSON.stringify(next);
 }
