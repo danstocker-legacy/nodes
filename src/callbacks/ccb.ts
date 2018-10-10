@@ -1,8 +1,8 @@
 export const ccb = {
   /**
-   * Compares intrinsic values of inputs.
+   * Compares reference values of inputs.
    */
-  intrinsic: (a: any, b: any): number => {
+  reference: (a: any, b: any): number => {
     return a > b ? 1 : a < b ? -1 : a === b ? 0 : undefined;
   }
 };

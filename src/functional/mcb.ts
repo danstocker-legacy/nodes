@@ -75,7 +75,7 @@ export const mcb = {
    * comparer callback.
    * Higher-order function.
    */
-  sort: <T>(callback: ComparerCallback<T> = ccb.intrinsic): MapperCallback<Array<T>, Array<T>> => {
+  sort: <T>(callback: ComparerCallback<T> = ccb.reference): MapperCallback<Array<T>, Array<T>> => {
     return (next: Array<T>) => {
       return next.sort(callback);
     };
