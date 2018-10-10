@@ -1,3 +1,6 @@
+import {ComparerCallback} from "../callbacks/ComparerCallback";
+import {intrinsic} from "../callbacks/comparerCallbacks";
+
 /**
  * Extracts keys from object.
  */
@@ -62,4 +65,14 @@ export function jsonStringify(next: any): string {
   return JSON.stringify(next);
 }
 
-// TODO: Add sort()
+// TODO: Add jsonParse
+
+/**
+ * Returns a function that sorts input according to the specified
+ * comparer callback.
+ */
+export function sort<T>(callback: ComparerCallback<T> = intrinsic): (next: Array<T>) => Array<T> {
+  return (next: Array<T>) => {
+    return next.sort(callback);
+  };
+}

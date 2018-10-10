@@ -3,6 +3,7 @@ import {
   addValues,
   jsonStringify,
   keys,
+  sort,
   stringify,
   values
 } from "./mapperCallbacks";
@@ -71,5 +72,22 @@ describe("jsonStringify()", function () {
       },
       7: undefined
     })).toBe(`{"1":"foo","2":1,"3":true,"4":null,"5":[1,2],"6":{"foo":1}}`);
+  });
+});
+
+describe("sort()", function () {
+  it("should return sorted array", function () {
+    const result = sort<{ [key: string]: number }>((a, b) =>
+      a.foo > b.foo ? 1 :
+        a.foo < b.foo ? -1 :
+          a.foo === b.foo ? 0 :
+            undefined)([{foo: 5}, {foo: 2}, {foo: 3}, {foo: 1}, {foo: 4}]);
+    expect(result).toEqual([
+      {foo: 1},
+      {foo: 2},
+      {foo: 3},
+      {foo: 4},
+      {foo: 5}
+    ]);
   });
 });
