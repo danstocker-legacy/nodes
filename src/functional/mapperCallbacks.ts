@@ -1,5 +1,5 @@
+import {ccb} from "../callbacks";
 import {ComparerCallback} from "../callbacks/ComparerCallback";
-import {intrinsic} from "../callbacks/comparerCallbacks";
 import {MapperCallback} from "./MapperCallback";
 
 /**
@@ -75,7 +75,7 @@ export function jsonStringify(next: any): string {
  * comparer callback.
  * Higher-order function.
  */
-export function sort<T>(callback: ComparerCallback<T> = intrinsic): MapperCallback<Array<T>, Array<T>> {
+export function sort<T>(callback: ComparerCallback<T> = ccb.intrinsic): MapperCallback<Array<T>, Array<T>> {
   return (next: Array<T>) => {
     return next.sort(callback);
   };
