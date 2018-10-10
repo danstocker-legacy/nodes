@@ -1,5 +1,6 @@
 import {
   addKeys,
+  addValues,
   jsonStringify,
   keys,
   stringify,
@@ -21,8 +22,19 @@ describe("values()", function () {
 });
 
 describe("addKeys()", function () {
-  it("should convert array to addKeys", function () {
+  it("should convert add keys to array", function () {
     const result = [[1, 2, 3]].map(addKeys(["foo", "bar", "baz"]));
+    expect(result).toEqual([{
+      bar: 2,
+      baz: 3,
+      foo: 1
+    }]);
+  });
+});
+
+describe("addValues()", function () {
+  it("should add values to keys", function () {
+    const result = [["foo", "bar", "baz"]].map(addValues([1, 2, 3]));
     expect(result).toEqual([{
       bar: 2,
       baz: 3,

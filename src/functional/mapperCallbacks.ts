@@ -35,6 +35,20 @@ export function addKeys(fields: Array<string>): (next: Array<any>) => { [key: st
 }
 
 /**
+ * Returns a mapper callback function that assigns values to a list of keys.
+ */
+export function addValues(values: Array<any>): (next: Array<string>) => { [key: string]: any } {
+  return function (next: Array<string>) {
+    const result: { [key: string]: any } = {};
+    const valueCount = values.length;
+    for (let i = 0; i < valueCount; i++) {
+      result[next[i]] = values[i];
+    }
+    return result;
+  };
+}
+
+/**
  * Returns string representation of input.
  */
 export function stringify(next: any): string {
@@ -47,3 +61,5 @@ export function stringify(next: any): string {
 export function jsonStringify(next: any): string {
   return JSON.stringify(next);
 }
+
+// TODO: Add sort()
