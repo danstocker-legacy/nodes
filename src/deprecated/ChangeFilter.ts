@@ -4,7 +4,7 @@ import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Sends input to output when it's different from the last input.
- * @deprecated Use `new Filter(change())` instead.
+ * @deprecated Use `new Filter(fcb.change$())` instead.
  */
 export class ChangeFilter<T> extends NodeBase {
   public readonly in: {

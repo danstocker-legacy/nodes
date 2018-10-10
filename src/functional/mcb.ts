@@ -30,7 +30,7 @@ export const mcb = {
    * elements.
    * Higher-order function.
    */
-  addKeys: (fields: Array<string>): MapperCallback<Array<any>, { [key: string]: any }> => {
+  addKeys$: (fields: Array<string>): MapperCallback<Array<any>, { [key: string]: any }> => {
     return function (next: Array<any>) {
       const result: { [key: string]: any } = {};
       const fieldCount = fields.length;
@@ -45,7 +45,7 @@ export const mcb = {
    * Returns a mapper callback function that assigns values to a list of keys.
    * Higher-order function.
    */
-  addValues: (values: Array<any>): MapperCallback<Array<string>, { [key: string]: any }> => {
+  addValues$: (values: Array<any>): MapperCallback<Array<string>, { [key: string]: any }> => {
     return function (next: Array<string>) {
       const result: { [key: string]: any } = {};
       const valueCount = values.length;
@@ -75,7 +75,7 @@ export const mcb = {
    * comparer callback.
    * Higher-order function.
    */
-  sort: <T>(callback: ComparerCallback<T> = ccb.reference): MapperCallback<Array<T>, Array<T>> => {
+  sort$: <T>(callback: ComparerCallback<T> = ccb.reference): MapperCallback<Array<T>, Array<T>> => {
     return (next: Array<T>) => {
       return next.sort(callback);
     };

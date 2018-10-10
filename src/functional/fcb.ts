@@ -8,7 +8,7 @@ export const fcb = {
    * current, false otherwise.
    * Higher-order function.
    */
-  change: <T>(callback: EqualsCallback<T> = ecb.reference): FilterCallback<T> => {
+  change$: <T>(callback: EqualsCallback<T> = ecb.reference): FilterCallback<T> => {
     let current: T;
     return (next: T): boolean => {
       const previous = current;

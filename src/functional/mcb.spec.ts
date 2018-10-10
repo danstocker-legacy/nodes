@@ -15,9 +15,9 @@ describe("mcb", function () {
     });
   });
 
-  describe("addKeys()", function () {
+  describe("addKeys$()", function () {
     it("should convert add keys to array", function () {
-      const result = mcb.addKeys(["foo", "bar", "baz"])([1, 2, 3]);
+      const result = mcb.addKeys$(["foo", "bar", "baz"])([1, 2, 3]);
       expect(result).toEqual({
         bar: 2,
         baz: 3,
@@ -26,9 +26,9 @@ describe("mcb", function () {
     });
   });
 
-  describe("addValues()", function () {
+  describe("addValues$()", function () {
     it("should add values to keys", function () {
-      const result = mcb.addValues([1, 2, 3])(["foo", "bar", "baz"]);
+      const result = mcb.addValues$([1, 2, 3])(["foo", "bar", "baz"]);
       expect(result).toEqual({
         bar: 2,
         baz: 3,
@@ -68,9 +68,9 @@ describe("mcb", function () {
     });
   });
 
-  describe("sort()", function () {
+  describe("sort$()", function () {
     it("should return sorted array", function () {
-      const result = mcb.sort<{ [key: string]: number }>((a, b) =>
+      const result = mcb.sort$<{ [key: string]: number }>((a, b) =>
         a.foo > b.foo ? 1 :
           a.foo < b.foo ? -1 :
             a.foo === b.foo ? 0 :
