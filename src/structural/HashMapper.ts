@@ -2,7 +2,7 @@ import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Special mapper that adds field names to an array of values.
- * TODO: Tentative. Contender: mapper callback "hash".
+ * TODO: Tentative. Contender: mapper callback "addKeys".
  */
 export class HashMapper extends NodeBase {
   public readonly in: {

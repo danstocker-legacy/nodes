@@ -1,8 +1,8 @@
-import {hash, jsonStringify, stringify} from "./mapperCallbacks";
+import {addKeys, jsonStringify, stringify} from "./mapperCallbacks";
 
-describe("hash()", function () {
-  it("should convert array to hash", function () {
-    const result = [[1, 2, 3]].map(hash(["foo", "bar", "baz"]));
+describe("addKeys()", function () {
+  it("should convert array to addKeys", function () {
+    const result = [[1, 2, 3]].map(addKeys(["foo", "bar", "baz"]));
     expect(result).toEqual([{
       bar: 2,
       baz: 3,
