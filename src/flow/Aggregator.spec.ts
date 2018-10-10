@@ -1,10 +1,10 @@
 import {sum} from "../callbacks";
-import {Reducer} from "./Reducer";
+import {Aggregator} from "./Aggregator";
 
-describe("Reducer", function () {
+describe("Aggregator", function () {
   describe("constructor", function () {
     it("should open ports", function () {
-      const node = new Reducer<number, number>(sum, 0);
+      const node = new Aggregator<number, number>(sum, 0);
       expect(node.in.ref).toBeDefined();
       expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
@@ -12,10 +12,10 @@ describe("Reducer", function () {
   });
 
   describe("#send()", function () {
-    let node: Reducer<number, number>;
+    let node: Aggregator<number, number>;
 
     beforeEach(function () {
-      node = new Reducer(sum, 0);
+      node = new Aggregator(sum, 0);
     });
 
     describe("when ref changes", function () {

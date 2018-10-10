@@ -6,7 +6,7 @@ import {shallowCopy} from "../utils/utils";
 /**
  * Outputs aggregated input values between changes in reference.
  */
-export class Reducer<I, O> extends SyncerBase {
+export class Aggregator<I, O> extends SyncerBase {
   public readonly in: {
     ref: InPort<any>,
     $: InPort<I>

@@ -1,5 +1,5 @@
-import {SyncerBase} from "../abstracts/index";
-import {InPort, Inputs, OutPort} from "../node/index";
+import {SyncerBase} from "../abstracts";
+import {InPort, Inputs, OutPort} from "../node";
 
 /**
  * Forwards default input to output when reference input is truthy.
