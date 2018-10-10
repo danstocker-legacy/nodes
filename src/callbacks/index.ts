@@ -1,1 +1,1 @@
-export * from "./equalsCallbacks";
+export {ecb} from "./ecb";
