@@ -1,4 +1,24 @@
-import {addKeys, jsonStringify, stringify} from "./mapperCallbacks";
+import {
+  addKeys,
+  jsonStringify,
+  keys,
+  stringify,
+  values
+} from "./mapperCallbacks";
+
+describe("keys()", function () {
+  it("should extract keys from object", function () {
+    const result = keys({foo: "bar", baz: "quux"});
+    expect(result.sort()).toEqual(["baz", "foo"]);
+  });
+});
+
+describe("values()", function () {
+  it("should extract values from object", function () {
+    const result = values({foo: "bar", baz: "quux"});
+    expect(result.sort()).toEqual(["bar", "quux"]);
+  });
+});
 
 describe("addKeys()", function () {
   it("should convert array to addKeys", function () {
