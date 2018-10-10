@@ -1,6 +1,4 @@
-import {Syncer} from "../forwarders";
-import {JsonStringifier} from "../string";
-import {Logger} from "../utils";
+import {JsonStringifier, Logger, Syncer} from "..";
 
 const syncer = new Syncer(2);
 const jsonStringifier = new JsonStringifier(true);

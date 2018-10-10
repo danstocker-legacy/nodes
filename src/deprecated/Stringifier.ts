@@ -2,6 +2,7 @@ import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Sends string representation of input to output.
+ * @deprecated Use `new Mapper(stringify)` instead
  */
 export class Stringifier<I> extends NodeBase {
   public readonly in: {

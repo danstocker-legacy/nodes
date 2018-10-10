@@ -1,4 +1,5 @@
 export * from "./abstracts";
+export * from "./deprecated";
 export * from "./flow";
 export * from "./forwarders";
 export * from "./functional";

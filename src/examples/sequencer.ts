@@ -1,5 +1,4 @@
-import {Sequencer} from "../forwarders";
-import {Logger} from "../utils";
+import {Logger, Sequencer} from "..";
 
 const sequencer = new Sequencer();
 const logger = new Logger();
