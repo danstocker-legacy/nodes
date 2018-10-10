@@ -24,23 +24,23 @@ describe("values()", function () {
 
 describe("addKeys()", function () {
   it("should convert add keys to array", function () {
-    const result = [[1, 2, 3]].map(addKeys(["foo", "bar", "baz"]));
-    expect(result).toEqual([{
+    const result = addKeys(["foo", "bar", "baz"])([1, 2, 3]);
+    expect(result).toEqual({
       bar: 2,
       baz: 3,
       foo: 1
-    }]);
+    });
   });
 });
 
 describe("addValues()", function () {
   it("should add values to keys", function () {
-    const result = [["foo", "bar", "baz"]].map(addValues([1, 2, 3]));
-    expect(result).toEqual([{
+    const result = addValues([1, 2, 3])(["foo", "bar", "baz"]);
+    expect(result).toEqual({
       bar: 2,
       baz: 3,
       foo: 1
-    }]);
+    });
   });
 });
 

@@ -1,5 +1,6 @@
 import {ComparerCallback} from "../callbacks/ComparerCallback";
 import {intrinsic} from "../callbacks/comparerCallbacks";
+import {MapperCallback} from "./MapperCallback";
 
 /**
  * Extracts keys from object.
@@ -26,7 +27,7 @@ export function values(next: { [key: string]: any }): Array<any> {
  * Returns a mapper callback function that assigns field names to array
  * elements.
  */
-export function addKeys(fields: Array<string>): (next: Array<any>) => { [key: string]: any } {
+export function addKeys(fields: Array<string>): MapperCallback<Array<any>, { [key: string]: any }> {
   return function (next: Array<any>) {
     const result: { [key: string]: any } = {};
     const fieldCount = fields.length;
@@ -40,7 +41,7 @@ export function addKeys(fields: Array<string>): (next: Array<any>) => { [key: st
 /**
  * Returns a mapper callback function that assigns values to a list of keys.
  */
-export function addValues(values: Array<any>): (next: Array<string>) => { [key: string]: any } {
+export function addValues(values: Array<any>): MapperCallback<Array<string>, { [key: string]: any }> {
   return function (next: Array<string>) {
     const result: { [key: string]: any } = {};
     const valueCount = values.length;
@@ -71,7 +72,7 @@ export function jsonStringify(next: any): string {
  * Returns a function that sorts input according to the specified
  * comparer callback.
  */
-export function sort<T>(callback: ComparerCallback<T> = intrinsic): (next: Array<T>) => Array<T> {
+export function sort<T>(callback: ComparerCallback<T> = intrinsic): MapperCallback<Array<T>, Array<T>> {
   return (next: Array<T>) => {
     return next.sort(callback);
   };
