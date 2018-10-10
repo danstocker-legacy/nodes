@@ -26,6 +26,7 @@ export function values(next: { [key: string]: any }): Array<any> {
 /**
  * Returns a mapper callback function that assigns field names to array
  * elements.
+ * Higher-order function.
  */
 export function addKeys(fields: Array<string>): MapperCallback<Array<any>, { [key: string]: any }> {
   return function (next: Array<any>) {
@@ -40,6 +41,7 @@ export function addKeys(fields: Array<string>): MapperCallback<Array<any>, { [ke
 
 /**
  * Returns a mapper callback function that assigns values to a list of keys.
+ * Higher-order function.
  */
 export function addValues(values: Array<any>): MapperCallback<Array<string>, { [key: string]: any }> {
   return function (next: Array<string>) {
@@ -71,6 +73,7 @@ export function jsonStringify(next: any): string {
 /**
  * Returns a function that sorts input according to the specified
  * comparer callback.
+ * Higher-order function.
  */
 export function sort<T>(callback: ComparerCallback<T> = intrinsic): MapperCallback<Array<T>, Array<T>> {
   return (next: Array<T>) => {
