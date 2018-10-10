@@ -1,5 +1,5 @@
 import {SyncerBase} from "../abstracts";
-import {push} from "../functional";
+import {rcb} from "../functional";
 import {ReducerCallback} from "../functional/ReducerCallback";
 import {InPort, Inputs, OutPort} from "../node";
 import {shallowCopy} from "./utils";
@@ -17,7 +17,7 @@ export class Merger<I> extends SyncerBase {
 
   constructor(
     count: number = 2,
-    callback: ReducerCallback<I, any> = push,
+    callback: ReducerCallback<I, any> = rcb.push,
     initial: any = []
   ) {
     super();

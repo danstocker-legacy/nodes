@@ -1,4 +1,4 @@
-import {push} from "../functional";
+import {rcb} from "../functional";
 import {ReducerCallback} from "../functional/ReducerCallback";
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
 import {shallowCopy} from "../utils/utils";
@@ -22,7 +22,7 @@ export class Debouncer<I> extends NodeBase {
 
   constructor(
     delay: number,
-    callback: ReducerCallback<I, any> = push,
+    callback: ReducerCallback<I, any> = rcb.push,
     initial: any = []
   ) {
     super();
