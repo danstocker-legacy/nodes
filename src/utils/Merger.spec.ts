@@ -1,4 +1,4 @@
-import {sum} from "../callbacks";
+import {sum} from "../functional";
 import {Merger} from "./Merger";
 
 describe("Merger", function () {

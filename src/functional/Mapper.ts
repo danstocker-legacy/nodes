@@ -1,5 +1,5 @@
-import {MapperCallback} from "../callbacks/MapperCallback";
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
+import {MapperCallback} from "./MapperCallback";
 
 /**
  * Sends mapped input to output.

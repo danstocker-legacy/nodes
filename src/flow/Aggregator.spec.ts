@@ -1,4 +1,4 @@
-import {sum} from "../callbacks";
+import {sum} from "../functional";
 import {Aggregator} from "./Aggregator";
 
 describe("Aggregator", function () {
