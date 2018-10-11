@@ -17,9 +17,8 @@ through *ports*, and its primary function is to translate inputs to outputs.
 opening / closing ports, depending on how dynamic the network is expected to 
 be by the application.) Nodes may be composed into *super-nodes*.
 
-Nodes is developed in [TypeScript](http://www.typescriptlang.org/).
-
-Nodes is a [Kwaia](http://kwaia.com) project.
+Nodes is a [Kwaia](http://kwaia.com) project, and is developed in 
+[TypeScript](http://www.typescriptlang.org/).
 
 Getting started
 ---------------
@@ -139,10 +138,27 @@ single port.
 
 Nodes that perform purely functional operations.
 
-- `ChangeFilter`: Sends input to output when it's different from the last input.
 - `Filter`: Outputs only those inputs that satisfy the specified filter callback.
 - `Mapper`: Sends mapped input to output.
+
+There is no purely functional *Reducer* in Nodes as initial value in the case
+of streams would be arbitrary. There are quasi-reducers though, including 
+`Aggregator`, `Debouncer`, and `Throttler`; all of which take a reducer 
+callback to produce their outputs.
+
+    Frequently used filter, mapper, reducer, equality, and comparison callbacks
+    are provided by the corresponding `filter`, `map`, `reduce`, `equal`, and 
+    `compare` namespaces.
+
+### Control Flow
+
+Nodes where output behavior is controlled by a reference signal.
+
 - `Aggregator`: Outputs aggregated input values between changes in reference.
+- `ChangeDetector`: Sends 1 to output when current input is different from 
+previous, 0 otherwise.
+- `Merger`: Merges values from all input ports into a single output.
+- `Selector`: Forwards default input to output when reference input is truthy.
 
 ### Input / output
 
@@ -156,9 +172,7 @@ Source and sink nodes.
 
 String manipulation.
 
-- `JsonStringifier`: Sends object input to output as JSON string.
 - `LineSplitter`: Splits input text and sends individual lines to output.
-- `Stringifier`: Sends string representation of input to output.
 
 ### Timing
 
@@ -170,7 +184,6 @@ Tools for asynchronous data flow.
 - `Interval`: Outputs Unix timestamp at intervals.
 
 ### Abstract / base classes
-
 
 - `NodeBase`: General purpose 
 - `SequencerBase`: Pre-processes input so it's following a reference order.

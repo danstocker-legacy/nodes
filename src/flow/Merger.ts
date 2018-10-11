@@ -4,6 +4,9 @@ import {ReduceCallback} from "../functional/callbacks/ReduceCallback";
 import {InPort, Inputs, OutPort} from "../node";
 import {shallowCopy} from "../utils/utils";
 
+/**
+ * Merges values from all input ports into a single output.
+ */
 export class Merger<I> extends SyncerBase {
   public readonly in: {
     [key: string]: InPort<I>
