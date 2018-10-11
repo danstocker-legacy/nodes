@@ -159,6 +159,7 @@ Nodes where output behavior is controlled by a reference signal.
 previous, 0 otherwise.
 - `Merger`: Merges values from all input ports into a single output.
 - `Selector`: Forwards default input to output when reference input is truthy.
+- `Shifter`: Outputs the previous input value.
 
 ### Input / output
 
