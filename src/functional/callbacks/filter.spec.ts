@@ -1,12 +1,12 @@
-import {flt} from "./flt";
+import {filter} from "./filter";
 import {FilterCallback} from "./FilterCallback";
 
-describe("flt", function () {
+describe("filter", function () {
   describe("change$()", function () {
     let callback: FilterCallback<number>;
 
     beforeEach(function () {
-      callback = flt.change$();
+      callback = filter.change$();
       callback(1);
     });
 

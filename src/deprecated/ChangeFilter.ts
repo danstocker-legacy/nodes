@@ -1,10 +1,10 @@
-import {eq} from "../callbacks";
+import {equal} from "../callbacks";
 import {EqualsCallback} from "../callbacks/EqualsCallback";
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Sends input to output when it's different from the last input.
- * @deprecated Use `new Filter(flt.change$())` instead.
+ * @deprecated Use `new Filter(filter.change$())` instead.
  */
 export class ChangeFilter<T> extends NodeBase {
   public readonly in: {
@@ -16,7 +16,7 @@ export class ChangeFilter<T> extends NodeBase {
   private readonly equals?: EqualsCallback<T>;
   private lastValue: T;
 
-  constructor(equals: EqualsCallback<T> = eq.reference) {
+  constructor(equals: EqualsCallback<T> = equal.reference) {
     super();
     this.equals = equals;
     this.openInPort("$", new InPort(this));

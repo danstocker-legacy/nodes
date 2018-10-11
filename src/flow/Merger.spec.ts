@@ -1,4 +1,4 @@
-import {rdc} from "../functional";
+import {reduce} from "../functional";
 import {Merger} from "./Merger";
 
 describe("Merger", function () {
@@ -25,7 +25,7 @@ describe("Merger", function () {
 
     describe("when callback & initial are specified", function () {
       beforeEach(function () {
-        node = new Merger(2, rdc.sum, 0);
+        node = new Merger(2, reduce.sum, 0);
       });
 
       it("should send merged inputs", function () {

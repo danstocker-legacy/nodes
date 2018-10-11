@@ -1,2 +1,2 @@
-export {cmp} from "./cmp";
-export {eq} from "./eq";
+export {compare} from "./compare";
+export {equal} from "./equal";

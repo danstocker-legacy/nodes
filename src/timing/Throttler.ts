@@ -1,4 +1,4 @@
-import {rdc} from "../functional";
+import {reduce} from "../functional";
 import {ReduceCallback} from "../functional/callbacks/ReduceCallback";
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
 import {shallowCopy} from "../utils/utils";
@@ -23,7 +23,7 @@ export class Throttler<I> extends NodeBase {
 
   constructor(
     delay: number,
-    callback: ReduceCallback<I, any> = rdc.push,
+    callback: ReduceCallback<I, any> = reduce.push,
     initial: any = []
   ) {
     super();

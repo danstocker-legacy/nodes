@@ -1,4 +1,4 @@
-import {cmp} from "../../callbacks";
+import {compare} from "../../callbacks";
 import {CompareCallback} from "../../callbacks/CompareCallback";
 import {MapCallback} from "./MapCallback";
 
@@ -78,7 +78,7 @@ export namespace map {
    * compare callback.
    * Higher-order function.
    */
-  export function sort$<T>(callback: CompareCallback<T> = cmp.reference): MapCallback<Array<T>, Array<T>> {
+  export function sort$<T>(callback: CompareCallback<T> = compare.reference): MapCallback<Array<T>, Array<T>> {
     return (next: Array<T>) => {
       return next.sort(callback);
     };

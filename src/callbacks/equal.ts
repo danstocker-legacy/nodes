@@ -4,7 +4,7 @@ import {EqualsCallback} from "./EqualsCallback";
  * Collection of equality callbacks.
  * TODO: Add shallow(), deep()
  */
-export namespace eq {
+export namespace equal {
   /**
    * Determines equality by reference.
    */
