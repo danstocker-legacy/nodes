@@ -1,5 +1,5 @@
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
-import {MapperCallback} from "./callbacks/MapperCallback";
+import {MapCallback} from "./callbacks/MapCallback";
 
 /**
  * Sends mapped input to output.
@@ -11,9 +11,9 @@ export class Mapper<I, O> extends NodeBase {
   public readonly out: {
     $: OutPort<O>
   };
-  private readonly callback: MapperCallback<I, O>;
+  private readonly callback: MapCallback<I, O>;
 
-  constructor(callback: MapperCallback<I, O>) {
+  constructor(callback: MapCallback<I, O>) {
     super();
     this.callback = callback;
     this.openInPort("$", new InPort(this));

@@ -1,5 +1,5 @@
 import {SyncerBase} from "../abstracts";
-import {ReducerCallback} from "../functional/callbacks/ReducerCallback";
+import {ReduceCallback} from "../functional/callbacks/ReduceCallback";
 import {InPort, Inputs, OutPort} from "../node";
 import {shallowCopy} from "../utils/utils";
 
@@ -14,12 +14,12 @@ export class Aggregator<I, O> extends SyncerBase {
   public readonly out: {
     $: OutPort<O>
   };
-  private readonly callback: ReducerCallback<I, O>;
+  private readonly callback: ReduceCallback<I, O>;
   private readonly initial: O;
   private ref: any;
   private reduced: O;
 
-  constructor(callback: ReducerCallback<I, O>, initial?: O) {
+  constructor(callback: ReduceCallback<I, O>, initial?: O) {
     super();
     this.callback = callback;
     this.initial = initial;

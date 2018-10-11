@@ -1,5 +1,5 @@
 import {rdc} from "../functional";
-import {ReducerCallback} from "../functional/callbacks/ReducerCallback";
+import {ReduceCallback} from "../functional/callbacks/ReduceCallback";
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
 import {shallowCopy} from "../utils/utils";
 
@@ -15,7 +15,7 @@ export class Throttler<I> extends NodeBase {
     $: OutPort<Array<I>>
   };
   private readonly delay: number;
-  private readonly callback: ReducerCallback<I, any>;
+  private readonly callback: ReduceCallback<I, any>;
   private readonly initial: any;
   private timer: NodeJS.Timer;
   private reduced: any;
@@ -23,7 +23,7 @@ export class Throttler<I> extends NodeBase {
 
   constructor(
     delay: number,
-    callback: ReducerCallback<I, any> = rdc.push,
+    callback: ReduceCallback<I, any> = rdc.push,
     initial: any = []
   ) {
     super();

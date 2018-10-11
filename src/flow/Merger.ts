@@ -1,6 +1,6 @@
 import {SyncerBase} from "../abstracts";
 import {rdc} from "../functional";
-import {ReducerCallback} from "../functional/callbacks/ReducerCallback";
+import {ReduceCallback} from "../functional/callbacks/ReduceCallback";
 import {InPort, Inputs, OutPort} from "../node";
 import {shallowCopy} from "../utils/utils";
 
@@ -12,12 +12,12 @@ export class Merger<I> extends SyncerBase {
     $: OutPort<any>
   };
   private readonly count: number;
-  private readonly callback: ReducerCallback<I, any>;
+  private readonly callback: ReduceCallback<I, any>;
   private readonly initial: any;
 
   constructor(
     count: number = 2,
-    callback: ReducerCallback<I, any> = rdc.push,
+    callback: ReduceCallback<I, any> = rdc.push,
     initial: any = []
   ) {
     super();

@@ -1,6 +1,6 @@
 import {cmp} from "../../callbacks";
-import {ComparerCallback} from "../../callbacks/ComparerCallback";
-import {MapperCallback} from "./MapperCallback";
+import {CompareCallback} from "../../callbacks/CompareCallback";
+import {MapCallback} from "./MapCallback";
 
 /**
  * Collection of mapper callbacks.
@@ -33,7 +33,7 @@ export namespace map {
    * elements.
    * Higher-order function.
    */
-  export function addKeys$(fields: Array<string>): MapperCallback<Array<any>, { [key: string]: any }> {
+  export function addKeys$(fields: Array<string>): MapCallback<Array<any>, { [key: string]: any }> {
     return function (next: Array<any>) {
       const result: { [key: string]: any } = {};
       const fieldCount = fields.length;
@@ -48,7 +48,7 @@ export namespace map {
    * Returns a mapper callback function that assigns values to a list of keys.
    * Higher-order function.
    */
-  export function addValues$(values: Array<any>): MapperCallback<Array<string>, { [key: string]: any }> {
+  export function addValues$(values: Array<any>): MapCallback<Array<string>, { [key: string]: any }> {
     return function (next: Array<string>) {
       const result: { [key: string]: any } = {};
       const valueCount = values.length;
@@ -75,10 +75,10 @@ export namespace map {
 
   /**
    * Returns a function that sorts input according to the specified
-   * comparer callback.
+   * compare callback.
    * Higher-order function.
    */
-  export function sort$<T>(callback: ComparerCallback<T> = cmp.reference): MapperCallback<Array<T>, Array<T>> {
+  export function sort$<T>(callback: CompareCallback<T> = cmp.reference): MapCallback<Array<T>, Array<T>> {
     return (next: Array<T>) => {
       return next.sort(callback);
     };
