@@ -1,5 +1,5 @@
 import {equal} from "../callbacks";
-import {EqualsCallback} from "../callbacks/EqualsCallback";
+import {EqualCallback} from "../callbacks/EqualCallback";
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
@@ -12,10 +12,10 @@ export class ChangeDetector<T> extends NodeBase {
   public readonly out: {
     $: OutPort<number>
   };
-  private readonly equals?: EqualsCallback<T>;
+  private readonly equals?: EqualCallback<T>;
   private lastValue: T;
 
-  constructor(equals: EqualsCallback<T> = equal.reference) {
+  constructor(equals: EqualCallback<T> = equal.reference) {
     super();
     this.equals = equals;
     this.openInPort("$", new InPort(this));

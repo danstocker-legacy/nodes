@@ -1,5 +1,5 @@
 import {equal} from "../../callbacks";
-import {EqualsCallback} from "../../callbacks/EqualsCallback";
+import {EqualCallback} from "../../callbacks/EqualCallback";
 import {FilterCallback} from "./FilterCallback";
 
 /**
@@ -11,7 +11,7 @@ export namespace filter {
    * current, false otherwise.
    * Higher-order function.
    */
-  export function change$<T>(callback: EqualsCallback<T> = equal.reference): FilterCallback<T> {
+  export function change$<T>(callback: EqualCallback<T> = equal.reference): FilterCallback<T> {
     let current: T;
     return (next: T): boolean => {
       const previous = current;
