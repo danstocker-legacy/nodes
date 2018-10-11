@@ -1,5 +1,5 @@
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
-import {FilterCallback} from "./FilterCallback";
+import {FilterCallback} from "./callbacks/FilterCallback";
 
 /**
  * Outputs only those inputs that satisfy the specified filter callback.

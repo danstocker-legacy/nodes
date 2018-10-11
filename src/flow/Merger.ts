@@ -1,7 +1,7 @@
-import {SyncerBase} from "../abstracts/index";
-import {rcb} from "../functional/index";
-import {ReducerCallback} from "../functional/ReducerCallback";
-import {InPort, Inputs, OutPort} from "../node/index";
+import {SyncerBase} from "../abstracts";
+import {rcb} from "../functional";
+import {ReducerCallback} from "../functional/callbacks/ReducerCallback";
+import {InPort, Inputs, OutPort} from "../node";
 import {shallowCopy} from "../utils/utils";
 
 export class Merger<I> extends SyncerBase {

@@ -1,5 +1,5 @@
-import {ecb} from "../callbacks";
-import {EqualsCallback} from "../callbacks/EqualsCallback";
+import {ecb} from "../../callbacks";
+import {EqualsCallback} from "../../callbacks/EqualsCallback";
 import {FilterCallback} from "./FilterCallback";
 
 /**

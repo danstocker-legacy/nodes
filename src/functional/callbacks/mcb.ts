@@ -1,5 +1,5 @@
-import {ccb} from "../callbacks";
-import {ComparerCallback} from "../callbacks/ComparerCallback";
+import {ccb} from "../../callbacks";
+import {ComparerCallback} from "../../callbacks/ComparerCallback";
 import {MapperCallback} from "./MapperCallback";
 
 /**

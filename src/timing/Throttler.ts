@@ -1,5 +1,5 @@
 import {rcb} from "../functional";
-import {ReducerCallback} from "../functional/ReducerCallback";
+import {ReducerCallback} from "../functional/callbacks/ReducerCallback";
 import {InPort, Inputs, NodeBase, OutPort} from "../node";
 import {shallowCopy} from "../utils/utils";
 

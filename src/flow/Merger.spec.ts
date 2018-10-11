@@ -1,4 +1,4 @@
-import {rcb} from "../functional/index";
+import {rcb} from "../functional";
 import {Merger} from "./Merger";
 
 describe("Merger", function () {
