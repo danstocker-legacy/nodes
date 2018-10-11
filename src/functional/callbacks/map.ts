@@ -1,4 +1,4 @@
-import {ccb} from "../../callbacks";
+import {cmp} from "../../callbacks";
 import {ComparerCallback} from "../../callbacks/ComparerCallback";
 import {MapperCallback} from "./MapperCallback";
 
@@ -6,7 +6,7 @@ import {MapperCallback} from "./MapperCallback";
  * Collection of mapper callbacks.
  * TODO: Add jsonParse
  */
-export namespace mcb {
+export namespace map {
   /**
    * Extracts keys from object.
    */
@@ -78,7 +78,7 @@ export namespace mcb {
    * comparer callback.
    * Higher-order function.
    */
-  export function sort$<T>(callback: ComparerCallback<T> = ccb.reference): MapperCallback<Array<T>, Array<T>> {
+  export function sort$<T>(callback: ComparerCallback<T> = cmp.reference): MapperCallback<Array<T>, Array<T>> {
     return (next: Array<T>) => {
       return next.sort(callback);
     };

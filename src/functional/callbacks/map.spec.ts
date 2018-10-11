@@ -1,23 +1,23 @@
-import {mcb} from "./mcb";
+import {map} from "./map";
 
-describe("mcb", function () {
+describe("map", function () {
   describe("keys()", function () {
     it("should extract keys from object", function () {
-      const result = mcb.keys({foo: "bar", baz: "quux"});
+      const result = map.keys({foo: "bar", baz: "quux"});
       expect(result.sort()).toEqual(["baz", "foo"]);
     });
   });
 
   describe("values()", function () {
     it("should extract values from object", function () {
-      const result = mcb.values({foo: "bar", baz: "quux"});
+      const result = map.values({foo: "bar", baz: "quux"});
       expect(result.sort()).toEqual(["bar", "quux"]);
     });
   });
 
   describe("addKeys$()", function () {
     it("should convert add keys to array", function () {
-      const result = mcb.addKeys$(["foo", "bar", "baz"])([1, 2, 3]);
+      const result = map.addKeys$(["foo", "bar", "baz"])([1, 2, 3]);
       expect(result).toEqual({
         bar: 2,
         baz: 3,
@@ -28,7 +28,7 @@ describe("mcb", function () {
 
   describe("addValues$()", function () {
     it("should add values to keys", function () {
-      const result = mcb.addValues$([1, 2, 3])(["foo", "bar", "baz"]);
+      const result = map.addValues$([1, 2, 3])(["foo", "bar", "baz"]);
       expect(result).toEqual({
         bar: 2,
         baz: 3,
@@ -39,12 +39,12 @@ describe("mcb", function () {
 
   describe("stringify()", function () {
     it("should return input as string", function () {
-      expect(mcb.stringify(1)).toBe("1");
-      expect(mcb.stringify(null)).toBe("null");
-      expect(mcb.stringify(true)).toBe("true");
-      expect(mcb.stringify(undefined)).toBe("undefined");
-      expect(mcb.stringify({})).toBe("[object Object]");
-      expect(mcb.stringify({
+      expect(map.stringify(1)).toBe("1");
+      expect(map.stringify(null)).toBe("null");
+      expect(map.stringify(true)).toBe("true");
+      expect(map.stringify(undefined)).toBe("undefined");
+      expect(map.stringify({})).toBe("[object Object]");
+      expect(map.stringify({
         toString() {
           return "foo";
         }
@@ -54,7 +54,7 @@ describe("mcb", function () {
 
   describe("jsonStringify()", function () {
     it("should return input JSON as string", function () {
-      expect(mcb.jsonStringify({
+      expect(map.jsonStringify({
         1: "foo",
         2: 1,
         3: true,
@@ -70,7 +70,7 @@ describe("mcb", function () {
 
   describe("sort$()", function () {
     it("should return sorted array", function () {
-      const result = mcb.sort$<{ [key: string]: number }>((a, b) =>
+      const result = map.sort$<{ [key: string]: number }>((a, b) =>
         a.foo > b.foo ? 1 :
           a.foo < b.foo ? -1 :
             a.foo === b.foo ? 0 :

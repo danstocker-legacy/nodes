@@ -1,10 +1,10 @@
-import {rcb} from "../functional";
+import {rdc} from "../functional";
 import {Aggregator} from "./Aggregator";
 
 describe("Aggregator", function () {
   describe("constructor", function () {
     it("should open ports", function () {
-      const node = new Aggregator<number, number>(rcb.sum, 0);
+      const node = new Aggregator<number, number>(rdc.sum, 0);
       expect(node.in.ref).toBeDefined();
       expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
@@ -15,7 +15,7 @@ describe("Aggregator", function () {
     let node: Aggregator<number, number>;
 
     beforeEach(function () {
-      node = new Aggregator(rcb.sum, 0);
+      node = new Aggregator(rdc.sum, 0);
     });
 
     describe("when ref changes", function () {

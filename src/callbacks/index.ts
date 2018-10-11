@@ -1,2 +1,2 @@
-export {ccb} from "./ccb";
-export {ecb} from "./ecb";
+export {cmp} from "./cmp";
+export {eq} from "./eq";

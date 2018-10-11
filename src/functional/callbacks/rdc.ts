@@ -1,7 +1,7 @@
 /**
  * Collection of reducer callbacks.
  */
-export namespace rcb {
+export namespace rdc {
   /**
    * Pushes next item into the output array.
    */

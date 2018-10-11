@@ -1,7 +1,7 @@
 /**
  * Collection of comparison callbacks.
  */
-export namespace ccb {
+export namespace cmp {
   /**
    * Compares reference values of inputs.
    */
