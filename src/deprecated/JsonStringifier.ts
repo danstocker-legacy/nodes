@@ -2,7 +2,7 @@ import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
  * Sends object input to output as JSON string.
- * @deprecated Use `new Mapper(jsonStringify)` instead
+ * @deprecated Use `new Mapper(map.jsonStringify)` instead
  */
 export class JsonStringifier<I extends object> extends NodeBase {
   public readonly in: {
