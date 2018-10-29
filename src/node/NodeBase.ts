@@ -16,6 +16,50 @@ export abstract class NodeBase implements INode {
     this.out = {};
   }
 
+  public openInPort<T>(name: string, port: InPort<T>): void {
+    const ports = this.in;
+    const portBefore = ports[name];
+    if (portBefore) {
+      throw new Error(`Port "${name}" already open`);
+    }
+    ports[name] = port;
+    this.onPortOpen(name, port, ports);
+  }
+
+  public openOutPort<T>(name: string, port: OutPort<T>): void {
+    const ports = this.out;
+    const portBefore = ports[name];
+    if (portBefore) {
+      throw new Error(`Port "${name}" already open`);
+    }
+    ports[name] = port;
+    this.onPortOpen(name, port, ports);
+  }
+
+  public closeInPort<T>(name: string): void {
+    const ports = this.in;
+    const portBefore = ports[name];
+    if (portBefore) {
+      if (portBefore.peer) {
+        portBefore.disconnect();
+      }
+      delete ports[name];
+      this.onPortClose(name, portBefore, ports);
+    }
+  }
+
+  public closeOutPort<T>(name: string): void {
+    const ports = this.out;
+    const portBefore = ports[name];
+    if (portBefore) {
+      if (portBefore.peers.size > 0) {
+        portBefore.disconnect();
+      }
+      delete ports[name];
+      this.onPortClose(name, portBefore, ports);
+    }
+  }
+
   public send(inputs: Inputs, tag?: string): void {
     this.process(inputs, tag);
   }
@@ -24,47 +68,9 @@ export abstract class NodeBase implements INode {
   public onConnect<T>(outPort: OutPort<T>, inPort: InPort<T>): void {
   }
 
-  // tslint:disable:no-empty
   public onDisconnect<T>(outPort: OutPort<T>, inPort: InPort<T>): void {
   }
-
-  protected openInPort<T>(name: string, port: InPort<T>): void {
-    const ports = this.in;
-    const portBefore = ports[name];
-    if (portBefore) {
-      throw new Error(`Port "${name}" already open`);
-    }
-    ports[name] = port;
-    this.onPortOpen(name, port, ports);
-  }
-
-  protected openOutPort<T>(name: string, port: OutPort<T>): void {
-    const ports = this.out;
-    const portBefore = ports[name];
-    if (portBefore) {
-      throw new Error(`Port "${name}" already open`);
-    }
-    ports[name] = port;
-    this.onPortOpen(name, port, ports);
-  }
-
-  protected closeInPort<T>(name: string): void {
-    const ports = this.in;
-    const portBefore = ports[name];
-    if (portBefore) {
-      delete ports[name];
-      this.onPortClose(name, portBefore, ports);
-    }
-  }
-
-  protected closeOutPort<T>(name: string): void {
-    const ports = this.out;
-    const portBefore = ports[name];
-    if (portBefore) {
-      delete ports[name];
-      this.onPortClose(name, portBefore, ports);
-    }
-  }
+  // tslint:enable:no-empty
 
   protected abstract process(inputs: Inputs, tag?: string): void;
 
@@ -72,7 +78,7 @@ export abstract class NodeBase implements INode {
   protected onPortOpen(name: string, port: IPort<any>, ports: Ports): void {
   }
 
-  // tslint:disable:no-empty
   protected onPortClose(name: string, port: IPort<any>, ports: Ports): void {
   }
+  // tslint:enable:no-empty
 }
