@@ -119,7 +119,6 @@ Nodes comes with a number of built-in node types:
 
 ### Utilities
 
-- `Logger`: Logs input to console.
 - `Node`: Ad-hoc node defined by process callback and number of ports.
 - `SuperNode`: Groups nodes into a single node.
 - `Tagger`: Forwards input to output with the tag changed.
@@ -129,6 +128,7 @@ Nodes comes with a number of built-in node types:
 Input values of these nodes are sent to the output unchanged.
 
 - `Batcher`: Sends input to output in batches of a given size.
+- `Logger`: Forwards logs, warnings, and errors to connected sink nodes.
 - `Noop`: Forwards input to output.
 - `Sequencer`: Forwards input following a reference order.
 - `Syncer`: Synchronizes input values from multiple ports into an array on a 
@@ -165,6 +165,7 @@ previous, 0 otherwise.
 
 Source and sink nodes.
 
+- `Console`: Sends input to `console.log` / `.warn` / `.error`.
 - `StdErr`: Forwards input to `process.stderr`.
 - `StdIn`: Takes input from `process.stdin` and sends it to output.
 - `StdOut`: Forwards input to `process.stdout`.

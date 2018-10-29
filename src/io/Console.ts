@@ -1,7 +1,8 @@
-import {InPort, Inputs, NodeBase} from "../node/index";
+import {InPort, Inputs, NodeBase} from "../node";
 
 /**
- * Sends input to console.log/warn/error
+ * Sends input to `console.log` / `.warn` / `.error`.
+ * TODO: Rename to JsConsole?
  */
 export class Console extends NodeBase {
   public readonly in: {

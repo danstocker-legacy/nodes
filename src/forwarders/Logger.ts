@@ -1,7 +1,7 @@
-import {InPort, Inputs, NodeBase, OutPort} from "../node/index";
+import {InPort, Inputs, NodeBase, OutPort} from "../node";
 
 /**
- * Logs input to console.
+ * Forwards logs, warnings, and errors to connected sink nodes.
  */
 export class Logger extends NodeBase {
   public readonly in: {
