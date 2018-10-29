@@ -512,26 +512,30 @@ as a super-node class in its own right.
 
 ```typescript
 // node node_modules/@kwaia/nodes/examples/json-logger
-import {InPort, Inputs, JsonStringifier, Logger, NodeBase} from "@kwaia/nodes";
+import {
+  Console, InPort, Inputs, Logger, map, Mapper, NodeBase
+} from "@kwaia/nodes";
 
 class JsonLogger extends NodeBase {
   public readonly in: {
     $: InPort<object>
   };
-  private readonly jsonStringifier: JsonStringifier<object>;
+  private readonly stringifier: Mapper<any, string>;
 
   constructor() {
     super();
-    const jsonStringifier = new JsonStringifier(true);
+    const jsonStringifier = new Mapper(map.jsonStringify);
     const logger = new Logger();
-    this.jsonStringifier = jsonStringifier;
+    const con = new Console();
+    this.stringifier = jsonStringifier;
     jsonStringifier.out.$.connect(logger.in.$);
+    logger.out.log.connect(con.in.log);
     this.openInPort("$", new InPort(this));
   }
 
   protected process(inputs: Inputs, tag?: string): void {
     const value = inputs.get(this.in.$);
-    this.jsonStringifier.in.$.send(value, tag);
+    this.stringifier.in.$.send(value, tag);
   }
 }
 
