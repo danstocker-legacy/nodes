@@ -76,25 +76,43 @@ describe("NodeBase", function () {
 
     beforeEach(function () {
       node = new MyNode();
-      node.openInPort("foo", new InPort(node));
     });
 
-    describe("when port is connected", function () {
-      let inPort: InPort<number>;
-      let outPort: OutPort<number>;
-
+    describe("when port is permanent", function () {
       beforeEach(function () {
+        node.openInPort("foo", new InPort(node, true));
         const node2 = new MyNode();
         node2.openOutPort("foo", new OutPort(node2));
-        inPort = node.in.foo;
-        outPort = node2.out.foo;
-        inPort.connect(outPort);
+        node.in.foo.connect(node2.out.foo);
       });
 
-      it("should disconnect first", function () {
-        spyOn(inPort, "disconnect");
-        node.closeInPort("foo");
-        expect(inPort.disconnect).toHaveBeenCalledWith();
+      it("should throw", function () {
+        expect(function () {
+          node.closeInPort("foo");
+        }).toThrow();
+      });
+    });
+
+    describe("when port is not permanent", function () {
+      beforeEach(function () {
+        node.openInPort("foo", new InPort(node));
+      });
+
+      describe("when port is connected", function () {
+        let inPort: InPort<number>;
+
+        beforeEach(function () {
+          const node2 = new MyNode();
+          node2.openOutPort("foo", new OutPort(node2));
+          inPort = node.in.foo;
+          inPort.connect(node2.out.foo);
+        });
+
+        it("should disconnect first", function () {
+          spyOn(inPort, "disconnect");
+          node.closeInPort("foo");
+          expect(inPort.disconnect).toHaveBeenCalledWith();
+        });
       });
     });
   });
@@ -104,25 +122,43 @@ describe("NodeBase", function () {
 
     beforeEach(function () {
       node = new MyNode();
-      node.openOutPort("foo", new OutPort(node));
     });
 
-    describe("when port is connected", function () {
-      let inPort: InPort<number>;
-      let outPort: OutPort<number>;
-
+    describe("when port is permanent", function () {
       beforeEach(function () {
+        node.openOutPort("foo", new OutPort(node, true));
         const node2 = new MyNode();
         node2.openInPort("foo", new InPort(node2));
-        inPort = node2.in.foo;
-        outPort = node.out.foo;
-        outPort.connect(inPort);
+        node.out.foo.connect(node2.in.foo);
       });
 
-      it("should disconnect first", function () {
-        spyOn(outPort, "disconnect");
-        node.closeOutPort("foo");
-        expect(outPort.disconnect).toHaveBeenCalledWith();
+      it("should throw", function () {
+        expect(function () {
+          node.closeOutPort("foo");
+        }).toThrow();
+      });
+    });
+
+    describe("when port is not permanent", function () {
+      beforeEach(function () {
+        node.openOutPort("foo", new OutPort(node));
+      });
+
+      describe("when port is connected", function () {
+        let outPort: OutPort<number>;
+
+        beforeEach(function () {
+          const node2 = new MyNode();
+          node2.openInPort("foo", new InPort(node2));
+          outPort = node.out.foo;
+          outPort.connect(node2.in.foo);
+        });
+
+        it("should disconnect first", function () {
+          spyOn(outPort, "disconnect");
+          node.closeOutPort("foo");
+          expect(outPort.disconnect).toHaveBeenCalledWith();
+        });
       });
     });
   });

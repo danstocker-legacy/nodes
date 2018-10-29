@@ -7,10 +7,12 @@ import {OutPort} from "./OutPort";
  */
 export class InPort<T> implements IPort<T> {
   public readonly node: NodeBase;
+  public readonly permanent: boolean;
   public peer: OutPort<T>;
 
-  constructor(node: NodeBase) {
+  constructor(node: NodeBase, permanent: boolean = false) {
     this.node = node;
+    this.permanent = permanent;
   }
 
   public connect(peer: OutPort<T>): void {

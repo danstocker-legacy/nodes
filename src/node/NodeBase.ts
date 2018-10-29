@@ -40,6 +40,9 @@ export abstract class NodeBase implements INode {
     const ports = this.in;
     const portBefore = ports[name];
     if (portBefore) {
+      if (portBefore.permanent) {
+        throw Error(`Port ${name} is permanent.`);
+      }
       if (portBefore.peer) {
         portBefore.disconnect();
       }
@@ -52,6 +55,9 @@ export abstract class NodeBase implements INode {
     const ports = this.out;
     const portBefore = ports[name];
     if (portBefore) {
+      if (portBefore.permanent) {
+        throw Error(`Port ${name} is permanent.`);
+      }
       if (portBefore.peers.size > 0) {
         portBefore.disconnect();
       }
@@ -70,6 +76,7 @@ export abstract class NodeBase implements INode {
 
   public onDisconnect<T>(outPort: OutPort<T>, inPort: InPort<T>): void {
   }
+
   // tslint:enable:no-empty
 
   protected abstract process(inputs: Inputs, tag?: string): void;
@@ -80,5 +87,6 @@ export abstract class NodeBase implements INode {
 
   protected onPortClose(name: string, port: IPort<any>, ports: Ports): void {
   }
+
   // tslint:enable:no-empty
 }

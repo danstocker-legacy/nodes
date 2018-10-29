@@ -5,6 +5,7 @@ import {NodeBase} from "./NodeBase";
  */
 export interface IPort<T> {
   readonly node: NodeBase;
+  readonly permanent: boolean;
 
   send(value: T, tag?: string): void;
 

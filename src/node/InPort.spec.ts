@@ -28,6 +28,18 @@ describe("InPort", function () {
       const port = new InPort<number>(node);
       expect(port.node).toBe(node);
     });
+
+    it("should set permanent property", function () {
+      const port = new InPort<number>(node, true);
+      expect(port.permanent).toBe(true);
+    });
+
+    describe("on missing permanent argument", function () {
+      it("should default to false", function () {
+        const port = new InPort<number>(node);
+        expect(port.permanent).toBe(false);
+      });
+    });
   });
 
   describe("#connect()", function () {

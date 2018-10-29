@@ -7,10 +7,12 @@ import {NodeBase} from "./NodeBase";
  */
 export class OutPort<T> implements IPort<T> {
   public readonly node: NodeBase;
+  public readonly permanent: boolean;
   public readonly peers: Set<InPort<T>>;
 
-  constructor(node: NodeBase) {
+  constructor(node: NodeBase, permanent: boolean = false) {
     this.node = node;
+    this.permanent = permanent;
     this.peers = new Set();
   }
 
