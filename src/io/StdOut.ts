@@ -10,7 +10,7 @@ export class StdOut extends NodeBase {
 
   constructor() {
     super();
-    this.openInPort("$", new InPort(this));
+    this.openInPort("$");
   }
 
   protected process(inputs: Inputs): void {

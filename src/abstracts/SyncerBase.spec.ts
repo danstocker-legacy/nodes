@@ -12,8 +12,8 @@ describe("SyncerBase", function () {
 
     constructor() {
       super();
-      this.openInPort("a", new InPort(this));
-      this.openInPort("b", new InPort(this));
+      this.openInPort("a");
+      this.openInPort("b");
     }
 
     public process(inputs: Inputs, tag?: string): void {
@@ -56,31 +56,6 @@ describe("SyncerBase", function () {
         node.send(new Map([[node.in.b, 2]]), "1");
         expect(process).toHaveBeenCalledWith(
           new Map([[node.in.a, 5], [node.in.b, 2]]), "1");
-      });
-
-      it("should maintain port order", function () {
-        process.calls.reset();
-        node.send(new Map([[node.in.a, 3]]), "2");
-        const args = process.calls.allArgs();
-        expect(args.length).toBe(1);
-        const inputs: Inputs = args[0][0];
-        expect(Array.from(inputs.values())).toEqual([3, 4]);
-      });
-    });
-
-    describe("on closing port", function () {
-      describe("when closed port is the one w/o value yet", function () {
-        beforeEach(function () {
-          node.send(new Map([[node.in.a, 5]]), "1");
-        });
-
-        it("should process inputs", function () {
-          spyOn(node, "process");
-          // @ts-ignore
-          node.closeInPort("b");
-          expect(node.process).toHaveBeenCalledWith(
-            new Map([[node.in.a, 5]]), "1");
-        });
       });
     });
   });

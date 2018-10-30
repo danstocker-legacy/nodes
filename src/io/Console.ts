@@ -13,9 +13,9 @@ export class Console extends NodeBase {
 
   constructor() {
     super();
-    this.openInPort("log", new InPort(this));
-    this.openInPort("warn", new InPort(this));
-    this.openInPort("error", new InPort(this));
+    this.openInPort("log");
+    this.openInPort("warn");
+    this.openInPort("error");
   }
 
   protected process(inputs: Inputs, tag?: string): void {

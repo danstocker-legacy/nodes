@@ -16,7 +16,7 @@ class JsonLogger extends NodeBase {
     this.stringifier = jsonStringifier;
     jsonStringifier.out.$.connect(logger.in.$);
     logger.out.log.connect(con.in.log);
-    this.openInPort("$", new InPort(this));
+    this.openInPort("$");
   }
 
   protected process(inputs: Inputs, tag?: string): void {

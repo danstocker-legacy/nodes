@@ -1,77 +1,56 @@
-import {InPort, Inputs, IPort, NodeBase, Ports} from "../node";
+import {INode, InPort, Inputs, NodeBase} from "../node";
+
+type SyncCallback = (node: INode, inputs: Inputs, tag?: string) => Set<InPort<any>>;
 
 /**
  * Pre-processes input so values with the same tag stay together.
  * Not recommended for use with dynamic graphs as cached values may be
  * purged on closing ports.
+ * TODO: Track cache size.
  */
 export abstract class SyncerBase extends NodeBase {
-  private readonly buffer: Map<string, Inputs>;
-  private readonly inPorts: Set<InPort<any>>;
+  // subclasses must have access to these to handle failures
+  protected readonly cachedInputSets: Map<string, Inputs>;
+  protected readonly requiredPortSets: Map<string, Set<InPort<any>>>;
 
-  protected constructor() {
+  private readonly syncCallback: SyncCallback;
+
+  protected constructor(syncCallback: SyncCallback = (node: INode) => new Set(Object.values(node.in))) {
     super();
-    this.buffer = new Map();
-    this.inPorts = new Set();
+    this.cachedInputSets = new Map();
+    this.requiredPortSets = new Map();
+    this.syncCallback = syncCallback;
   }
 
   public send(inputs: Inputs, tag: string): void {
-    const buffer = this.buffer;
-    const values = this.getValues(tag);
-
-    // associating input values with port and tag
-    for (const [port, value] of inputs.entries()) {
-      values.set(port, value);
+    const cachedInputSets = this.cachedInputSets;
+    let cachedInputs = cachedInputSets.get(tag);
+    if (!cachedInputs) {
+      cachedInputs = new Map();
+      cachedInputSets.set(tag, cachedInputs);
     }
 
-    if (values.size >= this.inPorts.size) {
-      // got all inputs for current tag
-      buffer.delete(tag);
-      this.process(this.consolidateInputs(values), tag);
+    const requiredPortSets = this.requiredPortSets;
+    let requiredPorts = requiredPortSets.get(tag);
+    if (!requiredPorts) {
+      // attempting to acquire required port set
+      requiredPorts = this.syncCallback(this, cachedInputs, tag);
+      requiredPortSets.set(tag, requiredPorts);
     }
-  }
 
-  protected onPortOpen(name: string, port: IPort<any>, ports: Ports): void {
-    if (ports === this.in) {
-      for (const inputs of this.buffer.values()) {
-        inputs.set(port as InPort<any>, undefined);
+    if (requiredPorts) {
+      // associating input values with port and tag
+      for (const [port, value] of inputs.entries()) {
+        cachedInputs.set(port, value);
+        requiredPorts.delete(port);
       }
-      this.inPorts.add(port as InPort<any>);
-    }
-  }
 
-  protected onPortClose(name: string, port: IPort<any>, ports: Ports): void {
-    if (ports === this.in) {
-      for (const inputs of this.buffer.values()) {
-        inputs.delete(port as InPort<any>);
-      }
-      this.inPorts.delete(port as InPort<any>);
-      this.processTags();
-    }
-  }
-
-  private getValues(tag: string): Inputs {
-    const buffer = this.buffer;
-    let values = buffer.get(tag);
-    if (!values) {
-      buffer.set(tag, values = new Map());
-    }
-    return values;
-  }
-
-  private processTags(): void {
-    for (const [tag, inputs] of this.buffer.entries()) {
-      if (inputs.size >= this.inPorts.size) {
-        this.process(this.consolidateInputs(inputs), tag);
+      if (requiredPorts.size === 0) {
+        // got all inputs for current tag
+        cachedInputSets.delete(tag);
+        requiredPortSets.delete(tag);
+        this.process(cachedInputs, tag);
       }
     }
-  }
-
-  private consolidateInputs(inputs: Inputs): Inputs {
-    const result = new Map();
-    for (const port of this.inPorts.values()) {
-      result.set(port, inputs.get(port));
-    }
-    return result;
   }
 }
