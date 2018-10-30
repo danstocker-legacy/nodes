@@ -24,6 +24,11 @@ describe("NodeBase", function () {
   }
 
   describe("constructor", function () {
+    it("should initialize id property", function () {
+      const node = new MyNode();
+      expect(new MyNode().id).toBe(String(1 + parseInt(node.id, 10)));
+    });
+
     it("should initialize in & out properties", function () {
       const node = new MyNode();
       expect(node.in).toBeDefined();

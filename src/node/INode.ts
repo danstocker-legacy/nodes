@@ -3,6 +3,7 @@ import {Inputs} from "./Inputs";
 import {OutPorts} from "./OutPorts";
 
 export interface INode {
+  readonly id: string;
   readonly in: InPorts;
   readonly out: OutPorts;
 
