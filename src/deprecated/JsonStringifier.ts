@@ -16,8 +16,8 @@ export class JsonStringifier<I extends object> extends NodeBase {
   constructor(pretty: boolean = false) {
     super();
     this.pretty = pretty;
-    this.openInPort("$", new InPort(this));
-    this.openOutPort("$", new OutPort(this));
+    this.openInPort("$");
+    this.openOutPort("$");
   }
 
   protected process(inputs: Inputs, tag?: string): void {

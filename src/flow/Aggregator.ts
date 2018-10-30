@@ -24,9 +24,9 @@ export class Aggregator<I, O> extends SyncerBase {
     this.callback = callback;
     this.initial = initial;
     this.reduced = shallowCopy(initial);
-    this.openInPort("ref", new InPort(this));
-    this.openInPort("$", new InPort(this));
-    this.openOutPort("$", new OutPort(this));
+    this.openInPort("ref");
+    this.openInPort("$");
+    this.openOutPort("$");
   }
 
   protected process(inputs: Inputs, tag?: string): void {

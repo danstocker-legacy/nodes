@@ -9,11 +9,11 @@ export class SuperNode extends NodeBase {
     if (inPorts) {
       // tslint:disable:forin
       for (const name in inPorts) {
-        this.openInPort(name, inPorts[name]);
+        this.in[name] = inPorts[name];
       }
       // tslint:disable:forin
       for (const name in outPorts) {
-        this.openOutPort(name, outPorts[name]);
+        this.out[name] = outPorts[name];
       }
     }
   }

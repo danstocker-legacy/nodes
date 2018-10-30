@@ -11,7 +11,7 @@ export class StdIn extends NodeBase {
 
   constructor() {
     super();
-    this.openOutPort("$", new OutPort(this));
+    this.openOutPort("$");
     process.stdin.on("readable", this.onReadable.bind(this));
   }
 

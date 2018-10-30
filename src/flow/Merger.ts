@@ -9,7 +9,7 @@ import {shallowCopy} from "../utils/utils";
  */
 export class Merger<I> extends SyncerBase {
   public readonly in: {
-    [key: string]: InPort<I>
+    [key: number]: InPort<I>
   };
   public readonly out: {
     $: OutPort<any>
@@ -28,9 +28,9 @@ export class Merger<I> extends SyncerBase {
     this.callback = callback;
     this.initial = initial;
     for (let i = 0; i < count; i++) {
-      this.openInPort(`${i}`, new InPort(this));
+      this.openInPort(i);
     }
-    this.openOutPort("$", new OutPort(this));
+    this.openOutPort("$");
   }
 
   protected process(inputs: Inputs, tag: string): void {

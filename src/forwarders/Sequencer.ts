@@ -7,10 +7,10 @@ import {InPort, Inputs, OutPort} from "../node";
 export class Sequencer extends SequencerBase {
   public readonly in: {
     ref: InPort<string>,
-    [key: string]: InPort<any>
+    [key: number]: InPort<any>
   };
   public readonly out: {
-    [key: string]: OutPort<any>
+    [key: number]: OutPort<any>
   };
   private readonly lookup: Map<InPort<any>, OutPort<any>>;
 
@@ -18,10 +18,8 @@ export class Sequencer extends SequencerBase {
     super();
     this.lookup = new Map();
     for (let i = 0; i < count; i++) {
-      const inPort = new InPort(this);
-      const outPort = new OutPort(this);
-      this.openInPort(`${i}`, inPort);
-      this.openOutPort(`${i}`, outPort);
+      const inPort =  this.openInPort(i);
+      const outPort = this.openOutPort(i);
       this.lookup.set(inPort, outPort);
     }
   }

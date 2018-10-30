@@ -19,13 +19,13 @@ export class Logger extends NodeBase {
 
   constructor() {
     super();
-    this.openInPort("$", new InPort(this));
-    this.openInPort("log", new InPort(this));
-    this.openInPort("warn", new InPort(this));
-    this.openInPort("error", new InPort(this));
-    this.openOutPort("log", new OutPort(this));
-    this.openOutPort("warn", new OutPort(this));
-    this.openOutPort("error", new OutPort(this));
+    this.openInPort("$");
+    this.openInPort("log");
+    this.openInPort("warn");
+    this.openInPort("error");
+    this.openOutPort("log");
+    this.openOutPort("warn");
+    this.openOutPort("error");
   }
 
   protected process(inputs: Inputs, tag?: string): void {

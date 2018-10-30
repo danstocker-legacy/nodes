@@ -1,8 +1,6 @@
-import {InPort} from "./InPort";
 import {InPorts} from "./InPorts";
 import {Inputs} from "./Inputs";
 import {NodeBase} from "./NodeBase";
-import {OutPort} from "./OutPort";
 import {OutPorts} from "./OutPorts";
 
 type ProcessCallback = (inputs: { [key: string]: any }, tag?: string) => void;
@@ -19,10 +17,10 @@ export class Node extends NodeBase {
     super();
     this.callback = callback;
     for (let i = 0; i < inCount; i++) {
-      this.openInPort(`${i}`, new InPort<any>(this));
+      this.openInPort(i);
     }
     for (let i = 0; i < outCount; i++) {
-      this.openOutPort(`${i}`, new OutPort<any>(this));
+      this.openOutPort(i);
     }
   }
 

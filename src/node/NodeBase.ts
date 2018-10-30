@@ -20,7 +20,8 @@ export abstract class NodeBase implements INode {
     this.out = {};
   }
 
-  public openInPort<T>(name: string, port: InPort<T>): void {
+  public openInPort<T>(name: string | number, port?: InPort<T>): InPort<T> {
+    port = port || new InPort(this, typeof name === "string");
     const ports = this.in;
     const portBefore = ports[name];
     if (portBefore) {
@@ -28,9 +29,11 @@ export abstract class NodeBase implements INode {
     }
     ports[name] = port;
     this.onPortOpen(name, port, ports);
+    return port;
   }
 
-  public openOutPort<T>(name: string, port: OutPort<T>): void {
+  public openOutPort<T>(name: string | number, port?: OutPort<T>): OutPort<T> {
+    port = port || new OutPort(this, typeof name === "string");
     const ports = this.out;
     const portBefore = ports[name];
     if (portBefore) {
@@ -38,6 +41,7 @@ export abstract class NodeBase implements INode {
     }
     ports[name] = port;
     this.onPortOpen(name, port, ports);
+    return port;
   }
 
   public closeInPort<T>(name: string): void {
@@ -86,10 +90,10 @@ export abstract class NodeBase implements INode {
   protected abstract process(inputs: Inputs, tag?: string): void;
 
   // tslint:disable:no-empty
-  protected onPortOpen(name: string, port: IPort<any>, ports: Ports): void {
+  protected onPortOpen(name: string | number, port: IPort<any>, ports: Ports): void {
   }
 
-  protected onPortClose(name: string, port: IPort<any>, ports: Ports): void {
+  protected onPortClose(name: string | number, port: IPort<any>, ports: Ports): void {
   }
 
   // tslint:enable:no-empty

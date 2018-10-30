@@ -14,9 +14,9 @@ class Adder extends SequencerBase {
 
   constructor() {
     super();
-    this.openInPort("a", new InPort(this));
-    this.openInPort("b", new InPort(this));
-    this.openOutPort("sum", new OutPort(this));
+    this.openInPort("a");
+    this.openInPort("b");
+    this.openOutPort("sum");
   }
 
   protected process(inputs: Inputs, tag?: string): void {

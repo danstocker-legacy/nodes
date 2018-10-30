@@ -6,7 +6,7 @@ import {InPort, Inputs, OutPort} from "../node";
  */
 export class Syncer extends SyncerBase {
   public readonly in: {
-    [key: string]: InPort<any>
+    [key: number]: InPort<any>
   };
   public readonly out: {
     $: OutPort<Array<any>>
@@ -15,9 +15,9 @@ export class Syncer extends SyncerBase {
   constructor(count: number = 2) {
     super();
     for (let i = 0; i < count; i++) {
-      this.openInPort(`${i}`, new InPort(this));
+      this.openInPort(i);
     }
-    this.openOutPort("$", new OutPort(this));
+    this.openOutPort("$");
   }
 
   protected process(inputs: Inputs, tag: string) {

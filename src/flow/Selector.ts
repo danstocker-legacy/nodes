@@ -15,9 +15,9 @@ export class Selector<T> extends SyncerBase {
 
   constructor() {
     super();
-    this.openInPort("ref", new InPort(this));
-    this.openInPort("$", new InPort(this));
-    this.openOutPort("$", new OutPort(this));
+    this.openInPort("ref");
+    this.openInPort("$");
+    this.openOutPort("$");
   }
 
   protected process(inputs: Inputs, tag: string): void {

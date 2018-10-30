@@ -14,7 +14,7 @@ export class Interval extends NodeBase {
     super();
     this.timer = setInterval(this.onInterval.bind(this), delay);
     this.delay = delay;
-    this.openOutPort("$", new OutPort(this));
+    this.openOutPort("$");
   }
 
   protected process() {
