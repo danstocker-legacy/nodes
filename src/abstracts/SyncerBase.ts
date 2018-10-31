@@ -4,8 +4,6 @@ type SyncCallback = (node: INode, inputs: Inputs, tag?: string) => Set<InPort<an
 
 /**
  * Pre-processes input so values with the same tag stay together.
- * Not recommended for use with dynamic graphs as cached values may be
- * purged on closing ports.
  * TODO: Track cache size.
  */
 export abstract class SyncerBase extends NodeBase {
