@@ -7,7 +7,7 @@ import {OutPort} from "./OutPort";
 import {OutPorts} from "./OutPorts";
 import {Ports} from "./Ports";
 
-let lastId = 0;
+let nextNodeId = 0;
 
 export abstract class NodeBase implements INode {
   public readonly id: string;
@@ -15,7 +15,7 @@ export abstract class NodeBase implements INode {
   public readonly out: OutPorts;
 
   protected constructor() {
-    this.id = String(lastId++);
+    this.id = String(nextNodeId++);
     this.in = {};
     this.out = {};
   }
