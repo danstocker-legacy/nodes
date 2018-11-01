@@ -13,27 +13,20 @@ describe("Mapper", function () {
   });
 
   describe("#send()", function () {
-    let noop: Noop<number>;
     let mapper: Mapper<number, string>;
-
-    beforeEach(function () {
-      noop = new Noop();
-    });
 
     it("should invoke callback", function () {
       const cb = jasmine.createSpy();
       mapper = new Mapper(cb);
-      noop.out.$.connect(mapper.in.$);
-      noop.send(new Map([[noop.in.$, 5]]));
+      mapper.in.$.send(5, "1");
       expect(cb).toHaveBeenCalledWith(5, mapper.in.$, mapper);
     });
 
     it("should send value to output port", function () {
       mapper = new Mapper((next) => "_" + next);
-      noop.out.$.connect(mapper.in.$);
       spyOn(mapper.out.$, "send");
-      noop.send(new Map([[noop.in.$, 5]]));
-      expect(mapper.out.$.send).toHaveBeenCalledWith("_5", undefined);
+      mapper.in.$.send(5, "1");
+      expect(mapper.out.$.send).toHaveBeenCalledWith("_5", "1");
     });
   });
 });

@@ -13,27 +13,20 @@ describe("Filter", function () {
   });
 
   describe("#send()", function () {
-    let noop: Noop<number>;
     let filter: Filter<number>;
-
-    beforeEach(function () {
-      noop = new Noop();
-    });
 
     it("should invoke callback", function () {
       const cb = jasmine.createSpy();
       filter = new Filter(cb);
-      noop.out.$.connect(filter.in.$);
-      noop.send(new Map([[noop.in.$, 5]]));
+      filter.in.$.send(5, "1");
       expect(cb).toHaveBeenCalledWith(5, filter.in.$, filter);
     });
 
     it("should send value to output port", function () {
       filter = new Filter((next) => next % 2 === 1);
-      noop.out.$.connect(filter.in.$);
       spyOn(filter.out.$, "send");
-      noop.send(new Map([[noop.in.$, 5]]));
-      expect(filter.out.$.send).toHaveBeenCalledWith(5, undefined);
+      filter.in.$.send(5, "1");
+      expect(filter.out.$.send).toHaveBeenCalledWith(5, "1");
     });
   });
 });

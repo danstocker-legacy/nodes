@@ -74,22 +74,32 @@ export abstract class NodeBase implements INode {
     }
   }
 
+  /** @deprecated */
   public send(inputs: Inputs, tag?: string): void {
     this.process(inputs, tag);
   }
 
   // tslint:disable:no-empty
+
+  /**
+   * TODO: Use name instead of ports? Could be used directly then.
+   * TODO: Make abstract.
+   * TODO: Make generic.
+   * TODO: Rename to send once deprecated methods are removed.
+   */
+  public sendInput(port: InPort<any>, value: any, tag?: string): void {
+  }
+
   public onConnect<T>(outPort: OutPort<T>, inPort: InPort<T>): void {
   }
 
   public onDisconnect<T>(outPort: OutPort<T>, inPort: InPort<T>): void {
   }
 
-  // tslint:enable:no-empty
+  /** @deprecated */
+  protected process(inputs: Inputs, tag?: string): void {
+  }
 
-  protected abstract process(inputs: Inputs, tag?: string): void;
-
-  // tslint:disable:no-empty
   protected onPortOpen(name: string | number, port: IPort<any>, ports: Ports): void {
   }
 

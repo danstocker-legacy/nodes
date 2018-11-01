@@ -9,19 +9,17 @@ describe("Noop", function () {
     });
   });
 
-  describe("#send()", function () {
+  describe("#sendInput()", function () {
     let node: Noop<number>;
 
     beforeEach(function () {
       node = new Noop();
     });
 
-    describe("when ending to send port", function () {
-      it("should send value to out port", function () {
-        spyOn(node.out.$, "send");
-        node.send(new Map([[node.in.$, 5]]));
-        expect(node.out.$.send).toHaveBeenCalledWith(5, undefined);
-      });
+    it("should forward input to output", function () {
+      spyOn(node.out.$, "send");
+      node.sendInput(node.in.$, 5, "1");
+      expect(node.out.$.send).toHaveBeenCalledWith(5, "1");
     });
   });
 });

@@ -17,7 +17,9 @@ export class Noop<T> extends NodeBase {
     this.openOutPort("$");
   }
 
-  protected process(inputs: Inputs, tag?: string): void {
-    this.out.$.send(inputs.get(this.in.$), tag);
+  public sendInput(port: InPort<T>, value: T, tag?: string): void {
+    if (port === this.in.$) {
+      this.out.$.send(value, tag);
+    }
   }
 }

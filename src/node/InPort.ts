@@ -36,5 +36,6 @@ export class InPort<T> implements IPort<T> {
 
   public send(value: T, tag?: string): void {
     this.node.send(new Map([[this, value]]), tag);
+    this.node.sendInput(this, value, tag);
   }
 }
