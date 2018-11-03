@@ -1,9 +1,15 @@
+import {INode} from "../node";
 import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
 
-export class InPort<T> extends Port<T> implements IInPort<T> {
+export abstract class InPort<T> extends Port<T> implements IInPort<T> {
   public readonly in: true;
+
+  protected constructor(name: string, node: INode) {
+    super(name, node);
+    this.in = true;
+  }
 
   public connect(peer: IOutPort<T>, tag?: string): void {
     //
