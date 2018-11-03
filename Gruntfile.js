@@ -22,7 +22,7 @@ module.exports = function (grunt) {
       options: {
         configuration: "./tslint.json"
       },
-      files: "src/**/*.ts"
+      files: "src2/**/*.ts"
     },
 
     exec: {
@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 
     watch: {
       ts: {
-        files: ["src/**/*.ts"],
+        files: ["src2/**/*.ts"],
         tasks: ["build-quick"]
       }
     },
@@ -59,7 +59,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-ts");
   grunt.loadNpmTasks("grunt-tslint");
   grunt.registerTask("test", ["tslint", "exec:test", "notify:test"]);
-  grunt.registerTask("build", ["clean:tsc", "tslint", "ts", "exec:test", "notify:build"]);
+  grunt.registerTask("build", ["clean:tsc", "tslint", "ts", "exec:test",
+    "notify:build"]);
   grunt.registerTask("build-quick", ["clean:tsc", "ts", "notify:build"]);
   grunt.registerTask("default", ["build-quick", "watch"]);
 };
