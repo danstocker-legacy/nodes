@@ -11,6 +11,6 @@ export class DynamicOutPort<T> extends OutPort<T> implements IDynamicPort<T> {
   }
 
   public delete(tag?: string): void {
-    //
+    this.node.deletePort(this, tag);
   }
 }
