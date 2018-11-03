@@ -1,3 +1,5 @@
+export {DynamicInPort} from "./DynamicInPort";
+export {DynamicOutPort} from "./DynamicOutPort";
 export {DynamicPorts} from "./DynamicPorts";
 export {IDynamicPort} from "./IDynamicPort";
 export {IInPort} from "./IInPort";
@@ -7,4 +9,6 @@ export {IOutPort} from "./IOutPort";
 export {IPort} from "./IPort";
 export {OutPorts} from "./OutPorts";
 export {OutPort} from "./OutPort";
+export {StaticInPort} from "./StaticInPort";
+export {StaticOutPort} from "./StaticOutPort";
 export {StaticPorts} from "./StaticPorts";

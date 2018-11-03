@@ -6,7 +6,7 @@ import {Port} from "./Port";
 export abstract class OutPort<T> extends Port<T> implements IOutPort<T> {
   public readonly out: true;
 
-  protected constructor(name: string, node: INode) {
+  protected constructor(name: string | number, node: INode) {
     super(name, node);
     this.out = true;
   }

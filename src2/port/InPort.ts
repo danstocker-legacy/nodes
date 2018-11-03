@@ -6,7 +6,7 @@ import {Port} from "./Port";
 export abstract class InPort<T> extends Port<T> implements IInPort<T> {
   public readonly in: true;
 
-  protected constructor(name: string, node: INode) {
+  protected constructor(name: string | number, node: INode) {
     super(name, node);
     this.in = true;
   }

@@ -1,7 +1,7 @@
 import {INode} from "../node";
 
 export interface IPort<T> {
-  name: string;
+  name: string | number;
   node: INode;
 
   connect(peer: IPort<T>, tag?: string): void;

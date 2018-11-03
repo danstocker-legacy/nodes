@@ -5,7 +5,7 @@ import {OutPort} from "./OutPort";
 export class DynamicOutPort<T> extends OutPort<T> implements IDynamicPort<T> {
   public readonly dynamic: true;
 
-  constructor(name: string, node: INode) {
+  constructor(name: number, node: INode) {
     super(name, node);
     this.dynamic = true;
   }
