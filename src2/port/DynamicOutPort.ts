@@ -10,7 +10,7 @@ export class DynamicOutPort<T> extends OutPort<T> implements IDynamicPort<T> {
     this.dynamic = true;
   }
 
-  public close(tag?: string): void {
+  public delete(tag?: string): void {
     //
   }
 }
