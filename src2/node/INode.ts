@@ -1,4 +1,4 @@
-import {IDynamicPort, IInPort, InPorts, IPort, OutPorts} from "../port";
+import {IDynamicPort, IInPort, IPort, TInPorts, TOutPorts} from "../port";
 
 /**
  * Outlines what a node is.
@@ -8,10 +8,10 @@ import {IDynamicPort, IInPort, InPorts, IPort, OutPorts} from "../port";
  */
 export interface INode {
   /** Input ports of the node. */
-  readonly in: InPorts;
+  readonly in: TInPorts;
 
   /** Output ports of the node. */
-  readonly out: OutPorts;
+  readonly out: TOutPorts;
 
   /**
    * Adds a port to the node, as the effect of an optionally identified impulse.

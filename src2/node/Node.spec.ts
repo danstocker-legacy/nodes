@@ -1,19 +1,19 @@
 import {
   DynamicInPort,
   DynamicOutPort,
-  DynamicPorts,
   IInPort,
   IOutPort,
   StaticInPort,
   StaticOutPort,
-  StaticPorts
+  TDynamicPorts,
+  TStaticPorts
 } from "../port";
 import {Node} from "./Node";
 
 describe("Node", function () {
   class TestNode extends Node {
-    public readonly in: StaticPorts<IInPort<any>, "$"> & DynamicPorts<IInPort<any>>;
-    public readonly out: StaticPorts<IOutPort<any>, "$"> & DynamicPorts<IOutPort<any>>;
+    public readonly in: TStaticPorts<IInPort<any>, "$"> & TDynamicPorts<IInPort<any>>;
+    public readonly out: TStaticPorts<IOutPort<any>, "$"> & TDynamicPorts<IOutPort<any>>;
 
     constructor() {
       super();

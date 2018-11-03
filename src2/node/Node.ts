@@ -1,17 +1,17 @@
 import {
   IDynamicPort,
   IInPort,
-  InPorts,
   IOutPort,
   IPort,
   OutPort,
-  OutPorts
+  TInPorts,
+  TOutPorts
 } from "../port";
 import {INode} from "./INode";
 
 export abstract class Node implements INode {
-  public readonly in: InPorts;
-  public readonly out: OutPorts;
+  public readonly in: TInPorts;
+  public readonly out: TOutPorts;
 
   protected constructor() {
     this.in = {};
