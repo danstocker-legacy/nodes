@@ -95,4 +95,32 @@ describe("OutPort", function () {
       });
     });
   });
+
+  describe("#send()", function () {
+    let local: Noop;
+    let remote1: Noop;
+    let remote2: Noop;
+    let localPort: TestOutPort<number>;
+    let remotePort1: StaticInPort<number>;
+    let remotePort2: StaticInPort<number>;
+
+    beforeEach(function () {
+      local = new Noop();
+      remote1 = new Noop();
+      remote2 = new Noop();
+      localPort = new TestOutPort("foo", local);
+      remotePort1 = new StaticInPort("bar", remote1);
+      remotePort2 = new StaticInPort("bar", remote2);
+      localPort.connect(remotePort1);
+      localPort.connect(remotePort2);
+    });
+
+    it("should send value to input node", function () {
+      spyOn(remotePort1, "send");
+      spyOn(remotePort2, "send");
+      localPort.send(5, "1");
+      expect(remotePort1.send).toHaveBeenCalledWith(5, "1");
+      expect(remotePort2.send).toHaveBeenCalledWith(5, "1");
+    });
+  });
 });

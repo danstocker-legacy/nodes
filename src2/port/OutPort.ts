@@ -36,6 +36,8 @@ export abstract class OutPort<T> extends Port<T> implements IOutPort<T> {
   }
 
   public send(value: T, tag?: string): void {
-    //
+    for (const peer of this.peers.values()) {
+      peer.send(value, tag);
+    }
   }
 }

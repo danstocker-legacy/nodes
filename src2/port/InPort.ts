@@ -32,6 +32,6 @@ export abstract class InPort<T> extends Port<T> implements IInPort<T> {
   }
 
   public send(value: T, tag?: string): void {
-    //
+    this.node.send(this, value, tag);
   }
 }
