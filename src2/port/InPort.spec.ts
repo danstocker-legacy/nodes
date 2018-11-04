@@ -1,5 +1,9 @@
+import {Noop} from "../forwarders";
 import {INode} from "../node";
+import {IInPort} from "./IInPort";
 import {InPort} from "./InPort";
+import {IOutPort} from "./IOutPort";
+import {StaticOutPort} from "./StaticOutPort";
 
 describe("InPort", function () {
   class TestInPort<T> extends InPort<T> {
@@ -13,6 +17,81 @@ describe("InPort", function () {
       const node = <INode> {};
       const port = new TestInPort("foo", node);
       expect(port.in).toBe(true);
+    });
+  });
+
+  describe("#connect()", function () {
+    let local: Noop;
+    let remote: Noop;
+    let localPort: IInPort<number>;
+    let remotePort: IOutPort<number>;
+
+    beforeEach(function () {
+      local = new Noop();
+      remote = new Noop();
+      localPort = new TestInPort("foo", local);
+      remotePort = new StaticOutPort("bar", remote);
+    });
+
+    it("should set property 'peer'", function () {
+      localPort.connect(remotePort, "1");
+      expect(localPort.peer).toBe(remotePort);
+    });
+
+    it("should invoke #connect() on peer", function () {
+      spyOn(remotePort, "connect");
+      localPort.connect(remotePort, "1");
+      expect(remotePort.connect).toHaveBeenCalledWith(localPort, "1");
+    });
+
+    it("should invoke #onConnect() on node", function () {
+      spyOn(local, "onConnect");
+      localPort.connect(remotePort, "1");
+      expect(local.onConnect).toHaveBeenCalledWith(localPort, remotePort, "1");
+    });
+
+    describe("when port is already connected", function () {
+      beforeEach(function () {
+        localPort.connect(remotePort, "1");
+      });
+
+      it("should throw", function () {
+        expect(function () {
+          localPort.connect(new StaticOutPort("baz", remote));
+        }).toThrow();
+      });
+    });
+  });
+
+  describe("#disconnect()", function () {
+    let local: Noop;
+    let remote: Noop;
+    let localPort: IInPort<number>;
+    let remotePort: IOutPort<number>;
+
+    beforeEach(function () {
+      local = new Noop();
+      remote = new Noop();
+      localPort = new TestInPort("foo", local);
+      remotePort = new StaticOutPort("bar", remote);
+      localPort.connect(remotePort);
+    });
+
+    it("should set property 'peer'", function () {
+      localPort.disconnect("1");
+      expect(localPort.peer).toBeUndefined();
+    });
+
+    it("should invoke #disconnect() on peer", function () {
+      spyOn(remotePort, "disconnect");
+      localPort.disconnect("1");
+      expect(remotePort.disconnect).toHaveBeenCalledWith(localPort, "1");
+    });
+
+    it("should invoke #onDisconnect() on node", function () {
+      spyOn(local, "onDisconnect");
+      localPort.disconnect("1");
+      expect(local.onDisconnect).toHaveBeenCalledWith(localPort, remotePort, "1");
     });
   });
 });

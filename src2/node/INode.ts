@@ -36,4 +36,20 @@ export interface INode {
    * @param tag Identifies impulse.
    */
   send<T>(port: IInPort<T>, value: T, tag?: string): void;
+
+  /**
+   * Called when one of the node's ports connects.
+   * @param localPort Port that belongs to the current node.
+   * @param remotePort Port that belongs to the remote node.
+   * @param tag Identifies impulse.
+   */
+  onConnect<T>(localPort: IPort<T>, remotePort: IPort<T>, tag?: string): void;
+
+  /**
+   * Called when one of the node's ports disconnects.
+   * @param localPort Port that belongs to the current node.
+   * @param remotePort Port that belongs to the remote node.
+   * @param tag Identifies impulse.
+   */
+  onDisconnect<T>(localPort: IPort<T>, remotePort: IPort<T>, tag?: string): void;
 }

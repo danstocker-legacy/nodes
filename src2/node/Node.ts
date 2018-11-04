@@ -51,4 +51,12 @@ export abstract class Node implements INode {
   }
 
   public abstract send<T>(port: IInPort<T>, value: T, tag?: string): void;
+
+  public onConnect<T>(localPort: IPort<T>, remotePort: IPort<T>, tag?: string): void {
+    //
+  }
+
+  public onDisconnect<T>(localPort: IPort<T>, remotePort: IPort<T>, tag?: string): void {
+    //
+  }
 }
