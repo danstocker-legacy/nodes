@@ -3,6 +3,7 @@ import {IPort} from "./IPort";
 
 export interface IOutPort<T> extends IPort<T> {
   out: true;
+  peers: Set<IInPort<T>>;
 
   connect(peer: IInPort<T>, tag?: string): void;
 
