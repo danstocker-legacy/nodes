@@ -1,4 +1,4 @@
-import {Noop} from "../forwarders";
+import {Noop} from "../lang";
 import {NodeEvent} from "./NodeEvent";
 
 describe("NodeEvent", function () {

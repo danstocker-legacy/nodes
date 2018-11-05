@@ -1,4 +1,4 @@
-import {Noop} from "../forwarders";
+import {Noop} from "../lang";
 import {INode} from "../node";
 import {IInPort} from "./IInPort";
 import {InPort} from "./InPort";
