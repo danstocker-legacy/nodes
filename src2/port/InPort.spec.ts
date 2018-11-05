@@ -21,8 +21,8 @@ describe("InPort", function () {
   });
 
   describe("#connect()", function () {
-    let local: Noop;
-    let remote: Noop;
+    let local: Noop<number>;
+    let remote: Noop<number>;
     let localPort: IInPort<number>;
     let remotePort: IOutPort<number>;
 
@@ -64,8 +64,8 @@ describe("InPort", function () {
   });
 
   describe("#disconnect()", function () {
-    let local: Noop;
-    let remote: Noop;
+    let local: Noop<number>;
+    let remote: Noop<number>;
     let localPort: IInPort<number>;
     let remotePort: IOutPort<number>;
 
@@ -96,7 +96,7 @@ describe("InPort", function () {
   });
 
   describe("#send()", function () {
-    let local: Noop;
+    let local: Noop<number>;
     let localPort: TestInPort<number>;
 
     beforeEach(function () {

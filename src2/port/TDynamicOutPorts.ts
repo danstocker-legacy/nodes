@@ -1,7 +1,6 @@
 import {NodeEvent} from "../utils";
-import {IOutPort} from "./IOutPort";
-import {TDynamicPorts} from "./TDynamicPorts";
-import {TStaticPorts} from "./TStaticPorts";
+import {IDynamicPort} from "./IDynamicPort";
+import {TStaticOutPorts} from "./TStaticOutPorts";
 
 /**
  * Defines a set of dynamic output ports, where T specifies the value type of
@@ -12,8 +11,8 @@ import {TStaticPorts} from "./TStaticPorts";
  * // a set of dynamic string output ports
  * const dynamicOutPorts: TDynamicOutPorts<string>
  */
-export type TDynamicOutPorts<T> =
-  TDynamicPorts<IOutPort<T>> &
-  TStaticPorts<IOutPort<T>, {
-    event: NodeEvent
-  }>;
+export type TDynamicOutPorts<T> = {
+  [key: number]: IDynamicPort<T>
+} & TStaticOutPorts<{
+  event: NodeEvent
+}>;

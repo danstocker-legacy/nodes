@@ -7,12 +7,12 @@ import {
   TStaticOutPorts
 } from "../port";
 
-export class Noop extends Node {
+export class Noop<T> extends Node {
   public readonly in: TStaticInPorts<{
-    "$": any
+    "$": T
   }>;
   public readonly out: TStaticOutPorts<{
-    "$": any
+    "$": T
   }>;
 
   constructor() {
@@ -21,7 +21,7 @@ export class Noop extends Node {
     this.addPort(new StaticOutPort("$", this));
   }
 
-  public send<T>(port: IInPort<T>, value: T, tag?: string): void {
+  public send<U>(port: IInPort<U & T>, value: U & T, tag?: string): void {
     if (port === this.in.$) {
       this.out.$.send(value, tag);
     }
