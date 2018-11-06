@@ -21,17 +21,15 @@ export class Tracker<T extends THash = THash> extends Node {
     $: T
   }>;
 
-  private prepping: boolean;
-  private countdown: Set<string | number>;
+  private readonly countdown: Set<string | number>;
   private cache: Array<[T, string]>;
   private values: T;
 
   constructor(fields: Array<string>) {
     super();
-    this.prepping = true;
     this.countdown = new Set(fields);
-    this.values = <T> {};
     this.cache = [];
+    this.values = <T> {};
     for (const field of fields) {
       this.addPort(new StaticInPort(field, this));
     }
@@ -39,11 +37,12 @@ export class Tracker<T extends THash = THash> extends Node {
   }
 
   public send<U>(port: IInPort<U>, value: U, tag?: string): void {
-    const name = port.name;
+    const countdown = this.countdown;
     const cache = this.cache;
     let values = this.values;
+    const name = port.name;
 
-    if (this.prepping) {
+    if (countdown.size) {
       // initializing cache
       if (!cache.length) {
         cache.push([values, tag]);
@@ -52,7 +51,8 @@ export class Tracker<T extends THash = THash> extends Node {
       // trying to place value in last set of values
       const current = values[name];
       if (current !== undefined) {
-        // when slot for port is occupied, adding new set
+        // slot for port is occupied
+        // adding new value set to cache
         this.values = values = <T> merge({}, values);
         cache.push([values, tag]);
       }
@@ -60,13 +60,10 @@ export class Tracker<T extends THash = THash> extends Node {
       values[name] = value;
 
       // checking if we've got inputs from all ports
-      const countdown = this.countdown;
       countdown.delete(name);
       if (countdown.size === 0) {
         // releasing cached inputs and cleaning up
         this.release();
-        this.prepping = false;
-        this.countdown = undefined;
         this.cache = undefined;
       }
     } else {
