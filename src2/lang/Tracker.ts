@@ -11,25 +11,26 @@ import {merge, THash} from "../utils";
 /**
  * Outputs full sets of inputs, where each value corresponds to the latest
  * one received.
+ * @example
+ * const tracker: Tracker<{ foo: number, bar: number }>
+ * tracker = new Tracker(["foo", "bar"]);
  */
-export class Tracker extends Node {
-  public readonly in: TStaticInPorts<{
-    [key: string]: any
-  }>;
+export class Tracker<T extends THash = THash> extends Node {
+  public readonly in: TStaticInPorts<T>;
   public readonly out: TStaticOutPorts<{
-    $: any
+    $: T
   }>;
 
   private prepping: boolean;
   private countdown: Set<string | number>;
-  private cache: Array<[THash, string]>;
-  private values: THash;
+  private cache: Array<[T, string]>;
+  private values: T;
 
   constructor(fields: Array<string>) {
     super();
     this.prepping = true;
     this.countdown = new Set(fields);
-    this.values = {};
+    this.values = <T> {};
     this.cache = [];
     for (const field of fields) {
       this.addPort(new StaticInPort(field, this));
@@ -52,7 +53,7 @@ export class Tracker extends Node {
       const current = values[name];
       if (current !== undefined) {
         // when slot for port is occupied, adding new set
-        this.values = values = merge({}, values);
+        this.values = values = <T> merge({}, values);
         cache.push([values, tag]);
       }
       // assigning new value to port

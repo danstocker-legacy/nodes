@@ -12,7 +12,7 @@ describe("Tracker", function () {
   });
 
   describe("#send()", function () {
-    let node: Tracker;
+    let node: Tracker<{ foo: number, bar: number }>;
 
     beforeEach(function () {
       node = new Tracker(["foo", "bar"]);
