@@ -11,6 +11,7 @@ import {merge, THash} from "../utils";
 /**
  * Outputs full sets of inputs, where each value corresponds to the latest
  * one received.
+ * TODO: Prepare for caching while disconnected.
  * @example
  * const tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
