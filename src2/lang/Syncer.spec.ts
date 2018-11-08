@@ -2,7 +2,7 @@ import {Syncer} from "./Syncer";
 
 describe("Syncer", function () {
   describe("constructor", function () {
-    it("should open ports", function () {
+    it("should add ports", function () {
       const node = new Syncer<{ foo: number, bar: boolean }>(["foo", "bar"]);
       expect(node.in.foo).toBeDefined();
       expect(node.in.bar).toBeDefined();

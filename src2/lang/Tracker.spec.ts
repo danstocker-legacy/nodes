@@ -3,7 +3,7 @@ import {Tracker} from "./Tracker";
 // tslint:disable
 describe("Tracker", function () {
   describe("constructor", function () {
-    it("should open ports", function () {
+    it("should add ports", function () {
       const node = new Tracker(["foo", "bar"]);
       expect(node.in.foo).toBeDefined();
       expect(node.in.bar).toBeDefined();

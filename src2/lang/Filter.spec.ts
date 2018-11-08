@@ -2,7 +2,7 @@ import {Filter} from "./Filter";
 
 describe("Filter", function () {
   describe("constructor", function () {
-    it("should open ports", function () {
+    it("should add ports", function () {
       const node = new Filter();
       expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();

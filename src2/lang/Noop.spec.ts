@@ -2,7 +2,7 @@ import {Noop} from "./Noop";
 
 describe("Noop", function () {
   describe("constructor", function () {
-    it("should open ports", function () {
+    it("should add ports", function () {
       const node = new Noop<number>();
       expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();

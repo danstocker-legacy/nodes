@@ -2,7 +2,7 @@ import {Demuxer} from "./Demuxer";
 
 describe("Demuxer", function () {
   describe("constructor", function () {
-    it("should open ports", function () {
+    it("should add ports", function () {
       const node = new Demuxer<{ foo: number, bar: number }>(["foo", "bar"]);
       expect(node.in.$).toBeDefined();
       expect(node.out.foo).toBeDefined();

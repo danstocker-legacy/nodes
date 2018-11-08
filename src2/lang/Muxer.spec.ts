@@ -2,7 +2,7 @@ import {Muxer} from "./Muxer";
 
 describe("Muxer", function () {
   describe("constructor", function () {
-    it("should open ports", function () {
+    it("should add ports", function () {
       const node = new Muxer<{ foo: number, bar: number }>(["foo", "bar"]);
       expect(node.in.foo).toBeDefined();
       expect(node.in.bar).toBeDefined();

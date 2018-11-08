@@ -2,7 +2,7 @@ import {Reducer} from "./Reducer";
 
 describe("Reducer", function () {
   describe("constructor", function () {
-    it("should open ports", function () {
+    it("should add ports", function () {
       const node = new Reducer(() => null);
       expect(node.in.$).toBeDefined();
       expect(node.in.$).toBeDefined();

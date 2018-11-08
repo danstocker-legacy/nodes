@@ -2,7 +2,7 @@ import {Emitter} from "./Emitter";
 
 describe("Emitter", function () {
   describe("constructor", function () {
-    it("should open ports", function () {
+    it("should add ports", function () {
       const node = new Emitter(5);
       expect(node.in.tag).toBeDefined();
       expect(node.out.$).toBeDefined();
