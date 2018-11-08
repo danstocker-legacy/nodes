@@ -4,5 +4,6 @@ export {Mapper} from "./Mapper";
 export {Muxer} from "./Muxer";
 export {Noop} from "./Noop";
 export {Reducer} from "./Reducer";
+export {Splitter} from "./Splitter";
 export {Syncer} from "./Syncer";
 export {TMuxed} from "./TMuxed";
