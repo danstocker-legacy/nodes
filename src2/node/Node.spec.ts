@@ -24,7 +24,7 @@ describe("Node", function () {
       super();
     }
 
-    public send<T>(port: IInPort<T>, value: T, tag?: string): void {
+    public send<T>(port: IInPort<T>, input: T, tag?: string): void {
       //
     }
   }

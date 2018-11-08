@@ -33,9 +33,9 @@ export class Mapper<I, O> extends Node {
     this.addPort(new StaticOutPort("$", this));
   }
 
-  public send<U>(port: IInPort<U & I>, value: U & I, tag?: string): void {
+  public send<U>(port: IInPort<U & I>, input: U & I, tag?: string): void {
     if (port === this.in.$) {
-      const mapped = this.cb(value, tag, this);
+      const mapped = this.cb(input, tag, this);
       this.out.$.send(mapped, tag);
     }
   }

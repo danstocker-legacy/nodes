@@ -29,7 +29,7 @@ export class Emitter<T> extends Node {
     this.addPort(new StaticOutPort("$", this));
   }
 
-  public send(port: IInPort<any>, value: any, tag?: string): void {
+  public send(port: IInPort<any>, input: any, tag?: string): void {
     if (port === this.in.tag) {
       this.out.$.send(this.value, tag);
     }

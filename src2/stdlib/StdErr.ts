@@ -14,9 +14,9 @@ export class StdErr extends Node {
     this.addPort(new StaticInPort("$", this));
   }
 
-  public send<T>(port: IInPort<T & (string | Buffer)>, value: T & (string | Buffer)): void {
+  public send<T>(port: IInPort<T & (string | Buffer)>, input: T & (string | Buffer)): void {
     if (port === this.in.$) {
-      process.stderr.write(value);
+      process.stderr.write(input);
     }
   }
 }

@@ -21,9 +21,9 @@ export class Noop<T> extends Node {
     this.addPort(new StaticOutPort("$", this));
   }
 
-  public send<U>(port: IInPort<U & T>, value: U & T, tag?: string): void {
+  public send<U>(port: IInPort<U & T>, input: U & T, tag?: string): void {
     if (port === this.in.$) {
-      this.out.$.send(value, tag);
+      this.out.$.send(input, tag);
     }
   }
 }

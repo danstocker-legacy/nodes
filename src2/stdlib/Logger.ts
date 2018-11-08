@@ -32,18 +32,18 @@ export class Logger extends Node {
     this.addPort(new StaticOutPort("err", this));
   }
 
-  public send<T>(port: IInPort<T>, value: T, tag?: string): void {
+  public send<T>(port: IInPort<T>, input: T, tag?: string): void {
     const inPorts = this.in;
     const outPorts = this.out;
     switch (port) {
       case inPorts.log:
-        outPorts.log.send(value, tag);
+        outPorts.log.send(input, tag);
         break;
       case inPorts.warn:
-        outPorts.warn.send(value, tag);
+        outPorts.warn.send(input, tag);
         break;
       case inPorts.err:
-        outPorts.err.send(value, tag);
+        outPorts.err.send(input, tag);
         break;
     }
   }

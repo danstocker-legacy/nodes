@@ -33,7 +33,7 @@ export class Syncer<T> extends Node {
     this.addPort(new StaticOutPort("$", this));
   }
 
-  public send<U>(port: IInPort<U & TInput<T>>, value: U & TInput<T>, tag: string): void {
+  public send<U>(port: IInPort<U & TInput<T>>, input: U & TInput<T>, tag: string): void {
     const name = port.name;
     if (port === this.in[name]) {
       const inputCache = this.inputCache;
@@ -51,7 +51,7 @@ export class Syncer<T> extends Node {
       }
 
       // adding value to input cache
-      inputs[name] = value;
+      inputs[name] = input;
       ports.delete(name);
 
       if (ports.size === 0) {

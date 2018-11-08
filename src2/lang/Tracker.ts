@@ -37,7 +37,7 @@ export class Tracker<T extends THash = THash> extends Node {
     this.addPort(new StaticOutPort("$", this));
   }
 
-  public send<U>(port: IInPort<U>, value: U, tag?: string): void {
+  public send<U>(port: IInPort<U>, input: U, tag?: string): void {
     const countdown = this.countdown;
     const cache = this.cache;
     let values = this.values;
@@ -58,7 +58,7 @@ export class Tracker<T extends THash = THash> extends Node {
         cache.push([values, tag]);
       }
       // assigning new value to port
-      values[name] = value;
+      values[name] = input;
 
       // checking if we've got inputs from all ports
       countdown.delete(name);
@@ -68,7 +68,7 @@ export class Tracker<T extends THash = THash> extends Node {
         this.cache = undefined;
       }
     } else {
-      values[name] = value;
+      values[name] = input;
       this.out.$.send(values, tag);
     }
   }

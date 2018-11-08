@@ -26,9 +26,9 @@ export class Filter<T> extends Node {
     this.addPort(new StaticOutPort("$", this));
   }
 
-  public send<U>(port: IInPort<U & FilterInput<T>>, value: U & FilterInput<T>, tag?: string): void {
-    if (port === this.in.$ && value.incl) {
-      this.out.$.send(value.val, tag);
+  public send<U>(port: IInPort<U & FilterInput<T>>, input: U & FilterInput<T>, tag?: string): void {
+    if (port === this.in.$ && input.incl) {
+      this.out.$.send(input.val, tag);
     }
   }
 }

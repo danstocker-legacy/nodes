@@ -23,10 +23,10 @@ export class Muxer<T extends THash = THash> extends Node {
     this.addPort(new StaticOutPort("$", this));
   }
 
-  public send<U extends T[keyof T]>(port: IInPort<U>, value: U, tag?: string): void {
+  public send<U extends T[keyof T]>(port: IInPort<U>, input: U, tag?: string): void {
     const name = port.name;
     if (port === this.in[name]) {
-      this.out.$.send({name, value, tag}, `${tag}|${name}`);
+      this.out.$.send({name, value: input, tag}, `${tag}|${name}`);
     }
   }
 }
