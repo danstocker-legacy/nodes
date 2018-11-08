@@ -7,5 +7,5 @@ export {Reducer} from "./Reducer";
 export {Serializer} from "./Serializer";
 export {Shifter} from "./Shifter";
 export {Splitter} from "./Splitter";
-export {Syncer} from "./Syncer";
+export {Merger} from "./Merger";
 export {TMuxed} from "./TMuxed";

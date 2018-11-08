@@ -9,10 +9,7 @@ import {
 
 type TInput<T> = T[keyof T];
 
-/**
- * TODO: Prepare for caching while disconnected.
- */
-export class Syncer<T> extends Node {
+export class Merger<T> extends Node {
   public readonly in: TStaticInPorts<T>;
   public readonly out: TStaticOutPorts<{
     $: T

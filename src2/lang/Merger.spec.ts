@@ -1,9 +1,9 @@
-import {Syncer} from "./Syncer";
+import {Merger} from "./Merger";
 
-describe("Syncer", function () {
+describe("Merger", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Syncer<{ foo: number, bar: boolean }>(["foo", "bar"]);
+      const node = new Merger<{ foo: number, bar: boolean }>(["foo", "bar"]);
       expect(node.in.foo).toBeDefined();
       expect(node.in.bar).toBeDefined();
       expect(node.out.$).toBeDefined();
@@ -11,10 +11,10 @@ describe("Syncer", function () {
   });
 
   describe("#send()", function () {
-    let node: Syncer<{ foo: number, bar: boolean }>;
+    let node: Merger<{ foo: number, bar: boolean }>;
 
     beforeEach(function () {
-      node = new Syncer(["foo", "bar"]);
+      node = new Merger(["foo", "bar"]);
     });
 
     describe("until there is a complete input set", function () {
