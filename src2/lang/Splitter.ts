@@ -11,7 +11,7 @@ import {THash} from "../utils";
 /**
  * Splits synchronized values sets.
  * @example
- * const splitter: Splitter<{foo: number, bar: boolean}>;
+ * let splitter: Splitter<{foo: number, bar: boolean}>;
  * splitter = new Splitter(["foo", "bar"]);
  * splitter.in.$.connect(A.out.$);
  * splitter.out.foo.connect(B.in.$);

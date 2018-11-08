@@ -12,7 +12,7 @@ import {THash} from "../utils";
  * Outputs sets of inputs, where each value in the set reflects the latest
  * one received through its corresponding port.
  * @example
- * const tracker: Tracker<{ foo: number, bar: number }>
+ * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
  */
 export class Tracker<T extends THash = THash> extends Node {

@@ -22,7 +22,7 @@ type TReducerInput<I> = {
  * Reduces input according to callback.
  * Resets state to initial on receiving truthy on `res`.
  * @example
- * const sum: Reducer<number, number>;
+ * let sum: Reducer<number, number>;
  * sum = new Reducer((curr, next) => curr + next, 0);
  */
 export class Reducer<I, O> extends Node {
