@@ -9,6 +9,16 @@ import {
 
 type TInput<T> = T[keyof T];
 
+/**
+ * Merges input values bearing the same tag. Produces a dictionary of port
+ * name - value pairs.
+ * @example
+ * let merger: Merger<{foo: number, bar: boolean}>;
+ * merger = new Merger(["foo", "bar"]);
+ * merger.in.foo.send(5, "1");
+ * merger.in.bar.send(true, "1");
+ * // merger.out.$ will output {foo: 5, bar: true} for tag "1"
+ */
 export class Merger<T> extends Node {
   public readonly in: TStaticInPorts<T>;
   public readonly out: TStaticOutPorts<{
