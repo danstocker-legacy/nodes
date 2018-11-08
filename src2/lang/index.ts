@@ -1,3 +1,4 @@
+export {Demuxer} from "./Demuxer";
 export {Emitter} from "./Emitter";
 export {Filter} from "./Filter";
 export {Mapper} from "./Mapper";
