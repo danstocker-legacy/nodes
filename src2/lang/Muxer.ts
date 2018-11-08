@@ -26,7 +26,7 @@ export class Muxer<T extends THash = THash> extends Node {
   public send<U extends T[keyof T]>(port: IInPort<U>, input: U, tag?: string): void {
     const name = port.name;
     if (port === this.in[name]) {
-      this.out.$.send({name, value: input, tag}, `${tag}|${name}`);
+      this.out.$.send({name, value: input}, tag);
     }
   }
 }

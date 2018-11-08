@@ -22,9 +22,8 @@ describe("Muxer", function () {
       node.send(node.in.foo, 5, "1");
       expect(node.out.$.send).toHaveBeenCalledWith({
         name: "foo",
-        tag: "1",
         value: 5
-      }, "1|foo");
+      }, "1");
     });
   });
 });

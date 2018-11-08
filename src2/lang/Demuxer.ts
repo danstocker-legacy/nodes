@@ -26,7 +26,7 @@ export class Demuxer<T extends THash = THash> extends Node {
   public send<U>(port: IInPort<U & TMuxed<T>>, input: U & TMuxed<T>, tag?: string): void {
     if (port === this.in.$) {
       const name = input.name;
-      this.out[name].send(input.value, input.tag);
+      this.out[name].send(input.value, tag);
     }
   }
 }
