@@ -7,9 +7,9 @@ import {
   TInPorts,
   TOutPorts
 } from "../port";
-import {INode} from "./INode";
+import {IAtomicNode} from "./IAtomicNode";
 
-export abstract class Node implements INode {
+export abstract class Node implements IAtomicNode {
   public readonly in: TInPorts;
   public readonly out: TOutPorts;
 

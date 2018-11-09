@@ -1,5 +1,5 @@
 import {Noop} from "../lang";
-import {INode} from "../node";
+import {IAtomicNode} from "../node";
 import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {OutPort} from "./OutPort";
@@ -7,20 +7,20 @@ import {StaticInPort} from "./StaticInPort";
 
 describe("OutPort", function () {
   class TestOutPort<T> extends OutPort<T> {
-    constructor(name: string, node: INode) {
+    constructor(name: string, node: IAtomicNode) {
       super(name, node);
     }
   }
 
   describe("constructor", function () {
     it("should set property 'in'", function () {
-      const node = <INode> {};
+      const node = <IAtomicNode> {};
       const port = new TestOutPort("foo", node);
       expect(port.out).toBe(true);
     });
 
     it("should set property 'peers'", function () {
-      const node = <INode> {};
+      const node = <IAtomicNode> {};
       const port = new TestOutPort("foo", node);
       expect(port.peers).toEqual(new Set());
     });

@@ -1,2 +1,2 @@
-export {INode} from "./INode";
+export {IAtomicNode} from "./IAtomicNode";
 export {Node} from "./Node";

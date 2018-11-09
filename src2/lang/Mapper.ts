@@ -1,4 +1,4 @@
-import {INode, Node} from "../node";
+import {IAtomicNode, Node} from "../node";
 import {
   IInPort,
   StaticInPort,
@@ -7,7 +7,7 @@ import {
   TStaticOutPorts
 } from "../port";
 
-type MapperCallback<I, O> = (value: I, tag: string, node: INode) => O;
+type MapperCallback<I, O> = (value: I, tag: string, node: IAtomicNode) => O;
 
 /**
  * Maps input value to an output value, as specified by a static mapper

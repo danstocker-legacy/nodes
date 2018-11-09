@@ -6,7 +6,7 @@ import {IDynamicPort, IInPort, IPort, TInPorts, TOutPorts} from "../port";
  * delete from. Nodes may also have data sent to them through one of their
  * input ports.
  */
-export interface INode {
+export interface IAtomicNode {
   /** Input ports of the node. */
   readonly in: TInPorts;
 

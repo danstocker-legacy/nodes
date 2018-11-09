@@ -1,4 +1,4 @@
-import {INode, Node} from "../node";
+import {IAtomicNode, Node} from "../node";
 import {
   IInPort,
   StaticInPort,
@@ -8,7 +8,7 @@ import {
 } from "../port";
 import {copy} from "../utils";
 
-type TReducerCallback<I, O> = (curr: O, next: I, tag: string, node: INode) => O;
+type TReducerCallback<I, O> = (curr: O, next: I, tag: string, node: IAtomicNode) => O;
 
 type TReducerInput<I> = {
   /** Reset signal */

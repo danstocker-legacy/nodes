@@ -1,8 +1,8 @@
-import {INode} from "../node";
+import {IAtomicNode} from "../node";
 
 export interface IPort<T> {
   name: string | number;
-  node: INode;
+  node: IAtomicNode;
 
   connect(peer: IPort<T>, tag?: string): void;
 

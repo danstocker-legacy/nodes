@@ -1,11 +1,11 @@
-import {INode} from "../node";
+import {IAtomicNode} from "../node";
 import {IPort} from "./IPort";
 
 export abstract class Port<T> implements IPort<T> {
   public readonly name: string | number;
-  public readonly node: INode;
+  public readonly node: IAtomicNode;
 
-  protected constructor(name: string | number, node: INode) {
+  protected constructor(name: string | number, node: IAtomicNode) {
     this.name = name;
     this.node = node;
   }
