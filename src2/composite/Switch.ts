@@ -1,4 +1,4 @@
-import {Demuxer, Mapper, Merger, TMuxed} from "../lang";
+import {Demuxer, Mapper, Merger, TMuxed} from "../atomic";
 import {INode} from "../node";
 import {TStaticInPorts, TStaticOutPorts} from "../port";
 

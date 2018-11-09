@@ -1,4 +1,4 @@
-import {Noop} from "../lang";
+import {Noop} from "../atomic";
 import {DynamicInPort} from "./DynamicInPort";
 
 describe("DynamicInPort", function () {

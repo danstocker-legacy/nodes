@@ -1,4 +1,4 @@
-import {Noop} from "../lang";
+import {Noop} from "../atomic";
 import {StaticInPort} from "./StaticInPort";
 
 describe("StaticInPort", function () {

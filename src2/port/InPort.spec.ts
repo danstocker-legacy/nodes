@@ -1,4 +1,4 @@
-import {Noop} from "../lang";
+import {Noop} from "../atomic";
 import {IAtomicNode} from "../node";
 import {IInPort} from "./IInPort";
 import {InPort} from "./InPort";
