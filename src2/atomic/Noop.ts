@@ -5,6 +5,15 @@ import {
   OutPort, TInPorts, TOutPorts
 } from "../port";
 
+/**
+ * Forwards input without change.
+ * Mostly used in composite nodes to distribute single input to multiple atomic
+ * component nodes.
+ * @example
+ * let noop: Noop<number>
+ * noop = new Noop();
+ * noop.in.$.send(5);
+ */
 export class Noop<T> extends Node {
   public readonly in: TInPorts<{
     "$": T
