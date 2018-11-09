@@ -1,24 +1,22 @@
 import {Node} from "../node";
 import {
   IInPort,
-  StaticInPort,
-  StaticOutPort,
-  TStaticInPorts,
-  TStaticOutPorts
+  InPort,
+  OutPort, TInPorts, TOutPorts
 } from "../port";
 
 export class Noop<T> extends Node {
-  public readonly in: TStaticInPorts<{
+  public readonly in: TInPorts<{
     "$": T
   }>;
-  public readonly out: TStaticOutPorts<{
+  public readonly out: TOutPorts<{
     "$": T
   }>;
 
   constructor() {
     super();
-    this.addPort(new StaticInPort("$", this));
-    this.addPort(new StaticOutPort("$", this));
+    this.addPort(new InPort("$", this));
+    this.addPort(new OutPort("$", this));
   }
 
   public send<U>(port: IInPort<U & T>, input: U & T, tag?: string): void {

@@ -1,25 +1,19 @@
 import {Node} from "../node";
-import {
-  IInPort,
-  StaticInPort,
-  StaticOutPort,
-  TStaticInPorts,
-  TStaticOutPorts
-} from "../port";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 import {THash} from "../utils";
 import {TMuxed} from "./TMuxed";
 
 export class Demuxer<T extends THash = THash> extends Node {
-  public readonly in: TStaticInPorts<{
+  public readonly in: TInPorts<{
     $: TMuxed<T>
   }>;
-  public readonly out: TStaticOutPorts<T>;
+  public readonly out: TOutPorts<T>;
 
   constructor(fields: Array<string>) {
     super();
-    this.addPort(new StaticInPort("$", this));
+    this.addPort(new InPort("$", this));
     for (const field of fields) {
-      this.addPort(new StaticOutPort(field, this));
+      this.addPort(new OutPort(field, this));
     }
   }
 

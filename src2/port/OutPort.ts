@@ -3,11 +3,11 @@ import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
 
-export abstract class OutPort<T> extends Port<T> implements IOutPort<T> {
+export class OutPort<T> extends Port<T> implements IOutPort<T> {
   public readonly out: true;
   public readonly peers: Set<IInPort<T>>;
 
-  protected constructor(name: string | number, node: IAtomicNode) {
+  constructor(name: string, node: IAtomicNode) {
     super(name, node);
     this.out = true;
     this.peers = new Set();

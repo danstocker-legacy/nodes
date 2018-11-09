@@ -1,11 +1,5 @@
 import {Node} from "../node";
-import {
-  IInPort,
-  StaticInPort,
-  StaticOutPort,
-  TStaticInPorts,
-  TStaticOutPorts
-} from "../port";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 
 /**
  * Emits a constant in response to each incoming impulse.
@@ -13,10 +7,10 @@ import {
  * const emitter = new Emitter<number>(5);
  */
 export class Emitter<T> extends Node {
-  public readonly in: TStaticInPorts<{
+  public readonly in: TInPorts<{
     tag: any
   }>;
-  public readonly out: TStaticOutPorts<{
+  public readonly out: TOutPorts<{
     $: T
   }>;
 
@@ -25,8 +19,8 @@ export class Emitter<T> extends Node {
   constructor(value: any) {
     super();
     this.value = value;
-    this.addPort(new StaticInPort("tag", this));
-    this.addPort(new StaticOutPort("$", this));
+    this.addPort(new InPort("tag", this));
+    this.addPort(new OutPort("$", this));
   }
 
   public send(port: IInPort<any>, input: any, tag?: string): void {

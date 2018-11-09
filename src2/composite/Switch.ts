@@ -1,6 +1,6 @@
 import {Demuxer, Mapper, Merger, TMuxed} from "../atomic";
 import {INode} from "../node";
-import {TStaticInPorts, TStaticOutPorts} from "../port";
+import {TInPorts, TOutPorts} from "../port";
 
 type TSwitchInputs<P extends string, T> = {
   $: T,
@@ -25,8 +25,8 @@ function switchToMuxed<P extends string, T>(inputs: TSwitchInputs<P, T>): TMuxed
  * switch = new Switch(["foo", "bar", "baz");
  */
 export class Switch<P extends string, T> implements INode {
-  public readonly in: TStaticInPorts<TSwitchInputs<P, T>>;
-  public readonly out: TStaticOutPorts<TSwitchOutputs<P, T>>;
+  public readonly in: TInPorts<TSwitchInputs<P, T>>;
+  public readonly out: TOutPorts<TSwitchOutputs<P, T>>;
 
   /**
    * @param cases Strings identifying possible cases for switch.

@@ -1,9 +1,9 @@
 import {Noop} from "../atomic";
 import {IAtomicNode} from "../node";
 import {IInPort} from "./IInPort";
+import {InPort} from "./InPort";
 import {IOutPort} from "./IOutPort";
 import {OutPort} from "./OutPort";
-import {StaticInPort} from "./StaticInPort";
 
 describe("OutPort", function () {
   class TestOutPort<T> extends OutPort<T> {
@@ -36,7 +36,7 @@ describe("OutPort", function () {
       local = new Noop();
       remote = new Noop();
       localPort = new TestOutPort("foo", local);
-      remotePort = new StaticInPort("bar", remote);
+      remotePort = new InPort("bar", remote);
     });
 
     it("should add to property 'peers'", function () {
@@ -67,7 +67,7 @@ describe("OutPort", function () {
       local = new Noop();
       remote = new Noop();
       localPort = new TestOutPort("foo", local);
-      remotePort = new StaticInPort("bar", remote);
+      remotePort = new InPort("bar", remote);
       localPort.connect(remotePort);
     });
 
@@ -101,16 +101,16 @@ describe("OutPort", function () {
     let remote1: Noop<number>;
     let remote2: Noop<number>;
     let localPort: TestOutPort<number>;
-    let remotePort1: StaticInPort<number>;
-    let remotePort2: StaticInPort<number>;
+    let remotePort1: InPort<number>;
+    let remotePort2: InPort<number>;
 
     beforeEach(function () {
       local = new Noop();
       remote1 = new Noop();
       remote2 = new Noop();
       localPort = new TestOutPort("foo", local);
-      remotePort1 = new StaticInPort("bar", remote1);
-      remotePort2 = new StaticInPort("bar", remote2);
+      remotePort1 = new InPort("bar", remote1);
+      remotePort2 = new InPort("bar", remote2);
       localPort.connect(remotePort1);
       localPort.connect(remotePort2);
     });

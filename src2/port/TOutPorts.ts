@@ -1,3 +1,4 @@
-import {IOutPort} from "./IOutPort";
+import {TOutPort} from "./TOutPort";
+import {TPorts} from "./TPorts";
 
-export type TOutPorts = { [key: string]: IOutPort<any> };
+export type TOutPorts<V> = TPorts<TOutPort<V>, V>;

@@ -1,17 +1,9 @@
-import {
-  IDynamicPort,
-  IInPort,
-  IOutPort,
-  IPort,
-  OutPort,
-  TInPorts,
-  TOutPorts
-} from "../port";
+import {IInPort, IOutPort, IPort, TInPorts, TOutPorts} from "../port";
 import {IAtomicNode} from "./IAtomicNode";
 
 export abstract class Node implements IAtomicNode {
-  public readonly in: TInPorts;
-  public readonly out: TOutPorts;
+  public readonly in: TInPorts<any>;
+  public readonly out: TOutPorts<any>;
 
   protected constructor() {
     this.in = {};
@@ -20,6 +12,7 @@ export abstract class Node implements IAtomicNode {
 
   /**
    * TODO: Trigger for dynamic ports.
+   * TODO: Make it call into #dynamicPorts if there is one.
    * @param port Port to be added.
    * @param tag Identifies impulse.
    */
@@ -28,7 +21,7 @@ export abstract class Node implements IAtomicNode {
       case (<IInPort<T>> port).in:
         this.in[port.name] = <IInPort<T>> port;
         break;
-      case port instanceof OutPort:
+      case (<IOutPort<T>> port).out:
         this.out[port.name] = <IOutPort<T>> port;
         break;
     }
@@ -36,15 +29,16 @@ export abstract class Node implements IAtomicNode {
 
   /**
    * TODO: Trigger event.
+   * TODO: Make it call into #dynamicPorts if there is one.
    * @param port
    * @param tag
    */
-  public deletePort<T>(port: IDynamicPort<T>, tag?: string): void {
+  public deletePort<T>(port: IPort<T>, tag?: string): void {
     switch (true) {
-      case (<IInPort<T> & IDynamicPort<T>> port).in:
+      case (<IInPort<T>> port).in:
         delete this.in[port.name];
         break;
-      case (<IOutPort<T> & IDynamicPort<T>> port).out:
+      case (<IOutPort<T>> port).out:
         delete this.out[port.name];
         break;
     }

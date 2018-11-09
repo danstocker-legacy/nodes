@@ -3,11 +3,11 @@ import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
 
-export abstract class InPort<T> extends Port<T> implements IInPort<T> {
+export class InPort<T> extends Port<T> implements IInPort<T> {
   public readonly in: true;
   public peer: IOutPort<T>;
 
-  protected constructor(name: string | number, node: IAtomicNode) {
+  constructor(name: string, node: IAtomicNode) {
     super(name, node);
     this.in = true;
   }

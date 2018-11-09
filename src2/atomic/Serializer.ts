@@ -1,11 +1,5 @@
 import {Node} from "../node";
-import {
-  IInPort,
-  StaticInPort,
-  StaticOutPort,
-  TStaticInPorts,
-  TStaticOutPorts
-} from "../port";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 
 /**
  * Forwards inputs matching the order of the reference input `tag`.
@@ -14,11 +8,11 @@ import {
  * node = new Serializer();
  */
 export class Serializer<T> extends Node {
-  public readonly in: TStaticInPorts<{
+  public readonly in: TInPorts<{
     $: T,
     tag: string
   }>;
-  public readonly out: TStaticOutPorts<{
+  public readonly out: TOutPorts<{
     $: T
   }>;
 
@@ -29,9 +23,9 @@ export class Serializer<T> extends Node {
     super();
     this.inputs = new Map();
     this.order = [];
-    this.addPort(new StaticInPort("$", this));
-    this.addPort(new StaticInPort("tag", this));
-    this.addPort(new StaticOutPort("$", this));
+    this.addPort(new InPort("$", this));
+    this.addPort(new InPort("tag", this));
+    this.addPort(new OutPort("$", this));
   }
 
   public send<U>(port: IInPort<U & (T | string)>, input: U & (T | string), tag?: string): void {

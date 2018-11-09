@@ -1,11 +1,5 @@
 import {IAtomicNode, Node} from "../node";
-import {
-  IInPort,
-  StaticInPort,
-  StaticOutPort,
-  TStaticInPorts,
-  TStaticOutPorts
-} from "../port";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 
 type MapperCallback<I, O> = (value: I, tag: string, node: IAtomicNode) => O;
 
@@ -17,10 +11,10 @@ type MapperCallback<I, O> = (value: I, tag: string, node: IAtomicNode) => O;
  * const mapper = new Mapper<number, string>(String);
  */
 export class Mapper<I, O> extends Node {
-  public readonly in: TStaticInPorts<{
+  public readonly in: TInPorts<{
     $: I
   }>;
-  public readonly out: TStaticOutPorts<{
+  public readonly out: TOutPorts<{
     $: O
   }>;
 
@@ -29,8 +23,8 @@ export class Mapper<I, O> extends Node {
   constructor(cb: MapperCallback<I, O>) {
     super();
     this.cb = cb;
-    this.addPort(new StaticInPort("$", this));
-    this.addPort(new StaticOutPort("$", this));
+    this.addPort(new InPort("$", this));
+    this.addPort(new OutPort("$", this));
   }
 
   public send<U>(port: IInPort<U & I>, input: U & I, tag?: string): void {

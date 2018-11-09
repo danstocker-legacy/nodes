@@ -1,11 +1,5 @@
 import {Node} from "../node";
-import {
-  IInPort,
-  StaticInPort,
-  StaticOutPort,
-  TStaticInPorts,
-  TStaticOutPorts
-} from "../port";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 
 type TInput<T> = T[keyof T];
 
@@ -20,8 +14,8 @@ type TInput<T> = T[keyof T];
  * // merger.out.$ will output {foo: 5, bar: true} for tag "1"
  */
 export class Merger<T> extends Node {
-  public readonly in: TStaticInPorts<T>;
-  public readonly out: TStaticOutPorts<{
+  public readonly in: TInPorts<T>;
+  public readonly out: TOutPorts<{
     $: T
   }>;
 
@@ -35,9 +29,9 @@ export class Merger<T> extends Node {
     this.inputCache = new Map();
     this.portCache = new Map();
     for (const field of fields) {
-      this.addPort(new StaticInPort(field, this));
+      this.addPort(new InPort(field, this));
     }
-    this.addPort(new StaticOutPort("$", this));
+    this.addPort(new OutPort("$", this));
   }
 
   public send<U>(port: IInPort<U & TInput<T>>, input: U & TInput<T>, tag: string): void {

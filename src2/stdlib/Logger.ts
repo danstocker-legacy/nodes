@@ -1,22 +1,16 @@
 import {Node} from "../node";
-import {
-  IInPort,
-  StaticInPort,
-  StaticOutPort,
-  TStaticInPorts,
-  TStaticOutPorts
-} from "../port";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
 export class Logger extends Node {
-  public readonly in: TStaticInPorts<{
+  public readonly in: TInPorts<{
     log: any,
     warn: any,
     err: any
   }>;
-  public readonly out: TStaticOutPorts<{
+  public readonly out: TOutPorts<{
     log: any,
     warn: any,
     err: any
@@ -24,12 +18,12 @@ export class Logger extends Node {
 
   constructor() {
     super();
-    this.addPort(new StaticInPort("log", this));
-    this.addPort(new StaticInPort("warn", this));
-    this.addPort(new StaticInPort("err", this));
-    this.addPort(new StaticOutPort("log", this));
-    this.addPort(new StaticOutPort("warn", this));
-    this.addPort(new StaticOutPort("err", this));
+    this.addPort(new InPort("log", this));
+    this.addPort(new InPort("warn", this));
+    this.addPort(new InPort("err", this));
+    this.addPort(new OutPort("log", this));
+    this.addPort(new OutPort("warn", this));
+    this.addPort(new OutPort("err", this));
   }
 
   public send<T>(port: IInPort<T>, input: T, tag?: string): void {

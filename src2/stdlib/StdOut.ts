@@ -1,17 +1,17 @@
 import {Node} from "../node";
-import {IInPort, StaticInPort, TStaticInPorts} from "../port";
+import {IInPort, InPort, TInPorts} from "../port";
 
 /**
  * Forwards input to `process.stdout`.
  */
 export class StdOut extends Node {
-  public readonly in: TStaticInPorts<{
+  public readonly in: TInPorts<{
     $: string | Buffer;
   }>;
 
   constructor() {
     super();
-    this.addPort(new StaticInPort("$", this));
+    this.addPort(new InPort("$", this));
   }
 
   public send<T>(port: IInPort<T & (string | Buffer)>, input: T & (string | Buffer)): void {

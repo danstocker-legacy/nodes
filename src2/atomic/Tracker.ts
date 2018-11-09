@@ -1,11 +1,5 @@
 import {Node} from "../node";
-import {
-  IInPort,
-  StaticInPort,
-  StaticOutPort,
-  TStaticInPorts,
-  TStaticOutPorts
-} from "../port";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 import {THash} from "../utils";
 
 /**
@@ -16,8 +10,8 @@ import {THash} from "../utils";
  * tracker = new Tracker(["foo", "bar"]);
  */
 export class Tracker<T extends THash = THash> extends Node {
-  public readonly in: TStaticInPorts<T>;
-  public readonly out: TStaticOutPorts<{
+  public readonly in: TInPorts<T>;
+  public readonly out: TOutPorts<{
     $: T
   }>;
   private readonly values: T;
@@ -26,9 +20,9 @@ export class Tracker<T extends THash = THash> extends Node {
     super();
     this.values = <T> {};
     for (const field of fields) {
-      this.addPort(new StaticInPort(field, this));
+      this.addPort(new InPort(field, this));
     }
-    this.addPort(new StaticOutPort("$", this));
+    this.addPort(new OutPort("$", this));
   }
 
   public send<U>(port: IInPort<U>, input: U, tag?: string): void {

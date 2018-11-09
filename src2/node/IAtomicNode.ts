@@ -1,4 +1,4 @@
-import {IDynamicPort, IInPort, IPort} from "../port";
+import {IInPort, IPort} from "../port";
 import {INode} from "./INode";
 
 /**
@@ -21,7 +21,7 @@ export interface IAtomicNode extends INode {
    * @param port Port to be deleted.
    * @param tag Identifies impulse.
    */
-  deletePort<T>(port: IDynamicPort<T>, tag?: string): void;
+  deletePort<T>(port: IPort<T>, tag?: string): void;
 
   /**
    * Sends a value to the node though the specified input port, as part of

@@ -1,17 +1,17 @@
 import {Node} from "../node";
-import {StaticOutPort, TStaticOutPorts} from "../port";
+import {OutPort, TOutPorts} from "../port";
 
 /**
  * Takes input from `process.stdin` and sends it to output.
  */
 export class StdIn extends Node {
-  public readonly out: TStaticOutPorts<{
+  public readonly out: TOutPorts<{
     $: string | Buffer
   }>;
 
   constructor() {
     super();
-    this.addPort(new StaticOutPort("$", this));
+    this.addPort(new OutPort("$", this));
     process.stdin.on("readable", this.onReadable.bind(this));
   }
 

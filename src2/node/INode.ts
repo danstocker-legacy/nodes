@@ -5,8 +5,8 @@ import {TInPorts, TOutPorts} from "../port";
  */
 export interface INode {
   /** Input ports of the node. */
-  readonly in: TInPorts;
+  readonly in: TInPorts<any>;
 
   /** Output ports of the node. */
-  readonly out: TOutPorts;
+  readonly out: TOutPorts<any>;
 }

@@ -3,7 +3,7 @@ import {IAtomicNode} from "../node";
 import {IInPort} from "./IInPort";
 import {InPort} from "./InPort";
 import {IOutPort} from "./IOutPort";
-import {StaticOutPort} from "./StaticOutPort";
+import {OutPort} from "./OutPort";
 
 describe("InPort", function () {
   class TestInPort<T> extends InPort<T> {
@@ -30,7 +30,7 @@ describe("InPort", function () {
       local = new Noop();
       remote = new Noop();
       localPort = new TestInPort("foo", local);
-      remotePort = new StaticOutPort("bar", remote);
+      remotePort = new OutPort("bar", remote);
     });
 
     it("should set property 'peer'", function () {
@@ -57,7 +57,7 @@ describe("InPort", function () {
 
       it("should throw", function () {
         expect(function () {
-          localPort.connect(new StaticOutPort("baz", remote));
+          localPort.connect(new OutPort("baz", remote));
         }).toThrow();
       });
     });
@@ -73,7 +73,7 @@ describe("InPort", function () {
       local = new Noop();
       remote = new Noop();
       localPort = new TestInPort("foo", local);
-      remotePort = new StaticOutPort("bar", remote);
+      remotePort = new OutPort("bar", remote);
       localPort.connect(remotePort);
     });
 

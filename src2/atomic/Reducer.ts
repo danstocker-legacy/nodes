@@ -1,11 +1,5 @@
 import {IAtomicNode, Node} from "../node";
-import {
-  IInPort,
-  StaticInPort,
-  StaticOutPort,
-  TStaticInPorts,
-  TStaticOutPorts
-} from "../port";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 import {copy} from "../utils";
 
 type TReducerCallback<I, O> = (curr: O, next: I, tag: string, node: IAtomicNode) => O;
@@ -26,10 +20,10 @@ type TReducerInput<I> = {
  * sum = new Reducer((curr, next) => curr + next, 0);
  */
 export class Reducer<I, O> extends Node {
-  public readonly in: TStaticInPorts<{
+  public readonly in: TInPorts<{
     $: TReducerInput<I>
   }>;
-  public readonly out: TStaticOutPorts<{
+  public readonly out: TOutPorts<{
     $: O
   }>;
 
@@ -42,8 +36,8 @@ export class Reducer<I, O> extends Node {
     this.cb = cb;
     this.initial = initial;
     this.reduced = copy(initial);
-    this.addPort(new StaticInPort("$", this));
-    this.addPort(new StaticOutPort("$", this));
+    this.addPort(new InPort("$", this));
+    this.addPort(new OutPort("$", this));
   }
 
   public send<U>(
