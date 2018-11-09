@@ -1,4 +1,5 @@
 import {Mapper, Muxer, Splitter, TMuxed} from "../lang";
+import {INode} from "../node";
 import {TStaticInPorts, TStaticOutPorts} from "../port";
 
 type TFunnelInputs<P extends string, T> = {
@@ -20,12 +21,11 @@ function muxedToSwitch<P extends string, T>(inputs: TMuxed<TFunnelInputs<P, T>>)
 /**
  * Forwards inputs from multiple ports to a single output.
  * Outputs which input the value came through.
- * TODO: Should implement INode or ISuperNode interface.
  * @example
  * let funnel: Funnel<"foo" | "bar" | "baz", number>;
  * funnel = new Funnel(["foo", "bar", "baz"]);
  */
-export class Funnel<P extends string, T> {
+export class Funnel<P extends string, T> implements INode {
   public readonly in: TStaticInPorts<TFunnelInputs<P, T>>;
   public readonly out: TStaticOutPorts<TFunnelOutputs<P, T>>;
 

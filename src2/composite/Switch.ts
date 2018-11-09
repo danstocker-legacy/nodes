@@ -1,4 +1,5 @@
 import {Demuxer, Mapper, Merger, TMuxed} from "../lang";
+import {INode} from "../node";
 import {TStaticInPorts, TStaticOutPorts} from "../port";
 
 type TSwitchInputs<P extends string, T> = {
@@ -19,12 +20,11 @@ function switchToMuxed<P extends string, T>(inputs: TSwitchInputs<P, T>): TMuxed
 
 /**
  * Forwards input to one of the possible outputs.
- * TODO: Should implement INode or ISuperNode interface.
  * @example
  * let switch: Switch<"foo" | "bar" | "baz", number>;
  * switch = new Switch(["foo", "bar", "baz");
  */
-export class Switch<P extends string, T> {
+export class Switch<P extends string, T> implements INode {
   public readonly in: TStaticInPorts<TSwitchInputs<P, T>>;
   public readonly out: TStaticOutPorts<TSwitchOutputs<P, T>>;
 

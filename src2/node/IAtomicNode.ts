@@ -1,4 +1,5 @@
 import {IDynamicPort, IInPort, IPort, TInPorts, TOutPorts} from "../port";
+import {INode} from "./INode";
 
 /**
  * Outlines what a node is.
@@ -6,13 +7,7 @@ import {IDynamicPort, IInPort, IPort, TInPorts, TOutPorts} from "../port";
  * delete from. Nodes may also have data sent to them through one of their
  * input ports.
  */
-export interface IAtomicNode {
-  /** Input ports of the node. */
-  readonly in: TInPorts;
-
-  /** Output ports of the node. */
-  readonly out: TOutPorts;
-
+export interface IAtomicNode extends INode {
   /**
    * Adds a port to the node, as the effect of an optionally identified impulse.
    * @param port Port to be added.
