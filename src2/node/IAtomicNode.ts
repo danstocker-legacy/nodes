@@ -1,4 +1,4 @@
-import {IDynamicPort, IInPort, IPort, TInPorts, TOutPorts} from "../port";
+import {IDynamicPort, IInPort, IPort} from "../port";
 import {INode} from "./INode";
 
 /**
