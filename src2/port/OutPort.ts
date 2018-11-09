@@ -18,7 +18,6 @@ export class OutPort<T> extends Port<T> implements IOutPort<T> {
     if (!peers.has(peer)) {
       peers.add(peer);
       peer.connect(this, tag);
-      this.node.onConnect(this, peer, tag);
     }
   }
 
@@ -31,7 +30,6 @@ export class OutPort<T> extends Port<T> implements IOutPort<T> {
     } else if (peers.has(peer)) {
       peers.delete(peer);
       peer.disconnect(tag);
-      this.node.onDisconnect(this, peer, tag);
     }
   }
 

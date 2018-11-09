@@ -44,12 +44,6 @@ describe("InPort", function () {
       expect(remotePort.connect).toHaveBeenCalledWith(localPort, "1");
     });
 
-    it("should invoke #onConnect() on node", function () {
-      spyOn(local, "onConnect");
-      localPort.connect(remotePort, "1");
-      expect(local.onConnect).toHaveBeenCalledWith(localPort, remotePort, "1");
-    });
-
     describe("when port is already connected", function () {
       beforeEach(function () {
         localPort.connect(remotePort, "1");
@@ -86,12 +80,6 @@ describe("InPort", function () {
       spyOn(remotePort, "disconnect");
       localPort.disconnect("1");
       expect(remotePort.disconnect).toHaveBeenCalledWith(localPort, "1");
-    });
-
-    it("should invoke #onDisconnect() on node", function () {
-      spyOn(local, "onDisconnect");
-      localPort.disconnect("1");
-      expect(local.onDisconnect).toHaveBeenCalledWith(localPort, remotePort, "1");
     });
   });
 

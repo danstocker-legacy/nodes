@@ -49,12 +49,6 @@ describe("OutPort", function () {
       localPort.connect(remotePort, "1");
       expect(remotePort.connect).toHaveBeenCalledWith(localPort, "1");
     });
-
-    it("should invoke #onConnect() on node", function () {
-      spyOn(local, "onConnect");
-      localPort.connect(remotePort, "1");
-      expect(local.onConnect).toHaveBeenCalledWith(localPort, remotePort, "1");
-    });
   });
 
   describe("#disconnect()", function () {
@@ -80,12 +74,6 @@ describe("OutPort", function () {
       spyOn(remotePort, "disconnect");
       localPort.disconnect(remotePort, "1");
       expect(remotePort.disconnect).toHaveBeenCalledWith("1");
-    });
-
-    it("should invoke #onDisconnect() on node", function () {
-      spyOn(local, "onDisconnect");
-      localPort.disconnect(remotePort, "1");
-      expect(local.onDisconnect).toHaveBeenCalledWith(localPort, remotePort, "1");
     });
 
     describe("when peer is omitted", function () {

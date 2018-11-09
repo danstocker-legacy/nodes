@@ -16,7 +16,6 @@ export class InPort<T> extends Port<T> implements IInPort<T> {
     if (!this.peer) {
       this.peer = peer;
       peer.connect(this, tag);
-      this.node.onConnect(this, peer, tag);
     } else if (peer !== this.peer) {
       throw new Error(`Input port "${this.name}" already connected.`);
     }
@@ -27,7 +26,6 @@ export class InPort<T> extends Port<T> implements IInPort<T> {
     if (peer) {
       this.peer = undefined;
       peer.disconnect(this, tag);
-      this.node.onDisconnect(this, peer, tag);
     }
   }
 
