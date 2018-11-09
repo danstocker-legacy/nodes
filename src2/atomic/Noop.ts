@@ -1,9 +1,5 @@
-import {Node} from "../node";
-import {
-  IInPort,
-  InPort,
-  OutPort, TInPorts, TOutPorts
-} from "../port";
+import {AtomicNode} from "../node";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 
 /**
  * Forwards input without change.
@@ -14,7 +10,7 @@ import {
  * noop = new Noop();
  * noop.in.$.send(5);
  */
-export class Noop<T> extends Node {
+export class Noop<T> extends AtomicNode {
   public readonly in: TInPorts<{
     "$": T
   }>;

@@ -1,4 +1,4 @@
-import {Node} from "../node";
+import {AtomicNode} from "../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 
 /**
@@ -6,7 +6,7 @@ import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
  * Does not know about original tag order. Feed through Serializer if
  * original tag order is to be retained.
  */
-export class Shifter<T> extends Node {
+export class Shifter<T> extends AtomicNode {
   public readonly in: TInPorts<{
     $: T
   }>;

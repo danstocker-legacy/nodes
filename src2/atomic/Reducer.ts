@@ -1,4 +1,4 @@
-import {IAtomicNode, Node} from "../node";
+import {AtomicNode, IAtomicNode} from "../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 import {copy} from "../utils";
 
@@ -19,7 +19,7 @@ type TReducerInput<I> = {
  * let sum: Reducer<number, number>;
  * sum = new Reducer((curr, next) => curr + next, 0);
  */
-export class Reducer<I, O> extends Node {
+export class Reducer<I, O> extends AtomicNode {
   public readonly in: TInPorts<{
     $: TReducerInput<I>
   }>;

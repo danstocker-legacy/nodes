@@ -1,4 +1,4 @@
-import {Node} from "../node";
+import {AtomicNode} from "../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 import {THash} from "../utils";
 
@@ -11,7 +11,7 @@ import {THash} from "../utils";
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends THash> extends Node {
+export class Splitter<T extends THash> extends AtomicNode {
   public readonly in: TInPorts<{
     $: T
   }>;

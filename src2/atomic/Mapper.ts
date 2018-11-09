@@ -1,4 +1,4 @@
-import {IAtomicNode, Node} from "../node";
+import {AtomicNode, IAtomicNode} from "../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 
 type MapperCallback<I, O> = (value: I, tag: string, node: IAtomicNode) => O;
@@ -10,7 +10,7 @@ type MapperCallback<I, O> = (value: I, tag: string, node: IAtomicNode) => O;
  * // static callback
  * const mapper = new Mapper<number, string>(String);
  */
-export class Mapper<I, O> extends Node {
+export class Mapper<I, O> extends AtomicNode {
   public readonly in: TInPorts<{
     $: I
   }>;

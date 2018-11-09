@@ -1,10 +1,10 @@
-import {Node} from "../node";
+import {AtomicNode} from "../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
-export class Logger extends Node {
+export class Logger extends AtomicNode {
   public readonly in: TInPorts<{
     log: any,
     warn: any,

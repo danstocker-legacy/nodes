@@ -1,4 +1,4 @@
-import {Node} from "../node";
+import {AtomicNode} from "../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 
 type FilterInput<T> = { val: T, incl: boolean };
@@ -6,7 +6,7 @@ type FilterInput<T> = { val: T, incl: boolean };
 /**
  * Forwards default input to output when reference input is truthy.
  */
-export class Filter<T> extends Node {
+export class Filter<T> extends AtomicNode {
   public readonly in: TInPorts<{
     $: FilterInput<T>
   }>;

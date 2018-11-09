@@ -1,4 +1,4 @@
-import {Node} from "../node";
+import {AtomicNode} from "../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
 
 /**
@@ -7,7 +7,7 @@ import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
  * let node: Serializer<number>;
  * node = new Serializer();
  */
-export class Serializer<T> extends Node {
+export class Serializer<T> extends AtomicNode {
   public readonly in: TInPorts<{
     $: T,
     tag: string

@@ -1,7 +1,7 @@
-import {IInPort, IOutPort, IPort, TInPorts, TOutPorts} from "../port";
+import {IInPort, TInPorts, TOutPorts} from "../port";
 import {IAtomicNode} from "./IAtomicNode";
 
-export abstract class Node implements IAtomicNode {
+export abstract class AtomicNode implements IAtomicNode {
   public readonly in: TInPorts<any>;
   public readonly out: TOutPorts<any>;
 

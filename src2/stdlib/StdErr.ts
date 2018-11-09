@@ -1,10 +1,10 @@
-import {Node} from "../node";
+import {AtomicNode} from "../node";
 import {IInPort, InPort, TInPorts} from "../port";
 
 /**
  * Forwards input to `process.stderr`.
  */
-export class StdErr extends Node {
+export class StdErr extends AtomicNode {
   public readonly in: TInPorts<{
     $: string | Buffer
   }>;
