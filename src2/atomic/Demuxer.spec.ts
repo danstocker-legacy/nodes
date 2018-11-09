@@ -19,7 +19,7 @@ describe("Demuxer", function () {
 
     it("should send multiplexed input to output", function () {
       spyOn(node.out.foo, "send");
-      node.send(node.in.$, {name: "foo", value: 5}, "1");
+      node.send(node.in.$, {name: "foo", val: 5}, "1");
       expect(node.out.foo.send).toHaveBeenCalledWith(5, "1");
     });
   });

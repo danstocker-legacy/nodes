@@ -13,7 +13,7 @@ type TFunnelOutputs<P extends string, T> = {
 
 function muxedToSwitch<P extends string, T>(inputs: TMuxed<TFunnelInputs<P, T>>): TFunnelOutputs<P, T> {
   return {
-    $: inputs.value,
+    $: inputs.val,
     case: inputs.name
   };
 }

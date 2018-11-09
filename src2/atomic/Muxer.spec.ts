@@ -22,7 +22,7 @@ describe("Muxer", function () {
       node.send(node.in.foo, 5, "1");
       expect(node.out.$.send).toHaveBeenCalledWith({
         name: "foo",
-        value: 5
+        val: 5
       }, "1");
     });
   });

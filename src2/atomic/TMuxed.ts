@@ -3,5 +3,5 @@
  */
 export type TMuxed<T> = {
   name: keyof T,
-  value: T[keyof T]
+  val: T[keyof T]
 };

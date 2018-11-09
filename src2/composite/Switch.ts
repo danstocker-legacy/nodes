@@ -14,7 +14,7 @@ type TSwitchOutputs<P extends string, T> = {
 function switchToMuxed<P extends string, T>(inputs: TSwitchInputs<P, T>): TMuxed<TSwitchOutputs<P, T>> {
   return {
     name: inputs.case,
-    value: inputs.$
+    val: inputs.$
   };
 }
 
