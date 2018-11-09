@@ -18,12 +18,12 @@ export class Logger extends Node {
 
   constructor() {
     super();
-    this.addPort(new InPort("log", this));
-    this.addPort(new InPort("warn", this));
-    this.addPort(new InPort("err", this));
-    this.addPort(new OutPort("log", this));
-    this.addPort(new OutPort("warn", this));
-    this.addPort(new OutPort("err", this));
+    this.in.log = new InPort("log", this);
+    this.in.warn = new InPort("warn", this);
+    this.in.err = new InPort("err", this);
+    this.out.log = new OutPort("log", this);
+    this.out.warn = new OutPort("warn", this);
+    this.out.err = new OutPort("err", this);
   }
 
   public send<T>(port: IInPort<T>, input: T, tag?: string): void {

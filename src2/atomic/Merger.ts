@@ -29,9 +29,9 @@ export class Merger<T> extends Node {
     this.inputCache = new Map();
     this.portCache = new Map();
     for (const field of fields) {
-      this.addPort(new InPort(field, this));
+      this.in[field] = new InPort(field, this);
     }
-    this.addPort(new OutPort("$", this));
+    this.out.$ = new OutPort("$", this);
   }
 
   public send<U>(port: IInPort<U & TInput<T>>, input: U & TInput<T>, tag: string): void {

@@ -23,9 +23,9 @@ export class Serializer<T> extends Node {
     super();
     this.inputs = new Map();
     this.order = [];
-    this.addPort(new InPort("$", this));
-    this.addPort(new InPort("tag", this));
-    this.addPort(new OutPort("$", this));
+    this.in.$ = new InPort("$", this);
+    this.in.tag = new InPort("tag", this);
+    this.out.$ = new OutPort("$", this);
   }
 
   public send<U>(port: IInPort<U & (T | string)>, input: U & (T | string), tag?: string): void {

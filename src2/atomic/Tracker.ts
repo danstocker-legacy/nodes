@@ -20,9 +20,9 @@ export class Tracker<T extends THash = THash> extends Node {
     super();
     this.values = <T> {};
     for (const field of fields) {
-      this.addPort(new InPort(field, this));
+      this.in[field] = new InPort(field, this);
     }
-    this.addPort(new OutPort("$", this));
+    this.out.$ = new OutPort("$", this);
   }
 
   public send<U>(port: IInPort<U>, input: U, tag?: string): void {

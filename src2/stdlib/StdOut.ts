@@ -11,7 +11,7 @@ export class StdOut extends Node {
 
   constructor() {
     super();
-    this.addPort(new InPort("$", this));
+    this.in.$ = new InPort("$", this);
   }
 
   public send<T>(port: IInPort<T & (string | Buffer)>, input: T & (string | Buffer)): void {

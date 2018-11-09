@@ -19,9 +19,9 @@ export class Splitter<T extends THash> extends Node {
 
   constructor(fields: Array<string>) {
     super();
-    this.addPort(new InPort("$", this));
+    this.in.$ = new InPort("$", this);
     for (const field of fields) {
-      this.addPort(new OutPort(field, this));
+      this.out[field] = new OutPort(field, this);
     }
   }
 

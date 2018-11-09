@@ -24,8 +24,8 @@ export class Noop<T> extends Node {
 
   constructor() {
     super();
-    this.addPort(new InPort("$", this));
-    this.addPort(new OutPort("$", this));
+    this.in.$ = new InPort("$", this);
+    this.out.$ = new OutPort("$", this);
   }
 
   public send<U>(port: IInPort<U & T>, input: U & T, tag?: string): void {

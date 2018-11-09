@@ -22,9 +22,9 @@ export class Muxer<T extends THash = THash> extends Node {
   constructor(fields: Array<string>) {
     super();
     for (const field of fields) {
-      this.addPort(new InPort(field, this));
+      this.in[field] = new InPort(field, this);
     }
-    this.addPort(new OutPort("$", this));
+    this.out.$ = new OutPort("$", this);
   }
 
   public send<U extends T[keyof T]>(port: IInPort<U>, input: U, tag?: string): void {

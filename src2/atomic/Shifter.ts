@@ -25,8 +25,8 @@ export class Shifter<T> extends Node {
 
     this.disp = disp;
     this.buffer = [];
-    this.addPort(new InPort("$", this));
-    this.addPort(new OutPort("$", this));
+    this.in.$ = new InPort("$", this);
+    this.out.$ = new OutPort("$", this);
   }
 
   public send<U>(port: IInPort<U & T>, input: U & T, tag?: string): void {

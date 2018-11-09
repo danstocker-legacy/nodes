@@ -23,8 +23,8 @@ export class Mapper<I, O> extends Node {
   constructor(cb: MapperCallback<I, O>) {
     super();
     this.cb = cb;
-    this.addPort(new InPort("$", this));
-    this.addPort(new OutPort("$", this));
+    this.in.$ = new InPort("$", this);
+    this.out.$ = new OutPort("$", this);
   }
 
   public send<U>(port: IInPort<U & I>, input: U & I, tag?: string): void {

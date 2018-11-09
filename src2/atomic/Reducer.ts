@@ -36,8 +36,8 @@ export class Reducer<I, O> extends Node {
     this.cb = cb;
     this.initial = initial;
     this.reduced = copy(initial);
-    this.addPort(new InPort("$", this));
-    this.addPort(new OutPort("$", this));
+    this.in.$ = new InPort("$", this);
+    this.out.$ = new OutPort("$", this);
   }
 
   public send<U>(
