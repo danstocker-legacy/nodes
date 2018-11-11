@@ -1,15 +1,20 @@
-import {IInPort, TInPorts, TOutPorts} from "../port";
+import {IInPort, OutPort, TEventPorts, TInPorts, TOutPorts} from "../port";
 import {IAtomicNode} from "./IAtomicNode";
-import {INode} from "./INode";
+import {INode, TPortEvents} from "./INode";
 
-export abstract class AtomicNode<I, O> implements INode<I, O>, IAtomicNode {
+export abstract class AtomicNode<I, O, E extends string = null>
+  implements INode<I, O, E>, IAtomicNode<I> {
   public readonly in: TInPorts<I>;
   public readonly out: TOutPorts<O>;
+  public readonly svc: TEventPorts<E | TPortEvents>;
 
   protected constructor() {
     this.in = <TInPorts<I>> {};
     this.out = <TOutPorts<O>> {};
+    this.svc = <TEventPorts<E>> {
+      evt: new OutPort("evt", this)
+    };
   }
 
-  public abstract send<T>(port: IInPort<T>, value: T, tag?: string): void;
+  public abstract send(port: IInPort<I[keyof I]>, value: I[keyof I], tag?: string): void;
 }

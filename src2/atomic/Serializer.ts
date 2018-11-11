@@ -25,7 +25,7 @@ export class Serializer<T> extends AtomicNode<{
     this.out.$ = new OutPort("$", this);
   }
 
-  public send<U>(port: IInPort<U & (T | string)>, input: U & (T | string), tag?: string): void {
+  public send(port: IInPort<T | string>, input: T | string, tag?: string): void {
     const ports = this.in;
     switch (port) {
       case ports.tag:

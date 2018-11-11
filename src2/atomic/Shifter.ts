@@ -22,7 +22,7 @@ export class Shifter<T> extends AtomicNode<{ $: T }, { $: T }> {
     this.out.$ = new OutPort("$", this);
   }
 
-  public send<U>(port: IInPort<U & T>, input: U & T, tag?: string): void {
+  public send(port: IInPort<T>, input: T, tag?: string): void {
     const disp = this.disp;
     const buffer = this.buffer;
     buffer.push(input);

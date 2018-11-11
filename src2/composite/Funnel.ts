@@ -1,6 +1,6 @@
 import {IMuxed, Mapper, Muxer, Splitter} from "../atomic";
 import {INode} from "../node";
-import {TInPorts, TOutPorts} from "../port";
+import {TEventPorts, TInPorts, TOutPorts} from "../port";
 
 type TFunnelInputs<P extends string, T> = {
   [K in P]: T
@@ -29,6 +29,7 @@ function muxedToSwitch<P extends string, T>(inputs: IMuxed<TFunnelInputs<P, T>>)
 export class Funnel<P extends string, T> implements INode<TFunnelInputs<P, T>, IFunnelOutputs<P, T>> {
   public readonly in: TInPorts<TFunnelInputs<P, T>>;
   public readonly out: TOutPorts<IFunnelOutputs<P, T>>;
+  public readonly svc: TEventPorts<null>;
 
   constructor(cases: Array<string>) {
     const muxer = new Muxer<TFunnelInputs<P, T>>(cases);

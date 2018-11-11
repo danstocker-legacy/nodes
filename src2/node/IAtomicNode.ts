@@ -7,7 +7,7 @@ import {INode} from "./INode";
  * delete from. Nodes may also have data sent to them through one of their
  * input ports.
  */
-export interface IAtomicNode extends INode<any, any> {
+export interface IAtomicNode<I> extends INode<I, any> {
   /**
    * Sends a value to the node though the specified input port, as part of
    * an optionally identified impulse.
@@ -15,5 +15,5 @@ export interface IAtomicNode extends INode<any, any> {
    * @param value Input value passed to node.
    * @param tag Identifies impulse.
    */
-  send<T>(port: IInPort<T>, value: T, tag?: string): void;
+  send(port: IInPort<I[keyof I]>, value: I[keyof I], tag?: string): void;
 }

@@ -17,7 +17,7 @@ export class Noop<T> extends AtomicNode<{ $: T; }, { $: T; }> {
     this.out.$ = new OutPort("$", this);
   }
 
-  public send<U>(port: IInPort<U & T>, input: U & T, tag?: string): void {
+  public send(port: IInPort<T>, input: T, tag?: string): void {
     if (port === this.in.$) {
       this.out.$.send(input, tag);
     }

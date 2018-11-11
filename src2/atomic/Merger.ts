@@ -31,7 +31,7 @@ export class Merger<T> extends AtomicNode<T, {
     this.out.$ = new OutPort("$", this);
   }
 
-  public send<U>(port: IInPort<U & TInput<T>>, input: U & TInput<T>, tag: string): void {
+  public send(port: IInPort<TInput<T>>, input: TInput<T>, tag: string): void {
     const name = port.name;
     if (port === this.in[name]) {
       const inputCache = this.inputCache;

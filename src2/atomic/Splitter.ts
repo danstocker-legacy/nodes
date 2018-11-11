@@ -20,7 +20,7 @@ export class Splitter<T extends IHash> extends AtomicNode<{ $: T }, T> {
     }
   }
 
-  public send<U>(port: IInPort<U & T>, input: U & T, tag?: string): void {
+  public send(port: IInPort<T>, input: T, tag?: string): void {
     if (port === this.in.$) {
       for (const [name, value] of Object.entries(input)) {
         this.out[name].send(value, tag);

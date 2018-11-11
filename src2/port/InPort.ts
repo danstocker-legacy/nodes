@@ -7,7 +7,7 @@ export class InPort<T> extends Port<T> implements IInPort<T> {
   public readonly in: true;
   public peer: IOutPort<T>;
 
-  constructor(name: string, node: IAtomicNode) {
+  constructor(name: string, node: IAtomicNode<any>) {
     super(name, node);
     this.in = true;
   }

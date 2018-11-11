@@ -1,8 +1,6 @@
 import {AtomicNode, IAtomicNode} from "../node";
-import {IInPort, InPort, OutPort} from "../port";
+import {IInPort, InPort, OutPort, TInPorts} from "../port";
 import {copy} from "../utils";
-
-type TReducerCallback<I, O> = (curr: O, next: I, tag: string, node: IAtomicNode) => O;
 
 interface IReducerInput<I> {
   /** Reset signal */
@@ -11,6 +9,12 @@ interface IReducerInput<I> {
   /** Next input value */
   val: I;
 }
+
+type TReducerCallback<I, O> = (
+  curr: O,
+  next: I,
+  tag: string,
+  node: IAtomicNode<any>) => O;
 
 /**
  * Reduces input according to callback.
@@ -37,9 +41,9 @@ export class Reducer<I, O> extends AtomicNode<{
     this.out.$ = new OutPort("$", this);
   }
 
-  public send<U>(
-    port: IInPort<U & IReducerInput<I>>,
-    value: U & IReducerInput<I>,
+  public send(
+    port: IInPort<IReducerInput<I>>,
+    value: IReducerInput<I>,
     tag?: string
   ): void {
     if (port === this.in.$) {

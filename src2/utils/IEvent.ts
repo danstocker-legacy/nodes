@@ -1,12 +1,12 @@
-import {IAtomicNode} from "../node";
-
 /**
  * Describes an event value emitted by nodes though the "event" output port.
  * @example
- * const nodeEvent = new IEvent("port-add", node, {port});
+ * const event: IEvent<"foo"> = {type: "foo", payload: null};
  */
-export interface IEvent<T> {
-  readonly type: string;
-  readonly node: IAtomicNode;
-  readonly payload: T;
+export interface IEvent<E extends string> {
+  /** Identifies event type, eg. EVENT_CONNECT */
+  readonly type: E;
+
+  /** Payload */
+  readonly payload: any;
 }

@@ -22,7 +22,7 @@ export class Demuxer<T> extends AtomicNode<{
     }
   }
 
-  public send<U>(port: IInPort<U & IMuxed<T>>, input: U & IMuxed<T>, tag?: string): void {
+  public send(port: IInPort<IMuxed<T>>, input: IMuxed<T>, tag?: string): void {
     if (port === this.in.$) {
       const name = input.name;
       this.out[name].send(input.val, tag);

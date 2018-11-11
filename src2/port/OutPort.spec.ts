@@ -7,20 +7,20 @@ import {OutPort} from "./OutPort";
 
 describe("OutPort", function () {
   class TestOutPort<T> extends OutPort<T> {
-    constructor(name: string, node: IAtomicNode) {
+    constructor(name: string, node: IAtomicNode<any>) {
       super(name, node);
     }
   }
 
   describe("constructor", function () {
     it("should set property 'in'", function () {
-      const node = <IAtomicNode> {};
+      const node = <IAtomicNode<any>> {};
       const port = new TestOutPort("foo", node);
       expect(port.out).toBe(true);
     });
 
     it("should set property 'peers'", function () {
-      const node = <IAtomicNode> {};
+      const node = <IAtomicNode<any>> {};
       const port = new TestOutPort("foo", node);
       expect(port.peers).toEqual(new Set());
     });

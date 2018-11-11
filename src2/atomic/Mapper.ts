@@ -1,7 +1,11 @@
 import {AtomicNode, IAtomicNode} from "../node";
 import {IInPort, InPort, OutPort} from "../port";
 
-type TMapperCallback<I, O> = (value: I, tag: string, node: IAtomicNode) => O;
+interface IMapperInputs<I> {
+  $: I;
+}
+
+type TMapperCallback<I, O> = (value: I, tag: string, node: IAtomicNode<IMapperInputs<I>>) => O;
 
 /**
  * Maps input value to an output value, as specified by a static mapper
@@ -10,7 +14,9 @@ type TMapperCallback<I, O> = (value: I, tag: string, node: IAtomicNode) => O;
  * // static callback
  * const mapper = new Mapper<number, string>(String);
  */
-export class Mapper<I, O> extends AtomicNode<{ $: I; }, { $: O; }> {
+export class Mapper<I, O> extends AtomicNode<IMapperInputs<I>, {
+  $: O;
+}> {
   private readonly cb: TMapperCallback<I, O>;
 
   constructor(cb: TMapperCallback<I, O>) {
@@ -20,7 +26,7 @@ export class Mapper<I, O> extends AtomicNode<{ $: I; }, { $: O; }> {
     this.out.$ = new OutPort("$", this);
   }
 
-  public send<U>(port: IInPort<U & I>, input: U & I, tag?: string): void {
+  public send(port: IInPort<I>, input: I, tag?: string): void {
     if (port === this.in.$) {
       const mapped = this.cb(input, tag, this);
       this.out.$.send(mapped, tag);

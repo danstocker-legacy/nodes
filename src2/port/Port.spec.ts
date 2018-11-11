@@ -4,7 +4,7 @@ import {Port} from "./Port";
 
 describe("Port", function () {
   class TestPort<T> extends Port<T> {
-    constructor(name: string, node: IAtomicNode) {
+    constructor(name: string, node: IAtomicNode<any>) {
       super(name, node);
     }
 
@@ -19,13 +19,13 @@ describe("Port", function () {
 
   describe("constructor", function () {
     it("should initialize property 'name'", function () {
-      const node = <IAtomicNode> {};
+      const node = <IAtomicNode<any>> {};
       const port = new TestPort("foo", node);
       expect(port.name).toBe("foo");
     });
 
     it("should initialize property 'node'", function () {
-      const node = <IAtomicNode> {};
+      const node = <IAtomicNode<any>> {};
       const port = new TestPort("foo", node);
       expect(port.node).toBe(node);
     });

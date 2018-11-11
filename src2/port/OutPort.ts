@@ -7,7 +7,7 @@ export class OutPort<T> extends Port<T> implements IOutPort<T> {
   public readonly out: true;
   public readonly peers: Set<IInPort<T>>;
 
-  constructor(name: string, node: IAtomicNode) {
+  constructor(name: string, node: IAtomicNode<any>) {
     super(name, node);
     this.out = true;
     this.peers = new Set();
