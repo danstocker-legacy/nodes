@@ -1,6 +1,5 @@
 export {Demuxer} from "./Demuxer";
 export {Filter} from "./Filter";
-export {IMuxed} from "./IMuxed";
 export {Mapper} from "./Mapper";
 export {Merger} from "./Merger";
 export {Muxer} from "./Muxer";

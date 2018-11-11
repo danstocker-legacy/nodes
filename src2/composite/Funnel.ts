@@ -1,6 +1,7 @@
-import {IMuxed, Mapper, Muxer, Splitter} from "../atomic";
+import {Mapper, Muxer, Splitter} from "../atomic";
 import {INode} from "../node";
 import {TEventPorts, TInPorts, TOutPorts} from "../port";
+import {IMuxed} from "../utils";
 
 type TFunnelInputs<P extends string, T> = {
   [K in P]: T

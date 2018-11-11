@@ -1,4 +1,4 @@
-import {IMuxed} from "../atomic";
+import {IMuxed} from "../utils";
 import {TOutPorts} from "./TOutPorts";
 
 /**

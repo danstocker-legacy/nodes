@@ -1,7 +1,8 @@
-import {Demuxer, IMuxed, Mapper, Merger} from "../atomic";
+import {Demuxer, Mapper, Merger} from "../atomic";
 import {INode} from "../node";
 import {TPortEvents} from "../node/INode";
 import {TEventPorts, TInPorts, TOutPorts} from "../port";
+import {IMuxed} from "../utils";
 
 interface ISwitchInputs<P extends string, T> {
   $: T;

@@ -1,7 +1,6 @@
 import {AtomicNode} from "../node";
 import {IInPort, InPort, OutPort} from "../port";
-import {IHash} from "../utils";
-import {IMuxed} from "./IMuxed";
+import {IHash, IMuxed} from "../utils";
 
 /**
  * Multiplexes inputs.
