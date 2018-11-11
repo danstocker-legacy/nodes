@@ -1,5 +1,5 @@
 import {AtomicNode} from "../node";
-import {IInPort, InPort, TInPorts} from "../port";
+import {IInPort, InPort} from "../port";
 
 /**
  * Forwards input to `process.stdout`.

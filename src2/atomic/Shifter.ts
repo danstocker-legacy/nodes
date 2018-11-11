@@ -6,11 +6,7 @@ import {IInPort, InPort, OutPort} from "../port";
  * Does not know about original tag order. Feed through Serializer if
  * original tag order is to be retained.
  */
-export class Shifter<T> extends AtomicNode<{
-  $: T
-}, {
-  $: T
-}> {
+export class Shifter<T> extends AtomicNode<{ $: T }, { $: T }> {
   private readonly disp: number;
   private readonly buffer: Array<T>;
 

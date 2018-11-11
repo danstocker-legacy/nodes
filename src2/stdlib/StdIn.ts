@@ -1,5 +1,5 @@
 import {AtomicNode} from "../node";
-import {OutPort, TOutPorts} from "../port";
+import {OutPort} from "../port";
 
 /**
  * Takes input from `process.stdin` and sends it to output.

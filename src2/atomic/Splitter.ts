@@ -11,9 +11,7 @@ import {IHash} from "../utils";
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends IHash> extends AtomicNode<{
-  $: T
-}, T> {
+export class Splitter<T extends IHash> extends AtomicNode<{ $: T }, T> {
   constructor(fields: Array<string>) {
     super();
     this.in.$ = new InPort("$", this);

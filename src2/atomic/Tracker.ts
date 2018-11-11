@@ -9,9 +9,7 @@ import {IHash} from "../utils";
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
  */
-export class Tracker<T extends IHash = IHash> extends AtomicNode<T, {
-  $: T
-}> {
+export class Tracker<T extends IHash = IHash> extends AtomicNode<T, { $: T }> {
   private readonly values: T;
 
   constructor(fields: Array<string>) {

@@ -10,11 +10,7 @@ type TMapperCallback<I, O> = (value: I, tag: string, node: IAtomicNode) => O;
  * // static callback
  * const mapper = new Mapper<number, string>(String);
  */
-export class Mapper<I, O> extends AtomicNode<{
-  $: I;
-}, {
-  $: O;
-}> {
+export class Mapper<I, O> extends AtomicNode<{ $: I; }, { $: O; }> {
   private readonly cb: TMapperCallback<I, O>;
 
   constructor(cb: TMapperCallback<I, O>) {
