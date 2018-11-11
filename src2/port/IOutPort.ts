@@ -2,11 +2,15 @@ import {INode} from "../node";
 import {IInPort} from "./IInPort";
 import {IPort} from "./IPort";
 
-export interface IOutPort<T> extends IPort<INode<any, any>, T> {
+/**
+ * Describes an output port.
+ * Output ports may ba assigned to any node type. (Atomic & composite.)
+ */
+export interface IOutPort<V> extends IPort<INode<any, any>, V> {
   out: true;
-  peers: Set<IInPort<T>>;
+  peers: Set<IInPort<V>>;
 
-  connect(peer: IInPort<T>, tag?: string): void;
+  connect(peer: IInPort<V>, tag?: string): void;
 
-  disconnect(peer?: IInPort<T>, tag?: string): void;
+  disconnect(peer?: IInPort<V>, tag?: string): void;
 }

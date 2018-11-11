@@ -6,7 +6,7 @@ import {IOutPort} from "./IOutPort";
 import {OutPort} from "./OutPort";
 
 describe("InPort", function () {
-  class TestInPort<T> extends InPort<T> {
+  class TestInPort<V> extends InPort<V> {
     constructor(name: string, node: IAtomicNode<any>) {
       super(name, node);
     }

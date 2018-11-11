@@ -2,11 +2,15 @@ import {IAtomicNode} from "../node";
 import {IOutPort} from "./IOutPort";
 import {IPort} from "./IPort";
 
-export interface IInPort<T> extends IPort<IAtomicNode<any>, T> {
+/**
+ * Describes an input port.
+ * Input ports may only be assigned to atomic nodes.
+ */
+export interface IInPort<V> extends IPort<IAtomicNode<any>, V> {
   in: true;
-  peer: IOutPort<T>;
+  peer: IOutPort<V>;
 
-  connect(peer: IOutPort<T>, tag?: string): void;
+  connect(peer: IOutPort<V>, tag?: string): void;
 
   disconnect(tag?: string): void;
 }

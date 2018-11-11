@@ -3,9 +3,9 @@ import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
 
-export class OutPort<T> extends Port<INode<any, any>, T> implements IOutPort<T> {
+export class OutPort<V> extends Port<INode<any, any>, V> implements IOutPort<V> {
   public readonly out: true;
-  public readonly peers: Set<IInPort<T>>;
+  public readonly peers: Set<IInPort<V>>;
 
   constructor(name: string, node: INode<any, any>) {
     super(name, node);
@@ -13,7 +13,7 @@ export class OutPort<T> extends Port<INode<any, any>, T> implements IOutPort<T> 
     this.peers = new Set();
   }
 
-  public connect(peer: IInPort<T>, tag?: string): void {
+  public connect(peer: IInPort<V>, tag?: string): void {
     const peers = this.peers;
     if (!peers.has(peer)) {
       peers.add(peer);
@@ -21,7 +21,7 @@ export class OutPort<T> extends Port<INode<any, any>, T> implements IOutPort<T> 
     }
   }
 
-  public disconnect(peer?: IInPort<T>, tag?: string): void {
+  public disconnect(peer?: IInPort<V>, tag?: string): void {
     const peers = this.peers;
     if (!peer) {
       for (peer of peers.values()) {
@@ -33,7 +33,7 @@ export class OutPort<T> extends Port<INode<any, any>, T> implements IOutPort<T> 
     }
   }
 
-  public send(value: T, tag?: string): void {
+  public send(value: V, tag?: string): void {
     for (const peer of this.peers.values()) {
       peer.send(value, tag);
     }

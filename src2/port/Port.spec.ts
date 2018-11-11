@@ -3,16 +3,16 @@ import {IPort} from "./IPort";
 import {Port} from "./Port";
 
 describe("Port", function () {
-  class TestPort<T> extends Port<IAtomicNode<any>, T> {
+  class TestPort<V> extends Port<IAtomicNode<any>, V> {
     constructor(name: string, node: IAtomicNode<any>) {
       super(name, node);
     }
 
-    public connect(peer: IPort<IAtomicNode<any>, T>, tag?: string): void {
+    public connect(peer: IPort<IAtomicNode<any>, V>, tag?: string): void {
       //
     }
 
-    public send(value: T, tag?: string): void {
+    public send(value: V, tag?: string): void {
       //
     }
   }
