@@ -1,7 +1,5 @@
 import {Demuxer, Mapper, Merger} from "../atomic";
-import {INode} from "../node";
-import {TPortEvents} from "../node/INode";
-import {TEventPorts, TInPorts, TOutPorts} from "../port";
+import {Node} from "../node";
 import {IMuxed} from "../utils";
 
 interface ISwitchInputs<P extends string, T> {
@@ -22,20 +20,16 @@ function switchToMuxed<P extends string, T>(inputs: ISwitchInputs<P, T>): IMuxed
 
 /**
  * Forwards input to one of the possible outputs.
- * TODO: Extend generic Node base class.
  * @example
  * let switch: Switch<"foo" | "bar" | "baz", number>;
  * switch = new Switch(["foo", "bar", "baz");
  */
-export class Switch<P extends string, T> implements INode<ISwitchInputs<P, T>, TSwitchOutputs<P, T>> {
-  public readonly in: TInPorts<ISwitchInputs<P, T>>;
-  public readonly out: TOutPorts<TSwitchOutputs<P, T>>;
-  public readonly svc: TEventPorts<TPortEvents>;
-
+export class Switch<P extends string, T> extends Node<ISwitchInputs<P, T>, TSwitchOutputs<P, T>> {
   /**
    * @param cases Strings identifying possible cases for switch.
    */
   constructor(cases: Array<string>) {
+    super();
     const merger = new Merger<ISwitchInputs<P, T>>(["case", "$"]);
     const mapper = new Mapper<ISwitchInputs<P, T>, IMuxed<TSwitchOutputs<P, T>>>(switchToMuxed);
     const demuxer = new Demuxer<TSwitchOutputs<P, T>>(cases);
