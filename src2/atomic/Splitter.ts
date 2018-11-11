@@ -1,6 +1,6 @@
 import {AtomicNode} from "../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
-import {THash} from "../utils";
+import {IHash} from "../utils";
 
 /**
  * Splits synchronized values sets.
@@ -11,7 +11,7 @@ import {THash} from "../utils";
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends THash> extends AtomicNode<{
+export class Splitter<T extends IHash> extends AtomicNode<{
   $: T
 }, T> {
   constructor(fields: Array<string>) {

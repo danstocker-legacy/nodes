@@ -1,6 +1,6 @@
 import {AtomicNode} from "../node";
 import {IInPort, InPort, OutPort} from "../port";
-import {THash} from "../utils";
+import {IHash} from "../utils";
 
 /**
  * Outputs sets of inputs, where each value in the set reflects the latest
@@ -9,7 +9,7 @@ import {THash} from "../utils";
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
  */
-export class Tracker<T extends THash = THash> extends AtomicNode<T, {
+export class Tracker<T extends IHash = IHash> extends AtomicNode<T, {
   $: T
 }> {
   private readonly values: T;

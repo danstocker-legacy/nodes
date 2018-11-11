@@ -1,7 +1,7 @@
 import {AtomicNode} from "../node";
 import {IInPort, InPort, OutPort} from "../port";
-import {THash} from "../utils";
-import {TMuxed} from "./TMuxed";
+import {IHash} from "../utils";
+import {IMuxed} from "./IMuxed";
 
 /**
  * Multiplexes inputs.
@@ -13,8 +13,8 @@ import {TMuxed} from "./TMuxed";
  * muxer.in.foo.send(5);
  * // outputs `{val: 5, name: "foo"}` on port "$"
  */
-export class Muxer<T extends THash = THash> extends AtomicNode<T, {
-  $: TMuxed<T>;
+export class Muxer<T extends IHash = IHash> extends AtomicNode<T, {
+  $: IMuxed<T>;
 }> {
   constructor(fields: Array<string>) {
     super();

@@ -8,4 +8,4 @@ export {Serializer} from "./Serializer";
 export {Shifter} from "./Shifter";
 export {Splitter} from "./Splitter";
 export {Merger} from "./Merger";
-export {TMuxed} from "./TMuxed";
+export {IMuxed} from "./IMuxed";

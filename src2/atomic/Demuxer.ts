@@ -1,6 +1,6 @@
 import {AtomicNode} from "../node";
 import {IInPort, InPort, OutPort} from "../port";
-import {TMuxed} from "./TMuxed";
+import {IMuxed} from "./IMuxed";
 
 /**
  * De-multiplexes input.
@@ -12,7 +12,7 @@ import {TMuxed} from "./TMuxed";
  * // outputs `5` on port "foo"
  */
 export class Demuxer<T> extends AtomicNode<{
-  $: TMuxed<T>;
+  $: IMuxed<T>;
 }, T> {
   constructor(fields: Array<string>) {
     super();
@@ -22,7 +22,7 @@ export class Demuxer<T> extends AtomicNode<{
     }
   }
 
-  public send<U>(port: IInPort<U & TMuxed<T>>, input: U & TMuxed<T>, tag?: string): void {
+  public send<U>(port: IInPort<U & IMuxed<T>>, input: U & IMuxed<T>, tag?: string): void {
     if (port === this.in.$) {
       const name = input.name;
       this.out[name].send(input.val, tag);
