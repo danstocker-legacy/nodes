@@ -1,16 +1,16 @@
 import {AtomicNode, IAtomicNode} from "../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
+import {IInPort, InPort, OutPort} from "../port";
 import {copy} from "../utils";
 
 type TReducerCallback<I, O> = (curr: O, next: I, tag: string, node: IAtomicNode) => O;
 
-type TReducerInput<I> = {
+interface IReducerInput<I> {
   /** Reset signal */
-  res: boolean,
+  res: boolean;
 
   /** Next input value */
-  val: I
-};
+  val: I;
+}
 
 /**
  * Reduces input according to callback.
@@ -19,14 +19,11 @@ type TReducerInput<I> = {
  * let sum: Reducer<number, number>;
  * sum = new Reducer((curr, next) => curr + next, 0);
  */
-export class Reducer<I, O> extends AtomicNode {
-  public readonly in: TInPorts<{
-    $: TReducerInput<I>
-  }>;
-  public readonly out: TOutPorts<{
-    $: O
-  }>;
-
+export class Reducer<I, O> extends AtomicNode<{
+  $: IReducerInput<I>;
+}, {
+  $: O;
+}> {
   private readonly cb: TReducerCallback<I, O>;
   private readonly initial?: O;
   private reduced: O;
@@ -41,8 +38,8 @@ export class Reducer<I, O> extends AtomicNode {
   }
 
   public send<U>(
-    port: IInPort<U & TReducerInput<I>>,
-    value: U & TReducerInput<I>,
+    port: IInPort<U & IReducerInput<I>>,
+    value: U & IReducerInput<I>,
     tag?: string
   ): void {
     if (port === this.in.$) {

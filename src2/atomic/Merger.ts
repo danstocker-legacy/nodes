@@ -1,5 +1,5 @@
 import {AtomicNode} from "../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
+import {IInPort, InPort, OutPort} from "../port";
 
 type TInput<T> = T[keyof T];
 
@@ -13,12 +13,9 @@ type TInput<T> = T[keyof T];
  * merger.in.bar.send(true, "1");
  * // merger.out.$ will output {foo: 5, bar: true} for tag "1"
  */
-export class Merger<T> extends AtomicNode {
-  public readonly in: TInPorts<T>;
-  public readonly out: TOutPorts<{
-    $: T
-  }>;
-
+export class Merger<T> extends AtomicNode<T, {
+  $: T;
+}> {
   private readonly fields: Array<string>;
   private readonly inputCache: Map<string, T>;
   private readonly portCache: Map<string, Set<string | number>>;

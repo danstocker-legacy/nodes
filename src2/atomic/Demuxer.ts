@@ -1,6 +1,5 @@
 import {AtomicNode} from "../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
-import {THash} from "../utils";
+import {IInPort, InPort, OutPort} from "../port";
 import {TMuxed} from "./TMuxed";
 
 /**
@@ -12,12 +11,9 @@ import {TMuxed} from "./TMuxed";
  * demuxer.in.$.send({name: "foo", 5});
  * // outputs `5` on port "foo"
  */
-export class Demuxer<T extends THash = THash> extends AtomicNode {
-  public readonly in: TInPorts<{
-    $: TMuxed<T>
-  }>;
-  public readonly out: TOutPorts<T>;
-
+export class Demuxer<T> extends AtomicNode<{
+  $: TMuxed<T>;
+}, T> {
   constructor(fields: Array<string>) {
     super();
     this.in.$ = new InPort("$", this);

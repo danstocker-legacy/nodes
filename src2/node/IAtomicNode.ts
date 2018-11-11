@@ -7,7 +7,7 @@ import {INode} from "./INode";
  * delete from. Nodes may also have data sent to them through one of their
  * input ports.
  */
-export interface IAtomicNode extends INode {
+export interface IAtomicNode extends INode<any, any> {
   /**
    * Sends a value to the node though the specified input port, as part of
    * an optionally identified impulse.

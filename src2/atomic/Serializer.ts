@@ -1,5 +1,5 @@
 import {AtomicNode} from "../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
+import {IInPort, InPort, OutPort} from "../port";
 
 /**
  * Forwards inputs matching the order of the reference input `tag`.
@@ -7,15 +7,12 @@ import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
  * let node: Serializer<number>;
  * node = new Serializer();
  */
-export class Serializer<T> extends AtomicNode {
-  public readonly in: TInPorts<{
-    $: T,
-    tag: string
-  }>;
-  public readonly out: TOutPorts<{
-    $: T
-  }>;
-
+export class Serializer<T> extends AtomicNode<{
+  $: T;
+  tag: string;
+}, {
+  $: T;
+}> {
   private readonly inputs: Map<string, T>;
   private readonly order: Array<string>;
 

@@ -1,5 +1,5 @@
 import {AtomicNode} from "../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
+import {IInPort, InPort, OutPort} from "../port";
 import {THash} from "../utils";
 
 /**
@@ -9,11 +9,9 @@ import {THash} from "../utils";
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
  */
-export class Tracker<T extends THash = THash> extends AtomicNode {
-  public readonly in: TInPorts<T>;
-  public readonly out: TOutPorts<{
-    $: T
-  }>;
+export class Tracker<T extends THash = THash> extends AtomicNode<T, {
+  $: T
+}> {
   private readonly values: T;
 
   constructor(fields: Array<string>) {

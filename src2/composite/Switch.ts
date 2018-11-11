@@ -20,11 +20,12 @@ function switchToMuxed<P extends string, T>(inputs: TSwitchInputs<P, T>): TMuxed
 
 /**
  * Forwards input to one of the possible outputs.
+ * TODO: Extend generic Node base class.
  * @example
  * let switch: Switch<"foo" | "bar" | "baz", number>;
  * switch = new Switch(["foo", "bar", "baz");
  */
-export class Switch<P extends string, T> implements INode {
+export class Switch<P extends string, T> implements INode<TSwitchInputs<P, T>, TSwitchOutputs<P, T>> {
   public readonly in: TInPorts<TSwitchInputs<P, T>>;
   public readonly out: TOutPorts<TSwitchOutputs<P, T>>;
 

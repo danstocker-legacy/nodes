@@ -4,11 +4,9 @@ import {OutPort, TOutPorts} from "../port";
 /**
  * Takes input from `process.stdin` and sends it to output.
  */
-export class StdIn extends AtomicNode {
-  public readonly out: TOutPorts<{
-    $: string | Buffer
-  }>;
-
+export class StdIn extends AtomicNode<null, {
+  $: string | Buffer
+}> {
   constructor() {
     super();
     this.out.$ = new OutPort("$", this);

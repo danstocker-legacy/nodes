@@ -1,12 +1,14 @@
 import {TInPorts, TOutPorts} from "../port";
 
 /**
- * A node has at least one input and one output socket.
+ * A node has at least one input and one output port bundle, plus a service
+ * port bundle. The service port bundle includes an event port, and user
+ * defined ports.
  */
-export interface INode {
-  /** Input ports of the node. */
-  readonly in: TInPorts<any>;
+export interface INode<I, O> {
+  /** User defined input ports */
+  readonly in: TInPorts<I>;
 
-  /** Output ports of the node. */
-  readonly out: TOutPorts<any>;
+  /** User defined output ports */
+  readonly out: TOutPorts<O>;
 }

@@ -2,14 +2,7 @@ import {IInPort, TInPorts, TOutPorts} from "../port";
 import {AtomicNode} from "./AtomicNode";
 
 describe("Node", function () {
-  class TestNode extends AtomicNode {
-    public readonly in: TInPorts<{
-      "$": any
-    }>;
-    public readonly out: TOutPorts<{
-      "$": any
-    }>;
-
+  class TestNode extends AtomicNode<{$: any}, {$: any}> {
     constructor() {
       super();
     }

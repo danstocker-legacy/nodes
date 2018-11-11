@@ -1,21 +1,18 @@
 import {AtomicNode} from "../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
+import {IInPort, InPort, OutPort} from "../port";
 
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
-export class Logger extends AtomicNode {
-  public readonly in: TInPorts<{
-    log: any,
-    warn: any,
-    err: any
-  }>;
-  public readonly out: TOutPorts<{
-    log: any,
-    warn: any,
-    err: any
-  }>;
-
+export class Logger extends AtomicNode<{
+  log: any,
+  warn: any,
+  err: any
+}, {
+  log: any,
+  warn: any,
+  err: any
+}> {
   constructor() {
     super();
     this.in.log = new InPort("log", this);

@@ -11,12 +11,9 @@ import {THash} from "../utils";
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends THash> extends AtomicNode {
-  public readonly in: TInPorts<{
-    $: T
-  }>;
-  public readonly out: TOutPorts<T>;
-
+export class Splitter<T extends THash> extends AtomicNode<{
+  $: T
+}, T> {
   constructor(fields: Array<string>) {
     super();
     this.in.$ = new InPort("$", this);

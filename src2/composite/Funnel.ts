@@ -21,11 +21,12 @@ function muxedToSwitch<P extends string, T>(inputs: TMuxed<TFunnelInputs<P, T>>)
 /**
  * Forwards inputs from multiple ports to a single output.
  * Outputs which input the value came through.
+ * TODO: Extend generic Node base class.
  * @example
  * let funnel: Funnel<"foo" | "bar" | "baz", number>;
  * funnel = new Funnel(["foo", "bar", "baz"]);
  */
-export class Funnel<P extends string, T> implements INode {
+export class Funnel<P extends string, T> implements INode<TFunnelInputs<P, T>, TFunnelOutputs<P, T>> {
   public readonly in: TInPorts<TFunnelInputs<P, T>>;
   public readonly out: TOutPorts<TFunnelOutputs<P, T>>;
 

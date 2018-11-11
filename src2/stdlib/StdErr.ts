@@ -4,11 +4,9 @@ import {IInPort, InPort, TInPorts} from "../port";
 /**
  * Forwards input to `process.stderr`.
  */
-export class StdErr extends AtomicNode {
-  public readonly in: TInPorts<{
-    $: string | Buffer
-  }>;
-
+export class StdErr extends AtomicNode<{
+  $: string | Buffer
+}, null> {
   constructor() {
     super();
     this.in.$ = new InPort("$", this);

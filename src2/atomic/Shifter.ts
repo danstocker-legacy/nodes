@@ -1,19 +1,16 @@
 import {AtomicNode} from "../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
+import {IInPort, InPort, OutPort} from "../port";
 
 /**
  * Forwards previous input.
  * Does not know about original tag order. Feed through Serializer if
  * original tag order is to be retained.
  */
-export class Shifter<T> extends AtomicNode {
-  public readonly in: TInPorts<{
-    $: T
-  }>;
-  public readonly out: TOutPorts<{
-    $: T
-  }>;
-
+export class Shifter<T> extends AtomicNode<{
+  $: T
+}, {
+  $: T
+}> {
   private readonly disp: number;
   private readonly buffer: Array<T>;
 
