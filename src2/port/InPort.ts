@@ -3,7 +3,7 @@ import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
 
-export class InPort<T> extends Port<T> implements IInPort<T> {
+export class InPort<T> extends Port<IAtomicNode<any>, T> implements IInPort<T> {
   public readonly in: true;
   public peer: IOutPort<T>;
 

@@ -1,7 +1,8 @@
+import {IAtomicNode} from "../node";
 import {IOutPort} from "./IOutPort";
 import {IPort} from "./IPort";
 
-export interface IInPort<T> extends IPort<T> {
+export interface IInPort<T> extends IPort<IAtomicNode<any>, T> {
   in: true;
   peer: IOutPort<T>;
 

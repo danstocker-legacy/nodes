@@ -1,10 +1,10 @@
-import {IAtomicNode} from "../node";
+import {INode} from "../node";
 
-export interface IPort<T> {
+export interface IPort<N extends INode<any, any>, T> {
   name: string;
-  node: IAtomicNode<any>;
+  node: N;
 
-  connect(peer: IPort<T>, tag?: string): void;
+  connect(peer: IPort<INode<any, any>, T>, tag?: string): void;
 
   send(value: T, tag?: string): void;
 }
