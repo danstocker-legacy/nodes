@@ -1,6 +1,6 @@
-import {Node} from "../node";
-import {Mapper, Muxer, Splitter} from "../nodes";
-import {IMuxed} from "../utils";
+import {Node} from "../../node";
+import {IMuxed} from "../../utils";
+import {Mapper, Muxer, Splitter} from "../lang";
 
 type TFunnelInputs<P extends string, T> = {
   [K in P]: T

@@ -1,6 +1,6 @@
-import {Node} from "../node";
-import {Demuxer, Mapper, Merger} from "../nodes";
-import {IMuxed} from "../utils";
+import {Node} from "../../node";
+import {IMuxed} from "../../utils";
+import {Demuxer, Mapper, Merger} from "../lang";
 
 interface ISwitchInputs<P extends string, T> {
   $: T;
