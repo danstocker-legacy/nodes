@@ -2,6 +2,9 @@ import {IInPort, OutPort, TInPorts, TOutPorts} from "../port";
 import {IEvent} from "../utils";
 import {INode, TPortEvents} from "./INode";
 
+/**
+ * @deprecated Use a combination of ISink, ISource, IServiced
+ */
 export abstract class Node<I, O, E extends string = null> implements INode<I, O, E> {
   public in: TInPorts<I>;
   public out: TOutPorts<O>;
