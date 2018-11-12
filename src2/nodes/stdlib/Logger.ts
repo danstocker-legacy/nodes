@@ -1,5 +1,5 @@
-import {AtomicNode} from "../node";
-import {IInPort, InPort, OutPort} from "../port";
+import {AtomicNode} from "../../node";
+import {IInPort, InPort, OutPort} from "../../port";
 
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.

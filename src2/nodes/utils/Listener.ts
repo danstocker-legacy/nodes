@@ -1,5 +1,5 @@
-import {AtomicNode} from "../node";
-import {IInPort, InPort} from "../port";
+import {AtomicNode} from "../../node";
+import {IInPort, InPort} from "../../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
 
