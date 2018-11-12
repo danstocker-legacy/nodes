@@ -1,4 +1,4 @@
-import {INode} from "../node";
+import {TNode} from "../node";
 import {IInPort} from "./IInPort";
 import {IPort} from "./IPort";
 
@@ -6,7 +6,7 @@ import {IPort} from "./IPort";
  * Describes an output port.
  * Output ports may ba assigned to any node type. (Atomic & composite.)
  */
-export interface IOutPort<V> extends IPort<INode<any, any>, V> {
+export interface IOutPort<V> extends IPort<TNode<any, any>, V> {
   out: true;
   peers: Set<IInPort<V>>;
 

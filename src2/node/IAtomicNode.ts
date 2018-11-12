@@ -1,5 +1,5 @@
 import {IInPort} from "../port";
-import {INode} from "./INode";
+import {ISink} from "./ISink";
 
 /**
  * Outlines what a node is.
@@ -8,7 +8,7 @@ import {INode} from "./INode";
  * input ports.
  * @deprecated Use a combination of ISink, ISource, IServiced
  */
-export interface IAtomicNode<I> extends INode<I, any> {
+export interface IAtomicNode<I> extends ISink<I> {
   /**
    * Sends a value to the node though the specified input port, as part of
    * an optionally identified impulse.

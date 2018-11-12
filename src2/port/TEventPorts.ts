@@ -3,7 +3,6 @@ import {TOutPorts} from "./TOutPorts";
 
 /**
  * Event port for the service port bundle.
- * Included in INode#svc.
  * @example
  * // usage:
  * node.svc.evt.connect(new Listener((value, tag) => console.log(value, tag)));

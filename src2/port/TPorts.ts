@@ -1,4 +1,4 @@
-import {INode} from "../node";
+import {TNode} from "../node";
 import {TPort} from "./TPort";
 
 /**
@@ -8,6 +8,6 @@ import {TPort} from "./TPort";
  * @example
  * const port: TPorts<{foo: number, bar: boolean}, >
  */
-export type TPorts<I, N extends INode<any, any>, P extends TPort<N, I>> = {
+export type TPorts<I, N extends TNode<any, any>, P extends TPort<N, I>> = {
   [K in keyof I]: P
 };

@@ -1,13 +1,13 @@
-import {INode} from "../node";
+import {TNode} from "../node";
 import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
 
-export class OutPort<V> extends Port<INode<any, any>, V> implements IOutPort<V> {
+export class OutPort<V> extends Port<TNode<any, any>, V> implements IOutPort<V> {
   public readonly out: true;
   public readonly peers: Set<IInPort<V>>;
 
-  constructor(name: string, node: INode<any, any>) {
+  constructor(name: string, node: TNode<any, any>) {
     super(name, node);
     this.out = true;
     this.peers = new Set();

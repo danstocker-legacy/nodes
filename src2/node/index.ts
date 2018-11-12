@@ -1,6 +1,5 @@
 export {AtomicNode} from "./AtomicNode";
 export {IAtomicNode} from "./IAtomicNode";
-export {INode} from "./INode";
 export {IServiced} from "./IServiced";
 export {ISink} from "./ISink";
 export {ISource} from "./ISource";
@@ -8,3 +7,4 @@ export {Node} from "./Node";
 export {Serviced} from "./Serviced";
 export {Sink} from "./Sink";
 export {Source} from "./Source";
+export {TNode} from "./TNode";
