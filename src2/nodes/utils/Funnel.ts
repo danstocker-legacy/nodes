@@ -36,4 +36,8 @@ export class Funnel<P extends string, T> extends Node<TFunnelInputs<P, T>, IFunn
     this.in = muxer.in;
     this.out = splitter.out;
   }
+
+  public send(): void {
+    //
+  }
 }

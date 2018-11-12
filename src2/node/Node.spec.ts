@@ -5,6 +5,10 @@ describe("Node", function () {
     constructor() {
       super();
     }
+
+    public send(): void {
+      //
+    }
   }
 
   describe("constructor", function () {

@@ -38,4 +38,8 @@ export class Switch<P extends string, T> extends Node<ISwitchInputs<P, T>, TSwit
     this.in = merger.in;
     this.out = demuxer.out;
   }
+
+  public send(): void {
+    //
+  }
 }
