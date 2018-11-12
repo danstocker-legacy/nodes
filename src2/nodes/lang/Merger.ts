@@ -1,5 +1,5 @@
-import {AtomicNode} from "../node";
-import {IInPort, InPort, OutPort} from "../port";
+import {AtomicNode} from "../../node";
+import {IInPort, InPort, OutPort} from "../../port";
 
 type TInput<T> = T[keyof T];
 

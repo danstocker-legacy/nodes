@@ -1,6 +1,6 @@
-import {AtomicNode} from "../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../port";
-import {IHash} from "../utils";
+import {AtomicNode} from "../../node";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {IHash} from "../../utils/index";
 
 /**
  * Splits synchronized values sets.

@@ -1,5 +1,5 @@
-import {Noop} from "../atomic";
 import {IAtomicNode} from "../node";
+import {Noop} from "../nodes";
 import {IInPort} from "./IInPort";
 import {InPort} from "./InPort";
 import {IOutPort} from "./IOutPort";

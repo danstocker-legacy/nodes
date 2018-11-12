@@ -1,5 +1,5 @@
-import {AtomicNode, IAtomicNode} from "../node";
-import {IInPort, InPort, OutPort} from "../port";
+import {AtomicNode, IAtomicNode} from "../../node";
+import {IInPort, InPort, OutPort} from "../../port";
 
 interface IMapperInputs<I> {
   $: I;

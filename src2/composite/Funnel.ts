@@ -1,5 +1,5 @@
-import {Mapper, Muxer, Splitter} from "../atomic";
 import {Node} from "../node";
+import {Mapper, Muxer, Splitter} from "../nodes";
 import {IMuxed} from "../utils";
 
 type TFunnelInputs<P extends string, T> = {

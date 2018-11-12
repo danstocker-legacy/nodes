@@ -1,6 +1,6 @@
-import {AtomicNode, IAtomicNode} from "../node";
-import {IInPort, InPort, OutPort, TInPorts} from "../port";
-import {copy} from "../utils";
+import {AtomicNode, IAtomicNode} from "../../node";
+import {IInPort, InPort, OutPort, TInPorts} from "../../port";
+import {copy} from "../../utils/index";
 
 interface IReducerInput<I> {
   /** Reset signal */

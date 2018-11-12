@@ -1,6 +1,6 @@
-import {AtomicNode} from "../node";
-import {IInPort, InPort, OutPort} from "../port";
-import {IMuxed} from "../utils";
+import {AtomicNode} from "../../node";
+import {IInPort, InPort, OutPort} from "../../port";
+import {IMuxed} from "../../utils";
 
 /**
  * De-multiplexes input.

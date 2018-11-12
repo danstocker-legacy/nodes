@@ -1,5 +1,5 @@
-import {Demuxer, Mapper, Merger} from "../atomic";
 import {Node} from "../node";
+import {Demuxer, Mapper, Merger} from "../nodes";
 import {IMuxed} from "../utils";
 
 interface ISwitchInputs<P extends string, T> {
