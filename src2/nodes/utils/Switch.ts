@@ -1,4 +1,4 @@
-import {Node} from "../../node";
+import {TInPorts, TOutPorts} from "../../port";
 import {IMuxed} from "../../utils";
 import {Demuxer, Mapper, Merger} from "../lang";
 
@@ -20,16 +20,19 @@ function switchToMuxed<P extends string, T>(inputs: ISwitchInputs<P, T>): IMuxed
 
 /**
  * Forwards input to one of the possible outputs.
+ * TODO: Implement IServiced interface?
  * @example
  * let switch: Switch<"foo" | "bar" | "baz", number>;
  * switch = new Switch(["foo", "bar", "baz");
  */
-export class Switch<P extends string, T> extends Node<ISwitchInputs<P, T>, TSwitchOutputs<P, T>> {
+export class Switch<P extends string, T> {
+  public readonly in: TInPorts<ISwitchInputs<P, T>>;
+  public readonly out: TOutPorts<TSwitchOutputs<P, T>>;
+
   /**
    * @param cases Strings identifying possible cases for switch.
    */
   constructor(cases: Array<string>) {
-    super();
     const merger = new Merger<ISwitchInputs<P, T>>(["case", "$"]);
     const mapper = new Mapper<ISwitchInputs<P, T>, IMuxed<TSwitchOutputs<P, T>>>(switchToMuxed);
     const demuxer = new Demuxer<TSwitchOutputs<P, T>>(cases);
@@ -37,9 +40,5 @@ export class Switch<P extends string, T> extends Node<ISwitchInputs<P, T>, TSwit
     mapper.out.$.connect(demuxer.in.$);
     this.in = merger.in;
     this.out = demuxer.out;
-  }
-
-  public send(): void {
-    //
   }
 }
