@@ -5,7 +5,7 @@ export type TPortEvents =
   "PORT_ADD" | "PORT_DELETE" |
   "PORT_CONNECT" | "PORT_DISCONNECT";
 
-export interface IServiced<T> {
+export interface IServiced {
   /** Service ports */
-  readonly svc: TOutPorts<T>;
+  readonly svc: TOutPorts<any>;
 }

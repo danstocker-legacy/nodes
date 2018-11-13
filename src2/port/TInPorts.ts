@@ -8,4 +8,4 @@ import {TPorts} from "./TPorts";
  * @example
  * const port: TInPorts<{foo: number, bar: boolean}>
  */
-export type TInPorts<I> = TPorts<I, ISink<I>, TInPort<I>>;
+export type TInPorts<I> = TPorts<I, ISink, TInPort<I>>;

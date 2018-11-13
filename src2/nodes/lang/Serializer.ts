@@ -16,7 +16,7 @@ interface ISerializerOutputs<V> {
  * let node: Serializer<number>;
  * node = new Serializer();
  */
-export class Serializer<V> implements ISink<ISerializerInputs<V>>, ISource<ISerializerOutputs<V>> {
+export class Serializer<V> implements ISink, ISource {
   public readonly in: TInPorts<ISerializerInputs<V>>;
   public readonly out: TOutPorts<ISerializerOutputs<V>>;
 

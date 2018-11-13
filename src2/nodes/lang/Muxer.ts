@@ -16,7 +16,7 @@ interface IMuxerOutputs<T> {
  * muxer.in.foo.send(5);
  * // outputs `{val: 5, name: "foo"}` on port "$"
  */
-export class Muxer<T extends IHash = IHash> implements ISink<T>, ISource<IMuxerOutputs<T>> {
+export class Muxer<T extends IHash = IHash> implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<IMuxerOutputs<T>>;
 
@@ -30,7 +30,7 @@ export class Muxer<T extends IHash = IHash> implements ISink<T>, ISource<IMuxerO
     };
   }
 
-  public send<U extends T[keyof T]>(port: IInPort<U>, input: U, tag?: string): void {
+  public send(port: IInPort<T[keyof T]>, input: T[keyof T], tag?: string): void {
     const name = port.name;
     if (port === this.in[name]) {
       this.out.$.send({name, val: input}, tag);

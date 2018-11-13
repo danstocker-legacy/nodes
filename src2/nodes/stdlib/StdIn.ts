@@ -8,7 +8,7 @@ interface IStdInOutputs {
 /**
  * Takes input from `process.stdin` and sends it to output.
  */
-export class StdIn implements ISource<IStdInOutputs> {
+export class StdIn implements ISource {
   public readonly out: TOutPorts<IStdInOutputs>;
 
   constructor() {

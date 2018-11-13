@@ -17,7 +17,7 @@ interface IFilterOutputs<V> {
 /**
  * Forwards default input to output when reference input is truthy.
  */
-export class Filter<V> implements ISink<IFilterInputs<V>>, ISource<IFilterOutputs<V>> {
+export class Filter<V> implements ISink, ISource {
   public readonly in: TInPorts<IFilterInputs<V>>;
   public readonly out: TOutPorts<IFilterOutputs<V>>;
 

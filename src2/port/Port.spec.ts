@@ -3,12 +3,12 @@ import {IPort} from "./IPort";
 import {Port} from "./Port";
 
 describe("Port", function () {
-  class TestPort<V> extends Port<ISink<any>, V> {
-    constructor(name: string, node: ISink<any>) {
+  class TestPort<V> extends Port<ISink, V> {
+    constructor(name: string, node: ISink) {
       super(name, node);
     }
 
-    public connect(peer: IPort<ISink<any>, V>, tag?: string): void {
+    public connect(peer: IPort<ISink, V>, tag?: string): void {
       //
     }
 
@@ -19,13 +19,13 @@ describe("Port", function () {
 
   describe("constructor", function () {
     it("should initialize property 'name'", function () {
-      const node = <ISink<any>> {};
+      const node = <ISink> {};
       const port = new TestPort("foo", node);
       expect(port.name).toBe("foo");
     });
 
     it("should initialize property 'node'", function () {
-      const node = <ISink<any>> {};
+      const node = <ISink> {};
       const port = new TestPort("foo", node);
       expect(port.node).toBe(node);
     });

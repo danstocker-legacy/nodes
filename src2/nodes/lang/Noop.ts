@@ -18,7 +18,7 @@ interface INoopOutputs<V> {
  * noop = new Noop();
  * noop.in.$.send(5);
  */
-export class Noop<V> implements ISink<INoopInputs<V>>, ISource<INoopOutputs<V>> {
+export class Noop<V> implements ISink, ISource {
   public readonly in: TInPorts<INoopInputs<V>>;
   public readonly out: TOutPorts<INoopOutputs<V>>;
 

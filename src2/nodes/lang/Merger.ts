@@ -17,7 +17,7 @@ interface IMergerOutputs<T> {
  * merger.in.bar.send(true, "1");
  * // merger.out.$ will output {foo: 5, bar: true} for tag "1"
  */
-export class Merger<T> implements ISink<T>, ISource<IMergerOutputs<T>> {
+export class Merger<T> implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<IMergerOutputs<T>>;
 

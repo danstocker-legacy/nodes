@@ -7,14 +7,14 @@ import {OutPort} from "./OutPort";
 
 describe("InPort", function () {
   class TestInPort<V> extends InPort<V> {
-    constructor(name: string, node: ISink<any>) {
+    constructor(name: string, node: ISink) {
       super(name, node);
     }
   }
 
   describe("constructor", function () {
     it("should set property 'in'", function () {
-      const node = <ISink<any>> {};
+      const node = <ISink> {};
       const port = new TestInPort("foo", node);
       expect(port.in).toBe(true);
     });

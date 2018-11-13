@@ -8,11 +8,11 @@ import {TNode} from "../node";
  * @see IInPort
  * @see IOutPort
  */
-export interface IPort<N extends TNode<any, any>, V> {
+export interface IPort<N extends TNode, V> {
   name: string;
   node: N;
 
-  connect(peer: IPort<TNode<any, any>, V>, tag?: string): void;
+  connect(peer: IPort<TNode, V>, tag?: string): void;
 
   send(value: V, tag?: string): void;
 }

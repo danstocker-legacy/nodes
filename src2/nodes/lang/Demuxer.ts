@@ -15,7 +15,7 @@ interface IDemuxerInputs<T> {
  * demuxer.in.$.send({name: "foo", 5});
  * // outputs `5` on port "foo"
  */
-export class Demuxer<T> implements ISink<{ $: IMuxed<T>; }>, ISource<T> {
+export class Demuxer<T> implements ISink, ISource {
   public readonly in: TInPorts<{ $: IMuxed<T>; }>;
   public readonly out: TOutPorts<T>;
 

@@ -8,7 +8,7 @@ interface IStdErrInputs {
 /**
  * Forwards input to `process.stderr`.
  */
-export class StdErr implements ISink<IStdErrInputs> {
+export class StdErr implements ISink {
   public readonly in: TInPorts<IStdErrInputs>;
 
   constructor() {
@@ -17,7 +17,7 @@ export class StdErr implements ISink<IStdErrInputs> {
     };
   }
 
-  public send<T>(port: IInPort<T & (string | Buffer)>, input: T & (string | Buffer)): void {
+  public send(port: IInPort<string | Buffer>, input: string | Buffer): void {
     if (port === this.in.$) {
       process.stderr.write(input);
     }

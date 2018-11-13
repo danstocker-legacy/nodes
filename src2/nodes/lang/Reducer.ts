@@ -22,7 +22,7 @@ type TReducerCallback<I, O> = (
   curr: O,
   next: I,
   tag: string,
-  node: ISink<any>) => O;
+  node: ISink) => O;
 
 /**
  * Reduces input according to callback.
@@ -31,7 +31,7 @@ type TReducerCallback<I, O> = (
  * let sum: Reducer<number, number>;
  * sum = new Reducer((curr, next) => curr + next, 0);
  */
-export class Reducer<I, O> implements ISink<IReducerInputs<I>>, ISource<IReducerOutputs<O>> {
+export class Reducer<I, O> implements ISink, ISource {
   public readonly in: TInPorts<IReducerInputs<I>>;
   public readonly out: TOutPorts<IReducerOutputs<O>>;
 

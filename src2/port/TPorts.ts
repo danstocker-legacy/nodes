@@ -8,6 +8,6 @@ import {TPort} from "./TPort";
  * @example
  * const port: TPorts<{foo: number, bar: boolean}, >
  */
-export type TPorts<I, N extends TNode<any, any>, P extends TPort<N, I>> = {
+export type TPorts<I, N extends TNode, P extends TPort<N, I>> = {
   [K in keyof I]: P
 };

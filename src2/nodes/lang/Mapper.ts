@@ -9,7 +9,7 @@ interface IMapperOutputs<V> {
   $: V;
 }
 
-type TMapperCallback<I, O> = (value: I, tag: string, node: ISink<IMapperInputs<I>>) => O;
+type TMapperCallback<I, O> = (value: I, tag: string, node: ISink) => O;
 
 /**
  * Maps input value to an output value, as specified by a static mapper
@@ -18,7 +18,7 @@ type TMapperCallback<I, O> = (value: I, tag: string, node: ISink<IMapperInputs<I
  * // static callback
  * const mapper = new Mapper<number, string>(String);
  */
-export class Mapper<I, O> implements ISink<IMapperInputs<I>>, ISource<IMapperOutputs<O>> {
+export class Mapper<I, O> implements ISink, ISource {
   public readonly in: TInPorts<IMapperInputs<I>>;
   public readonly out: TOutPorts<IMapperOutputs<O>>;
 

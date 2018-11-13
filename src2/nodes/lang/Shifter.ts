@@ -14,7 +14,7 @@ interface IShifterOutputs<V> {
  * Does not know about original tag order. Feed through Serializer if
  * original tag order is to be retained.
  */
-export class Shifter<V> implements ISink<IShifterInputs<V>>, ISource<IShifterOutputs<V>> {
+export class Shifter<V> implements ISink, ISource {
   public readonly in: TInPorts<IShifterInputs<V>>;
   public readonly out: TOutPorts<IShifterOutputs<V>>;
 

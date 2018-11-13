@@ -8,7 +8,7 @@ interface IStdOutInputs {
 /**
  * Forwards input to `process.stdout`.
  */
-export class StdOut implements ISink<IStdOutInputs> {
+export class StdOut implements ISink {
   public readonly in: TInPorts<IStdOutInputs>;
 
   constructor() {
@@ -17,7 +17,7 @@ export class StdOut implements ISink<IStdOutInputs> {
     };
   }
 
-  public send<T>(port: IInPort<T & (string | Buffer)>, input: T & (string | Buffer)): void {
+  public send(port: IInPort<string | Buffer>, input: string | Buffer): void {
     if (port === this.in.$) {
       process.stdout.write(input);
     }

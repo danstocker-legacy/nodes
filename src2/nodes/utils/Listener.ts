@@ -16,7 +16,7 @@ interface IListenerInputs {
  * // to unsubscribe:
  * listener.in.$.disconnect();
  */
-export class Listener implements ISink<IListenerInputs> {
+export class Listener implements ISink {
   public readonly in: TInPorts<IListenerInputs>;
 
   private readonly cb: TListenerCallback;

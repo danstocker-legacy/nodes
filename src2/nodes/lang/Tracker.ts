@@ -13,7 +13,7 @@ interface ITrackerOutputs<T> {
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
  */
-export class Tracker<T extends IHash = IHash> implements ISink<T>, ISource<ITrackerOutputs<T>> {
+export class Tracker<T extends IHash = IHash> implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<ITrackerOutputs<T>>;
 
@@ -30,7 +30,7 @@ export class Tracker<T extends IHash = IHash> implements ISink<T>, ISource<ITrac
     };
   }
 
-  public send<U>(port: IInPort<U>, input: U, tag?: string): void {
+  public send(port: IInPort<T[keyof T]>, input: T[keyof T], tag?: string): void {
     const name = port.name;
     if (port === this.in[name]) {
       const values = this.values;

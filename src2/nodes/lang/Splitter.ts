@@ -15,7 +15,7 @@ interface ISplitterInputs<T> {
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends IHash> implements ISink<ISplitterInputs<T>>, ISource<T> {
+export class Splitter<T extends IHash> implements ISink, ISource {
   public readonly in: TInPorts<ISplitterInputs<T>>;
   public readonly out: TOutPorts<T>;
 
