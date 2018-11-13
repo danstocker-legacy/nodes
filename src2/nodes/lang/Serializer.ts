@@ -1,4 +1,4 @@
-import {ISink, ISource} from "../../node";
+import {ISink, ISource, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 interface ISerializerInputs<V> {
@@ -24,15 +24,13 @@ export class Serializer<V> implements ISink, ISource {
   private readonly order: Array<string>;
 
   constructor() {
+    Sink.init.call(this);
+    Source.init.call(this);
     this.inputs = new Map();
     this.order = [];
-    this.in = {
-      $: new InPort("$", this),
-      tag: new InPort("tag", this)
-    };
-    this.out = {
-      $: new OutPort("$", this)
-    };
+    this.in.$ = new InPort("$", this);
+    this.in.tag = new InPort("tag", this);
+    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<V | string>, input: V | string, tag?: string): void {

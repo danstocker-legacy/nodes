@@ -1,4 +1,4 @@
-import {ISink, ISource} from "../../node";
+import {ISink, ISource, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 interface ILoggerInputs {
@@ -21,16 +21,14 @@ export class Logger implements ISink, ISource {
   public readonly out: TOutPorts<ILoggerOutputs>;
 
   constructor() {
-    this.in = {
-      err: new InPort("err", this),
-      log: new InPort("log", this),
-      warn: new InPort("warn", this)
-    };
-    this.out = {
-      err: new OutPort("err", this),
-      log: new OutPort("log", this),
-      warn: new OutPort("warn", this)
-    };
+    Sink.init.call(this);
+    Source.init.call(this);
+    this.in.err = new InPort("err", this);
+    this.in.log = new InPort("log", this);
+    this.in.warn = new InPort("warn", this);
+    this.out.err = new OutPort("err", this);
+    this.out.log = new OutPort("log", this);
+    this.out.warn = new OutPort("warn", this);
   }
 
   public send(port: IInPort<any>, input: any, tag?: string): void {

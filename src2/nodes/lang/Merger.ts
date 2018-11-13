@@ -1,4 +1,4 @@
-import {ISink, ISource} from "../../node";
+import {ISink, ISource, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 type TInput<T> = T[keyof T];
@@ -26,16 +26,15 @@ export class Merger<T> implements ISink, ISource {
   private readonly portCache: Map<string, Set<string | number>>;
 
   constructor(fields: Array<string>) {
+    Sink.init.call(this);
+    Source.init.call(this);
     this.fields = fields;
     this.inputCache = new Map();
     this.portCache = new Map();
-    this.in = <TInPorts<T>> {};
     for (const field of fields) {
       this.in[field] = new InPort(field, this);
     }
-    this.out = {
-      $: new OutPort("$", this)
-    };
+    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<TInput<T>>, input: TInput<T>, tag: string): void {

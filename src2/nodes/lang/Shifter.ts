@@ -1,4 +1,4 @@
-import {ISink, ISource} from "../../node";
+import {ISink, ISource, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 interface IShifterInputs<V> {
@@ -25,14 +25,12 @@ export class Shifter<V> implements ISink, ISource {
    * @param disp Displacement
    */
   constructor(disp: number = 1) {
+    Sink.init.call(this);
+    Source.init.call(this);
     this.disp = disp;
     this.buffer = [];
-    this.in = {
-      $: new InPort("$", this)
-    };
-    this.out = {
-      $: new OutPort("$", this)
-    };
+    this.in.$ = new InPort("$", this);
+    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<V>, input: V, tag?: string): void {

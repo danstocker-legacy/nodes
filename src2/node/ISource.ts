@@ -5,5 +5,5 @@ import {TOutPorts} from "../port";
  */
 export interface ISource {
   /** User defined output ports */
-  readonly out: TOutPorts<any>;
+  out: TOutPorts<any>;
 }

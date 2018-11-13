@@ -1,4 +1,4 @@
-import {ISink, ISource} from "../../node";
+import {ISink, ISource, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 import {IHash, IMuxed} from "../../utils";
 
@@ -21,13 +21,12 @@ export class Muxer<T extends IHash = IHash> implements ISink, ISource {
   public readonly out: TOutPorts<IMuxerOutputs<T>>;
 
   constructor(fields: Array<string>) {
-    this.in = <TInPorts<T>> {};
+    Sink.init.call(this);
+    Source.init.call(this);
     for (const field of fields) {
       this.in[field] = new InPort(field, this);
     }
-    this.out = {
-      $: new OutPort("$", this)
-    };
+    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<T[keyof T]>, input: T[keyof T], tag?: string): void {

@@ -2,7 +2,7 @@ import {IInPort, TInPorts} from "../port";
 
 export interface ISink {
   /** User defined input ports */
-  readonly in: TInPorts<any>;
+  in: TInPorts<any>;
 
   /**
    * Sends a value to the node though the specified input port, as part of

@@ -1,4 +1,4 @@
-import {ISink, ISource} from "../../node";
+import {ISink, ISource, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 import {copy} from "../../utils";
 
@@ -40,15 +40,13 @@ export class Reducer<I, O> implements ISink, ISource {
   private reduced: O;
 
   constructor(cb: TReducerCallback<I, O>, initial?: O) {
+    Sink.init.call(this);
+    Source.init.call(this);
     this.cb = cb;
     this.initial = initial;
     this.reduced = copy(initial);
-    this.in = {
-      $: new InPort("$", this)
-    };
-    this.out = {
-      $: new OutPort("$", this)
-    };
+    this.in.$ = new InPort("$", this);
+    this.out.$ = new OutPort("$", this);
   }
 
   public send(

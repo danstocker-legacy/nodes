@@ -1,4 +1,4 @@
-import {ISink, ISource} from "../../node";
+import {ISink, ISource, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 interface IFilterInput<V> {
@@ -22,12 +22,10 @@ export class Filter<V> implements ISink, ISource {
   public readonly out: TOutPorts<IFilterOutputs<V>>;
 
   constructor() {
-    this.in = {
-      $: new InPort("$", this)
-    };
-    this.out = {
-      $: new OutPort("$", this)
-    };
+    Sink.init.call(this);
+    Source.init.call(this);
+    this.in.$ = new InPort("$", this);
+    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<IFilterInput<V>>, input: IFilterInput<V>, tag?: string): void {

@@ -1,4 +1,4 @@
-import {ISink, ISource} from "../../node";
+import {ISink, ISource, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 interface IMapperInputs<V> {
@@ -25,13 +25,11 @@ export class Mapper<I, O> implements ISink, ISource {
   private readonly cb: TMapperCallback<I, O>;
 
   constructor(cb: TMapperCallback<I, O>) {
+    Sink.init.call(this);
+    Source.init.call(this);
     this.cb = cb;
-    this.in = {
-      $: new InPort("$", this)
-    };
-    this.out = {
-      $: new OutPort("$", this)
-    };
+    this.in.$ = new InPort("$", this);
+    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<I>, input: I, tag?: string): void {

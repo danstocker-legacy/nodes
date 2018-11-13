@@ -1,4 +1,4 @@
-import {ISink, ISource} from "../../node";
+import {ISink, ISource, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 import {IHash} from "../../utils";
 
@@ -20,10 +20,9 @@ export class Splitter<T extends IHash> implements ISink, ISource {
   public readonly out: TOutPorts<T>;
 
   constructor(fields: Array<string>) {
-    this.in = {
-      $: new InPort("$", this)
-    };
-    this.out = <TOutPorts<T>> {};
+    Sink.init.call(this);
+    Source.init.call(this);
+    this.in.$ = new InPort("$", this);
     for (const field of fields) {
       this.out[field] = new OutPort(field, this);
     }
