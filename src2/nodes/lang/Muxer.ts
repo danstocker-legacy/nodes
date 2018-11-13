@@ -1,6 +1,10 @@
-import {AtomicNode} from "../../node";
-import {IInPort, InPort, OutPort} from "../../port";
-import {IHash, IMuxed} from "../../utils/index";
+import {ISink, ISource} from "../../node";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {IHash, IMuxed} from "../../utils";
+
+interface IMuxerOutputs<T> {
+  $: IMuxed<T>;
+}
 
 /**
  * Multiplexes inputs.
@@ -12,15 +16,18 @@ import {IHash, IMuxed} from "../../utils/index";
  * muxer.in.foo.send(5);
  * // outputs `{val: 5, name: "foo"}` on port "$"
  */
-export class Muxer<T extends IHash = IHash> extends AtomicNode<T, {
-  $: IMuxed<T>;
-}> {
+export class Muxer<T extends IHash = IHash> implements ISink<T>, ISource<IMuxerOutputs<T>> {
+  public readonly in: TInPorts<T>;
+  public readonly out: TOutPorts<IMuxerOutputs<T>>;
+
   constructor(fields: Array<string>) {
-    super();
+    this.in = <TInPorts<T>> {};
     for (const field of fields) {
       this.in[field] = new InPort(field, this);
     }
-    this.out.$ = new OutPort("$", this);
+    this.out = {
+      $: new OutPort("$", this)
+    };
   }
 
   public send<U extends T[keyof T]>(port: IInPort<U>, input: U, tag?: string): void {

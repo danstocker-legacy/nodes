@@ -5,6 +5,4 @@ export {ISink} from "./ISink";
 export {ISource} from "./ISource";
 export {Node} from "./Node";
 export {Serviced} from "./Serviced";
-export {Sink} from "./Sink";
-export {Source} from "./Source";
 export {TNode} from "./TNode";

@@ -1,5 +1,14 @@
-import {AtomicNode} from "../../node";
-import {IInPort, InPort, OutPort} from "../../port";
+import {ISink, ISource} from "../../node";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+
+interface ISerializerInputs<V> {
+  $: V;
+  tag: string;
+}
+
+interface ISerializerOutputs<V> {
+  $: V;
+}
 
 /**
  * Forwards inputs matching the order of the reference input `tag`.
@@ -7,25 +16,26 @@ import {IInPort, InPort, OutPort} from "../../port";
  * let node: Serializer<number>;
  * node = new Serializer();
  */
-export class Serializer<T> extends AtomicNode<{
-  $: T;
-  tag: string;
-}, {
-  $: T;
-}> {
-  private readonly inputs: Map<string, T>;
+export class Serializer<V> implements ISink<ISerializerInputs<V>>, ISource<ISerializerOutputs<V>> {
+  public readonly in: TInPorts<ISerializerInputs<V>>;
+  public readonly out: TOutPorts<ISerializerOutputs<V>>;
+
+  private readonly inputs: Map<string, V>;
   private readonly order: Array<string>;
 
   constructor() {
-    super();
     this.inputs = new Map();
     this.order = [];
-    this.in.$ = new InPort("$", this);
-    this.in.tag = new InPort("tag", this);
-    this.out.$ = new OutPort("$", this);
+    this.in = {
+      $: new InPort("$", this),
+      tag: new InPort("tag", this)
+    };
+    this.out = {
+      $: new OutPort("$", this)
+    };
   }
 
-  public send(port: IInPort<T | string>, input: T | string, tag?: string): void {
+  public send(port: IInPort<V | string>, input: V | string, tag?: string): void {
     const ports = this.in;
     switch (port) {
       case ports.tag:
@@ -34,7 +44,7 @@ export class Serializer<T> extends AtomicNode<{
         break;
 
       case ports.$:
-        this.inputs.set(tag, <T> input);
+        this.inputs.set(tag, <V> input);
         this.release();
         break;
     }

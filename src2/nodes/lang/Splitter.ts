@@ -1,6 +1,10 @@
-import {AtomicNode} from "../../node";
+import {ISink, ISource} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
-import {IHash} from "../../utils/index";
+import {IHash} from "../../utils";
+
+interface ISplitterInputs<T> {
+  $: T;
+}
 
 /**
  * Splits synchronized values sets.
@@ -11,10 +15,15 @@ import {IHash} from "../../utils/index";
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends IHash> extends AtomicNode<{ $: T }, T> {
+export class Splitter<T extends IHash> implements ISink<ISplitterInputs<T>>, ISource<T> {
+  public readonly in: TInPorts<ISplitterInputs<T>>;
+  public readonly out: TOutPorts<T>;
+
   constructor(fields: Array<string>) {
-    super();
-    this.in.$ = new InPort("$", this);
+    this.in = {
+      $: new InPort("$", this)
+    };
+    this.out = <TOutPorts<T>> {};
     for (const field of fields) {
       this.out[field] = new OutPort(field, this);
     }

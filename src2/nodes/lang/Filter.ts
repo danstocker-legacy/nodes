@@ -1,26 +1,36 @@
-import {AtomicNode} from "../../node";
-import {IInPort, InPort, OutPort} from "../../port";
+import {ISink, ISource} from "../../node";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
-interface IFilterInput<T> {
-  val: T;
+interface IFilterInput<V> {
+  val: V;
   incl: boolean;
+}
+
+interface IFilterInputs<V> {
+  $: IFilterInput<V>;
+}
+
+interface IFilterOutputs<V> {
+  $: V;
 }
 
 /**
  * Forwards default input to output when reference input is truthy.
  */
-export class Filter<T> extends AtomicNode<{
-  $: IFilterInput<T>;
-}, {
-  $: T;
-}> {
+export class Filter<V> implements ISink<IFilterInputs<V>>, ISource<IFilterOutputs<V>> {
+  public readonly in: TInPorts<IFilterInputs<V>>;
+  public readonly out: TOutPorts<IFilterOutputs<V>>;
+
   constructor() {
-    super();
-    this.in.$ = new InPort("$", this);
-    this.out.$ = new OutPort("$", this);
+    this.in = {
+      $: new InPort("$", this)
+    };
+    this.out = {
+      $: new OutPort("$", this)
+    };
   }
 
-  public send(port: IInPort<IFilterInput<T>>, input: IFilterInput<T>, tag?: string): void {
+  public send(port: IInPort<IFilterInput<V>>, input: IFilterInput<V>, tag?: string): void {
     if (port === this.in.$ && input.incl) {
       this.out.$.send(input.val, tag);
     }

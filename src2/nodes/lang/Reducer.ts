@@ -1,20 +1,28 @@
-import {AtomicNode, IAtomicNode} from "../../node";
-import {IInPort, InPort, OutPort, TInPorts} from "../../port";
-import {copy} from "../../utils/index";
+import {ISink, ISource} from "../../node";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {copy} from "../../utils";
 
-interface IReducerInput<I> {
+interface IReducerInput<V> {
   /** Reset signal */
   res: boolean;
 
   /** Next input value */
-  val: I;
+  val: V;
+}
+
+interface IReducerInputs<V> {
+  $: IReducerInput<V>;
+}
+
+interface IReducerOutputs<V> {
+  $: V;
 }
 
 type TReducerCallback<I, O> = (
   curr: O,
   next: I,
   tag: string,
-  node: IAtomicNode<any>) => O;
+  node: ISink<any>) => O;
 
 /**
  * Reduces input according to callback.
@@ -23,22 +31,24 @@ type TReducerCallback<I, O> = (
  * let sum: Reducer<number, number>;
  * sum = new Reducer((curr, next) => curr + next, 0);
  */
-export class Reducer<I, O> extends AtomicNode<{
-  $: IReducerInput<I>;
-}, {
-  $: O;
-}> {
+export class Reducer<I, O> implements ISink<IReducerInputs<I>>, ISource<IReducerOutputs<O>> {
+  public readonly in: TInPorts<IReducerInputs<I>>;
+  public readonly out: TOutPorts<IReducerOutputs<O>>;
+
   private readonly cb: TReducerCallback<I, O>;
   private readonly initial?: O;
   private reduced: O;
 
   constructor(cb: TReducerCallback<I, O>, initial?: O) {
-    super();
     this.cb = cb;
     this.initial = initial;
     this.reduced = copy(initial);
-    this.in.$ = new InPort("$", this);
-    this.out.$ = new OutPort("$", this);
+    this.in = {
+      $: new InPort("$", this)
+    };
+    this.out = {
+      $: new OutPort("$", this)
+    };
   }
 
   public send(

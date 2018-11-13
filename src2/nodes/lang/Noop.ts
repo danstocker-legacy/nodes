@@ -1,5 +1,13 @@
-import {AtomicNode} from "../../node";
-import {IInPort, InPort, OutPort} from "../../port";
+import {ISink, ISource} from "../../node";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+
+interface INoopInputs<V> {
+  $: V;
+}
+
+interface INoopOutputs<V> {
+  $: V;
+}
 
 /**
  * Forwards input without change.
@@ -10,14 +18,20 @@ import {IInPort, InPort, OutPort} from "../../port";
  * noop = new Noop();
  * noop.in.$.send(5);
  */
-export class Noop<T> extends AtomicNode<{ $: T; }, { $: T; }> {
+export class Noop<V> implements ISink<INoopInputs<V>>, ISource<INoopOutputs<V>> {
+  public readonly in: TInPorts<INoopInputs<V>>;
+  public readonly out: TOutPorts<INoopOutputs<V>>;
+
   constructor() {
-    super();
-    this.in.$ = new InPort("$", this);
-    this.out.$ = new OutPort("$", this);
+    this.in = {
+      $: new InPort("$", this)
+    };
+    this.out = {
+      $: new OutPort("$", this)
+    };
   }
 
-  public send(port: IInPort<T>, input: T, tag?: string): void {
+  public send(port: IInPort<V>, input: V, tag?: string): void {
     if (port === this.in.$) {
       this.out.$.send(input, tag);
     }

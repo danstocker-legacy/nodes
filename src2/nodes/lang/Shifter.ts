@@ -1,28 +1,41 @@
-import {AtomicNode} from "../../node";
-import {IInPort, InPort, OutPort} from "../../port";
+import {ISink, ISource} from "../../node";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+
+interface IShifterInputs<V> {
+  $: V;
+}
+
+interface IShifterOutputs<V> {
+  $: V;
+}
 
 /**
  * Forwards previous input.
  * Does not know about original tag order. Feed through Serializer if
  * original tag order is to be retained.
  */
-export class Shifter<T> extends AtomicNode<{ $: T }, { $: T }> {
+export class Shifter<V> implements ISink<IShifterInputs<V>>, ISource<IShifterOutputs<V>> {
+  public readonly in: TInPorts<IShifterInputs<V>>;
+  public readonly out: TOutPorts<IShifterOutputs<V>>;
+
   private readonly disp: number;
-  private readonly buffer: Array<T>;
+  private readonly buffer: Array<V>;
 
   /**
    * @param disp Displacement
    */
   constructor(disp: number = 1) {
-    super();
-
     this.disp = disp;
     this.buffer = [];
-    this.in.$ = new InPort("$", this);
-    this.out.$ = new OutPort("$", this);
+    this.in = {
+      $: new InPort("$", this)
+    };
+    this.out = {
+      $: new OutPort("$", this)
+    };
   }
 
-  public send(port: IInPort<T>, input: T, tag?: string): void {
+  public send(port: IInPort<V>, input: V, tag?: string): void {
     const disp = this.disp;
     const buffer = this.buffer;
     buffer.push(input);

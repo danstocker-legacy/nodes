@@ -1,7 +1,11 @@
-import {AtomicNode} from "../../node";
-import {IInPort, InPort, OutPort} from "../../port";
+import {ISink, ISource} from "../../node";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 type TInput<T> = T[keyof T];
+
+interface IMergerOutputs<T> {
+  $: T;
+}
 
 /**
  * Merges input values bearing the same tag. Produces a dictionary of port
@@ -13,22 +17,25 @@ type TInput<T> = T[keyof T];
  * merger.in.bar.send(true, "1");
  * // merger.out.$ will output {foo: 5, bar: true} for tag "1"
  */
-export class Merger<T> extends AtomicNode<T, {
-  $: T;
-}> {
+export class Merger<T> implements ISink<T>, ISource<IMergerOutputs<T>> {
+  public readonly in: TInPorts<T>;
+  public readonly out: TOutPorts<IMergerOutputs<T>>;
+
   private readonly fields: Array<string>;
   private readonly inputCache: Map<string, T>;
   private readonly portCache: Map<string, Set<string | number>>;
 
   constructor(fields: Array<string>) {
-    super();
     this.fields = fields;
     this.inputCache = new Map();
     this.portCache = new Map();
+    this.in = <TInPorts<T>> {};
     for (const field of fields) {
       this.in[field] = new InPort(field, this);
     }
-    this.out.$ = new OutPort("$", this);
+    this.out = {
+      $: new OutPort("$", this)
+    };
   }
 
   public send(port: IInPort<TInput<T>>, input: TInput<T>, tag: string): void {
