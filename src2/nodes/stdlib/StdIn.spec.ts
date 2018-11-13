@@ -8,20 +8,6 @@ describe("StdIn", function () {
     });
   });
 
-  describe("#send()", function () {
-    let node: StdIn;
-
-    beforeEach(function () {
-      node = new StdIn();
-    });
-
-    it("should throw error", function () {
-      expect(function () {
-        node.send();
-      }).toThrow();
-    });
-  });
-
   describe("#onReadable()", function () {
     let node: StdIn;
 

@@ -1,26 +1,36 @@
-import {AtomicNode} from "../../node";
-import {IInPort, InPort, OutPort} from "../../port";
+import {ISink, ISource} from "../../node";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+
+interface ILoggerInputs {
+  log: any;
+  warn: any;
+  err: any;
+}
+
+interface ILoggerOutputs {
+  log: any;
+  warn: any;
+  err: any;
+}
 
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
-export class Logger extends AtomicNode<{
-  log: any,
-  warn: any,
-  err: any
-}, {
-  log: any,
-  warn: any,
-  err: any
-}> {
+export class Logger implements ISink<ILoggerInputs>, ISource<ILoggerOutputs> {
+  public readonly in: TInPorts<ILoggerInputs>;
+  public readonly out: TOutPorts<ILoggerOutputs>;
+
   constructor() {
-    super();
-    this.in.log = new InPort("log", this);
-    this.in.warn = new InPort("warn", this);
-    this.in.err = new InPort("err", this);
-    this.out.log = new OutPort("log", this);
-    this.out.warn = new OutPort("warn", this);
-    this.out.err = new OutPort("err", this);
+    this.in = {
+      err: new InPort("err", this),
+      log: new InPort("log", this),
+      warn: new InPort("warn", this)
+    };
+    this.out = {
+      err: new OutPort("err", this),
+      log: new OutPort("log", this),
+      warn: new OutPort("warn", this)
+    };
   }
 
   public send<T>(port: IInPort<T>, input: T, tag?: string): void {

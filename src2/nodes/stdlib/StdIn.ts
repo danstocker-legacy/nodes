@@ -1,20 +1,21 @@
-import {AtomicNode} from "../../node";
-import {OutPort} from "../../port";
+import {ISource} from "../../node";
+import {OutPort, TOutPorts} from "../../port";
+
+interface IStdInOutputs {
+  $: string | Buffer;
+}
 
 /**
  * Takes input from `process.stdin` and sends it to output.
  */
-export class StdIn extends AtomicNode<null, {
-  $: string | Buffer
-}> {
-  constructor() {
-    super();
-    this.out.$ = new OutPort("$", this);
-    process.stdin.on("readable", this.onReadable.bind(this));
-  }
+export class StdIn implements ISource<IStdInOutputs> {
+  public readonly out: TOutPorts<IStdInOutputs>;
 
-  public send() {
-    throw Error("StdIn is source-only.");
+  constructor() {
+    this.out = {
+      $: new OutPort("$", this)
+    };
+    process.stdin.on("readable", this.onReadable.bind(this));
   }
 
   private onReadable() {

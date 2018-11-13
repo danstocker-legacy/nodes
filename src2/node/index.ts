@@ -1,4 +1,3 @@
-export {AtomicNode} from "./AtomicNode";
 export {IAtomicNode} from "./IAtomicNode";
 export {IServiced} from "./IServiced";
 export {ISink} from "./ISink";

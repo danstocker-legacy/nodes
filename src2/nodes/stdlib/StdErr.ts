@@ -1,15 +1,20 @@
-import {AtomicNode} from "../../node";
-import {IInPort, InPort} from "../../port";
+import {ISink} from "../../node";
+import {IInPort, InPort, TInPorts} from "../../port";
+
+interface IStdErrInputs {
+  $: string | Buffer;
+}
 
 /**
  * Forwards input to `process.stderr`.
  */
-export class StdErr extends AtomicNode<{
-  $: string | Buffer
-}, null> {
+export class StdErr implements ISink<IStdErrInputs> {
+  public readonly in: TInPorts<IStdErrInputs>;
+
   constructor() {
-    super();
-    this.in.$ = new InPort("$", this);
+    this.in = {
+      $: new InPort("$", this)
+    };
   }
 
   public send<T>(port: IInPort<T & (string | Buffer)>, input: T & (string | Buffer)): void {
