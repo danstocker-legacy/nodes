@@ -1,4 +1,4 @@
-import {IAtomicNode} from "../node";
+import {ISink} from "../node";
 import {Noop} from "../nodes";
 import {IInPort} from "./IInPort";
 import {InPort} from "./InPort";
@@ -7,14 +7,14 @@ import {OutPort} from "./OutPort";
 
 describe("InPort", function () {
   class TestInPort<V> extends InPort<V> {
-    constructor(name: string, node: IAtomicNode<any>) {
+    constructor(name: string, node: ISink<any>) {
       super(name, node);
     }
   }
 
   describe("constructor", function () {
     it("should set property 'in'", function () {
-      const node = <IAtomicNode<any>> {};
+      const node = <ISink<any>> {};
       const port = new TestInPort("foo", node);
       expect(port.in).toBe(true);
     });
