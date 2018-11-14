@@ -15,6 +15,13 @@ export class InPort<V> extends Port<V> implements IInPort<V> {
     if (!this.peer) {
       this.peer = peer;
       peer.connect(this, tag);
+      this.node.svc.evt.send({
+        payload: {
+          peer,
+          port: this
+        },
+        type: "PORT_CONNECT"
+      }, tag);
     } else if (peer !== this.peer) {
       throw new Error(`Input port "${this.name}" already connected.`);
     }
@@ -25,6 +32,13 @@ export class InPort<V> extends Port<V> implements IInPort<V> {
     if (peer) {
       this.peer = undefined;
       peer.disconnect(this, tag);
+      this.node.svc.evt.send({
+        payload: {
+          peer,
+          port: this
+        },
+        type: "PORT_DISCONNECT"
+      }, tag);
     }
   }
 

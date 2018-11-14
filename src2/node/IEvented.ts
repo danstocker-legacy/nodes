@@ -1,6 +1,6 @@
-import {TEventPorts} from "../port";
-import {IServiced, TPortEvents} from "./IServiced";
+import {TEventPorts, TPortEventTypes} from "../port";
+import {IServiced} from "./IServiced";
 
 export interface IEvented extends IServiced {
-  svc: TEventPorts<TPortEvents>;
+  svc: TEventPorts<TPortEventTypes>;
 }

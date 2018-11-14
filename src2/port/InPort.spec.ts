@@ -36,6 +36,18 @@ describe("InPort", function () {
       expect(remotePort.connect).toHaveBeenCalledWith(localPort, "1");
     });
 
+    it("should send event", function () {
+      spyOn(local.svc.evt, "send");
+      localPort.connect(remotePort, "1");
+      expect(local.svc.evt.send).toHaveBeenCalledWith({
+        payload: {
+          peer: remotePort,
+          port: localPort
+        },
+        type: "PORT_CONNECT"
+      }, "1");
+    });
+
     describe("when port is already connected", function () {
       beforeEach(function () {
         localPort.connect(remotePort, "1");
@@ -72,6 +84,18 @@ describe("InPort", function () {
       spyOn(remotePort, "disconnect");
       localPort.disconnect("1");
       expect(remotePort.disconnect).toHaveBeenCalledWith(localPort, "1");
+    });
+
+    it("should send event", function () {
+      spyOn(local.svc.evt, "send");
+      localPort.disconnect("1");
+      expect(local.svc.evt.send).toHaveBeenCalledWith({
+        payload: {
+          peer: remotePort,
+          port: localPort
+        },
+        type: "PORT_DISCONNECT"
+      }, "1");
     });
   });
 

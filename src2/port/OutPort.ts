@@ -1,4 +1,4 @@
-import {Node} from "../node";
+import {INode} from "../node";
 import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
@@ -6,7 +6,7 @@ import {Port} from "./Port";
 export class OutPort<V> extends Port<V> implements IOutPort<V> {
   public readonly peers: Set<IInPort<V>>;
 
-  constructor(name: string, node: Node) {
+  constructor(name: string, node: INode) {
     super(name, node);
     this.peers = new Set();
   }
@@ -16,6 +16,13 @@ export class OutPort<V> extends Port<V> implements IOutPort<V> {
     if (!peers.has(peer)) {
       peers.add(peer);
       peer.connect(this, tag);
+      this.node.svc.evt.send({
+        payload: {
+          peer,
+          port: this
+        },
+        type: "PORT_CONNECT"
+      }, tag);
     }
   }
 
@@ -28,6 +35,13 @@ export class OutPort<V> extends Port<V> implements IOutPort<V> {
     } else if (peers.has(peer)) {
       peers.delete(peer);
       peer.disconnect(tag);
+      this.node.svc.evt.send({
+        payload: {
+          peer,
+          port: this
+        },
+        type: "PORT_DISCONNECT"
+      }, tag);
     }
   }
 

@@ -11,5 +11,6 @@ export {TInPorts} from "./TInPorts";
 export {TInPort} from "./TInPort";
 export {TOutPorts} from "./TOutPorts";
 export {TOutPort} from "./TOutPort";
+export {TPortEventTypes} from "./TPortEventTypes";
 export {TPorts} from "./TPorts";
 export {TPort} from "./TPort";
