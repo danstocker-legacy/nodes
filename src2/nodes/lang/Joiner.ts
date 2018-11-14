@@ -8,16 +8,16 @@ interface IMergerOutputs<T> {
 }
 
 /**
- * Merges input values bearing the same tag. Produces a dictionary of port
+ * Joins input values bearing the same tag. Produces a dictionary of port
  * name - value pairs.
  * @example
- * let merger: Merger<{foo: number, bar: boolean}>;
- * merger = new Merger(["foo", "bar"]);
- * merger.in.foo.send(5, "1");
- * merger.in.bar.send(true, "1");
- * // merger.out.$ will output {foo: 5, bar: true} for tag "1"
+ * let joiner: Joiner<{foo: number, bar: boolean}>;
+ * joiner = new Joiner(["foo", "bar"]);
+ * joiner.in.foo.send(5, "1");
+ * joiner.in.bar.send(true, "1");
+ * // joiner.out.$ will output {foo: 5, bar: true} for tag "1"
  */
-export class Merger<T> extends Node implements ISink, ISource {
+export class Joiner<T> extends Node implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<IMergerOutputs<T>>;
 

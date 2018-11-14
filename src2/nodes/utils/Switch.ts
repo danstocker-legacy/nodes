@@ -1,7 +1,7 @@
 import {Node} from "../../node";
 import {TInPorts, TOutPorts} from "../../port";
 import {IMuxed} from "../../utils";
-import {Demuxer, Mapper, Merger} from "../lang";
+import {Demuxer, Mapper, Joiner} from "../lang";
 
 interface ISwitchInputs<P extends string, T> {
   $: T;
@@ -34,7 +34,7 @@ export class Switch<P extends string, T> extends Node {
    */
   constructor(cases: Array<string>) {
     super();
-    const merger = new Merger<ISwitchInputs<P, T>>(["case", "$"]);
+    const merger = new Joiner<ISwitchInputs<P, T>>(["case", "$"]);
     const mapper = new Mapper<ISwitchInputs<P, T>, IMuxed<TSwitchOutputs<P, T>>>(switchToMuxed);
     const demuxer = new Demuxer<TSwitchOutputs<P, T>>(cases);
     merger.out.$.connect(mapper.in.$);
