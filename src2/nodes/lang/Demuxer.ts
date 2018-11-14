@@ -16,8 +16,8 @@ interface IDemuxerInputs<T> {
  * // outputs `5` on port "foo"
  */
 export class Demuxer<T> extends Node implements ISink, ISource {
-  public in: TInPorts<IDemuxerInputs<T>>;
-  public out: TOutPorts<T>;
+  public readonly in: TInPorts<IDemuxerInputs<T>>;
+  public readonly out: TOutPorts<T>;
 
   constructor(fields: Array<string>) {
     super();
