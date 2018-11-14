@@ -1,6 +1,6 @@
 import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
-import {IHash, IMuxed} from "../../utils";
+import {IAnything, IMuxed} from "../../utils";
 
 interface IMuxerOutputs<T> {
   $: IMuxed<T>;
@@ -16,7 +16,7 @@ interface IMuxerOutputs<T> {
  * muxer.in.foo.send(5);
  * // outputs `{val: 5, name: "foo"}` on port "$"
  */
-export class Muxer<T extends IHash = IHash> extends Node implements ISink, ISource {
+export class Muxer<T extends IAnything = IAnything> extends Node implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<IMuxerOutputs<T>>;
 

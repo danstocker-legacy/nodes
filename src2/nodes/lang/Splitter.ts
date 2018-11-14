@@ -1,6 +1,6 @@
 import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
-import {IHash} from "../../utils";
+import {IAnything} from "../../utils";
 
 interface ISplitterInputs<T> {
   $: T;
@@ -15,7 +15,7 @@ interface ISplitterInputs<T> {
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends IHash> extends Node implements ISink, ISource {
+export class Splitter<T extends IAnything> extends Node implements ISink, ISource {
   public readonly in: TInPorts<ISplitterInputs<T>>;
   public readonly out: TOutPorts<T>;
 

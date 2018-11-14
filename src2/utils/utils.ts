@@ -1,4 +1,4 @@
-import {IHash} from "./IHash";
+import {IAnything} from "./IAnything";
 
 /**
  * Merges hash "b" to hash "a". On conflicting properties, host hash (a) wins.
@@ -6,7 +6,7 @@ import {IHash} from "./IHash";
  * @param b
  * @returns Object passed as "a".
  */
-export function merge(a: IHash, b: IHash): IHash {
+export function merge(a: IAnything, b: IAnything): IAnything {
   for (const key in b) {
     if (a[key] === undefined) {
       a[key] = b[key];
