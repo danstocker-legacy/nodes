@@ -1,10 +1,14 @@
 import {TEventPorts} from "../port";
 import {Evented} from "./Evented";
-import {IEvented} from "./IEvented";
-import {IServiced} from "./IServiced";
+import {INode} from "./INode";
 import {Serviced} from "./Serviced";
 
-export class Node implements IServiced, IEvented {
+/**
+ * Base class for all nodes.
+ * All nodes have a service port bundle, (`svc` property) containing at
+ * least an event port (`svc.evt`).
+ */
+export class Node implements INode {
   public svc: TEventPorts;
 
   constructor() {

@@ -3,13 +3,12 @@ import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
 
-export class InPort<V> extends Port<ISink, V> implements IInPort<V> {
-  public readonly in: true;
+export class InPort<V> extends Port<V> implements IInPort<V> {
+  public node: ISink;
   public peer: IOutPort<V>;
 
   constructor(name: string, node: ISink) {
     super(name, node);
-    this.in = true;
   }
 
   public connect(peer: IOutPort<V>, tag?: string): void {

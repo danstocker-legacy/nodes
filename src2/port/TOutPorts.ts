@@ -1,4 +1,3 @@
-import {TNode} from "../node";
 import {TOutPort} from "./TOutPort";
 import {TPorts} from "./TPorts";
 
@@ -8,4 +7,4 @@ import {TPorts} from "./TPorts";
  * @example
  * const port: TOutPorts<{foo: number, bar: boolean}>
  */
-export type TOutPorts<V> = TPorts<V, TNode, TOutPort<V>>;
+export type TOutPorts<V> = TPorts<V, TOutPort<V>>;

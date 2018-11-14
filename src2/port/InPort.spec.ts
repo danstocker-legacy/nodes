@@ -12,14 +12,6 @@ describe("InPort", function () {
     }
   }
 
-  describe("constructor", function () {
-    it("should set property 'in'", function () {
-      const node = <ISink> {};
-      const port = new TestInPort("foo", node);
-      expect(port.in).toBe(true);
-    });
-  });
-
   describe("#connect()", function () {
     let local: Noop<number>;
     let remote: Noop<number>;

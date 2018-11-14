@@ -3,12 +3,12 @@ import {IPort} from "./IPort";
 import {Port} from "./Port";
 
 describe("Port", function () {
-  class TestPort<V> extends Port<ISink, V> {
+  class TestPort<V> extends Port<V> {
     constructor(name: string, node: ISink) {
       super(name, node);
     }
 
-    public connect(peer: IPort<ISink, V>, tag?: string): void {
+    public connect(peer: IPort<V>, tag?: string): void {
       //
     }
 

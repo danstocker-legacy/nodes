@@ -1,5 +1,6 @@
 export {Evented} from "./Evented";
 export {IEvented} from "./IEvented";
+export {INode} from "./INode";
 export {IServiced} from "./IServiced";
 export {ISink} from "./ISink";
 export {ISource} from "./ISource";

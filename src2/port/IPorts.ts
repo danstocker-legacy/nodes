@@ -1,12 +1,12 @@
-import {TNode} from "../node";
 import {TPort} from "./TPort";
 import {TPorts} from "./TPorts";
 
 /**
  * Defines class that manages a set of ports.
+ * @deprecated Will be replaced by mixins DynamicSource & DynamicSink.
  */
-export interface IPorts<T, N extends TNode, P extends TPort<N, T>> {
-  bundle: TPorts<T, N, P>;
+export interface IPorts<T, P extends TPort<T>> {
+  bundle: TPorts<T, P>;
 
   addPort(port: P): void;
 

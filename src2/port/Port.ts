@@ -1,4 +1,4 @@
-import {TNode} from "../node";
+import {Node} from "../node";
 import {IPort} from "./IPort";
 
 /**
@@ -9,16 +9,16 @@ import {IPort} from "./IPort";
  * @see InPort
  * @see OutPort
  */
-export abstract class Port<N extends TNode, V> implements IPort<N, V> {
+export abstract class Port<V> implements IPort<V> {
   public readonly name: string;
-  public readonly node: N;
+  public readonly node: Node;
 
-  protected constructor(name: string, node: N) {
+  protected constructor(name: string, node: Node) {
     this.name = name;
     this.node = node;
   }
 
-  public abstract connect(peer: IPort<TNode, V>, tag?: string): void;
+  public abstract connect(peer: IPort<V>, tag?: string): void;
 
   public abstract send(value: V, tag?: string): void;
 }

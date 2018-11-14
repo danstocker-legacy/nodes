@@ -1,4 +1,3 @@
-import {ISink} from "../node";
 import {TInPort} from "./TInPort";
 import {TPorts} from "./TPorts";
 
@@ -8,4 +7,4 @@ import {TPorts} from "./TPorts";
  * @example
  * const port: TInPorts<{foo: number, bar: boolean}>
  */
-export type TInPorts<I> = TPorts<I, ISink, TInPort<I>>;
+export type TInPorts<I> = TPorts<I, TInPort<I>>;

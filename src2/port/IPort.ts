@@ -1,4 +1,4 @@
-import {TNode} from "../node";
+import {INode} from "../node";
 
 /**
  * Describes a generic port.
@@ -8,11 +8,11 @@ import {TNode} from "../node";
  * @see IInPort
  * @see IOutPort
  */
-export interface IPort<N extends TNode, V> {
+export interface IPort<V> {
   name: string;
-  node: N;
+  node: INode;
 
-  connect(peer: IPort<TNode, V>, tag?: string): void;
+  connect(peer: IPort<V>, tag?: string): void;
 
   send(value: V, tag?: string): void;
 }

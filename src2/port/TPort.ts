@@ -1,4 +1,3 @@
-import {TNode} from "../node";
 import {IPort} from "./IPort";
 
 /**
@@ -7,4 +6,4 @@ import {IPort} from "./IPort";
  * @example
  * const port: TPort<TNode, {foo: number, bar: boolean}>;
  */
-export type TPort<N extends TNode, I> = IPort<N, I[keyof I]>;
+export type TPort<I> = IPort<I[keyof I]>;

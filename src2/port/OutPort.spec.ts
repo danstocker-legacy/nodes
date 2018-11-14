@@ -13,12 +13,6 @@ describe("OutPort", function () {
   }
 
   describe("constructor", function () {
-    it("should set property 'in'", function () {
-      const node = <ISource> {};
-      const port = new TestOutPort("foo", node);
-      expect(port.out).toBe(true);
-    });
-
     it("should set property 'peers'", function () {
       const node = <ISource> {};
       const port = new TestOutPort("foo", node);
