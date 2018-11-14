@@ -1,6 +1,14 @@
 import {Delayer} from "./Delayer";
 
 describe("Delayer", function () {
+  beforeEach(function () {
+    jasmine.clock().install();
+  });
+
+  afterEach(function () {
+    jasmine.clock().uninstall();
+  });
+
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Delayer(0);
@@ -18,12 +26,7 @@ describe("Delayer", function () {
 
     describe("until delay has passed", function () {
       beforeEach(function () {
-        jasmine.clock().install();
         node.send(node.in.$, 5, "1");
-      });
-
-      afterEach(function () {
-        jasmine.clock().uninstall();
       });
 
       it("should not forward", function () {
@@ -35,12 +38,7 @@ describe("Delayer", function () {
 
     describe("when delay has passed", function () {
       beforeEach(function () {
-        jasmine.clock().install();
         node.send(node.in.$, 5, "1");
-      });
-
-      afterEach(function () {
-        jasmine.clock().uninstall();
       });
 
       it("should forward", function () {
