@@ -5,6 +5,7 @@ import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
  * Forwards input without change.
  * Mostly used in composite nodes to distribute single input to multiple atomic
  * component nodes.
+ * Equivalent to `Mapper<V>((value) => value)`;
  * @example
  * let noop: Noop<number>
  * noop = new Noop();

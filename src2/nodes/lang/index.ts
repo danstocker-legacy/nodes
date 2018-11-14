@@ -4,7 +4,6 @@ export {Folder} from "./Folder";
 export {Joiner} from "./Joiner";
 export {Mapper} from "./Mapper";
 export {Muxer} from "./Muxer";
-export {Noop} from "./Noop";
 export {Serializer} from "./Serializer";
 export {Shifter} from "./Shifter";
 export {Splitter} from "./Splitter";
