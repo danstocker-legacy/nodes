@@ -1,19 +1,19 @@
-import {Reducer} from "./Reducer";
+import {Folder} from "./Folder";
 
-describe("Reducer", function () {
+describe("Folder", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Reducer(() => null);
+      const node = new Folder(() => null);
       expect(node.in.$).toBeDefined();
       expect(node.in.$).toBeDefined();
     });
   });
 
   describe("#send()", function () {
-    let node: Reducer<number, number>;
+    let node: Folder<number, number>;
 
     beforeEach(function () {
-      node = new Reducer((curr, next) => curr + next, 1);
+      node = new Folder((curr, next) => curr + next, 1);
     });
 
     describe("before first truthy signal", function () {

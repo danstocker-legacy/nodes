@@ -2,7 +2,7 @@ import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 import {copy} from "../../utils";
 
-interface IReducerInput<V> {
+interface IFolderInput<V> {
   /** Reset signal */
   res: boolean;
 
@@ -10,60 +10,60 @@ interface IReducerInput<V> {
   val: V;
 }
 
-interface IReducerInputs<V> {
-  $: IReducerInput<V>;
+interface IFolderInputs<V> {
+  $: IFolderInput<V>;
 }
 
-interface IReducerOutputs<V> {
+interface IFolderOutputs<V> {
   $: V;
 }
 
-type TReducerCallback<I, O> = (
+type TFolderCallback<I, O> = (
   curr: O,
   next: I,
   tag: string,
   node: ISink) => O;
 
 /**
- * Reduces input according to callback.
+ * Folds (reduces) input according to callback.
  * Resets state to initial on receiving truthy on `res`.
  * @example
- * let sum: Reducer<number, number>;
- * sum = new Reducer((curr, next) => curr + next, 0);
+ * let sum: Folder<number, number>;
+ * sum = new Folder((curr, next) => curr + next, 0);
  */
-export class Reducer<I, O> extends Node implements ISink, ISource {
-  public readonly in: TInPorts<IReducerInputs<I>>;
-  public readonly out: TOutPorts<IReducerOutputs<O>>;
+export class Folder<I, O> extends Node implements ISink, ISource {
+  public readonly in: TInPorts<IFolderInputs<I>>;
+  public readonly out: TOutPorts<IFolderOutputs<O>>;
 
-  private readonly cb: TReducerCallback<I, O>;
+  private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;
-  private reduced: O;
+  private folded: O;
 
-  constructor(cb: TReducerCallback<I, O>, initial?: O) {
+  constructor(cb: TFolderCallback<I, O>, initial?: O) {
     super();
     Sink.init.call(this);
     Source.init.call(this);
     this.cb = cb;
     this.initial = initial;
-    this.reduced = copy(initial);
+    this.folded = copy(initial);
     this.in.$ = new InPort("$", this);
     this.out.$ = new OutPort("$", this);
   }
 
   public send(
-    port: IInPort<IReducerInput<I>>,
-    value: IReducerInput<I>,
+    port: IInPort<IFolderInput<I>>,
+    value: IFolderInput<I>,
     tag?: string
   ): void {
     if (port === this.in.$) {
       const next = value.val;
       const curr = value.res ?
         copy(this.initial) :
-        this.reduced;
+        this.folded;
 
-      const reduced = this.reduced = this.cb(curr, next, tag, this);
+      const folded = this.folded = this.cb(curr, next, tag, this);
 
-      this.out.$.send(reduced, tag);
+      this.out.$.send(folded, tag);
     }
   }
 }
