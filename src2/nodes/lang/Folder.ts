@@ -10,14 +10,6 @@ interface IFolderInput<V> {
   val: V;
 }
 
-interface IFolderInputs<V> {
-  $: IFolderInput<V>;
-}
-
-interface IFolderOutputs<V> {
-  $: V;
-}
-
 type TFolderCallback<I, O> = (
   curr: O,
   next: I,
@@ -32,8 +24,12 @@ type TFolderCallback<I, O> = (
  * sum = new Folder((curr, next) => curr + next, 0);
  */
 export class Folder<I, O> extends Node implements ISink, ISource {
-  public readonly in: TInPorts<IFolderInputs<I>>;
-  public readonly out: TOutPorts<IFolderOutputs<O>>;
+  public readonly in: TInPorts<{
+    $: IFolderInput<I>;
+  }>;
+  public readonly out: TOutPorts<{
+    $: O;
+  }>;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;

@@ -1,15 +1,13 @@
 import {ISource, Node, Source} from "../../node";
 import {OutPort, TOutPorts} from "../../port";
 
-interface IStdInOutputs {
-  $: string | Buffer;
-}
-
 /**
  * Takes input from `process.stdin` and sends it to output.
  */
 export class StdIn extends Node implements ISource {
-  public readonly out: TOutPorts<IStdInOutputs>;
+  public readonly out: TOutPorts<{
+    $: string | Buffer;
+  }>;
 
   constructor() {
     super();

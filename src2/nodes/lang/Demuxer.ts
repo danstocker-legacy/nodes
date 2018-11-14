@@ -2,10 +2,6 @@ import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 import {IMuxed} from "../../utils";
 
-interface IDemuxerInputs<T> {
-  $: IMuxed<T>;
-}
-
 /**
  * De-multiplexes input.
  * Distributes impulses to output port specified by input.
@@ -16,7 +12,9 @@ interface IDemuxerInputs<T> {
  * // outputs `5` on port "foo"
  */
 export class Demuxer<T> extends Node implements ISink, ISource {
-  public readonly in: TInPorts<IDemuxerInputs<T>>;
+  public readonly in: TInPorts<{
+    $: IMuxed<T>;
+  }>;
   public readonly out: TOutPorts<T>;
 
   constructor(fields: Array<string>) {

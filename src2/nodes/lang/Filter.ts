@@ -6,20 +6,16 @@ interface IFilterInput<V> {
   incl: boolean;
 }
 
-interface IFilterInputs<V> {
-  $: IFilterInput<V>;
-}
-
-interface IFilterOutputs<V> {
-  $: V;
-}
-
 /**
  * Forwards default input to output when reference input is truthy.
  */
 export class Filter<V> extends Node implements ISink, ISource {
-  public readonly in: TInPorts<IFilterInputs<V>>;
-  public readonly out: TOutPorts<IFilterOutputs<V>>;
+  public readonly in: TInPorts<{
+    $: IFilterInput<V>;
+  }>;
+  public readonly out: TOutPorts<{
+    $: V;
+  }>;
 
   constructor() {
     super();

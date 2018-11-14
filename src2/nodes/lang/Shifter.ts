@@ -1,22 +1,18 @@
 import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
-interface IShifterInputs<V> {
-  $: V;
-}
-
-interface IShifterOutputs<V> {
-  $: V;
-}
-
 /**
  * Forwards previous input.
  * Does not know about original tag order. Feed through Serializer if
  * original tag order is to be retained.
  */
 export class Shifter<V> extends Node implements ISink, ISource {
-  public readonly in: TInPorts<IShifterInputs<V>>;
-  public readonly out: TOutPorts<IShifterOutputs<V>>;
+  public readonly in: TInPorts<{
+    $: V;
+  }>;
+  public readonly out: TOutPorts<{
+    $: V;
+  }>;
 
   private readonly disp: number;
   private readonly buffer: Array<V>;

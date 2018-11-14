@@ -1,14 +1,6 @@
 import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
-interface INoopInputs<V> {
-  $: V;
-}
-
-interface INoopOutputs<V> {
-  $: V;
-}
-
 /**
  * Forwards input without change.
  * Mostly used in composite nodes to distribute single input to multiple atomic
@@ -19,8 +11,12 @@ interface INoopOutputs<V> {
  * noop.in.$.send(5);
  */
 export class Noop<V> extends Node implements ISink, ISource {
-  public readonly in: TInPorts<INoopInputs<V>>;
-  public readonly out: TOutPorts<INoopOutputs<V>>;
+  public readonly in: TInPorts<{
+    $: V;
+  }>;
+  public readonly out: TOutPorts<{
+    $: V;
+  }>;
 
   constructor() {
     super();

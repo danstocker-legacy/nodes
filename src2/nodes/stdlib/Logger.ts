@@ -1,24 +1,20 @@
 import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
-interface ILoggerInputs {
-  log: any;
-  warn: any;
-  err: any;
-}
-
-interface ILoggerOutputs {
-  log: any;
-  warn: any;
-  err: any;
-}
-
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
 export class Logger extends Node implements ISink, ISource {
-  public readonly in: TInPorts<ILoggerInputs>;
-  public readonly out: TOutPorts<ILoggerOutputs>;
+  public readonly in: TInPorts<{
+    log: any;
+    warn: any;
+    err: any;
+  }>;
+  public readonly out: TOutPorts<{
+    log: any;
+    warn: any;
+    err: any;
+  }>;
 
   constructor() {
     super();

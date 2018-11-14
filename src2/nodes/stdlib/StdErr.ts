@@ -1,15 +1,13 @@
 import {ISink, Node, Sink} from "../../node";
 import {IInPort, InPort, TInPorts} from "../../port";
 
-interface IStdErrInputs {
-  $: string | Buffer;
-}
-
 /**
  * Forwards input to `process.stderr`.
  */
 export class StdErr extends Node implements ISink {
-  public readonly in: TInPorts<IStdErrInputs>;
+  public readonly in: TInPorts<{
+    $: string | Buffer;
+  }>;
 
   constructor() {
     super();

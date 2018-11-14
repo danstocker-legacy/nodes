@@ -3,10 +3,6 @@ import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 type TInput<T> = T[keyof T];
 
-interface IMergerOutputs<T> {
-  $: T;
-}
-
 /**
  * Joins input values bearing the same tag. Produces a dictionary of port
  * name - value pairs.
@@ -19,7 +15,9 @@ interface IMergerOutputs<T> {
  */
 export class Joiner<T> extends Node implements ISink, ISource {
   public readonly in: TInPorts<T>;
-  public readonly out: TOutPorts<IMergerOutputs<T>>;
+  public readonly out: TOutPorts<{
+    $: T;
+  }>;
 
   private readonly fields: Array<string>;
   private readonly inputCache: Map<string, T>;

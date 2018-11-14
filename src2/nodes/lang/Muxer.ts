@@ -2,10 +2,6 @@ import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 import {IAnything, IMuxed} from "../../utils";
 
-interface IMuxerOutputs<T> {
-  $: IMuxed<T>;
-}
-
 /**
  * Multiplexes inputs.
  * Channels impulses from all input ports into a single output port,
@@ -18,7 +14,9 @@ interface IMuxerOutputs<T> {
  */
 export class Muxer<T extends IAnything = IAnything> extends Node implements ISink, ISource {
   public readonly in: TInPorts<T>;
-  public readonly out: TOutPorts<IMuxerOutputs<T>>;
+  public readonly out: TOutPorts<{
+    $: IMuxed<T>;
+  }>;
 
   constructor(fields: Array<string>) {
     super();

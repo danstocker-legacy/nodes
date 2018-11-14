@@ -2,10 +2,6 @@ import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 import {IAnything} from "../../utils";
 
-interface ISplitterInputs<T> {
-  $: T;
-}
-
 /**
  * Splits synchronized values sets.
  * @example
@@ -16,7 +12,9 @@ interface ISplitterInputs<T> {
  * splitter.out.bar.connect(C.in.$);
  */
 export class Splitter<T extends IAnything> extends Node implements ISink, ISource {
-  public readonly in: TInPorts<ISplitterInputs<T>>;
+  public readonly in: TInPorts<{
+    $: T;
+  }>;
   public readonly out: TOutPorts<T>;
 
   constructor(fields: Array<string>) {
