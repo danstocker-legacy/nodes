@@ -1,7 +1,7 @@
 import {Node} from "../../node";
 import {TInPorts, TOutPorts} from "../../port";
 import {IMuxed} from "../../utils";
-import {Demuxer, Mapper, Joiner} from "../lang";
+import {Demuxer, Joiner, Mapper} from "../lang";
 
 interface ISwitchInputs<P extends string, T> {
   $: T;
