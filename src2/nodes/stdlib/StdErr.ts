@@ -1,4 +1,4 @@
-import {ISink, Sink} from "../../node";
+import {ISink, Node, Sink} from "../../node";
 import {IInPort, InPort, TInPorts} from "../../port";
 
 interface IStdErrInputs {
@@ -8,10 +8,11 @@ interface IStdErrInputs {
 /**
  * Forwards input to `process.stderr`.
  */
-export class StdErr implements ISink {
+export class StdErr extends Node implements ISink {
   public readonly in: TInPorts<IStdErrInputs>;
 
   constructor() {
+    super();
     Sink.init.call(this);
     this.in.$ = new InPort("$", this);
   }

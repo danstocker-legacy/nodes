@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 import {IMuxed} from "../../utils";
 
@@ -15,11 +15,12 @@ interface IDemuxerInputs<T> {
  * demuxer.in.$.send({name: "foo", 5});
  * // outputs `5` on port "foo"
  */
-export class Demuxer<T> implements ISink, ISource {
-  public readonly in: TInPorts<{ $: IMuxed<T>; }>;
-  public readonly out: TOutPorts<T>;
+export class Demuxer<T> extends Node implements ISink, ISource {
+  public in: TInPorts<IDemuxerInputs<T>>;
+  public out: TOutPorts<T>;
 
   constructor(fields: Array<string>) {
+    super();
     Sink.init.call(this);
     Source.init.call(this);
     this.in.$ = new InPort("$", this);

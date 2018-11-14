@@ -1,4 +1,4 @@
-import {ISink} from "../node";
+import {ISource} from "../node";
 import {Noop} from "../nodes";
 import {IInPort} from "./IInPort";
 import {InPort} from "./InPort";
@@ -7,20 +7,20 @@ import {OutPort} from "./OutPort";
 
 describe("OutPort", function () {
   class TestOutPort<V> extends OutPort<V> {
-    constructor(name: string, node: ISink) {
+    constructor(name: string, node: ISource) {
       super(name, node);
     }
   }
 
   describe("constructor", function () {
     it("should set property 'in'", function () {
-      const node = <ISink> {};
+      const node = <ISource> {};
       const port = new TestOutPort("foo", node);
       expect(port.out).toBe(true);
     });
 
     it("should set property 'peers'", function () {
-      const node = <ISink> {};
+      const node = <ISource> {};
       const port = new TestOutPort("foo", node);
       expect(port.peers).toEqual(new Set());
     });

@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 import {IHash} from "../../utils";
 
@@ -15,11 +15,12 @@ interface ISplitterInputs<T> {
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends IHash> implements ISink, ISource {
+export class Splitter<T extends IHash> extends Node implements ISink, ISource {
   public readonly in: TInPorts<ISplitterInputs<T>>;
   public readonly out: TOutPorts<T>;
 
   constructor(fields: Array<string>) {
+    super();
     Sink.init.call(this);
     Source.init.call(this);
     this.in.$ = new InPort("$", this);

@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 interface INoopInputs<V> {
@@ -18,11 +18,12 @@ interface INoopOutputs<V> {
  * noop = new Noop();
  * noop.in.$.send(5);
  */
-export class Noop<V> implements ISink, ISource {
+export class Noop<V> extends Node implements ISink, ISource {
   public readonly in: TInPorts<INoopInputs<V>>;
   public readonly out: TOutPorts<INoopOutputs<V>>;
 
   constructor() {
+    super();
     Sink.init.call(this);
     Source.init.call(this);
     this.in.$ = new InPort("$", this);

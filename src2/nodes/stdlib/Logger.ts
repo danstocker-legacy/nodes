@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 interface ILoggerInputs {
@@ -16,11 +16,12 @@ interface ILoggerOutputs {
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
-export class Logger implements ISink, ISource {
+export class Logger extends Node implements ISink, ISource {
   public readonly in: TInPorts<ILoggerInputs>;
   public readonly out: TOutPorts<ILoggerOutputs>;
 
   constructor() {
+    super();
     Sink.init.call(this);
     Source.init.call(this);
     this.in.err = new InPort("err", this);

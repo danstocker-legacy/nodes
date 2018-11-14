@@ -7,5 +7,5 @@ export type TPortEvents =
 
 export interface IServiced {
   /** Service ports */
-  readonly svc: TOutPorts<any>;
+  svc: TOutPorts<any>;
 }

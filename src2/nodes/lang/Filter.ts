@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 interface IFilterInput<V> {
@@ -17,11 +17,12 @@ interface IFilterOutputs<V> {
 /**
  * Forwards default input to output when reference input is truthy.
  */
-export class Filter<V> implements ISink, ISource {
+export class Filter<V> extends Node implements ISink, ISource {
   public readonly in: TInPorts<IFilterInputs<V>>;
   public readonly out: TOutPorts<IFilterOutputs<V>>;
 
   constructor() {
+    super();
     Sink.init.call(this);
     Source.init.call(this);
     this.in.$ = new InPort("$", this);

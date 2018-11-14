@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 import {copy} from "../../utils";
 
@@ -31,7 +31,7 @@ type TReducerCallback<I, O> = (
  * let sum: Reducer<number, number>;
  * sum = new Reducer((curr, next) => curr + next, 0);
  */
-export class Reducer<I, O> implements ISink, ISource {
+export class Reducer<I, O> extends Node implements ISink, ISource {
   public readonly in: TInPorts<IReducerInputs<I>>;
   public readonly out: TOutPorts<IReducerOutputs<O>>;
 
@@ -40,6 +40,7 @@ export class Reducer<I, O> implements ISink, ISource {
   private reduced: O;
 
   constructor(cb: TReducerCallback<I, O>, initial?: O) {
+    super();
     Sink.init.call(this);
     Source.init.call(this);
     this.cb = cb;

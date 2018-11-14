@@ -1,4 +1,4 @@
-import {ISource, Source} from "../../node";
+import {ISource, Node, Source} from "../../node";
 import {OutPort, TOutPorts} from "../../port";
 
 interface IStdInOutputs {
@@ -8,10 +8,11 @@ interface IStdInOutputs {
 /**
  * Takes input from `process.stdin` and sends it to output.
  */
-export class StdIn implements ISource {
+export class StdIn extends Node implements ISource {
   public readonly out: TOutPorts<IStdInOutputs>;
 
   constructor() {
+    super();
     Source.init.call(this);
     this.out.$ = new OutPort("$", this);
     process.stdin.on("readable", this.onReadable.bind(this));

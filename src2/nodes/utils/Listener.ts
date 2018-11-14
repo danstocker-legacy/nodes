@@ -1,4 +1,4 @@
-import {ISink, Sink} from "../../node";
+import {ISink, Node, Sink} from "../../node";
 import {IInPort, InPort, TInPorts} from "../../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
@@ -16,12 +16,13 @@ interface IListenerInputs {
  * // to unsubscribe:
  * listener.in.$.disconnect();
  */
-export class Listener implements ISink {
+export class Listener extends Node implements ISink {
   public readonly in: TInPorts<IListenerInputs>;
 
   private readonly cb: TListenerCallback;
 
   constructor(cb: TListenerCallback) {
+    super();
     Sink.init.call(this);
     this.cb = cb;
     this.in.$ = new InPort("$", this);

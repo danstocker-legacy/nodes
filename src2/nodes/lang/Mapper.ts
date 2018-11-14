@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 interface IMapperInputs<V> {
@@ -18,13 +18,14 @@ type TMapperCallback<I, O> = (value: I, tag: string, node: ISink) => O;
  * // static callback
  * const mapper = new Mapper<number, string>(String);
  */
-export class Mapper<I, O> implements ISink, ISource {
+export class Mapper<I, O> extends Node implements ISink, ISource {
   public readonly in: TInPorts<IMapperInputs<I>>;
   public readonly out: TOutPorts<IMapperOutputs<O>>;
 
   private readonly cb: TMapperCallback<I, O>;
 
   constructor(cb: TMapperCallback<I, O>) {
+    super();
     Sink.init.call(this);
     Source.init.call(this);
     this.cb = cb;

@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 import {IHash} from "../../utils";
 
@@ -13,13 +13,14 @@ interface ITrackerOutputs<T> {
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
  */
-export class Tracker<T extends IHash = IHash> implements ISink, ISource {
+export class Tracker<T extends IHash = IHash> extends Node implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<ITrackerOutputs<T>>;
 
   private readonly values: T;
 
   constructor(fields: Array<string>) {
+    super();
     Sink.init.call(this);
     Source.init.call(this);
     this.values = <T> {};

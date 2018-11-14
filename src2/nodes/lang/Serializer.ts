@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 interface ISerializerInputs<V> {
@@ -16,7 +16,7 @@ interface ISerializerOutputs<V> {
  * let node: Serializer<number>;
  * node = new Serializer();
  */
-export class Serializer<V> implements ISink, ISource {
+export class Serializer<V> extends Node implements ISink, ISource {
   public readonly in: TInPorts<ISerializerInputs<V>>;
   public readonly out: TOutPorts<ISerializerOutputs<V>>;
 
@@ -24,6 +24,7 @@ export class Serializer<V> implements ISink, ISource {
   private readonly order: Array<string>;
 
   constructor() {
+    super();
     Sink.init.call(this);
     Source.init.call(this);
     this.inputs = new Map();

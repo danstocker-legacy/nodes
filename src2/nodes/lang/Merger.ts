@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 type TInput<T> = T[keyof T];
@@ -17,7 +17,7 @@ interface IMergerOutputs<T> {
  * merger.in.bar.send(true, "1");
  * // merger.out.$ will output {foo: 5, bar: true} for tag "1"
  */
-export class Merger<T> implements ISink, ISource {
+export class Merger<T> extends Node implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<IMergerOutputs<T>>;
 
@@ -26,6 +26,7 @@ export class Merger<T> implements ISink, ISource {
   private readonly portCache: Map<string, Set<string | number>>;
 
   constructor(fields: Array<string>) {
+    super();
     Sink.init.call(this);
     Source.init.call(this);
     this.fields = fields;

@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, Node, Sink, Source} from "../../node";
 import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
 
 interface IShifterInputs<V> {
@@ -14,7 +14,7 @@ interface IShifterOutputs<V> {
  * Does not know about original tag order. Feed through Serializer if
  * original tag order is to be retained.
  */
-export class Shifter<V> implements ISink, ISource {
+export class Shifter<V> extends Node implements ISink, ISource {
   public readonly in: TInPorts<IShifterInputs<V>>;
   public readonly out: TOutPorts<IShifterOutputs<V>>;
 
@@ -25,6 +25,7 @@ export class Shifter<V> implements ISink, ISource {
    * @param disp Displacement
    */
   constructor(disp: number = 1) {
+    super();
     Sink.init.call(this);
     Source.init.call(this);
     this.disp = disp;
