@@ -1,7 +1,8 @@
-import {TEventPorts, TPortEventTypes} from "../port";
+import {TEventPorts} from "../port";
 import {Evented} from "./Evented";
 import {INode} from "./INode";
 import {Serviced} from "./Serviced";
+import {TNodeEventTypes} from "./TNodeEventTypes";
 
 /**
  * Base class for all nodes.
@@ -9,7 +10,7 @@ import {Serviced} from "./Serviced";
  * least an event port (`svc.evt`).
  */
 export class Node implements INode {
-  public svc: TEventPorts<TPortEventTypes>;
+  public svc: TEventPorts<TNodeEventTypes>;
 
   constructor() {
     Serviced.init.call(this);

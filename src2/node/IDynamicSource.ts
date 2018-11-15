@@ -1,9 +1,11 @@
-import {IOutPort, TEventPorts, TOutPorts, TPortEventTypes} from "../port";
+import {IOutPort, TEventPorts, TOutPorts} from "../port";
 import {ISource} from "./ISource";
+import {TDynamicEventTypes} from "./TDynamicEventTypes";
+import {TNodeEventTypes} from "./TNodeEventTypes";
 
 export interface IDynamicSource extends ISource {
   out: TOutPorts<{ [key: string]: any }>;
-  svc: TEventPorts<TPortEventTypes | "PORT_ADD" | "PORT_DELETE">;
+  svc: TEventPorts<TNodeEventTypes | TDynamicEventTypes>;
 
   addPort(port: IOutPort<any>, tag?: string): void;
 

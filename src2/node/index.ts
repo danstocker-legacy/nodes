@@ -12,4 +12,6 @@ export {Node} from "./Node";
 export {Serviced} from "./Serviced";
 export {Sink} from "./Sink";
 export {Source} from "./Source";
+export {TDynamicEventTypes} from "./TDynamicEventTypes";
+export {TNodeEventTypes} from "./TNodeEventTypes";
 export {TNode} from "./TNode";
