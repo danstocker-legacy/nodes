@@ -1,5 +1,6 @@
-import {IOutPort, OutPort, TOutPorts} from "../port";
+import {IOutPort, OutPort, TErrorPorts, TEventPorts, TOutPorts} from "../port";
 import {DynamicSource} from "./DynamicSource";
+import {Errorable} from "./Errorable";
 import {IDynamicSource} from "./IDynamicSource";
 import {Node} from "./Node";
 import {Source} from "./Source";
@@ -7,12 +8,14 @@ import {Source} from "./Source";
 describe("DynamicSource", function () {
   class TestDynamicSource extends Node implements IDynamicSource {
     public readonly out: TOutPorts<{ [key: string]: any }>;
+    public readonly svc: TEventPorts<any> & TErrorPorts<any>;
     public addPort = DynamicSource.addPort;
     public deletePort = DynamicSource.deletePort;
 
     constructor() {
       super();
       Source.init.call(this);
+      Errorable.init.call(this);
     }
   }
 
@@ -43,8 +46,24 @@ describe("DynamicSource", function () {
     });
 
     describe("when port already added", function () {
-      // TODO: Add test once error port is added
-      it("should send error");
+      let port: OutPort<number>;
+
+      beforeEach(function () {
+        port = new OutPort("foo", node);
+        node.addPort(port);
+      });
+
+      it("should send error", function () {
+        spyOn(node.svc.err, "send");
+        node.addPort(port, "1");
+        expect(node.svc.err.send).toHaveBeenCalledWith({
+          payload: {
+            node,
+            port
+          },
+          type: "PORT_ADD_FAILURE"
+        }, "1");
+      });
     });
   });
 

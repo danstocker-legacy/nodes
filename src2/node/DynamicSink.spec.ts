@@ -1,5 +1,6 @@
-import {IInPort, InPort, TInPorts} from "../port";
+import {IInPort, InPort, TErrorPorts, TEventPorts, TInPorts} from "../port";
 import {DynamicSink} from "./DynamicSink";
+import {Errorable} from "./Errorable";
 import {IDynamicSink} from "./IDynamicSink";
 import {Node} from "./Node";
 import {Sink} from "./Sink";
@@ -7,12 +8,14 @@ import {Sink} from "./Sink";
 describe("DynamicSink", function () {
   class TestDynamicSink extends Node implements IDynamicSink {
     public readonly in: TInPorts<{ [key: string]: any }>;
+    public readonly svc: TEventPorts<any> & TErrorPorts<any>;
     public addPort = DynamicSink.addPort;
     public deletePort = DynamicSink.deletePort;
 
     constructor() {
       super();
       Sink.init.call(this);
+      Errorable.init.call(this);
     }
 
     public send(): void {
@@ -47,8 +50,24 @@ describe("DynamicSink", function () {
     });
 
     describe("when port already added", function () {
-      // TODO: Add test once error port is added
-      it("should send error");
+      let port: InPort<number>;
+
+      beforeEach(function () {
+        port = new InPort("foo", node);
+        node.addPort(port);
+      });
+
+      it("should send error", function () {
+        spyOn(node.svc.err, "send");
+        node.addPort(port, "1");
+        expect(node.svc.err.send).toHaveBeenCalledWith({
+          payload: {
+            node,
+            port
+          },
+          type: "PORT_ADD_FAILURE"
+        }, "1");
+      });
     });
   });
 

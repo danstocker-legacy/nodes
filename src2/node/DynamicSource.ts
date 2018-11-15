@@ -6,7 +6,13 @@ export namespace DynamicSource {
     const name = port.name;
     const ports = this.out;
     if (ports[name]) {
-      // TODO: Send error through svc.err
+      this.svc.err.send({
+        payload: {
+          node: this,
+          port
+        },
+        type: "PORT_ADD_FAILURE"
+      }, tag);
     }
     ports[name] = port;
     this.svc.evt.send({

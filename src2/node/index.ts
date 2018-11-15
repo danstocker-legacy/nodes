@@ -17,3 +17,4 @@ export {Source} from "./Source";
 export {TDynamicEventTypes} from "./TDynamicEventTypes";
 export {TNodeEventTypes} from "./TNodeEventTypes";
 export {TNode} from "./TNode";
+export {TPortErrorTypes} from "./TPortErrorTypes";
