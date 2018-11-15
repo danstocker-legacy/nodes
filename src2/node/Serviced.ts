@@ -9,7 +9,7 @@ import {IServiced} from "./IServiced";
  * manually.
  */
 export namespace Serviced {
-  export function init(this: IServiced) {
+  export function init(this: IServiced): void {
     this.svc = <TOutPorts<any>> {};
   }
 }
