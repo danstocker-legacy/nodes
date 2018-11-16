@@ -1,5 +1,5 @@
-import {ISink, ISource, Node, Sink, Source} from "../../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {ISink, ISource, Node, Sink, Source} from "../../node/index";
+import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port/index";
 
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
