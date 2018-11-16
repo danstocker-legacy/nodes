@@ -1,5 +1,20 @@
-import {ISink, ISource, Node, Sink, Source} from "../../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {
+  EventEmitter,
+  ISink,
+  ISource,
+  Serviced,
+  Sink,
+  Source,
+  TNodeEventTypes
+} from "../../node";
+import {
+  IInPort,
+  InPort,
+  OutPort,
+  TEventPorts,
+  TInPorts,
+  TOutPorts
+} from "../../port";
 
 /**
  * Forwards input without change.
@@ -11,18 +26,20 @@ import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
  * noop = new Noop();
  * noop.in.$.send(5);
  */
-export class Noop<V> extends Node implements ISink, ISource {
+export class Noop<V> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: V;
   }>;
   public readonly out: TOutPorts<{
     $: V;
   }>;
+  public readonly svc: TEventPorts<TNodeEventTypes>;
 
   constructor() {
-    super();
     Sink.init.call(this);
     Source.init.call(this);
+    Serviced.init.call(this);
+    EventEmitter.init.call(this);
     this.in.$ = new InPort("$", this);
     this.out.$ = new OutPort("$", this);
   }

@@ -1,5 +1,20 @@
-import {ISink, ISource, Node, Sink, Source} from "../../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {
+  EventEmitter,
+  ISink,
+  ISource,
+  Serviced,
+  Sink,
+  Source,
+  TNodeEventTypes
+} from "../../node";
+import {
+  IInPort,
+  InPort,
+  OutPort,
+  TEventPorts,
+  TInPorts,
+  TOutPorts
+} from "../../port";
 import {IAnything, IMuxed} from "../../utils";
 
 /**
@@ -12,16 +27,18 @@ import {IAnything, IMuxed} from "../../utils";
  * muxer.in.foo.send(5);
  * // outputs `{val: 5, name: "foo"}` on port "$"
  */
-export class Muxer<T extends IAnything = IAnything> extends Node implements ISink, ISource {
+export class Muxer<T extends IAnything = IAnything> implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<{
     $: IMuxed<T>;
   }>;
+  public readonly svc: TEventPorts<TNodeEventTypes>;
 
   constructor(fields: Array<string>) {
-    super();
     Sink.init.call(this);
     Source.init.call(this);
+    Serviced.init.call(this);
+    EventEmitter.init.call(this);
     for (const field of fields) {
       this.in[field] = new InPort(field, this);
     }

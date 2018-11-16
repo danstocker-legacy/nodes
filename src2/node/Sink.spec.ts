@@ -1,15 +1,18 @@
-import {TInPorts} from "../port";
+import {TEventPorts, TInPorts} from "../port";
+import {EventEmitter} from "./EventEmitter";
 import {ISink} from "./ISink";
-import {Node} from "./Node";
+import {Serviced} from "./Serviced";
 import {Sink} from "./Sink";
 
 describe("Sink", function () {
-  class TestSink extends Node implements ISink {
+  class TestSink implements ISink {
     public readonly in: TInPorts<{ foo: number }>;
+    public readonly svc: TEventPorts<any>;
 
     constructor() {
-      super();
       Sink.init.call(this);
+      Serviced.init.call(this);
+      EventEmitter.init.call(this);
     }
 
     public send(): void {

@@ -1,17 +1,19 @@
-import {ISink, Node, Sink} from "../../node";
-import {IInPort, InPort, TInPorts} from "../../port";
+import {EventEmitter, ISink, Serviced, Sink, TNodeEventTypes} from "../../node";
+import {IInPort, InPort, TEventPorts, TInPorts} from "../../port";
 
 /**
  * Forwards input to `process.stderr`.
  */
-export class StdErr extends Node implements ISink {
+export class StdErr implements ISink {
   public readonly in: TInPorts<{
     $: string | Buffer;
   }>;
+  public readonly svc: TEventPorts<TNodeEventTypes>;
 
   constructor() {
-    super();
     Sink.init.call(this);
+    Serviced.init.call(this);
+    EventEmitter.init.call(this);
     this.in.$ = new InPort("$", this);
   }
 

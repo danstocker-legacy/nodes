@@ -4,10 +4,11 @@ import {IEventEmitter} from "./IEventEmitter";
 /**
  * Mixin with shared methods for node classes that implement IEventEmitter.
  * @example
- * class MyNode extends Node implements IEventEmitter {
+ * class MyNode implements IEventEmitter {
  *   ...
  *   constructor() {
  *     ...
+ *     Serviced.init.call(this);
  *     EventEmitter.init.call(this);
  *   }
  * }

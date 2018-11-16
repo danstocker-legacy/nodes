@@ -1,4 +1,3 @@
-import {Node} from "../../node";
 import {TInPorts, TOutPorts} from "../../port";
 import {IMuxed} from "../../utils";
 import {Demuxer, Joiner, Mapper} from "../lang";
@@ -25,7 +24,7 @@ function switchToMuxed<P extends string, T>(inputs: ISwitchInputs<P, T>): IMuxed
  * let switch: Switch<"foo" | "bar" | "baz", number>;
  * switch = new Switch(["foo", "bar", "baz");
  */
-export class Switch<P extends string, T> extends Node {
+export class Switch<P extends string, T> {
   public readonly in: TInPorts<ISwitchInputs<P, T>>;
   public readonly out: TOutPorts<TSwitchOutputs<P, T>>;
 
@@ -33,7 +32,6 @@ export class Switch<P extends string, T> extends Node {
    * @param cases Strings identifying possible cases for switch.
    */
   constructor(cases: Array<string>) {
-    super();
     const merger = new Joiner<ISwitchInputs<P, T>>(["case", "$"]);
     const mapper = new Mapper<ISwitchInputs<P, T>, IMuxed<TSwitchOutputs<P, T>>>(switchToMuxed);
     const demuxer = new Demuxer<TSwitchOutputs<P, T>>(cases);

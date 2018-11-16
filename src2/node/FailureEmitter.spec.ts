@@ -1,15 +1,17 @@
 import {TEventPorts, TFailurePorts} from "../port";
+import {EventEmitter} from "./EventEmitter";
 import {FailureEmitter} from "./FailureEmitter";
 import {IFailureEmitter} from "./IFailureEmitter";
-import {Node} from "./Node";
+import {Serviced} from "./Serviced";
 import {TNodeEventTypes} from "./TNodeEventTypes";
 
 describe("FailureEmitter", function () {
-  class TestFailureEmitter extends Node implements IFailureEmitter {
+  class TestFailureEmitter implements IFailureEmitter {
     public readonly svc: TEventPorts<TNodeEventTypes> & TFailurePorts<any>;
 
     constructor() {
-      super();
+      Serviced.init.call(this);
+      EventEmitter.init.call(this);
       FailureEmitter.init.call(this);
     }
   }

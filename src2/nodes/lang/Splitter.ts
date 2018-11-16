@@ -1,5 +1,20 @@
-import {ISink, ISource, Node, Sink, Source} from "../../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {
+  EventEmitter,
+  ISink,
+  ISource,
+  Serviced,
+  Sink,
+  Source,
+  TNodeEventTypes
+} from "../../node";
+import {
+  IInPort,
+  InPort,
+  OutPort,
+  TEventPorts,
+  TInPorts,
+  TOutPorts
+} from "../../port";
 import {IAnything} from "../../utils";
 
 /**
@@ -11,16 +26,18 @@ import {IAnything} from "../../utils";
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends IAnything> extends Node implements ISink, ISource {
+export class Splitter<T extends IAnything> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: T;
   }>;
   public readonly out: TOutPorts<T>;
+  public readonly svc: TEventPorts<TNodeEventTypes>;
 
   constructor(fields: Array<string>) {
-    super();
     Sink.init.call(this);
     Source.init.call(this);
+    Serviced.init.call(this);
+    EventEmitter.init.call(this);
     this.in.$ = new InPort("$", this);
     for (const field of fields) {
       this.out[field] = new OutPort(field, this);

@@ -7,6 +7,7 @@ import {IPort} from "./IPort";
  * Input ports may only be assigned to atomic nodes.
  */
 export interface IInPort<V> extends IPort<V> {
+  node: ISink;
   peer: IOutPort<V>;
 
   connect(peer: IOutPort<V>, tag?: string): void;

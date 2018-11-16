@@ -1,5 +1,20 @@
-import {ISink, ISource, Node, Sink, Source} from "../../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {
+  EventEmitter,
+  ISink,
+  ISource,
+  Serviced,
+  Sink,
+  Source,
+  TNodeEventTypes
+} from "../../node";
+import {
+  IInPort,
+  InPort,
+  OutPort,
+  TEventPorts,
+  TInPorts,
+  TOutPorts
+} from "../../port";
 import {copy} from "../../utils";
 
 interface IFolderInput<V> {
@@ -23,22 +38,24 @@ type TFolderCallback<I, O> = (
  * let sum: Folder<number, number>;
  * sum = new Folder((curr, next) => curr + next, 0);
  */
-export class Folder<I, O> extends Node implements ISink, ISource {
+export class Folder<I, O> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: IFolderInput<I>;
   }>;
   public readonly out: TOutPorts<{
     $: O;
   }>;
+  public readonly svc: TEventPorts<TNodeEventTypes>;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;
   private folded: O;
 
   constructor(cb: TFolderCallback<I, O>, initial?: O) {
-    super();
     Sink.init.call(this);
     Source.init.call(this);
+    Serviced.init.call(this);
+    EventEmitter.init.call(this);
     this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);

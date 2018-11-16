@@ -1,6 +1,5 @@
 import {TOutPorts} from "../port";
 import {IServiced} from "./IServiced";
-import {Node} from "./Node";
 import {Serviced} from "./Serviced";
 
 describe("Serviced", function () {

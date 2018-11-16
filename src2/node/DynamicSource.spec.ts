@@ -1,20 +1,22 @@
 import {IOutPort, OutPort, TErrorPorts, TEventPorts, TOutPorts} from "../port";
 import {DynamicSource} from "./DynamicSource";
 import {ErrorEmitter} from "./ErrorEmitter";
+import {EventEmitter} from "./EventEmitter";
 import {IDynamicSource} from "./IDynamicSource";
-import {Node} from "./Node";
+import {Serviced} from "./Serviced";
 import {Source} from "./Source";
 
 describe("DynamicSource", function () {
-  class TestDynamicSource extends Node implements IDynamicSource {
+  class TestDynamicSource implements IDynamicSource {
     public readonly out: TOutPorts<{ [key: string]: any }>;
     public readonly svc: TEventPorts<any> & TErrorPorts<any>;
     public addPort = DynamicSource.addPort;
     public deletePort = DynamicSource.deletePort;
 
     constructor() {
-      super();
       Source.init.call(this);
+      Serviced.init.call(this);
+      EventEmitter.init.call(this);
       ErrorEmitter.init.call(this);
     }
   }

@@ -1,5 +1,20 @@
-import {ISink, ISource, Node, Sink, Source} from "../../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {
+  EventEmitter,
+  ISink,
+  ISource,
+  Serviced,
+  Sink,
+  Source,
+  TNodeEventTypes
+} from "../../node";
+import {
+  IInPort,
+  InPort,
+  OutPort,
+  TEventPorts,
+  TInPorts,
+  TOutPorts
+} from "../../port";
 
 /**
  * Forwards inputs matching the order of the reference input `tag`.
@@ -7,7 +22,7 @@ import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
  * let node: Serializer<number>;
  * node = new Serializer();
  */
-export class Serializer<V> extends Node implements ISink, ISource {
+export class Serializer<V> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: V;
     tag: string;
@@ -15,14 +30,16 @@ export class Serializer<V> extends Node implements ISink, ISource {
   public readonly out: TOutPorts<{
     $: V;
   }>;
+  public readonly svc: TEventPorts<TNodeEventTypes>;
 
   private readonly inputs: Map<string, V>;
   private readonly order: Array<string>;
 
   constructor() {
-    super();
     Sink.init.call(this);
     Source.init.call(this);
+    Serviced.init.call(this);
+    EventEmitter.init.call(this);
     this.inputs = new Map();
     this.order = [];
     this.in.$ = new InPort("$", this);

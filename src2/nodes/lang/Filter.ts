@@ -1,5 +1,20 @@
-import {ISink, ISource, Node, Sink, Source} from "../../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {
+  EventEmitter,
+  ISink,
+  ISource,
+  Serviced,
+  Sink,
+  Source,
+  TNodeEventTypes
+} from "../../node";
+import {
+  IInPort,
+  InPort,
+  OutPort,
+  TEventPorts,
+  TInPorts,
+  TOutPorts
+} from "../../port";
 
 interface IFilterInput<V> {
   val: V;
@@ -9,18 +24,20 @@ interface IFilterInput<V> {
 /**
  * Forwards default input to output when reference input is truthy.
  */
-export class Filter<V> extends Node implements ISink, ISource {
+export class Filter<V> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: IFilterInput<V>;
   }>;
   public readonly out: TOutPorts<{
     $: V;
   }>;
+  public readonly svc: TEventPorts<TNodeEventTypes>;
 
   constructor() {
-    super();
     Sink.init.call(this);
     Source.init.call(this);
+    Serviced.init.call(this);
+    EventEmitter.init.call(this);
     this.in.$ = new InPort("$", this);
     this.out.$ = new OutPort("$", this);
   }

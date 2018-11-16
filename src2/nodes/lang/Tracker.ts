@@ -1,5 +1,20 @@
-import {ISink, ISource, Node, Sink, Source} from "../../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {
+  EventEmitter,
+  ISink,
+  ISource,
+  Serviced,
+  Sink,
+  Source,
+  TNodeEventTypes
+} from "../../node";
+import {
+  IInPort,
+  InPort,
+  OutPort,
+  TEventPorts,
+  TInPorts,
+  TOutPorts
+} from "../../port";
 import {IAnything} from "../../utils";
 
 interface ITrackerOutputs<T> {
@@ -13,16 +28,18 @@ interface ITrackerOutputs<T> {
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
  */
-export class Tracker<T extends IAnything = IAnything> extends Node implements ISink, ISource {
+export class Tracker<T extends IAnything = IAnything> implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<ITrackerOutputs<T>>;
+  public readonly svc: TEventPorts<TNodeEventTypes>;
 
   private readonly values: T;
 
   constructor(fields: Array<string>) {
-    super();
     Sink.init.call(this);
     Source.init.call(this);
+    Serviced.init.call(this);
+    EventEmitter.init.call(this);
     this.values = <T> {};
     for (const field of fields) {
       this.in[field] = new InPort(field, this);

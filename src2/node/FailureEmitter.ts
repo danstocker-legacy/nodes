@@ -4,10 +4,11 @@ import {IFailureEmitter} from "./IFailureEmitter";
 /**
  * Mixin with shared methods for node classes that implement IFailureEmitter.
  * @example
- * class MyNode extends Node implements IFailureEmitter {
+ * class MyNode implements IFailureEmitter {
  *   ...
  *   constructor() {
  *     ...
+ *     Serviced.init.call(this);
  *     FailureEmitter.init.call(this);
  *   }
  * }

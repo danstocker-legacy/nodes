@@ -1,20 +1,22 @@
 import {IInPort, InPort, TErrorPorts, TEventPorts, TInPorts} from "../port";
 import {DynamicSink} from "./DynamicSink";
 import {ErrorEmitter} from "./ErrorEmitter";
+import {EventEmitter} from "./EventEmitter";
 import {IDynamicSink} from "./IDynamicSink";
-import {Node} from "./Node";
+import {Serviced} from "./Serviced";
 import {Sink} from "./Sink";
 
 describe("DynamicSink", function () {
-  class TestDynamicSink extends Node implements IDynamicSink {
+  class TestDynamicSink implements IDynamicSink {
     public readonly in: TInPorts<{ [key: string]: any }>;
     public readonly svc: TEventPorts<any> & TErrorPorts<any>;
     public addPort = DynamicSink.addPort;
     public deletePort = DynamicSink.deletePort;
 
     constructor() {
-      super();
       Sink.init.call(this);
+      Serviced.init.call(this);
+      EventEmitter.init.call(this);
       ErrorEmitter.init.call(this);
     }
 

@@ -1,5 +1,20 @@
-import {ISink, ISource, Node, Sink, Source} from "../../node";
-import {IInPort, InPort, OutPort, TInPorts, TOutPorts} from "../../port";
+import {
+  EventEmitter,
+  ISink,
+  ISource,
+  Serviced,
+  Sink,
+  Source,
+  TNodeEventTypes
+} from "../../node";
+import {
+  IInPort,
+  InPort,
+  OutPort,
+  TEventPorts,
+  TInPorts,
+  TOutPorts
+} from "../../port";
 
 type TInput<T> = T[keyof T];
 
@@ -13,20 +28,22 @@ type TInput<T> = T[keyof T];
  * joiner.in.bar.send(true, "1");
  * // joiner.out.$ will output {foo: 5, bar: true} for tag "1"
  */
-export class Joiner<T> extends Node implements ISink, ISource {
+export class Joiner<T> implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<{
     $: T;
   }>;
+  public readonly svc: TEventPorts<TNodeEventTypes>;
 
   private readonly fields: Array<string>;
   private readonly inputCache: Map<string, T>;
   private readonly portCache: Map<string, Set<string | number>>;
 
   constructor(fields: Array<string>) {
-    super();
     Sink.init.call(this);
     Source.init.call(this);
+    Serviced.init.call(this);
+    EventEmitter.init.call(this);
     this.fields = fields;
     this.inputCache = new Map();
     this.portCache = new Map();

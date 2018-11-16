@@ -1,14 +1,22 @@
-import {ISource, Node, Source} from "../../node";
-import {OutPort, TOutPorts} from "../../port";
+import {
+  EventEmitter,
+  ISource,
+  Serviced,
+  Source,
+  TNodeEventTypes
+} from "../../node";
+import {OutPort, TEventPorts, TOutPorts} from "../../port";
 
-export class Interval extends Node implements ISource {
+export class Interval implements ISource {
   public readonly out: TOutPorts<{
     $: true
   }>;
+  public readonly svc: TEventPorts<TNodeEventTypes>;
 
   constructor(ms: number) {
-    super();
     Source.init.call(this);
+    Serviced.init.call(this);
+    EventEmitter.init.call(this);
     setInterval(this.onInterval.bind(this), ms);
     this.out.$ = new OutPort("$", this);
   }

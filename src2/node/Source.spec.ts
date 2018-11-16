@@ -1,15 +1,18 @@
-import {TOutPorts} from "../port";
+import {TEventPorts, TOutPorts} from "../port";
+import {EventEmitter} from "./EventEmitter";
 import {ISource} from "./ISource";
-import {Node} from "./Node";
+import {Serviced} from "./Serviced";
 import {Source} from "./Source";
 
 describe("Source", function () {
-  class TestSource extends Node implements ISource {
+  class TestSource implements ISource {
     public readonly out: TOutPorts<{ foo: number }>;
+    public readonly svc: TEventPorts<any>;
 
     constructor() {
-      super();
       Source.init.call(this);
+      Serviced.init.call(this);
+      EventEmitter.init.call(this);
     }
   }
 

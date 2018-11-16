@@ -1,6 +1,5 @@
 import {TEventPorts} from "../port";
 import {IServiced} from "./IServiced";
-import {TNodeEventTypes} from "./TNodeEventTypes";
 
 /**
  * Adds event emitting capability to nodes.
@@ -8,5 +7,5 @@ import {TNodeEventTypes} from "./TNodeEventTypes";
  * mix relevant methods from EventEmitter.
  */
 export interface IEventEmitter extends IServiced {
-  svc: TEventPorts<TNodeEventTypes>;
+  svc: TEventPorts<any>;
 }
