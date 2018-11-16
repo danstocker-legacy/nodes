@@ -6,7 +6,7 @@ export {OutPort} from "./OutPort";
 export {Port} from "./Port";
 export {TErrorPorts} from "./TErrorPorts";
 export {TEventPorts} from "./TEventPorts";
-export {TFailedPorts} from "./TFailedPorts";
+export {TFailurePorts} from "./TFailurePorts";
 export {TInPorts} from "./TInPorts";
 export {TInPort} from "./TInPort";
 export {TOutPorts} from "./TOutPorts";

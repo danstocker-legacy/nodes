@@ -6,8 +6,8 @@ import {TOutPorts} from "./TOutPorts";
  * Add to node classes where inputs might fail to be processed.
  * @example
  * // in a Node subclass
- * svc: TEventPorts<"foo"> & TFailedPorts<{foo: number, bar: boolean}>
+ * svc: TEventPorts<"foo"> & TFailurePorts<{foo: number, bar: boolean}>
  */
-export type TFailedPorts<T> = TOutPorts<{
+export type TFailurePorts<T> = TOutPorts<{
   fail: IMuxed<T>
 }>;
