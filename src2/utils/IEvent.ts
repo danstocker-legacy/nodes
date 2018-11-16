@@ -1,5 +1,6 @@
 /**
  * Describes an event value emitted by nodes though the `evt` service port.
+ * Events signal changes to the outside world.
  * @example
  * const event: IEvent<"foo"> = {type: "foo", payload: null};
  */

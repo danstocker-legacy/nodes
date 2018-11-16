@@ -1,5 +1,5 @@
 import {TEventPorts} from "../port";
-import {Evented} from "./Evented";
+import {EventEmitter} from "./EventEmitter";
 import {INode} from "./INode";
 import {Serviced} from "./Serviced";
 import {TNodeEventTypes} from "./TNodeEventTypes";
@@ -14,6 +14,6 @@ export class Node implements INode {
 
   constructor() {
     Serviced.init.call(this);
-    Evented.init.call(this);
+    EventEmitter.init.call(this);
   }
 }

@@ -1,3 +1,3 @@
-import {IEvented} from "./IEvented";
+import {IEventEmitter} from "./IEventEmitter";
 
-export type INode = IEvented;
+export type INode = IEventEmitter;

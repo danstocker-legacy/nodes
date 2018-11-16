@@ -1,6 +1,6 @@
 import {IOutPort, OutPort, TErrorPorts, TEventPorts, TOutPorts} from "../port";
 import {DynamicSource} from "./DynamicSource";
-import {Errorable} from "./Errorable";
+import {ErrorEmitter} from "./ErrorEmitter";
 import {IDynamicSource} from "./IDynamicSource";
 import {Node} from "./Node";
 import {Source} from "./Source";
@@ -15,7 +15,7 @@ describe("DynamicSource", function () {
     constructor() {
       super();
       Source.init.call(this);
-      Errorable.init.call(this);
+      ErrorEmitter.init.call(this);
     }
   }
 

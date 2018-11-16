@@ -1,21 +1,21 @@
 import {TEventPorts} from "../port";
-import {Evented} from "./Evented";
-import {IEvented} from "./IEvented";
+import {EventEmitter} from "./EventEmitter";
+import {IEventEmitter} from "./IEventEmitter";
 import {Serviced} from "./Serviced";
 
-describe("Evented", function () {
-  class TestEvented implements IEvented {
+describe("EventEmitter", function () {
+  class TestEventEmitter implements IEventEmitter {
     public readonly svc: TEventPorts<any>;
 
     constructor() {
       Serviced.init.call(this);
-      Evented.init.call(this);
+      EventEmitter.init.call(this);
     }
   }
 
   describe("init()", function () {
     it("should add ports", function () {
-      const node = new TestEvented();
+      const node = new TestEventEmitter();
       expect(node.svc.evt).toBeDefined();
     });
   });

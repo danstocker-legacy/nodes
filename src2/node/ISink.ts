@@ -1,7 +1,7 @@
 import {IInPort, TInPorts} from "../port";
-import {IEvented} from "./IEvented";
+import {IEventEmitter} from "./IEventEmitter";
 
-export interface ISink extends IEvented {
+export interface ISink extends IEventEmitter {
   /** User defined input ports */
   in: TInPorts<any>;
 

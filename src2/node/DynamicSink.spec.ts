@@ -1,6 +1,6 @@
 import {IInPort, InPort, TErrorPorts, TEventPorts, TInPorts} from "../port";
 import {DynamicSink} from "./DynamicSink";
-import {Errorable} from "./Errorable";
+import {ErrorEmitter} from "./ErrorEmitter";
 import {IDynamicSink} from "./IDynamicSink";
 import {Node} from "./Node";
 import {Sink} from "./Sink";
@@ -15,7 +15,7 @@ describe("DynamicSink", function () {
     constructor() {
       super();
       Sink.init.call(this);
-      Errorable.init.call(this);
+      ErrorEmitter.init.call(this);
     }
 
     public send(): void {

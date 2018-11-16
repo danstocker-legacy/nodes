@@ -1,22 +1,22 @@
 import {TErrorPorts, TEventPorts} from "../port";
-import {Errorable} from "./Errorable";
-import {IErrorable} from "./IErrorable";
+import {ErrorEmitter} from "./ErrorEmitter";
+import {IErrorEmitter} from "./IErrorEmitter";
 import {Node} from "./Node";
 import {TNodeEventTypes} from "./TNodeEventTypes";
 
-describe("Errorable", function () {
-  class TestErrorable extends Node implements IErrorable {
+describe("ErrorEmitter", function () {
+  class TestErrorEmitter extends Node implements IErrorEmitter {
     public readonly svc: TEventPorts<TNodeEventTypes> & TErrorPorts<any>;
 
     constructor() {
       super();
-      Errorable.init.call(this);
+      ErrorEmitter.init.call(this);
     }
   }
 
   describe("init()", function () {
     it("should add ports", function () {
-      const node = new TestErrorable();
+      const node = new TestErrorEmitter();
       expect(node.svc.err).toBeDefined();
     });
   });
