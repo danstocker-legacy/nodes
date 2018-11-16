@@ -14,7 +14,7 @@ type TFolderCallback<I, O> = (
   curr: O,
   next: I,
   tag: string,
-  node: ISink) => O;
+  node: Folder<I, O>) => O;
 
 /**
  * Folds (reduces) input according to callback.
