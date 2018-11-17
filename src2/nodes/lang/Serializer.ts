@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
   Serviced,
@@ -22,7 +23,7 @@ import {
  * let node: Serializer<number>;
  * node = new Serializer();
  */
-export class Serializer<V> implements ISink, ISource {
+export class Serializer<V> implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<{
     $: V;
     tag: string;

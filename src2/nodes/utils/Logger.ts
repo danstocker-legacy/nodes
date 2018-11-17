@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
   Serviced,
@@ -19,7 +20,7 @@ import {
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
-export class Logger implements ISink, ISource {
+export class Logger implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<{
     log: any;
     warn: any;

@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
   Serviced,
@@ -28,7 +29,7 @@ type TInput<T> = T[keyof T];
  * joiner.in.bar.send(true, "1");
  * // joiner.out.$ will output {foo: 5, bar: true} for tag "1"
  */
-export class Joiner<T> implements ISink, ISource {
+export class Joiner<T> implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<{
     $: T;

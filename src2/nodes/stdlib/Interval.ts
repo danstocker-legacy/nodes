@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISource,
   Serviced,
   Source,
@@ -7,7 +8,7 @@ import {
 } from "../../node";
 import {OutPort, TEventPorts, TOutPorts} from "../../port";
 
-export class Interval implements ISource {
+export class Interval implements ISource, IEventEmitter {
   public readonly out: TOutPorts<{
     $: true
   }>;

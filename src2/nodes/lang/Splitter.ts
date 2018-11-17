@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
   Serviced,
@@ -26,7 +27,7 @@ import {IAnything} from "../../utils";
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends IAnything> implements ISink, ISource {
+export class Splitter<T extends IAnything> implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<{
     $: T;
   }>;

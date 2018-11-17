@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
   Serviced,
@@ -26,7 +27,7 @@ import {
  * noop = new Noop();
  * noop.in.$.send(5);
  */
-export class Noop<V> implements ISink, ISource {
+export class Noop<V> implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<{
     $: V;
   }>;

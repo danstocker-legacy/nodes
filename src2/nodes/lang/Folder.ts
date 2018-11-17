@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
   Serviced,
@@ -38,7 +39,7 @@ type TFolderCallback<I, O> = (
  * let sum: Folder<number, number>;
  * sum = new Folder((curr, next) => curr + next, 0);
  */
-export class Folder<I, O> implements ISink, ISource {
+export class Folder<I, O> implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<{
     $: IFolderInput<I>;
   }>;

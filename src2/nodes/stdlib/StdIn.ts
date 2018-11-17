@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISource,
   Serviced,
   Source,
@@ -10,7 +11,7 @@ import {OutPort, TEventPorts, TOutPorts} from "../../port";
 /**
  * Takes input from `process.stdin` and sends it to output.
  */
-export class StdIn implements ISource {
+export class StdIn implements ISource, IEventEmitter {
   public readonly out: TOutPorts<{
     $: string | Buffer;
   }>;

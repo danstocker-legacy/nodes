@@ -1,12 +1,13 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
+  Serviced,
   Sink,
   Source,
   TNodeEventTypes
 } from "../../node";
-import {Serviced} from "../../node/Serviced";
 import {
   IInPort,
   InPort,
@@ -19,7 +20,7 @@ import {
 /**
  * Forwards input with the specified delay.
  */
-export class Delayer<V> implements ISink, ISource {
+export class Delayer<V> implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<{
     $: V
   }>;

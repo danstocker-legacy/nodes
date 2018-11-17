@@ -1,10 +1,17 @@
-import {EventEmitter, ISink, Serviced, Sink, TNodeEventTypes} from "../../node";
+import {
+  EventEmitter,
+  IEventEmitter,
+  ISink,
+  Serviced,
+  Sink,
+  TNodeEventTypes
+} from "../../node";
 import {IInPort, InPort, TEventPorts, TInPorts} from "../../port";
 
 /**
  * Forwards input to `process.stderr`.
  */
-export class StdErr implements ISink {
+export class StdErr implements ISink, IEventEmitter {
   public readonly in: TInPorts<{
     $: string | Buffer;
   }>;

@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
   Serviced,
@@ -26,7 +27,7 @@ import {IMuxed} from "../../utils";
  * demuxer.in.$.send({name: "foo", 5});
  * // outputs `5` on port "foo"
  */
-export class Demuxer<T> implements ISink, ISource {
+export class Demuxer<T> implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<{
     $: IMuxed<T>;
   }>;

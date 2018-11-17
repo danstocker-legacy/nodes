@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
   Serviced,
@@ -24,7 +25,7 @@ interface IFilterInput<V> {
 /**
  * Forwards default input to output when reference input is truthy.
  */
-export class Filter<V> implements ISink, ISource {
+export class Filter<V> implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<{
     $: IFilterInput<V>;
   }>;

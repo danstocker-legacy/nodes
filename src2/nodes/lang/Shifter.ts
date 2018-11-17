@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
   Serviced,
@@ -21,7 +22,7 @@ import {
  * Does not know about original tag order. Feed through Serializer if
  * original tag order is to be retained.
  */
-export class Shifter<V> implements ISink, ISource {
+export class Shifter<V> implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<{
     $: V;
   }>;

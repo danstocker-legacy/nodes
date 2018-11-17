@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
   Serviced,
@@ -28,7 +29,8 @@ interface ITrackerOutputs<T> {
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
  */
-export class Tracker<T extends IAnything = IAnything> implements ISink, ISource {
+export class Tracker<T extends IAnything = IAnything>
+  implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<ITrackerOutputs<T>>;
   public readonly svc: TEventPorts<TNodeEventTypes>;

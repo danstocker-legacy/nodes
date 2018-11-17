@@ -1,4 +1,4 @@
-import {ISink} from "../node";
+import {IEventEmitter, ISink} from "../node";
 import {Noop} from "../nodes";
 import {IInPort} from "./IInPort";
 import {InPort} from "./InPort";
@@ -7,7 +7,7 @@ import {OutPort} from "./OutPort";
 
 describe("InPort", function () {
   class TestInPort<V> extends InPort<V> {
-    constructor(name: string, node: ISink) {
+    constructor(name: string, node: ISink & IEventEmitter) {
       super(name, node);
     }
   }

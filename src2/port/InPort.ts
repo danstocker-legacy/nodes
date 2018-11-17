@@ -1,13 +1,13 @@
-import {ISink} from "../node";
+import {IEventEmitter, ISink} from "../node";
 import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
 
 export class InPort<V> extends Port<V> implements IInPort<V> {
-  public node: ISink;
+  public node: ISink & IEventEmitter;
   public peer: IOutPort<V>;
 
-  constructor(name: string, node: ISink) {
+  constructor(name: string, node: ISink & IEventEmitter) {
     super(name, node);
   }
 

@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  IEventEmitter,
   ISink,
   ISource,
   Serviced,
@@ -27,7 +28,8 @@ import {IAnything, IMuxed} from "../../utils";
  * muxer.in.foo.send(5);
  * // outputs `{val: 5, name: "foo"}` on port "$"
  */
-export class Muxer<T extends IAnything = IAnything> implements ISink, ISource {
+export class Muxer<T extends IAnything = IAnything>
+  implements ISink, ISource, IEventEmitter {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<{
     $: IMuxed<T>;

@@ -6,7 +6,7 @@ import {Port} from "./Port";
 export class OutPort<V> extends Port<V> implements IOutPort<V> {
   public readonly peers: Set<IInPort<V>>;
 
-  constructor(name: string, node: IEventEmitter) {
+  constructor(name: string, node: any) {
     super(name, node);
     this.peers = new Set();
   }

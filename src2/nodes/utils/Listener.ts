@@ -1,4 +1,11 @@
-import {EventEmitter, ISink, Serviced, Sink, TNodeEventTypes} from "../../node";
+import {
+  EventEmitter,
+  IEventEmitter,
+  ISink,
+  Serviced,
+  Sink,
+  TNodeEventTypes
+} from "../../node";
 import {IInPort, InPort, TEventPorts, TInPorts} from "../../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
@@ -12,7 +19,7 @@ type TListenerCallback = (value: any, tag?: string) => void;
  * // to unsubscribe:
  * listener.in.$.disconnect();
  */
-export class Listener implements ISink {
+export class Listener implements ISink, IEventEmitter {
   public readonly in: TInPorts<{
     $: any;
   }>;
