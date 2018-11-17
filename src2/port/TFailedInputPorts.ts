@@ -16,7 +16,7 @@ import {TOutPorts} from "./TOutPorts";
  *   ...
  *   public send(port: IInPort<any>, value: any, tag?: string) {
  *     ...
- *     this.svc.fail.send({name: port.name, value}, tag);
+ *     this.svc.fail.send({name: port.name, val: value}, tag);
  *   }
  * }
  */

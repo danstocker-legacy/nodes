@@ -5,9 +5,13 @@
  * const event: IEvent<"foo"> = {type: "foo", payload: null};
  */
 export interface IEvent<E extends string> {
-  /** Identifies event type, eg. EVENT_CONNECT */
+  /**
+   * Identifies type of event.
+   */
   readonly type: E;
 
-  /** Payload */
+  /**
+   * Carries additional information about the event.
+   */
   readonly payload: any;
 }

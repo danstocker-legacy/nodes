@@ -1,20 +1,3 @@
-import {IAnything} from "./IAnything";
-
-/**
- * Merges hash "b" to hash "a". On conflicting properties, host hash (a) wins.
- * @param a
- * @param b
- * @returns Object passed as "a".
- */
-export function merge(a: IAnything, b: IAnything): IAnything {
-  for (const key in b) {
-    if (a[key] === undefined) {
-      a[key] = b[key];
-    }
-  }
-  return a;
-}
-
 export function copy(a: any): any {
   if (a instanceof Array) {
     return a.slice();
