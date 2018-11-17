@@ -4,8 +4,8 @@ import {IServiced} from "./IServiced";
 /**
  * Adds event emitting capability to nodes.
  * Node classes that need to emit events must implement this interface, and
- * mix relevant methods from EventEmitter.
+ * mix relevant methods from EventSource.
  */
-export interface IEventEmitter extends IServiced {
+export interface IEventSource extends IServiced {
   svc: TEventPorts<any>;
 }

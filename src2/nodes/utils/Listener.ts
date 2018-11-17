@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISink,
   Serviced,
   Sink,
@@ -19,7 +19,7 @@ type TListenerCallback = (value: any, tag?: string) => void;
  * // to unsubscribe:
  * listener.in.$.disconnect();
  */
-export class Listener implements ISink, IEventEmitter {
+export class Listener implements ISink, IEventSource {
   public readonly in: TInPorts<{
     $: any;
   }>;
@@ -30,7 +30,7 @@ export class Listener implements ISink, IEventEmitter {
   constructor(cb: TListenerCallback) {
     Sink.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     this.cb = cb;
     this.in.$ = new InPort("$", this);
   }

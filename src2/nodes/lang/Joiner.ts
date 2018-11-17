@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISink,
   ISource,
   Serviced,
@@ -29,7 +29,7 @@ type TInput<T> = T[keyof T];
  * joiner.in.bar.send(true, "1");
  * // joiner.out.$ will output {foo: 5, bar: true} for tag "1"
  */
-export class Joiner<T> implements ISink, ISource, IEventEmitter {
+export class Joiner<T> implements ISink, ISource, IEventSource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<{
     $: T;
@@ -44,7 +44,7 @@ export class Joiner<T> implements ISink, ISource, IEventEmitter {
     Sink.init.call(this);
     Source.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     this.fields = fields;
     this.inputCache = new Map();
     this.portCache = new Map();

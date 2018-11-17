@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISink,
   Serviced,
   Sink,
@@ -11,7 +11,7 @@ import {IInPort, InPort, TEventPorts, TInPorts} from "../../port";
 /**
  * Forwards input to `process.stdout`.
  */
-export class StdOut implements ISink, IEventEmitter {
+export class StdOut implements ISink, IEventSource {
   public readonly in: TInPorts<{
     $: string | Buffer;
   }>;
@@ -20,7 +20,7 @@ export class StdOut implements ISink, IEventEmitter {
   constructor() {
     Sink.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     this.in.$ = new InPort("$", this);
   }
 

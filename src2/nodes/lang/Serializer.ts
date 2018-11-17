@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISink,
   ISource,
   Serviced,
@@ -23,7 +23,7 @@ import {
  * let node: Serializer<number>;
  * node = new Serializer();
  */
-export class Serializer<V> implements ISink, ISource, IEventEmitter {
+export class Serializer<V> implements ISink, ISource, IEventSource {
   public readonly in: TInPorts<{
     $: V;
     tag: string;
@@ -40,7 +40,7 @@ export class Serializer<V> implements ISink, ISource, IEventEmitter {
     Sink.init.call(this);
     Source.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     this.inputs = new Map();
     this.order = [];
     this.in.$ = new InPort("$", this);

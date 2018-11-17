@@ -1,4 +1,4 @@
-import {IEventEmitter} from "../node";
+import {IEventSource} from "../node";
 import {IInPort} from "./IInPort";
 import {IPort} from "./IPort";
 
@@ -7,7 +7,7 @@ import {IPort} from "./IPort";
  * Output ports may ba assigned to any node type. (Atomic & composite.)
  */
 export interface IOutPort<V> extends IPort<V> {
-  node: IEventEmitter;
+  node: IEventSource;
   peers: Set<IInPort<V>>;
 
   connect(peer: IInPort<V>, tag?: string): void;

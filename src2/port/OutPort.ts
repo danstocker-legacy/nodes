@@ -1,4 +1,4 @@
-import {IEventEmitter} from "../node";
+import {IEventSource} from "../node";
 import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";

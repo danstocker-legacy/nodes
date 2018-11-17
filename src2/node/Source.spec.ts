@@ -1,5 +1,5 @@
 import {TEventPorts, TOutPorts} from "../port";
-import {EventEmitter} from "./EventEmitter";
+import {EventSource} from "./EventSource";
 import {ISource} from "./ISource";
 import {Serviced} from "./Serviced";
 import {Source} from "./Source";
@@ -12,7 +12,7 @@ describe("Source", function () {
     constructor() {
       Source.init.call(this);
       Serviced.init.call(this);
-      EventEmitter.init.call(this);
+      EventSource.init.call(this);
     }
   }
 

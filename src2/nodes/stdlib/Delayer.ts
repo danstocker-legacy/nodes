@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISink,
   ISource,
   Serviced,
@@ -20,7 +20,7 @@ import {
 /**
  * Forwards input with the specified delay.
  */
-export class Delayer<V> implements ISink, ISource, IEventEmitter {
+export class Delayer<V> implements ISink, ISource, IEventSource {
   public readonly in: TInPorts<{
     $: V
   }>;
@@ -38,7 +38,7 @@ export class Delayer<V> implements ISink, ISource, IEventEmitter {
     Sink.init.call(this);
     Source.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     this.ms = ms;
     this.in.$ = new InPort("$", this);
     this.out.$ = new OutPort("$", this);

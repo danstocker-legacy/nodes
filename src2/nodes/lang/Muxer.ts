@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISink,
   ISource,
   Serviced,
@@ -29,7 +29,7 @@ import {IAnything, IMuxed} from "../../utils";
  * // outputs `{val: 5, name: "foo"}` on port "$"
  */
 export class Muxer<T extends IAnything = IAnything>
-  implements ISink, ISource, IEventEmitter {
+  implements ISink, ISource, IEventSource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<{
     $: IMuxed<T>;
@@ -40,7 +40,7 @@ export class Muxer<T extends IAnything = IAnything>
     Sink.init.call(this);
     Source.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     for (const field of fields) {
       this.in[field] = new InPort(field, this);
     }

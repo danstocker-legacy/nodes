@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISource,
   Serviced,
   Source,
@@ -8,7 +8,7 @@ import {
 } from "../../node";
 import {OutPort, TEventPorts, TOutPorts} from "../../port";
 
-export class Interval implements ISource, IEventEmitter {
+export class Interval implements ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: true
   }>;
@@ -17,7 +17,7 @@ export class Interval implements ISource, IEventEmitter {
   constructor(ms: number) {
     Source.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     setInterval(this.onInterval.bind(this), ms);
     this.out.$ = new OutPort("$", this);
   }

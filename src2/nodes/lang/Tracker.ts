@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISink,
   ISource,
   Serviced,
@@ -30,7 +30,7 @@ interface ITrackerOutputs<T> {
  * tracker = new Tracker(["foo", "bar"]);
  */
 export class Tracker<T extends IAnything = IAnything>
-  implements ISink, ISource, IEventEmitter {
+  implements ISink, ISource, IEventSource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<ITrackerOutputs<T>>;
   public readonly svc: TEventPorts<TNodeEventTypes>;
@@ -41,7 +41,7 @@ export class Tracker<T extends IAnything = IAnything>
     Sink.init.call(this);
     Source.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     this.values = <T> {};
     for (const field of fields) {
       this.in[field] = new InPort(field, this);

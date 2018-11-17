@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISink,
   ISource,
   Serviced,
@@ -27,7 +27,7 @@ import {IAnything} from "../../utils";
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends IAnything> implements ISink, ISource, IEventEmitter {
+export class Splitter<T extends IAnything> implements ISink, ISource, IEventSource {
   public readonly in: TInPorts<{
     $: T;
   }>;
@@ -38,7 +38,7 @@ export class Splitter<T extends IAnything> implements ISink, ISource, IEventEmit
     Sink.init.call(this);
     Source.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     this.in.$ = new InPort("$", this);
     for (const field of fields) {
       this.out[field] = new OutPort(field, this);

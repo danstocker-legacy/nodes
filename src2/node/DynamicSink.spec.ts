@@ -1,7 +1,7 @@
 import {IInPort, InPort, TErrorPorts, TEventPorts, TInPorts} from "../port";
 import {DynamicSink} from "./DynamicSink";
-import {ErrorEmitter} from "./ErrorEmitter";
-import {EventEmitter} from "./EventEmitter";
+import {ErrorSource} from "./ErrorSource";
+import {EventSource} from "./EventSource";
 import {IDynamicSink} from "./IDynamicSink";
 import {Serviced} from "./Serviced";
 import {Sink} from "./Sink";
@@ -16,8 +16,8 @@ describe("DynamicSink", function () {
     constructor() {
       Sink.init.call(this);
       Serviced.init.call(this);
-      EventEmitter.init.call(this);
-      ErrorEmitter.init.call(this);
+      EventSource.init.call(this);
+      ErrorSource.init.call(this);
     }
 
     public send(): void {

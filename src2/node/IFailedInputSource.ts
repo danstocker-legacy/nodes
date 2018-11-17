@@ -1,11 +1,11 @@
 import {TEventPorts, TFailurePorts} from "../port";
-import {IEventEmitter} from "./IEventEmitter";
+import {IEventSource} from "./IEventSource";
 
 /**
  * Adds input failure emitting capability to nodes.
  * Node classes where inputs might fail to be processed must implement this
- * interface, and mix relevant methods from FailureEmitter.
+ * interface, and mix relevant methods from FailedInputSource.
  */
-export interface IFailureEmitter extends IEventEmitter {
+export interface IFailedInputSource extends IEventSource {
   svc: TFailurePorts<any> & TEventPorts<any>;
 }

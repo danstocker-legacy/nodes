@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISource,
   Serviced,
   Source,
@@ -11,7 +11,7 @@ import {OutPort, TEventPorts, TOutPorts} from "../../port";
 /**
  * Takes input from `process.stdin` and sends it to output.
  */
-export class StdIn implements ISource, IEventEmitter {
+export class StdIn implements ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: string | Buffer;
   }>;
@@ -20,7 +20,7 @@ export class StdIn implements ISource, IEventEmitter {
   constructor() {
     Source.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     this.out.$ = new OutPort("$", this);
     process.stdin.on("readable", this.onReadable.bind(this));
   }

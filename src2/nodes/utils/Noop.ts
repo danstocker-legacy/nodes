@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISink,
   ISource,
   Serviced,
@@ -27,7 +27,7 @@ import {
  * noop = new Noop();
  * noop.in.$.send(5);
  */
-export class Noop<V> implements ISink, ISource, IEventEmitter {
+export class Noop<V> implements ISink, ISource, IEventSource {
   public readonly in: TInPorts<{
     $: V;
   }>;
@@ -40,7 +40,7 @@ export class Noop<V> implements ISink, ISource, IEventEmitter {
     Sink.init.call(this);
     Source.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     this.in.$ = new InPort("$", this);
     this.out.$ = new OutPort("$", this);
   }

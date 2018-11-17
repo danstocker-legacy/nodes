@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISink,
   ISource,
   Serviced,
@@ -26,7 +26,7 @@ type TMapperCallback<I, O> = (value: I, tag: string, node: ISink) => O;
  * // static callback
  * const mapper = new Mapper<number, string>(String);
  */
-export class Mapper<I, O> implements ISink, ISource, IEventEmitter {
+export class Mapper<I, O> implements ISink, ISource, IEventSource {
   public readonly in: TInPorts<{
     $: I;
   }>;
@@ -41,7 +41,7 @@ export class Mapper<I, O> implements ISink, ISource, IEventEmitter {
     Sink.init.call(this);
     Source.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     this.cb = cb;
     this.in.$ = new InPort("$", this);
     this.out.$ = new OutPort("$", this);

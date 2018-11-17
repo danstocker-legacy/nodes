@@ -1,6 +1,6 @@
 import {
-  EventEmitter,
-  IEventEmitter,
+  EventSource,
+  IEventSource,
   ISink,
   ISource,
   Serviced,
@@ -20,7 +20,7 @@ import {
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
-export class Logger implements ISink, ISource, IEventEmitter {
+export class Logger implements ISink, ISource, IEventSource {
   public readonly in: TInPorts<{
     log: any;
     warn: any;
@@ -37,7 +37,7 @@ export class Logger implements ISink, ISource, IEventEmitter {
     Sink.init.call(this);
     Source.init.call(this);
     Serviced.init.call(this);
-    EventEmitter.init.call(this);
+    EventSource.init.call(this);
     this.in.err = new InPort("err", this);
     this.in.log = new InPort("log", this);
     this.in.warn = new InPort("warn", this);
