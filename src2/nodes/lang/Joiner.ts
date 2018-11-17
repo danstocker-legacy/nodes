@@ -33,7 +33,7 @@ export class Joiner<T> implements ISink, ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: T;
   }>;
-  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
+  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
 
   private readonly fields: Array<string>;
   private readonly inputCache: Map<string, T>;

@@ -8,7 +8,7 @@ export class StdOut implements ISink, IEventSource {
   public readonly in: TInPorts<{
     $: string | Buffer;
   }>;
-  public readonly svc: TEventPorts<Sink.EventTypes>;
+  public readonly svc: TEventPorts<Sink.TEventTypes>;
 
   constructor() {
     Sink.init.call(this);

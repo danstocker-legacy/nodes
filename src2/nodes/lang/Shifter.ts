@@ -28,7 +28,7 @@ export class Shifter<V> implements ISink, ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: V;
   }>;
-  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
+  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
 
   private readonly disp: number;
   private readonly buffer: Array<V>;

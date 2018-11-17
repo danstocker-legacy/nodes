@@ -14,7 +14,7 @@ export class StdIn implements ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: string | Buffer;
   }>;
-  public readonly svc: TEventPorts<Source.EventTypes>;
+  public readonly svc: TEventPorts<Source.TEventTypes>;
 
   constructor() {
     Source.init.call(this);

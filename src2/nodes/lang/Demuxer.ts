@@ -31,7 +31,7 @@ export class Demuxer<T> implements ISink, ISource, IEventSource {
     $: IMuxed<T>;
   }>;
   public readonly out: TOutPorts<T>;
-  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
+  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
 
   constructor(fields: Array<string>) {
     Sink.init.call(this);

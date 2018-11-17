@@ -31,7 +31,7 @@ export class Splitter<T extends IAnything> implements ISink, ISource, IEventSour
     $: T;
   }>;
   public readonly out: TOutPorts<T>;
-  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
+  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
 
   constructor(fields: Array<string>) {
     Sink.init.call(this);

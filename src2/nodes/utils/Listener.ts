@@ -22,7 +22,7 @@ export class Listener implements ISink, IEventSource {
   public readonly in: TInPorts<{
     $: any;
   }>;
-  public readonly svc: TEventPorts<Sink.EventTypes>;
+  public readonly svc: TEventPorts<Sink.TEventTypes>;
 
   private readonly cb: TListenerCallback;
 

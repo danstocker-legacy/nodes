@@ -32,7 +32,7 @@ export class Tracker<T extends IAnything = IAnything>
   implements ISink, ISource, IEventSource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<ITrackerOutputs<T>>;
-  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
+  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
 
   private readonly values: T;
 

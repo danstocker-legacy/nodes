@@ -31,7 +31,7 @@ export class Filter<V> implements ISink, ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: V;
   }>;
-  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
+  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
 
   constructor() {
     Sink.init.call(this);

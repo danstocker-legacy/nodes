@@ -11,7 +11,7 @@ export class Interval implements ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: true
   }>;
-  public readonly svc: TEventPorts<Source.EventTypes>;
+  public readonly svc: TEventPorts<Source.TEventTypes>;
 
   constructor(ms: number) {
     Source.init.call(this);

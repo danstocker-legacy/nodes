@@ -45,7 +45,7 @@ export class Folder<I, O> implements ISink, ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: O;
   }>;
-  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
+  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;

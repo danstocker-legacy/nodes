@@ -33,7 +33,7 @@ export class Muxer<T extends IAnything = IAnything>
   public readonly out: TOutPorts<{
     $: IMuxed<T>;
   }>;
-  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
+  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
 
   constructor(fields: Array<string>) {
     Sink.init.call(this);

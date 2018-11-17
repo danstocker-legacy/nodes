@@ -30,7 +30,7 @@ export class Logger implements ISink, ISource, IEventSource {
     warn: any;
     err: any;
   }>;
-  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
+  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
 
   constructor() {
     Sink.init.call(this);
