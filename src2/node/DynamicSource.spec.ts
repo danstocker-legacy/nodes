@@ -3,13 +3,17 @@ import {DynamicSource} from "./DynamicSource";
 import {ErrorSource} from "./ErrorSource";
 import {EventSource} from "./EventSource";
 import {IDynamicSource} from "./IDynamicSource";
+import {IErrorSource} from "./IErrorSource";
+import {IEventSource} from "./IEventSource";
 import {Serviced} from "./Serviced";
 import {Source} from "./Source";
 
 describe("DynamicSource", function () {
-  class TestDynamicSource implements IDynamicSource {
+  class TestDynamicSource implements IDynamicSource, IEventSource, IErrorSource {
     public readonly out: TOutPorts<{ [key: string]: any }>;
-    public readonly svc: TEventPorts<any> & TErrorPorts<any>;
+    public readonly svc:
+      TEventPorts<DynamicSource.TEventTypes> &
+      TErrorPorts<DynamicSource.TErrorTypes>;
     public addPort = DynamicSource.addPort;
     public deletePort = DynamicSource.deletePort;
 

@@ -1,8 +1,18 @@
 import {IOutPort} from "../port";
 import {IDynamicSource} from "./IDynamicSource";
+import {IErrorSource} from "./IErrorSource";
+import {IEventSource} from "./IEventSource";
 
 export namespace DynamicSource {
-  export function addPort(this: IDynamicSource, port: IOutPort<any>, tag?: string): void {
+  export type TEventTypes = "PORT_ADD" | "PORT_DELETE";
+
+  export type TErrorTypes = "PORT_ADD_FAILURE";
+
+  export function addPort(
+    this: IDynamicSource & IEventSource & IErrorSource,
+    port: IOutPort<any>,
+    tag?: string
+  ): void {
     const name = port.name;
     const ports = this.out;
     if (ports[name]) {
@@ -24,7 +34,11 @@ export namespace DynamicSource {
     }, tag);
   }
 
-  export function deletePort(this: IDynamicSource, port: IOutPort<any>, tag?: string): void {
+  export function deletePort(
+    this: IDynamicSource & IEventSource,
+    port: IOutPort<any>,
+    tag?: string
+  ): void {
     const name = port.name;
     const ports = this.out;
     if (port === ports[name]) {

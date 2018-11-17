@@ -14,5 +14,3 @@ export {ISource} from "./ISource";
 export {Serviced} from "./Serviced";
 export {Sink} from "./Sink";
 export {Source} from "./Source";
-export {TDynamicEventTypes} from "./TDynamicEventTypes";
-export {TPortErrorTypes} from "./TPortErrorTypes";

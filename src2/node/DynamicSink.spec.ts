@@ -3,13 +3,17 @@ import {DynamicSink} from "./DynamicSink";
 import {ErrorSource} from "./ErrorSource";
 import {EventSource} from "./EventSource";
 import {IDynamicSink} from "./IDynamicSink";
+import {IErrorSource} from "./IErrorSource";
+import {IEventSource} from "./IEventSource";
 import {Serviced} from "./Serviced";
 import {Sink} from "./Sink";
 
 describe("DynamicSink", function () {
-  class TestDynamicSink implements IDynamicSink {
+  class TestDynamicSink implements IDynamicSink, IEventSource, IErrorSource {
     public readonly in: TInPorts<{ [key: string]: any }>;
-    public readonly svc: TEventPorts<any> & TErrorPorts<any>;
+    public readonly svc:
+      TEventPorts<DynamicSink.TEventTypes> &
+      TErrorPorts<DynamicSink.TErrorTypes>;
     public addPort = DynamicSink.addPort;
     public deletePort = DynamicSink.deletePort;
 

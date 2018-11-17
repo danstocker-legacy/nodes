@@ -1,8 +1,18 @@
 import {IInPort} from "../port";
 import {IDynamicSink} from "./IDynamicSink";
+import {IErrorSource} from "./IErrorSource";
+import {IEventSource} from "./IEventSource";
 
 export namespace DynamicSink {
-  export function addPort(this: IDynamicSink, port: IInPort<any>, tag?: string): void {
+  export type TEventTypes = "PORT_ADD" | "PORT_DELETE";
+
+  export type TErrorTypes = "PORT_ADD_FAILURE";
+
+  export function addPort(
+    this: IDynamicSink & IEventSource & IErrorSource,
+    port: IInPort<any>,
+    tag?: string
+  ): void {
     const name = port.name;
     const ports = this.in;
     if (ports[name]) {
@@ -24,7 +34,11 @@ export namespace DynamicSink {
     }, tag);
   }
 
-  export function deletePort(this: IDynamicSink, port: IInPort<any>, tag?: string): void {
+  export function deletePort(
+    this: IDynamicSink & IEventSource,
+    port: IInPort<any>,
+    tag?: string
+  ): void {
     const name = port.name;
     const ports = this.in;
     if (port === ports[name]) {
