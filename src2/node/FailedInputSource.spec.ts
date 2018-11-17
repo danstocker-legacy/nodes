@@ -1,13 +1,12 @@
-import {TEventPorts, TFailurePorts} from "../port";
+import {TFailurePorts} from "../port";
 import {EventSource} from "./EventSource";
 import {FailedInputSource} from "./FailedInputSource";
 import {IFailedInputSource} from "./IFailedInputSource";
 import {Serviced} from "./Serviced";
-import {TNodeEventTypes} from "./TNodeEventTypes";
 
 describe("FailedInputSource", function () {
   class TestFailedInputSource implements IFailedInputSource {
-    public readonly svc: TEventPorts<TNodeEventTypes> & TFailurePorts<any>;
+    public readonly svc: TFailurePorts<any>;
 
     constructor() {
       Serviced.init.call(this);
