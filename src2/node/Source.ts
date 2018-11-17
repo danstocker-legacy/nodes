@@ -7,8 +7,8 @@ import {ISource} from "./ISource";
  * To be mixed into classes that implement ISource.
  * @example
  * class SourceNode implements ISource {
+ *   public out: TOutPorts<...>
  *   ...
- *
  *   constructor() {
  *     Source.init.call(this);
  *     ...
@@ -18,7 +18,7 @@ import {ISource} from "./ISource";
  */
 export namespace Source {
   /**
-   * Event types available when host also implements IEventSource.
+   * Event types specific to source nodes.
    */
   export type TEventTypes = "PORT_CONNECT" | "PORT_DISCONNECT";
 

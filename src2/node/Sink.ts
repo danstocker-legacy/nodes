@@ -7,8 +7,8 @@ import {ISink} from "./ISink";
  * To be mixed into classes that implement ISink.
  * @example
  * class SinkNode implements ISink {
+ *   public in: TInPorts<...>
  *   ...
- *
  *   constructor() {
  *     Sink.init.call(this);
  *     ...
@@ -18,7 +18,7 @@ import {ISink} from "./ISink";
  */
 export namespace Sink {
   /**
-   * Event types available when host also implements IEventSource.
+   * Event types specific to sink nodes.
    */
   export type TEventTypes = "PORT_CONNECT" | "PORT_DISCONNECT";
 

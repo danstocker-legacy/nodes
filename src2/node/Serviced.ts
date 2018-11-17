@@ -10,8 +10,8 @@ import {IServiced} from "./IServiced";
  * IFailedInputSource.
  * @example
  * class ServicedNode implements IServiced {
+ *   public svc: TOutPorts<...>
  *   ...
- *
  *   constructor() {
  *     Serviced.init.call(this);
  *     ...
