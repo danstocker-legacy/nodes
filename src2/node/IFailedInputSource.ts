@@ -1,4 +1,4 @@
-import {TFailurePorts} from "../port";
+import {TFailedInputPorts} from "../port";
 import {IServiced} from "./IServiced";
 
 /**
@@ -15,5 +15,5 @@ import {IServiced} from "./IServiced";
  * @see FailedInputSource
  */
 export interface IFailedInputSource extends IServiced {
-  svc: TFailurePorts<any>;
+  svc: TFailedInputPorts<any>;
 }

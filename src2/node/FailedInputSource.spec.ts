@@ -1,4 +1,4 @@
-import {TFailurePorts} from "../port";
+import {TFailedInputPorts} from "../port";
 import {EventSource} from "./EventSource";
 import {FailedInputSource} from "./FailedInputSource";
 import {IFailedInputSource} from "./IFailedInputSource";
@@ -6,7 +6,7 @@ import {Serviced} from "./Serviced";
 
 describe("FailedInputSource", function () {
   class TestFailedInputSource implements IFailedInputSource {
-    public readonly svc: TFailurePorts<any>;
+    public readonly svc: TFailedInputPorts<any>;
 
     constructor() {
       Serviced.init.call(this);

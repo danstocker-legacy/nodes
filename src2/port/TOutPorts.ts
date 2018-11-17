@@ -7,4 +7,4 @@ import {TPorts} from "./TPorts";
  * @example
  * const port: TOutPorts<{foo: number, bar: boolean}>
  */
-export type TOutPorts<V> = TPorts<V, TOutPort<V>>;
+export type TOutPorts<I> = TPorts<I, TOutPort<I>>;
