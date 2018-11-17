@@ -3,8 +3,7 @@ import {
   IEventSource,
   ISource,
   Serviced,
-  Source,
-  TNodeEventTypes
+  Source
 } from "../../node";
 import {OutPort, TEventPorts, TOutPorts} from "../../port";
 
@@ -15,7 +14,7 @@ export class StdIn implements ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: string | Buffer;
   }>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Source.EventTypes>;
 
   constructor() {
     Source.init.call(this);

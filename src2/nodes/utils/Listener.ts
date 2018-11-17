@@ -3,8 +3,7 @@ import {
   IEventSource,
   ISink,
   Serviced,
-  Sink,
-  TNodeEventTypes
+  Sink
 } from "../../node";
 import {IInPort, InPort, TEventPorts, TInPorts} from "../../port";
 
@@ -23,7 +22,7 @@ export class Listener implements ISink, IEventSource {
   public readonly in: TInPorts<{
     $: any;
   }>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Sink.EventTypes>;
 
   private readonly cb: TListenerCallback;
 

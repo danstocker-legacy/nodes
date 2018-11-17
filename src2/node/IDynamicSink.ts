@@ -1,12 +1,12 @@
 import {IInPort, TErrorPorts, TEventPorts, TInPorts} from "../port";
 import {ISink} from "./ISink";
+import {Sink} from "./Sink";
 import {TDynamicEventTypes} from "./TDynamicEventTypes";
-import {TNodeEventTypes} from "./TNodeEventTypes";
 import {TPortErrorTypes} from "./TPortErrorTypes";
 
 export interface IDynamicSink extends ISink {
   in: TInPorts<{ [key: string]: any }>;
-  svc: TEventPorts<TNodeEventTypes | TDynamicEventTypes> & TErrorPorts<TPortErrorTypes>;
+  svc: TEventPorts<Sink.EventTypes | TDynamicEventTypes> & TErrorPorts<TPortErrorTypes>;
 
   addPort(port: IInPort<any>): void;
 

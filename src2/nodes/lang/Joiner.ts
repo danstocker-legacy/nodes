@@ -5,8 +5,7 @@ import {
   ISource,
   Serviced,
   Sink,
-  Source,
-  TNodeEventTypes
+  Source
 } from "../../node";
 import {
   IInPort,
@@ -34,7 +33,7 @@ export class Joiner<T> implements ISink, ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: T;
   }>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
 
   private readonly fields: Array<string>;
   private readonly inputCache: Map<string, T>;

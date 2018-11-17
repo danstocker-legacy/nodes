@@ -3,8 +3,7 @@ import {
   IEventSource,
   ISource,
   Serviced,
-  Source,
-  TNodeEventTypes
+  Source
 } from "../../node";
 import {OutPort, TEventPorts, TOutPorts} from "../../port";
 
@@ -12,7 +11,7 @@ export class Interval implements ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: true
   }>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Source.EventTypes>;
 
   constructor(ms: number) {
     Source.init.call(this);

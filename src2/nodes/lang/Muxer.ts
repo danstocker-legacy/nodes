@@ -5,8 +5,7 @@ import {
   ISource,
   Serviced,
   Sink,
-  Source,
-  TNodeEventTypes
+  Source
 } from "../../node";
 import {
   IInPort,
@@ -34,7 +33,7 @@ export class Muxer<T extends IAnything = IAnything>
   public readonly out: TOutPorts<{
     $: IMuxed<T>;
   }>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
 
   constructor(fields: Array<string>) {
     Sink.init.call(this);

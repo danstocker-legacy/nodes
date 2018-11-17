@@ -5,8 +5,7 @@ import {
   ISource,
   Serviced,
   Sink,
-  Source,
-  TNodeEventTypes
+  Source
 } from "../../node";
 import {
   IInPort,
@@ -31,7 +30,7 @@ export class Logger implements ISink, ISource, IEventSource {
     warn: any;
     err: any;
   }>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
 
   constructor() {
     Sink.init.call(this);

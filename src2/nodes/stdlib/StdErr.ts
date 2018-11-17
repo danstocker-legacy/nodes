@@ -3,8 +3,7 @@ import {
   IEventSource,
   ISink,
   Serviced,
-  Sink,
-  TNodeEventTypes
+  Sink
 } from "../../node";
 import {IInPort, InPort, TEventPorts, TInPorts} from "../../port";
 
@@ -15,7 +14,7 @@ export class StdErr implements ISink, IEventSource {
   public readonly in: TInPorts<{
     $: string | Buffer;
   }>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Sink.EventTypes>;
 
   constructor() {
     Sink.init.call(this);

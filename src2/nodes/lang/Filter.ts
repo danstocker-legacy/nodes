@@ -5,8 +5,7 @@ import {
   ISource,
   Serviced,
   Sink,
-  Source,
-  TNodeEventTypes
+  Source
 } from "../../node";
 import {
   IInPort,
@@ -32,7 +31,7 @@ export class Filter<V> implements ISink, ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: V;
   }>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
 
   constructor() {
     Sink.init.call(this);

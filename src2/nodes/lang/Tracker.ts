@@ -5,8 +5,7 @@ import {
   ISource,
   Serviced,
   Sink,
-  Source,
-  TNodeEventTypes
+  Source
 } from "../../node";
 import {
   IInPort,
@@ -33,7 +32,7 @@ export class Tracker<T extends IAnything = IAnything>
   implements ISink, ISource, IEventSource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<ITrackerOutputs<T>>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
 
   private readonly values: T;
 

@@ -1,11 +1,4 @@
-import {
-  EventSource,
-  IEventSource,
-  ISink,
-  Serviced,
-  Sink,
-  TNodeEventTypes
-} from "../../node";
+import {EventSource, IEventSource, ISink, Serviced, Sink} from "../../node";
 import {IInPort, InPort, TEventPorts, TInPorts} from "../../port";
 
 /**
@@ -15,7 +8,7 @@ export class StdOut implements ISink, IEventSource {
   public readonly in: TInPorts<{
     $: string | Buffer;
   }>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Sink.EventTypes>;
 
   constructor() {
     Sink.init.call(this);

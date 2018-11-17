@@ -5,8 +5,7 @@ import {
   ISource,
   Serviced,
   Sink,
-  Source,
-  TNodeEventTypes
+  Source
 } from "../../node";
 import {
   IInPort,
@@ -32,7 +31,7 @@ export class Demuxer<T> implements ISink, ISource, IEventSource {
     $: IMuxed<T>;
   }>;
   public readonly out: TOutPorts<T>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
 
   constructor(fields: Array<string>) {
     Sink.init.call(this);

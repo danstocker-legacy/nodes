@@ -5,8 +5,7 @@ import {
   ISource,
   Serviced,
   Sink,
-  Source,
-  TNodeEventTypes
+  Source
 } from "../../node";
 import {
   IInPort,
@@ -46,7 +45,7 @@ export class Folder<I, O> implements ISink, ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: O;
   }>;
-  public readonly svc: TEventPorts<TNodeEventTypes>;
+  public readonly svc: TEventPorts<Sink.EventTypes | Source.EventTypes>;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;
