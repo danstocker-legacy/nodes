@@ -1,4 +1,3 @@
-import {IEventSource, ISink} from "../node";
 import {Noop} from "../nodes";
 import {IInPort} from "./IInPort";
 import {InPort} from "./InPort";
@@ -6,12 +5,6 @@ import {IOutPort} from "./IOutPort";
 import {OutPort} from "./OutPort";
 
 describe("InPort", function () {
-  class TestInPort<V> extends InPort<V> {
-    constructor(name: string, node: ISink & IEventSource) {
-      super(name, node);
-    }
-  }
-
   describe("#connect()", function () {
     let local: Noop<number>;
     let remote: Noop<number>;
@@ -21,7 +14,7 @@ describe("InPort", function () {
     beforeEach(function () {
       local = new Noop();
       remote = new Noop();
-      localPort = new TestInPort("foo", local);
+      localPort = new InPort("foo", local);
       remotePort = new OutPort("bar", remote);
     });
 
@@ -53,10 +46,17 @@ describe("InPort", function () {
         localPort.connect(remotePort, "1");
       });
 
-      it("should throw", function () {
-        expect(function () {
-          localPort.connect(new OutPort("baz", remote));
-        }).toThrow();
+      it("should send error", function () {
+        const spy = spyOn(local.svc.err, "send");
+        const remotePort2 = new OutPort("baz", remote);
+        localPort.connect(remotePort2, "1");
+        expect(local.svc.err.send).toHaveBeenCalledWith({
+          payload: {
+            peer: remotePort2,
+            port: localPort
+          },
+          type: "PORT_ALREADY_CONNECTED"
+        }, "1");
       });
     });
   });
@@ -70,7 +70,7 @@ describe("InPort", function () {
     beforeEach(function () {
       local = new Noop();
       remote = new Noop();
-      localPort = new TestInPort("foo", local);
+      localPort = new InPort("foo", local);
       remotePort = new OutPort("bar", remote);
       localPort.connect(remotePort);
     });
@@ -101,11 +101,11 @@ describe("InPort", function () {
 
   describe("#send()", function () {
     let local: Noop<number>;
-    let localPort: TestInPort<number>;
+    let localPort: InPort<number>;
 
     beforeEach(function () {
       local = new Noop();
-      localPort = new TestInPort("foo", local);
+      localPort = new InPort("foo", local);
     });
 
     it("should send value to node", function () {

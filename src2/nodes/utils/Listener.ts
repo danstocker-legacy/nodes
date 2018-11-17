@@ -1,11 +1,12 @@
 import {
-  EventSource,
+  ErrorSource,
+  EventSource, IErrorSource,
   IEventSource,
   ISink,
   Serviced,
   Sink
 } from "../../node";
-import {IInPort, InPort, TEventPorts, TInPorts} from "../../port";
+import {IInPort, InPort, TErrorPorts, TEventPorts, TInPorts} from "../../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
 
@@ -18,11 +19,13 @@ type TListenerCallback = (value: any, tag?: string) => void;
  * // to unsubscribe:
  * listener.in.$.disconnect();
  */
-export class Listener implements ISink, IEventSource {
+export class Listener implements ISink, IEventSource, IErrorSource {
   public readonly in: TInPorts<{
     $: any;
   }>;
-  public readonly svc: TEventPorts<Sink.TEventTypes>;
+  public readonly svc:
+    TEventPorts<Sink.TEventTypes> &
+    TErrorPorts<Sink.TErrorTypes>;
 
   private readonly cb: TListenerCallback;
 
@@ -30,6 +33,7 @@ export class Listener implements ISink, IEventSource {
     Sink.init.call(this);
     Serviced.init.call(this);
     EventSource.init.call(this);
+    ErrorSource.init.call(this);
     this.cb = cb;
     this.in.$ = new InPort("$", this);
   }

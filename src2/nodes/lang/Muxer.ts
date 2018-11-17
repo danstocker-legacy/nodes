@@ -1,5 +1,7 @@
 import {
+  ErrorSource,
   EventSource,
+  IErrorSource,
   IEventSource,
   ISink,
   ISource,
@@ -11,6 +13,7 @@ import {
   IInPort,
   InPort,
   OutPort,
+  TErrorPorts,
   TEventPorts,
   TInPorts,
   TOutPorts
@@ -28,18 +31,21 @@ import {IAnything, IMuxed} from "../../utils";
  * // outputs `{val: 5, name: "foo"}` on port "$"
  */
 export class Muxer<T extends IAnything = IAnything>
-  implements ISink, ISource, IEventSource {
+  implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<{
     $: IMuxed<T>;
   }>;
-  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
+  public readonly svc:
+    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
+    TErrorPorts<Sink.TErrorTypes>;
 
   constructor(fields: Array<string>) {
     Sink.init.call(this);
     Source.init.call(this);
     Serviced.init.call(this);
     EventSource.init.call(this);
+    ErrorSource.init.call(this);
     for (const field of fields) {
       this.in[field] = new InPort(field, this);
     }

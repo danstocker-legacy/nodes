@@ -1,5 +1,7 @@
 import {
+  ErrorSource,
   EventSource,
+  IErrorSource,
   IEventSource,
   ISink,
   ISource,
@@ -11,6 +13,7 @@ import {
   IInPort,
   InPort,
   OutPort,
+  TErrorPorts,
   TEventPorts,
   TInPorts,
   TOutPorts
@@ -25,14 +28,16 @@ type TMapperCallback<I, O> = (value: I, tag: string, node: ISink) => O;
  * // static callback
  * const mapper = new Mapper<number, string>(String);
  */
-export class Mapper<I, O> implements ISink, ISource, IEventSource {
+export class Mapper<I, O> implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<{
     $: I;
   }>;
   public readonly out: TOutPorts<{
     $: O;
   }>;
-  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
+  public readonly svc:
+    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
+    TErrorPorts<Sink.TErrorTypes>;
 
   private readonly cb: TMapperCallback<I, O>;
 
@@ -41,6 +46,7 @@ export class Mapper<I, O> implements ISink, ISource, IEventSource {
     Source.init.call(this);
     Serviced.init.call(this);
     EventSource.init.call(this);
+    ErrorSource.init.call(this);
     this.cb = cb;
     this.in.$ = new InPort("$", this);
     this.out.$ = new OutPort("$", this);

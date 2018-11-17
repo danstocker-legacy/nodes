@@ -1,5 +1,7 @@
 import {
+  ErrorSource,
   EventSource,
+  IErrorSource,
   IEventSource,
   ISink,
   ISource,
@@ -10,7 +12,7 @@ import {
 import {
   IInPort,
   InPort,
-  OutPort,
+  OutPort, TErrorPorts,
   TEventPorts,
   TInPorts,
   TOutPorts
@@ -21,14 +23,16 @@ import {
  * Does not know about original tag order. Feed through Serializer if
  * original tag order is to be retained.
  */
-export class Shifter<V> implements ISink, ISource, IEventSource {
+export class Shifter<V> implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<{
     $: V;
   }>;
   public readonly out: TOutPorts<{
     $: V;
   }>;
-  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
+  public readonly svc:
+    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
+    TErrorPorts<Sink.TErrorTypes>;
 
   private readonly disp: number;
   private readonly buffer: Array<V>;
@@ -41,6 +45,7 @@ export class Shifter<V> implements ISink, ISource, IEventSource {
     Source.init.call(this);
     Serviced.init.call(this);
     EventSource.init.call(this);
+    ErrorSource.init.call(this);
     this.disp = disp;
     this.buffer = [];
     this.in.$ = new InPort("$", this);

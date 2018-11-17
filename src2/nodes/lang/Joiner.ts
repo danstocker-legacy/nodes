@@ -1,5 +1,7 @@
 import {
+  ErrorSource,
   EventSource,
+  IErrorSource,
   IEventSource,
   ISink,
   ISource,
@@ -11,6 +13,7 @@ import {
   IInPort,
   InPort,
   OutPort,
+  TErrorPorts,
   TEventPorts,
   TInPorts,
   TOutPorts
@@ -28,12 +31,14 @@ type TInput<T> = T[keyof T];
  * joiner.in.bar.send(true, "1");
  * // joiner.out.$ will output {foo: 5, bar: true} for tag "1"
  */
-export class Joiner<T> implements ISink, ISource, IEventSource {
+export class Joiner<T> implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<{
     $: T;
   }>;
-  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
+  public readonly svc:
+    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
+    TErrorPorts<Sink.TErrorTypes>;
 
   private readonly fields: Array<string>;
   private readonly inputCache: Map<string, T>;
@@ -44,6 +49,7 @@ export class Joiner<T> implements ISink, ISource, IEventSource {
     Source.init.call(this);
     Serviced.init.call(this);
     EventSource.init.call(this);
+    ErrorSource.init.call(this);
     this.fields = fields;
     this.inputCache = new Map();
     this.portCache = new Map();

@@ -1,5 +1,7 @@
 import {
+  ErrorSource,
   EventSource,
+  IErrorSource,
   IEventSource,
   ISink,
   ISource,
@@ -11,6 +13,7 @@ import {
   IInPort,
   InPort,
   OutPort,
+  TErrorPorts,
   TEventPorts,
   TInPorts,
   TOutPorts
@@ -38,14 +41,16 @@ type TFolderCallback<I, O> = (
  * let sum: Folder<number, number>;
  * sum = new Folder((curr, next) => curr + next, 0);
  */
-export class Folder<I, O> implements ISink, ISource, IEventSource {
+export class Folder<I, O> implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<{
     $: IFolderInput<I>;
   }>;
   public readonly out: TOutPorts<{
     $: O;
   }>;
-  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
+  public readonly svc:
+    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
+    TErrorPorts<Sink.TErrorTypes>;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;
@@ -56,6 +61,7 @@ export class Folder<I, O> implements ISink, ISource, IEventSource {
     Source.init.call(this);
     Serviced.init.call(this);
     EventSource.init.call(this);
+    ErrorSource.init.call(this);
     this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);

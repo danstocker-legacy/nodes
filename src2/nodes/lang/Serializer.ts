@@ -1,5 +1,7 @@
 import {
+  ErrorSource,
   EventSource,
+  IErrorSource,
   IEventSource,
   ISink,
   ISource,
@@ -11,6 +13,7 @@ import {
   IInPort,
   InPort,
   OutPort,
+  TErrorPorts,
   TEventPorts,
   TInPorts,
   TOutPorts
@@ -22,7 +25,7 @@ import {
  * let node: Serializer<number>;
  * node = new Serializer();
  */
-export class Serializer<V> implements ISink, ISource, IEventSource {
+export class Serializer<V> implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<{
     $: V;
     tag: string;
@@ -30,7 +33,9 @@ export class Serializer<V> implements ISink, ISource, IEventSource {
   public readonly out: TOutPorts<{
     $: V;
   }>;
-  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
+  public readonly svc:
+    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
+    TErrorPorts<Sink.TErrorTypes>;
 
   private readonly inputs: Map<string, V>;
   private readonly order: Array<string>;
@@ -40,6 +45,7 @@ export class Serializer<V> implements ISink, ISource, IEventSource {
     Source.init.call(this);
     Serviced.init.call(this);
     EventSource.init.call(this);
+    ErrorSource.init.call(this);
     this.inputs = new Map();
     this.order = [];
     this.in.$ = new InPort("$", this);

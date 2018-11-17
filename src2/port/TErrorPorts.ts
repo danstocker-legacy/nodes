@@ -3,7 +3,7 @@ import {TOutPorts} from "./TOutPorts";
 
 /**
  * Error port for the service port bundle.
- * Add to Node classes that throw errors.
+ * Add to Node classes that report errors.
  * @example
  * // in a Node subclass
  * svc: TEventPorts<"foo"> & TErrorPorts<"bar" | "baz">

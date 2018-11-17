@@ -1,10 +1,4 @@
-import {
-  EventSource,
-  IEventSource,
-  ISource,
-  Serviced,
-  Source
-} from "../../node";
+import {EventSource, IEventSource, ISource, Serviced, Source} from "../../node";
 import {OutPort, TEventPorts, TOutPorts} from "../../port";
 
 export class Interval implements ISource, IEventSource {

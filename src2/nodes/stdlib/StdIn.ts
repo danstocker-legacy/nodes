@@ -1,4 +1,5 @@
 import {
+  ErrorSource,
   EventSource,
   IEventSource,
   ISource,
@@ -20,6 +21,7 @@ export class StdIn implements ISource, IEventSource {
     Source.init.call(this);
     Serviced.init.call(this);
     EventSource.init.call(this);
+    ErrorSource.init.call(this);
     this.out.$ = new OutPort("$", this);
     process.stdin.on("readable", this.onReadable.bind(this));
   }

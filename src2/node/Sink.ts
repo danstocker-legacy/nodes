@@ -23,6 +23,11 @@ export namespace Sink {
   export type TEventTypes = "PORT_CONNECT" | "PORT_DISCONNECT";
 
   /**
+   * Error types specific to sink nodes.
+   */
+  export type TErrorTypes = "PORT_ALREADY_CONNECTED";
+
+  /**
    * Adds "in" port bundle.
    */
   export function init(this: ISink): void {

@@ -1,5 +1,7 @@
 import {
+  ErrorSource,
   EventSource,
+  IErrorSource,
   IEventSource,
   ISink,
   ISource,
@@ -11,6 +13,7 @@ import {
   IInPort,
   InPort,
   OutPort,
+  TErrorPorts,
   TEventPorts,
   TInPorts,
   TOutPorts
@@ -26,18 +29,21 @@ import {IMuxed} from "../../utils";
  * demuxer.in.$.send({name: "foo", 5});
  * // outputs `5` on port "foo"
  */
-export class Demuxer<T> implements ISink, ISource, IEventSource {
+export class Demuxer<T> implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<{
     $: IMuxed<T>;
   }>;
   public readonly out: TOutPorts<T>;
-  public readonly svc: TEventPorts<Sink.TEventTypes | Source.TEventTypes>;
+  public readonly svc:
+    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
+    TErrorPorts<Sink.TErrorTypes>;
 
   constructor(fields: Array<string>) {
     Sink.init.call(this);
     Source.init.call(this);
     Serviced.init.call(this);
     EventSource.init.call(this);
+    ErrorSource.init.call(this);
     this.in.$ = new InPort("$", this);
     for (const field of fields) {
       this.out[field] = new OutPort(field, this);
