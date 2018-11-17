@@ -2,9 +2,11 @@ import {OutPort} from "../port";
 import {IErrorSource} from "./IErrorSource";
 
 /**
- * Mixin with shared methods for node classes that implement IErrorSource.
+ * Shared implementation for nodes that report errors.
+ * Adds "err" (error) output port to the host's "svc" (service) port bundle.
+ * To be mixed into classes that implement IErrorSource.
  * @example
- * class MyNode implements IErrorSource {
+ * class ErrorSourceNode implements IErrorSource {
  *   ...
  *   constructor() {
  *     ...
@@ -12,8 +14,15 @@ import {IErrorSource} from "./IErrorSource";
  *     ErrorSource.init.call(this);
  *   }
  * }
+ * @see IErrorSource
  */
 export namespace ErrorSource {
+  /**
+   * Adds "err" port to service port bundle.
+   * Service port bundle is expected to be already initialized. (By Serviced
+   * mixin.)
+   * @see Serviced
+   */
   export function init(this: IErrorSource): void {
     this.svc.err = new OutPort("err", this);
   }
