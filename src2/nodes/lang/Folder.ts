@@ -31,8 +31,7 @@ interface IFolderInput<V> {
 type TFolderCallback<I, O> = (
   curr: O,
   next: I,
-  tag: string,
-  node: Folder<I, O>) => O;
+  tag?: string) => O;
 
 /**
  * Folds (reduces) input according to callback.
@@ -81,7 +80,7 @@ export class Folder<I, O> implements ISink, ISource, IEventSource, IErrorSource 
         this.folded;
 
       try {
-        const folded = this.folded = this.cb(curr, next, tag, this);
+        const folded = this.folded = this.cb(curr, next, tag);
         this.out.$.send(folded, tag);
       } catch (err) {
         this.svc.err.send({

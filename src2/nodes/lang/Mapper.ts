@@ -19,7 +19,7 @@ import {
   TOutPorts
 } from "../../port";
 
-type TMapperCallback<I, O> = (value: I, tag: string, node: ISink) => O;
+type TMapperCallback<I, O> = (value: I, tag: string) => O;
 
 /**
  * Maps input value to an output value, as specified by a static mapper
@@ -55,7 +55,7 @@ export class Mapper<I, O> implements ISink, ISource, IEventSource, IErrorSource 
   public send(port: IInPort<I>, input: I, tag?: string): void {
     if (port === this.in.$) {
       try {
-        const mapped = this.cb(input, tag, this);
+        const mapped = this.cb(input, tag);
         this.out.$.send(mapped, tag);
       } catch (err) {
         this.svc.err.send({
