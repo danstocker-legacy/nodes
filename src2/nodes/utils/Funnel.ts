@@ -21,6 +21,12 @@ function muxedToSwitch<P extends string, T>(inputs: IMuxed<TFunnelInputs<P, T>>)
 /**
  * Forwards inputs from multiple ports to a single output.
  * Outputs which input the value came through.
+ * Atomic implementation of a composite node.
+ * Composite view:
+ * A -+-> Muxer -> Mapper -> Splitter =#-> $
+ * B -+                                +-> case
+ * C -+
+ * ...
  * @example
  * let funnel: Funnel<"foo" | "bar" | "baz", number>;
  * funnel = new Funnel(["foo", "bar", "baz"]);

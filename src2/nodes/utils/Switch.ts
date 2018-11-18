@@ -21,6 +21,10 @@ function switchToMuxed<P extends string, T>(inputs: ISwitchInputs<P, T>): IMuxed
 /**
  * Forwards input to one of the possible outputs.
  * Composite view:
+ * $ -----#=> Joiner -> Mapper -> Demuxer -+-> A
+ * case --/                                +-> B
+ *                                         +-> C
+ *                                         ...
  * @example
  * let switch: Switch<"foo" | "bar" | "baz", number>;
  * switch = new Switch(["foo", "bar", "baz");
