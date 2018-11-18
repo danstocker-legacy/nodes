@@ -1,6 +1,7 @@
 import {
   ErrorSource,
-  EventSource, IErrorSource,
+  EventSource,
+  IErrorSource,
   IEventSource,
   ISink,
   Serviced,
@@ -39,6 +40,8 @@ export class Listener implements ISink, IEventSource, IErrorSource {
   }
 
   public send(port: IInPort<any>, value: any, tag?: string): void {
-    this.cb(value, tag);
+    if (port === this.in.$) {
+      this.cb(value, tag);
+    }
   }
 }
