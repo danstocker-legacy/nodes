@@ -34,11 +34,14 @@ type TFolderCallback<I, O> = (
   tag?: string) => O;
 
 /**
- * Folds (reduces) input according to callback.
- * Resets state to initial on receiving truthy on `res`.
+ * Folds input values into an aggregate.
+ * Emits the next folded value for each input.
+ * Takes a callback function which aggregates input values received since the
+ * last reset signal.
  * @example
  * let sum: Folder<number, number>;
  * sum = new Folder((curr, next) => curr + next, 0);
+ * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
 export class Folder<I, O> implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<{
