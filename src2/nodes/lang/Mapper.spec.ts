@@ -21,5 +21,28 @@ describe("Mapper", function () {
       node.send(node.in.$, 5, "1");
       expect(node.out.$.send).toHaveBeenCalledWith("5", "1");
     });
+
+    describe("when callback throws", function () {
+      let error: Error;
+
+      beforeEach(function () {
+        error = new Error();
+        node = new Mapper(() => {
+          throw error;
+        });
+      });
+
+      it("should send error", function () {
+        spyOn(node.svc.err, "send");
+        node.send(node.in.$, 5, "1");
+        expect(node.svc.err.send).toHaveBeenCalledWith({
+          payload: {
+            err: error,
+            node
+          },
+          type: "CALLBACK_ERROR"
+        }, "1");
+      });
+    });
   });
 });

@@ -37,7 +37,7 @@ export class Mapper<I, O> implements ISink, ISource, IEventSource, IErrorSource 
   }>;
   public readonly svc:
     TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes>;
+    TErrorPorts<Sink.TErrorTypes | "CALLBACK_ERROR">;
 
   private readonly cb: TMapperCallback<I, O>;
 
@@ -54,8 +54,18 @@ export class Mapper<I, O> implements ISink, ISource, IEventSource, IErrorSource 
 
   public send(port: IInPort<I>, input: I, tag?: string): void {
     if (port === this.in.$) {
-      const mapped = this.cb(input, tag, this);
-      this.out.$.send(mapped, tag);
+      try {
+        const mapped = this.cb(input, tag, this);
+        this.out.$.send(mapped, tag);
+      } catch (err) {
+        this.svc.err.send({
+          payload: {
+            err,
+            node: this
+          },
+          type: "CALLBACK_ERROR"
+        }, tag);
+      }
     }
   }
 }

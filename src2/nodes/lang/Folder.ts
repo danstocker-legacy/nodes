@@ -50,7 +50,7 @@ export class Folder<I, O> implements ISink, ISource, IEventSource, IErrorSource 
   }>;
   public readonly svc:
     TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes>;
+    TErrorPorts<Sink.TErrorTypes | "CALLBACK_ERROR">;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;
@@ -80,9 +80,18 @@ export class Folder<I, O> implements ISink, ISource, IEventSource, IErrorSource 
         copy(this.initial) :
         this.folded;
 
-      const folded = this.folded = this.cb(curr, next, tag, this);
-
-      this.out.$.send(folded, tag);
+      try {
+        const folded = this.folded = this.cb(curr, next, tag, this);
+        this.out.$.send(folded, tag);
+      } catch (err) {
+        this.svc.err.send({
+          payload: {
+            err,
+            node: this
+          },
+          type: "CALLBACK_ERROR"
+        }, tag);
+      }
     }
   }
 }
