@@ -1,6 +1,6 @@
-import {Interval} from "./Interval";
+import {Ticker} from "./Ticker";
 
-describe("Interval", function () {
+describe("Ticker", function () {
   beforeEach(function () {
     jasmine.clock().install();
   });
@@ -11,37 +11,37 @@ describe("Interval", function () {
 
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Interval(0);
-      expect(node.out.$).toBeDefined();
+      const node = new Ticker(0);
+      expect(node.out.tick).toBeDefined();
     });
   });
 
   describe("between intervals", function () {
-    let node: Interval;
+    let node: Ticker;
 
     beforeEach(function () {
-      node = new Interval(500);
+      node = new Ticker(500);
       jasmine.clock().tick(100);
     });
 
     it("should not send to output", function () {
-      spyOn(node.out.$, "send");
+      spyOn(node.out.tick, "send");
       jasmine.clock().tick(100);
-      expect(node.out.$.send).not.toHaveBeenCalled();
+      expect(node.out.tick.send).not.toHaveBeenCalled();
     });
   });
 
   describe("on interval", function () {
-    let node: Interval;
+    let node: Ticker;
 
     beforeEach(function () {
-      node = new Interval(500);
+      node = new Ticker(500);
     });
 
-    it("should send null to output", function () {
-      spyOn(node.out.$, "send");
+    it("should send true to output", function () {
+      spyOn(node.out.tick, "send");
       jasmine.clock().tick(500);
-      expect(node.out.$.send).toHaveBeenCalledWith(true, null);
+      expect(node.out.tick.send).toHaveBeenCalledWith(true, null);
     });
   });
 });
