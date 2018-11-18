@@ -1,9 +1,26 @@
-import {TInPorts, TOutPorts} from "../../port";
-import {IMuxed} from "../../utils";
-import {Demuxer, Joiner, Mapper} from "../lang";
+import {
+  ErrorSource,
+  EventSource,
+  IErrorSource,
+  IEventSource,
+  ISink,
+  ISource,
+  Serviced,
+  Sink,
+  Source
+} from "../../node";
+import {
+  IInPort,
+  InPort,
+  OutPort,
+  TErrorPorts,
+  TEventPorts,
+  TInPorts,
+  TOutPorts
+} from "../../port";
 
 interface ISwitchInputs<P extends string, T> {
-  $: T;
+  val: T;
   case: P;
 }
 
@@ -11,15 +28,9 @@ type TSwitchOutputs<P extends string, T> = {
   [K in P]: T
 };
 
-function switchToMuxed<P extends string, T>(inputs: ISwitchInputs<P, T>): IMuxed<TSwitchOutputs<P, T>> {
-  return {
-    name: inputs.case,
-    val: inputs.$
-  };
-}
-
 /**
  * Forwards input to one of the possible outputs.
+ * Atomic equivalent of a composite node.
  * Composite view:
  * $ -----#=> Joiner -> Mapper -> Demuxer -+-> A
  * case --/                                +-> B
@@ -29,20 +40,49 @@ function switchToMuxed<P extends string, T>(inputs: ISwitchInputs<P, T>): IMuxed
  * let switch: Switch<"foo" | "bar" | "baz", number>;
  * switch = new Switch(["foo", "bar", "baz");
  */
-export class Switch<P extends string, T> {
-  public readonly in: TInPorts<ISwitchInputs<P, T>>;
+export class Switch<P extends string, T>
+  implements ISink, ISource, IEventSource, IErrorSource {
+  public readonly in: TInPorts<{
+    $: ISwitchInputs<P, T>
+  }>;
   public readonly out: TOutPorts<TSwitchOutputs<P, T>>;
+  public svc:
+    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
+    TErrorPorts<Sink.TErrorTypes | "INVALID_CASE">;
 
   /**
    * @param cases Strings identifying possible cases for switch.
    */
   constructor(cases: Array<string>) {
-    const joiner = new Joiner<ISwitchInputs<P, T>>(["case", "$"]);
-    const mapper = new Mapper<ISwitchInputs<P, T>, IMuxed<TSwitchOutputs<P, T>>>(switchToMuxed);
-    const demuxer = new Demuxer<TSwitchOutputs<P, T>>(cases);
-    joiner.out.$.connect(mapper.in.$);
-    mapper.out.$.connect(demuxer.in.$);
-    this.in = joiner.in;
-    this.out = demuxer.out;
+    Sink.init.call(this);
+    Source.init.call(this);
+    Serviced.init.call(this);
+    EventSource.init.call(this);
+    ErrorSource.init.call(this);
+    this.in.$ = new InPort("$", this);
+    for (const field of cases) {
+      this.out[field] = new OutPort(field, this);
+    }
+  }
+
+  public send(
+    port: IInPort<ISwitchInputs<P, T>>,
+    value: ISwitchInputs<P, T>,
+    tag?: string
+  ): void {
+    if (port === this.in.$) {
+      const name = value.case;
+      const outPort = this.out[name];
+      if (outPort) {
+        outPort.send(value.val, tag);
+      } else {
+        this.svc.err.send({
+          payload: {
+            case: name
+          },
+          type: "INVALID_CASE"
+        }, tag);
+      }
+    }
   }
 }
