@@ -28,7 +28,7 @@ interface IFolderInput<V> {
   val: V;
 }
 
-type TFolderCallback<I, O> = (
+export type TFolderCallback<I, O> = (
   curr: O,
   next: I,
   tag?: string) => O;

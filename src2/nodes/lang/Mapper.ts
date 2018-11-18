@@ -19,7 +19,7 @@ import {
   TOutPorts
 } from "../../port";
 
-type TMapperCallback<I, O> = (value: I, tag: string) => O;
+export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
 
 /**
  * Maps input value to an output value, as specified by a static mapper
