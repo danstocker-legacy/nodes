@@ -24,7 +24,7 @@ import {
  * Extracts the next unfolded item of the current aggregate value `curr`,
  * and determines whether unfolding the current value is done.
  */
-type TUnfolderCallback<I, O> = (curr: I, idx: number, tag?: string) =>
+export type TUnfolderCallback<I, O> = (curr: I, idx: number, tag?: string) =>
   { next: O, curr: I, done: boolean };
 
 /**
