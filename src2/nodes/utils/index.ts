@@ -1,3 +1,4 @@
+export {Debouncer} from "./Debouncer";
 export {Funnel} from "./Funnel";
 export {Listener} from "./Listener";
 export {Logger} from "./Logger";
