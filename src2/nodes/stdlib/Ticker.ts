@@ -5,11 +5,11 @@ import {OutPort, TEventPorts, TOutPorts} from "../../port";
  * Emits a tick at the specified intervals.
  * @example
  * const ticker = new Ticker(5000);
- * ticker.out.tick.connect(new StdOut().in.$);
+ * ticker.out.$.connect(new StdOut().in.$);
  */
 export class Ticker implements ISource, IEventSource {
   public readonly out: TOutPorts<{
-    tick: true
+    $: true
   }>;
   public readonly svc: TEventPorts<Source.TEventTypes>;
 
@@ -18,10 +18,10 @@ export class Ticker implements ISource, IEventSource {
     Serviced.init.call(this);
     EventSource.init.call(this);
     setInterval(this.onInterval.bind(this), ms);
-    this.out.tick = new OutPort("tick", this);
+    this.out.$ = new OutPort("$", this);
   }
 
   private onInterval(): void {
-    this.out.tick.send(true, null);
+    this.out.$.send(true, null);
   }
 }
