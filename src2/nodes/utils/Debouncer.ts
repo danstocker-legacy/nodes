@@ -20,14 +20,17 @@ import {
 } from "../../port";
 
 /**
- * Emits a debounce signal based on received inputs: `true` when timer has
- * finished, `false` when timer got interrupted by new input.
+ * Emits a boolean with the last received input tag: `true` when the specified
+ * delay has passed since last received input tag, `false` when a new input is
+ * received before timer runs out.
  * Atomic equivalent of a composite node.
  * Commonly used in conjunction with Filter and Folder.
  * Composite view:
  * TBD
  * @example
  * const debouncer = new Debouncer(500);
+ * debouncer.in.$.connect(...);
+ * debouncer.out.$.connect(...);
  */
 export class Debouncer implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<{
@@ -44,6 +47,9 @@ export class Debouncer implements ISink, ISource, IEventSource, IErrorSource {
   private readonly buffer: Array<string>;
   private timer: NodeJS.Timer;
 
+  /**
+   * @param ms Debounce delay in milliseconds.
+   */
   constructor(ms: number) {
     Sink.init.call(this);
     Source.init.call(this);
@@ -63,7 +69,7 @@ export class Debouncer implements ISink, ISource, IEventSource, IErrorSource {
       buffer.push(tag);
 
       if (timer) {
-        // interrupting timer
+        // interrupting timer & sending out last tag in buffer w/ false
         clearTimeout(timer);
         const next = buffer.shift();
         this.out.$.send(false, next);
