@@ -18,7 +18,7 @@ import {
   TInPorts,
   TOutPorts
 } from "../../port";
-import {IAnything, IMuxed} from "../../utils";
+import {IAny, IMuxed} from "../../utils";
 
 /**
  * Multiplexes inputs.
@@ -30,7 +30,7 @@ import {IAnything, IMuxed} from "../../utils";
  * muxer.in.foo.send(5);
  * // outputs `{val: 5, name: "foo"}` on port "$"
  */
-export class Muxer<T extends IAnything = IAnything>
+export class Muxer<T extends IAny = IAny>
   implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<{

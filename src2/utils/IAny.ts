@@ -1,6 +1,6 @@
 /**
  * Generic interface.
  */
-export interface IAnything {
+export interface IAny {
   [key: string]: any;
 }

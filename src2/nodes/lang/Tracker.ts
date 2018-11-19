@@ -16,7 +16,7 @@ import {
   TInPorts,
   TOutPorts
 } from "../../port";
-import {IAnything} from "../../utils";
+import {IAny} from "../../utils";
 
 interface ITrackerOutputs<T> {
   $: T;
@@ -29,7 +29,7 @@ interface ITrackerOutputs<T> {
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
  */
-export class Tracker<T extends IAnything = IAnything>
+export class Tracker<T extends IAny = IAny>
   implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<ITrackerOutputs<T>>;

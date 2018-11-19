@@ -18,7 +18,7 @@ import {
   TInPorts,
   TOutPorts
 } from "../../port";
-import {IAnything} from "../../utils";
+import {IAny} from "../../utils";
 
 /**
  * Splits synchronized values sets.
@@ -29,7 +29,7 @@ import {IAnything} from "../../utils";
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends IAnything>
+export class Splitter<T extends IAny>
   implements ISink, ISource, IEventSource, IErrorSource {
   public readonly in: TInPorts<{
     $: T;

@@ -1,5 +1,5 @@
 import {TEqualityCallback} from "../nodes/utils/Comparer";
-import {IAnything} from "../utils";
+import {IAny} from "../utils";
 
 /**
  * Frequently used Comparer callbacks.
@@ -19,7 +19,7 @@ export namespace equal {
    * @param cb Optional equality callback for determining property equality.
    * (Defaults to `equal.reference`.)
    */
-  export function property$<I extends IAnything>(
+  export function property$<I extends IAny>(
     name: string,
     cb: TEqualityCallback<I[keyof I]> = equal.reference
   ): TEqualityCallback<I> {
