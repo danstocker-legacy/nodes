@@ -8,9 +8,9 @@ export namespace unfold {
    * Returns function which splits string along the specified delimiter,
    * preserving fragments at ends / beginnings of inputs.
    * @example
-   * const lineSplitter = new Unfolder(unfold.stringSplitter$("\n"));
+   * const lineSplitter = new Unfolder(unfold.split$("\n"));
    */
-  export function stringSplit$(delimiter: string):
+  export function split$(delimiter: string):
     TUnfolderCallback<string, string> {
     const delimiterLength = delimiter.length;
     let fragment = "";

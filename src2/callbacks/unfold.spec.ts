@@ -2,9 +2,9 @@ import {TUnfolderCallback} from "../nodes/lang/Unfolder";
 import {unfold} from "./unfold";
 
 describe("unfold", function () {
-  describe("stringSplit$", function () {
+  describe("split$", function () {
     it("should return string fragments", function () {
-      const lineSplit = unfold.stringSplit$("\n");
+      const lineSplit = unfold.split$("\n");
       expect(lineSplit("foo\nbar\nbaz", 0)).toEqual({
         curr: "bar\nbaz",
         done: false,
@@ -16,7 +16,7 @@ describe("unfold", function () {
       let lineSplit: TUnfolderCallback<string, string>;
 
       beforeEach(function () {
-        lineSplit = unfold.stringSplit$("\n");
+        lineSplit = unfold.split$("\n");
         lineSplit("foo\nba", 0);
         lineSplit("ba", 1);
       });
