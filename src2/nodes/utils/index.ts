@@ -1,3 +1,4 @@
+export {Comparer} from "./Comparer";
 export {Debouncer} from "./Debouncer";
 export {Funnel} from "./Funnel";
 export {Listener} from "./Listener";
