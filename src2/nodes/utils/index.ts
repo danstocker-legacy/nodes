@@ -1,5 +1,6 @@
 export {Comparer} from "./Comparer";
 export {Debouncer} from "./Debouncer";
+export {Differ} from "./Differ";
 export {Funnel} from "./Funnel";
 export {Listener} from "./Listener";
 export {Logger} from "./Logger";
