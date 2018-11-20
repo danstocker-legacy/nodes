@@ -47,7 +47,7 @@ describe("InPort", function () {
       });
 
       it("should send error", function () {
-        const spy = spyOn(local.svc.err, "send");
+        spyOn(local.svc.err, "send");
         const remotePort2 = new OutPort("baz", remote);
         localPort.connect(remotePort2, "1");
         expect(local.svc.err.send).toHaveBeenCalledWith({
