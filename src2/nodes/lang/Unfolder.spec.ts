@@ -15,12 +15,11 @@ describe("Unfolder", function () {
     let node: Unfolder<Array<number>, number>;
 
     beforeEach(function () {
-      node = new Unfolder((curr: Array<number>) => {
-        return {
-          curr,
-          done: curr.length === 1,
-          next: curr.shift()
-        };
+      node = new Unfolder(function* (value) {
+        value = value.slice();
+        while (value.length > 0) {
+          yield value.shift();
+        }
       });
     });
 
@@ -28,21 +27,9 @@ describe("Unfolder", function () {
       const spy = spyOn(node.out.$, "send");
       node.send(node.in.$, [1, 2, 3], "1");
       expect(spy.calls.allArgs()).toEqual([
-        [{
-          done: false,
-          idx: 0,
-          val: 1
-        }, "1"],
-        [{
-          done: false,
-          idx: 1,
-          val: 2
-        }, "1"],
-        [{
-          done: true,
-          idx: 2,
-          val: 3
-        }, "1"]
+        [1, "1"],
+        [2, "1"],
+        [3, "1"]
       ]);
     });
 
@@ -51,7 +38,7 @@ describe("Unfolder", function () {
 
       beforeEach(function () {
         error = new Error();
-        node = new Unfolder(() => {
+        node = new Unfolder(function* () {
           throw error;
         });
       });
