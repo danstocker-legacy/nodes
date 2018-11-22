@@ -45,18 +45,14 @@ export class Joiner<T> implements ISink, ISource, IEventSource, IErrorSource {
   private readonly portCache: Map<string, Set<string | number>>;
 
   constructor(fields: Array<string>) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, fields);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.fields = fields;
     this.inputCache = new Map();
     this.portCache = new Map();
-    for (const field of fields) {
-      this.in[field] = new InPort(field, this);
-    }
-    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<TInput<T>>, input: TInput<T>, tag: string): void {
@@ -65,7 +61,7 @@ export class Joiner<T> implements ISink, ISource, IEventSource, IErrorSource {
       const inputCache = this.inputCache;
       let inputs = inputCache.get(tag);
       if (!inputs) {
-        inputs = <T> {};
+        inputs = {} as T;
         inputCache.set(tag, inputs);
       }
 

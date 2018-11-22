@@ -1,4 +1,4 @@
-import {TOutPorts} from "../port";
+import {OutPort, TOutPorts} from "../port";
 import {ISource} from "./ISource";
 
 /**
@@ -24,8 +24,12 @@ export namespace Source {
 
   /**
    * Adds "out" port bundle.
+   * @param fields Port names in output port bundle.
    */
-  export function init(this: ISource): void {
-    this.out = <TOutPorts<any>> {};
+  export function init(this: ISource, fields: Array<string> = []): void {
+    const ports = this.out = {} as TOutPorts<any>;
+    for (const field of fields) {
+      ports[field] = new OutPort(field, this);
+    }
   }
 }

@@ -41,16 +41,13 @@ export class Serializer<V> implements ISink, ISource, IEventSource, IErrorSource
   private readonly order: Array<string>;
 
   constructor() {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["$", "tag"]);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.inputs = new Map();
     this.order = [];
-    this.in.$ = new InPort("$", this);
-    this.in.tag = new InPort("tag", this);
-    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<V | string>, input: V | string, tag?: string): void {
@@ -62,7 +59,7 @@ export class Serializer<V> implements ISink, ISource, IEventSource, IErrorSource
         break;
 
       case ports.$:
-        this.inputs.set(tag, <V> input);
+        this.inputs.set(tag, input as V);
         this.release();
         break;
     }

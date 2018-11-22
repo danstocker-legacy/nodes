@@ -39,13 +39,11 @@ export class Noop<V> implements ISink, ISource, IEventSource, IErrorSource {
     TErrorPorts<Sink.TErrorTypes>;
 
   constructor() {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["$"]);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
-    this.in.$ = new InPort("$", this);
-    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<V>, input: V, tag?: string): void {

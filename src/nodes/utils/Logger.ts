@@ -36,17 +36,11 @@ export class Logger implements ISink, ISource, IEventSource, IErrorSource {
     TErrorPorts<Sink.TErrorTypes>;
 
   constructor() {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["err", "log", "warn"]);
+    Source.init.call(this, ["err", "log", "warn"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
-    this.in.err = new InPort("err", this);
-    this.in.log = new InPort("log", this);
-    this.in.warn = new InPort("warn", this);
-    this.out.err = new OutPort("err", this);
-    this.out.log = new OutPort("log", this);
-    this.out.warn = new OutPort("warn", this);
   }
 
   public send(port: IInPort<any>, input: any, tag?: string): void {

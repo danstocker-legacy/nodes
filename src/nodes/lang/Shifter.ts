@@ -41,15 +41,13 @@ export class Shifter<V> implements ISink, ISource, IEventSource, IErrorSource {
    * @param disp Displacement
    */
   constructor(disp: number = 1) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["$"]);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.disp = disp;
     this.buffer = [];
-    this.in.$ = new InPort("$", this);
-    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<V>, input: V, tag?: string): void {

@@ -19,13 +19,13 @@ describe("Port", function () {
 
   describe("constructor", function () {
     it("should initialize property 'name'", function () {
-      const node = <ISink> {};
+      const node = {} as ISink;
       const port = new TestPort("foo", node);
       expect(port.name).toBe("foo");
     });
 
     it("should initialize property 'node'", function () {
-      const node = <ISink> {};
+      const node = {} as ISink;
       const port = new TestPort("foo", node);
       expect(port.node).toBe(node);
     });

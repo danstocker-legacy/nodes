@@ -41,15 +41,11 @@ export class Muxer<T extends IAny = IAny>
     TErrorPorts<Sink.TErrorTypes>;
 
   constructor(fields: Array<string>) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, fields);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
-    for (const field of fields) {
-      this.in[field] = new InPort(field, this);
-    }
-    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<T[keyof T]>, input: T[keyof T], tag?: string): void {

@@ -24,6 +24,6 @@ export namespace Serviced {
    * Adds "svc" output port bundle.
    */
   export function init(this: IServiced): void {
-    this.svc = <TOutPorts<any>> {};
+    this.svc = {} as TOutPorts<any>;
   }
 }

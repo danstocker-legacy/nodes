@@ -14,7 +14,7 @@ describe("OutPort", function () {
 
   describe("constructor", function () {
     it("should set property 'peers'", function () {
-      const node = <ISource> {};
+      const node = {} as ISource;
       const port = new TestOutPort("foo", node);
       expect(port.peers).toEqual(new Set());
     });

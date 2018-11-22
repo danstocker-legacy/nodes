@@ -40,15 +40,11 @@ export class Splitter<T extends IAny>
     TErrorPorts<Sink.TErrorTypes>;
 
   constructor(fields: Array<string>) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["$"]);
+    Source.init.call(this, fields);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
-    this.in.$ = new InPort("$", this);
-    for (const field of fields) {
-      this.out[field] = new OutPort(field, this);
-    }
   }
 
   public send(port: IInPort<T>, input: T, tag?: string): void {

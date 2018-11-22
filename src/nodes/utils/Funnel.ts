@@ -47,16 +47,11 @@ export class Funnel<P extends string, T> implements ISink, ISource, IEventSource
     TErrorPorts<Sink.TErrorTypes>;
 
   constructor(cases: Array<string>) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, cases);
+    Source.init.call(this, ["val", "case"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
-    for (const field of cases) {
-      this.in[field] = new InPort(field, this);
-    }
-    this.out.val = new OutPort("val", this);
-    this.out.case = new OutPort("case", this);
   }
 
   public send(
@@ -64,7 +59,7 @@ export class Funnel<P extends string, T> implements ISink, ISource, IEventSource
     value: T,
     tag?: string
   ): void {
-    this.out.case.send(<P> port.name, tag);
+    this.out.case.send(port.name as P, tag);
     this.out.val.send(value, tag);
   }
 }

@@ -42,14 +42,12 @@ export class Mapper<I, O> implements ISink, ISource, IEventSource, IErrorSource 
   private readonly cb: TMapperCallback<I, O>;
 
   constructor(cb: TMapperCallback<I, O>) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["$"]);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.cb = cb;
-    this.in.$ = new InPort("$", this);
-    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<I>, input: I, tag?: string): void {

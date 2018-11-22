@@ -47,15 +47,13 @@ export class Differ<V> implements ISink, ISource, IEventSource, IErrorSource {
   private buffer: Array<V>;
 
   constructor(cb: TEqualityCallback<V>) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["$"]);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.cb = cb;
     this.buffer = [];
-    this.in.$ = new InPort("$", this);
-    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<V>, value: V, tag?: string): void {

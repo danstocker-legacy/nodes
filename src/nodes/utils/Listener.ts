@@ -31,12 +31,11 @@ export class Listener implements ISink, IEventSource, IErrorSource {
   private readonly cb: TListenerCallback;
 
   constructor(cb: TListenerCallback) {
-    Sink.init.call(this);
+    Sink.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.cb = cb;
-    this.in.$ = new InPort("$", this);
   }
 
   public send(port: IInPort<any>, value: any, tag?: string): void {

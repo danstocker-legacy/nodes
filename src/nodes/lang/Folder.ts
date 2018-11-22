@@ -59,16 +59,14 @@ export class Folder<I, O> implements ISink, ISource, IEventSource, IErrorSource 
   private folded: O;
 
   constructor(cb: TFolderCallback<I, O>, initial?: O) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["$"]);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);
-    this.in.$ = new InPort("$", this);
-    this.out.$ = new OutPort("$", this);
   }
 
   public send(

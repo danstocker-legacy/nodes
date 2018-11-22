@@ -1,4 +1,4 @@
-import {TInPorts} from "../port";
+import {InPort, TInPorts} from "../port";
 import {ISink} from "./ISink";
 
 /**
@@ -10,7 +10,7 @@ import {ISink} from "./ISink";
  *   public in: TInPorts<...>
  *   ...
  *   constructor() {
- *     Sink.init.call(this);
+ *     Sink.init.call(this, ["foo", "bar"]);
  *     ...
  *   }
  * }
@@ -29,8 +29,12 @@ export namespace Sink {
 
   /**
    * Adds "in" port bundle.
+   * @param fields Port names in input port bundle.
    */
-  export function init(this: ISink): void {
-    this.in = <TInPorts<any>> {};
+  export function init(this: ISink, fields: Array<string> = []): void {
+    const ports = this.in = {} as TInPorts<any>;
+    for (const field of fields) {
+      ports[field] = new InPort(field, this);
+    }
   }
 }

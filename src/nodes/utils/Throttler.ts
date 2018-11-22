@@ -52,15 +52,12 @@ export class Throttler implements ISink, ISource, IEventSource, IErrorSource {
   private readonly buffer: Array<string>;
 
   constructor() {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["tag", "tick"]);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.buffer = [];
-    this.in.tag = new InPort("tag", this);
-    this.in.tick = new InPort("tick", this);
-    this.out.$ = new OutPort("$", this);
   }
 
   public send(

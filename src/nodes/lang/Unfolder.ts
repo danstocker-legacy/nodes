@@ -56,14 +56,12 @@ export class Unfolder<I, O> implements ISink, ISource, IEventSource, IErrorSourc
   private readonly cb: TUnfolderCallback<I, O>;
 
   constructor(cb: TUnfolderCallback<I, O>) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["$"]);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.cb = cb;
-    this.in.$ = new InPort("$", this);
-    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<I>, value: I, tag?: string): void {

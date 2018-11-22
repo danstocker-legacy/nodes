@@ -40,16 +40,12 @@ export class Tracker<T extends IAny = IAny>
   private readonly values: T;
 
   constructor(fields: Array<string>) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, fields);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
-    this.values = <T> {};
-    for (const field of fields) {
-      this.in[field] = new InPort(field, this);
-    }
-    this.out.$ = new OutPort("$", this);
+    this.values = {} as T;
   }
 
   public send(port: IInPort<T[keyof T]>, input: T[keyof T], tag?: string): void {

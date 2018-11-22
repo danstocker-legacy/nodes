@@ -10,7 +10,7 @@ describe("Sink", function () {
     public readonly svc: TEventPorts<any>;
 
     constructor() {
-      Sink.init.call(this);
+      Sink.init.call(this, ["foo"]);
       Serviced.init.call(this);
       EventSource.init.call(this);
     }

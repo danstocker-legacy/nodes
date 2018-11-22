@@ -54,15 +54,11 @@ export class Switch<P extends string, T>
    * @param cases Strings identifying possible cases for switch.
    */
   constructor(cases: Array<string>) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["$"]);
+    Source.init.call(this, cases);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
-    this.in.$ = new InPort("$", this);
-    for (const field of cases) {
-      this.out[field] = new OutPort(field, this);
-    }
   }
 
   public send(

@@ -10,7 +10,6 @@
       "generic"
     ],
     "only-arrow-functions": false,
-    "no-angle-bracket-type-assertion": false,
     "no-namespace": false,
     "space-before-function-paren": false,
     "trailing-comma": false

@@ -51,15 +51,13 @@ export class Debouncer implements ISink, ISource, IEventSource, IErrorSource {
    * @param ms Debounce delay in milliseconds.
    */
   constructor(ms: number) {
-    Sink.init.call(this);
-    Source.init.call(this);
+    Sink.init.call(this, ["$"]);
+    Source.init.call(this, ["$"]);
     Serviced.init.call(this);
     EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.ms = ms;
     this.buffer = [];
-    this.in.$ = new InPort("$", this);
-    this.out.$ = new OutPort("$", this);
   }
 
   public send(port: IInPort<any>, value: any, tag: string): void {
