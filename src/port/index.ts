@@ -1,7 +1,5 @@
-export {IInMetaPorts} from "./IInMetaPorts";
 export {IInPort} from "./IInPort";
 export {InPort} from "./InPort";
-export {IOutMetaPorts} from "./IOutMetaPorts";
 export {IOutPort} from "./IOutPort";
 export {IPort} from "./IPort";
 export {OutPort} from "./OutPort";
@@ -11,8 +9,6 @@ export {TEventPorts} from "./TEventPorts";
 export {TFailedInputPorts} from "./TFailedInputPorts";
 export {TInPorts} from "./TInPorts";
 export {TInPort} from "./TInPort";
-export {TMetaBundles} from "./TMetaBundles";
-export {TMetaPorts} from "./TMetaPorts";
 export {TOutPorts} from "./TOutPorts";
 export {TOutPort} from "./TOutPort";
 export {TPorts} from "./TPorts";
