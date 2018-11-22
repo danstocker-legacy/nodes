@@ -18,11 +18,6 @@ import {ISource} from "./ISource";
  */
 export namespace Source {
   /**
-   * Event types specific to source nodes.
-   */
-  export type TEventTypes = "PORT_CONNECT" | "PORT_DISCONNECT";
-
-  /**
    * Adds "out" port bundle.
    * @param fields Port names in output port bundle.
    */

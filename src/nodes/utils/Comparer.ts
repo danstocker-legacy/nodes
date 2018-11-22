@@ -1,23 +1,13 @@
 import {
   ErrorSource,
-  EventSource,
   IErrorSource,
-  IEventSource,
   ISink,
   ISource,
   Serviced,
   Sink,
   Source
 } from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {IInPort, TErrorPorts, TInPorts, TOutPorts} from "../../port";
 
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
 
@@ -36,16 +26,14 @@ interface IComparerInputs<V> {
  * const comparer = new Comparer<number>((a, b) => a === b);
  * comparer.in.$.send({a: 4, b: 5}); // outputs `false`
  */
-export class Comparer<V> implements ISink, ISource, IEventSource, IErrorSource {
+export class Comparer<V> implements ISink, ISource, IErrorSource {
   public readonly in: TInPorts<{
     $: IComparerInputs<V>;
   }>;
   public readonly out: TOutPorts<{
     $: boolean;
   }>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes | "CALLBACK_ERROR">;
+  public readonly svc: TErrorPorts<"CALLBACK_ERROR">;
 
   private readonly cb: TEqualityCallback<V>;
 
@@ -53,7 +41,6 @@ export class Comparer<V> implements ISink, ISource, IEventSource, IErrorSource {
     Sink.init.call(this, ["$"]);
     Source.init.call(this, ["$"]);
     Serviced.init.call(this);
-    EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.cb = cb;
   }

@@ -1,21 +1,5 @@
-import {
-  ErrorSource,
-  EventSource, IErrorSource,
-  IEventSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort, TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 import {IAny} from "../../utils";
 
 interface ITrackerOutputs<T> {
@@ -29,22 +13,15 @@ interface ITrackerOutputs<T> {
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
  */
-export class Tracker<T extends IAny = IAny>
-  implements ISink, ISource, IEventSource, IErrorSource {
+export class Tracker<T extends IAny = IAny> implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<ITrackerOutputs<T>>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes>;
 
   private readonly values: T;
 
   constructor(fields: Array<string>) {
     Sink.init.call(this, fields);
     Source.init.call(this, ["$"]);
-    Serviced.init.call(this);
-    EventSource.init.call(this);
-    ErrorSource.init.call(this);
     this.values = {} as T;
   }
 

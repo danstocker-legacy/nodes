@@ -1,23 +1,5 @@
-import {
-  ErrorSource,
-  EventSource,
-  IErrorSource,
-  IEventSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 interface IThrottlerInputs {
   tag: any;
@@ -40,23 +22,17 @@ type TThrottlerInput = IThrottlerInputs[keyof IThrottlerInputs];
  * throttler.in.tag.connect(...);
  * throttler.out.$.connect(...);
  */
-export class Throttler implements ISink, ISource, IEventSource, IErrorSource {
+export class Throttler implements ISink, ISource {
   public readonly in: TInPorts<IThrottlerInputs>;
   public readonly out: TOutPorts<{
     $: boolean
   }>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes>;
 
   private readonly buffer: Array<string>;
 
   constructor() {
     Sink.init.call(this, ["tag", "tick"]);
     Source.init.call(this, ["$"]);
-    Serviced.init.call(this);
-    EventSource.init.call(this);
-    ErrorSource.init.call(this);
     this.buffer = [];
   }
 

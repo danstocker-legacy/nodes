@@ -1,23 +1,13 @@
 import {
   ErrorSource,
-  EventSource,
   IErrorSource,
-  IEventSource,
   ISink,
   ISource,
   Serviced,
   Sink,
   Source
 } from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {IInPort, TErrorPorts, TInPorts, TOutPorts} from "../../port";
 import {copy} from "../../utils";
 
 interface IFolderInput<V> {
@@ -43,16 +33,14 @@ export type TFolderCallback<I, O> = (
  * sum = new Folder((curr, next) => curr + next, 0);
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
-export class Folder<I, O> implements ISink, ISource, IEventSource, IErrorSource {
+export class Folder<I, O> implements ISink, ISource, IErrorSource {
   public readonly in: TInPorts<{
     $: IFolderInput<I>;
   }>;
   public readonly out: TOutPorts<{
     $: O;
   }>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes | "CALLBACK_ERROR">;
+  public readonly svc: TErrorPorts<"CALLBACK_ERROR">;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;
@@ -62,7 +50,6 @@ export class Folder<I, O> implements ISink, ISource, IEventSource, IErrorSource 
     Sink.init.call(this, ["$"]);
     Source.init.call(this, ["$"]);
     Serviced.init.call(this);
-    EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.cb = cb;
     this.initial = initial;

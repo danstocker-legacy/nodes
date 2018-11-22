@@ -1,23 +1,13 @@
 import {
   ErrorSource,
-  EventSource,
   IErrorSource,
-  IEventSource,
   ISink,
   ISource,
   Serviced,
   Sink,
   Source
 } from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {IInPort, TErrorPorts, TInPorts, TOutPorts} from "../../port";
 
 /**
  * Callback generator to be passed to an Unfolder.
@@ -42,16 +32,14 @@ export type TUnfolderCallback<I, O> = (value: I) => IterableIterator<O>;
  * }));
  * @see {@link https://en.wikipedia.org/wiki/Anamorphism}
  */
-export class Unfolder<I, O> implements ISink, ISource, IEventSource, IErrorSource {
+export class Unfolder<I, O> implements ISink, ISource, IErrorSource {
   public readonly in: TInPorts<{
     $: I
   }>;
   public readonly out: TOutPorts<{
     $: O
   }>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes | "CALLBACK_ERROR">;
+  public readonly svc: TErrorPorts<"CALLBACK_ERROR">;
 
   private readonly cb: TUnfolderCallback<I, O>;
 
@@ -59,7 +47,6 @@ export class Unfolder<I, O> implements ISink, ISource, IEventSource, IErrorSourc
     Sink.init.call(this, ["$"]);
     Source.init.call(this, ["$"]);
     Serviced.init.call(this);
-    EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.cb = cb;
   }

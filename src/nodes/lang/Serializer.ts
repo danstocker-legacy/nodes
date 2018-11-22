@@ -1,23 +1,5 @@
-import {
-  ErrorSource,
-  EventSource,
-  IErrorSource,
-  IEventSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 /**
  * Forwards inputs matching the order of the reference input `tag`.
@@ -25,7 +7,7 @@ import {
  * let node: Serializer<number>;
  * node = new Serializer();
  */
-export class Serializer<V> implements ISink, ISource, IEventSource, IErrorSource {
+export class Serializer<V> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: V;
     tag: string;
@@ -33,9 +15,6 @@ export class Serializer<V> implements ISink, ISource, IEventSource, IErrorSource
   public readonly out: TOutPorts<{
     $: V;
   }>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes>;
 
   private readonly inputs: Map<string, V>;
   private readonly order: Array<string>;
@@ -43,9 +22,6 @@ export class Serializer<V> implements ISink, ISource, IEventSource, IErrorSource
   constructor() {
     Sink.init.call(this, ["$", "tag"]);
     Source.init.call(this, ["$"]);
-    Serviced.init.call(this);
-    EventSource.init.call(this);
-    ErrorSource.init.call(this);
     this.inputs = new Map();
     this.order = [];
   }

@@ -1,23 +1,5 @@
-import {
-  ErrorSource,
-  EventSource,
-  IErrorSource,
-  IEventSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 type TFunnelInputs<P extends string, T> = {
   [K in P]: T
@@ -36,22 +18,16 @@ type TFunnelInputs<P extends string, T> = {
  * let funnel: Funnel<"foo" | "bar" | "baz", number>;
  * funnel = new Funnel(["foo", "bar", "baz"]);
  */
-export class Funnel<P extends string, T> implements ISink, ISource, IEventSource, IErrorSource {
+export class Funnel<P extends string, T> implements ISink, ISource {
   public readonly in: TInPorts<TFunnelInputs<P, T>>;
   public readonly out: TOutPorts<{
     val: T;
     case: P;
   }>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes>;
 
   constructor(cases: Array<string>) {
     Sink.init.call(this, cases);
     Source.init.call(this, ["val", "case"]);
-    Serviced.init.call(this);
-    EventSource.init.call(this);
-    ErrorSource.init.call(this);
   }
 
   public send(

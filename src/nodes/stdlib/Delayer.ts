@@ -1,37 +1,16 @@
-import {
-  ErrorSource,
-  EventSource,
-  IErrorSource,
-  IEventSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 /**
  * Forwards input with the specified delay.
  */
-export class Delayer<V> implements ISink, ISource, IEventSource, IErrorSource {
+export class Delayer<V> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: V
   }>;
   public readonly out: TOutPorts<{
     $: V
   }>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes>;
 
   private readonly ms: number;
 
@@ -41,9 +20,6 @@ export class Delayer<V> implements ISink, ISource, IEventSource, IErrorSource {
   constructor(ms: number) {
     Sink.init.call(this, ["$"]);
     Source.init.call(this, ["$"]);
-    Serviced.init.call(this);
-    EventSource.init.call(this);
-    ErrorSource.init.call(this);
     this.ms = ms;
   }
 

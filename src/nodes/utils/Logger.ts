@@ -1,26 +1,10 @@
-import {
-  ErrorSource,
-  EventSource, IErrorSource,
-  IEventSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort, TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
-export class Logger implements ISink, ISource, IEventSource, IErrorSource {
+export class Logger implements ISink, ISource {
   public readonly in: TInPorts<{
     log: any;
     warn: any;
@@ -31,16 +15,10 @@ export class Logger implements ISink, ISource, IEventSource, IErrorSource {
     warn: any;
     err: any;
   }>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes>;
 
   constructor() {
     Sink.init.call(this, ["err", "log", "warn"]);
     Source.init.call(this, ["err", "log", "warn"]);
-    Serviced.init.call(this);
-    EventSource.init.call(this);
-    ErrorSource.init.call(this);
   }
 
   public send(port: IInPort<any>, input: any, tag?: string): void {

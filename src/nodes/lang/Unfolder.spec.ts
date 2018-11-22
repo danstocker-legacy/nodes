@@ -4,7 +4,6 @@ describe("Unfolder", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Unfolder(() => null);
-      expect(node.svc.evt).toBeDefined();
       expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });

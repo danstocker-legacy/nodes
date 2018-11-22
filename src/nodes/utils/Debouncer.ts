@@ -1,23 +1,5 @@
-import {
-  ErrorSource,
-  EventSource,
-  IErrorSource,
-  IEventSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 /**
  * Emits a boolean with the last received input tag: `true` when the specified
@@ -32,16 +14,13 @@ import {
  * debouncer.in.$.connect(...);
  * debouncer.out.$.connect(...);
  */
-export class Debouncer implements ISink, ISource, IEventSource, IErrorSource {
+export class Debouncer implements ISink, ISource {
   public readonly in: TInPorts<{
     $: any
   }>;
   public readonly out: TOutPorts<{
     $: boolean
   }>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes>;
 
   private readonly ms: number;
   private readonly buffer: Array<string>;
@@ -53,9 +32,6 @@ export class Debouncer implements ISink, ISource, IEventSource, IErrorSource {
   constructor(ms: number) {
     Sink.init.call(this, ["$"]);
     Source.init.call(this, ["$"]);
-    Serviced.init.call(this);
-    EventSource.init.call(this);
-    ErrorSource.init.call(this);
     this.ms = ms;
     this.buffer = [];
   }

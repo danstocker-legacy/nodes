@@ -1,23 +1,13 @@
 import {
   ErrorSource,
-  EventSource,
   IErrorSource,
-  IEventSource,
   ISink,
   ISource,
   Serviced,
   Sink,
   Source
 } from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {IInPort, TErrorPorts, TInPorts, TOutPorts} from "../../port";
 import {TEqualityCallback} from "./Comparer";
 
 /**
@@ -32,16 +22,14 @@ import {TEqualityCallback} from "./Comparer";
  * differ.in.$.send(5) // outputs `false` (not different)
  * differ.in.$.send(4) // outputs `true` (is different)
  */
-export class Differ<V> implements ISink, ISource, IEventSource, IErrorSource {
+export class Differ<V> implements ISink, ISource, IErrorSource {
   public readonly in: TInPorts<{
     $: V;
   }>;
   public readonly out: TOutPorts<{
     $: boolean;
   }>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes | "CALLBACK_ERROR">;
+  public readonly svc: TErrorPorts<"CALLBACK_ERROR">;
 
   private readonly cb: TEqualityCallback<V>;
   private buffer: Array<V>;
@@ -50,7 +38,6 @@ export class Differ<V> implements ISink, ISource, IEventSource, IErrorSource {
     Sink.init.call(this, ["$"]);
     Source.init.call(this, ["$"]);
     Serviced.init.call(this);
-    EventSource.init.call(this);
     ErrorSource.init.call(this);
     this.cb = cb;
     this.buffer = [];

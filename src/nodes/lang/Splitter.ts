@@ -1,23 +1,5 @@
-import {
-  ErrorSource,
-  EventSource,
-  IErrorSource,
-  IEventSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 import {IAny} from "../../utils";
 
 /**
@@ -29,22 +11,15 @@ import {IAny} from "../../utils";
  * splitter.out.foo.connect(B.in.$);
  * splitter.out.bar.connect(C.in.$);
  */
-export class Splitter<T extends IAny>
-  implements ISink, ISource, IEventSource, IErrorSource {
+export class Splitter<T extends IAny> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: T;
   }>;
   public readonly out: TOutPorts<T>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes>;
 
   constructor(fields: Array<string>) {
     Sink.init.call(this, ["$"]);
     Source.init.call(this, fields);
-    Serviced.init.call(this);
-    EventSource.init.call(this);
-    ErrorSource.init.call(this);
   }
 
   public send(port: IInPort<T>, input: T, tag?: string): void {

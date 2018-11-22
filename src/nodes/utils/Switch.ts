@@ -1,23 +1,13 @@
 import {
   ErrorSource,
-  EventSource,
   IErrorSource,
-  IEventSource,
   ISink,
   ISource,
   Serviced,
   Sink,
   Source
 } from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {IInPort, TErrorPorts, TInPorts, TOutPorts} from "../../port";
 
 interface ISwitchInputs<P extends string, T> {
   val: T;
@@ -41,14 +31,12 @@ type TSwitchOutputs<P extends string, T> = {
  * switch = new Switch(["foo", "bar", "baz");
  */
 export class Switch<P extends string, T>
-  implements ISink, ISource, IEventSource, IErrorSource {
+  implements ISink, ISource, IErrorSource {
   public readonly in: TInPorts<{
     $: ISwitchInputs<P, T>
   }>;
   public readonly out: TOutPorts<TSwitchOutputs<P, T>>;
-  public svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes | "INVALID_CASE">;
+  public svc: TErrorPorts<"INVALID_CASE">;
 
   /**
    * @param cases Strings identifying possible cases for switch.
@@ -57,7 +45,6 @@ export class Switch<P extends string, T>
     Sink.init.call(this, ["$"]);
     Source.init.call(this, cases);
     Serviced.init.call(this);
-    EventSource.init.call(this);
     ErrorSource.init.call(this);
   }
 

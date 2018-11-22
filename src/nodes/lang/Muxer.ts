@@ -1,23 +1,5 @@
-import {
-  ErrorSource,
-  EventSource,
-  IErrorSource,
-  IEventSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {
-  IInPort,
-  InPort,
-  OutPort,
-  TErrorPorts,
-  TEventPorts,
-  TInPorts,
-  TOutPorts
-} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 import {IAny, IMuxed} from "../../utils";
 
 /**
@@ -30,22 +12,15 @@ import {IAny, IMuxed} from "../../utils";
  * muxer.in.foo.send(5);
  * // outputs `{val: 5, name: "foo"}` on port "$"
  */
-export class Muxer<T extends IAny = IAny>
-  implements ISink, ISource, IEventSource, IErrorSource {
+export class Muxer<T extends IAny = IAny> implements ISink, ISource {
   public readonly in: TInPorts<T>;
   public readonly out: TOutPorts<{
     $: IMuxed<T>;
   }>;
-  public readonly svc:
-    TEventPorts<Sink.TEventTypes | Source.TEventTypes> &
-    TErrorPorts<Sink.TErrorTypes>;
 
   constructor(fields: Array<string>) {
     Sink.init.call(this, fields);
     Source.init.call(this, ["$"]);
-    Serviced.init.call(this);
-    EventSource.init.call(this);
-    ErrorSource.init.call(this);
   }
 
   public send(port: IInPort<T[keyof T]>, input: T[keyof T], tag?: string): void {

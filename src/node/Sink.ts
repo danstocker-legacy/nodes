@@ -18,16 +18,6 @@ import {ISink} from "./ISink";
  */
 export namespace Sink {
   /**
-   * Event types specific to sink nodes.
-   */
-  export type TEventTypes = "PORT_CONNECT" | "PORT_DISCONNECT";
-
-  /**
-   * Error types specific to sink nodes.
-   */
-  export type TErrorTypes = "PORT_ALREADY_CONNECTED";
-
-  /**
    * Adds "in" port bundle.
    * @param fields Port names in input port bundle.
    */
