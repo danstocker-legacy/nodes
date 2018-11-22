@@ -43,18 +43,6 @@ describe("OutPort", function () {
       localPort.connect(remotePort, "1");
       expect(remotePort.connect).toHaveBeenCalledWith(localPort, "1");
     });
-
-    it("should send event", function () {
-      spyOn(local.svc.evt, "send");
-      localPort.connect(remotePort, "1");
-      expect(local.svc.evt.send).toHaveBeenCalledWith({
-        payload: {
-          peer: remotePort,
-          port: localPort
-        },
-        type: "PORT_CONNECT"
-      }, "1");
-    });
   });
 
   describe("#disconnect()", function () {
@@ -80,18 +68,6 @@ describe("OutPort", function () {
       spyOn(remotePort, "disconnect");
       localPort.disconnect(remotePort, "1");
       expect(remotePort.disconnect).toHaveBeenCalledWith("1");
-    });
-
-    it("should send event", function () {
-      spyOn(local.svc.evt, "send");
-      localPort.disconnect(remotePort, "1");
-      expect(local.svc.evt.send).toHaveBeenCalledWith({
-        payload: {
-          peer: remotePort,
-          port: localPort
-        },
-        type: "PORT_DISCONNECT"
-      }, "1");
     });
 
     describe("when peer is omitted", function () {

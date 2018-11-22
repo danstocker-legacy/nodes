@@ -1,4 +1,4 @@
-import {IErrorSource, IEventSource, ISink} from "../node";
+import {ISink} from "../node";
 import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
@@ -13,7 +13,7 @@ export class InPort<V> extends Port<V> implements IInPort<V> {
    * Node the port is assigned to.
    * Must be sink node that is capable of emitting events.
    */
-  public node: ISink & IEventSource & IErrorSource;
+  public node: ISink;
 
   /**
    * Remote port the current port is connecting to.
@@ -25,7 +25,7 @@ export class InPort<V> extends Port<V> implements IInPort<V> {
    * @param name Identifies port in the context of its assigned node.
    * @param node Node the port is assigned to.
    */
-  constructor(name: string, node: ISink & IEventSource & IErrorSource) {
+  constructor(name: string, node: ISink) {
     super(name, node);
   }
 
@@ -41,21 +41,6 @@ export class InPort<V> extends Port<V> implements IInPort<V> {
     if (!this.peer) {
       this.peer = peer;
       peer.connect(this, tag);
-      this.node.svc.evt.send({
-        payload: {
-          peer,
-          port: this
-        },
-        type: "PORT_CONNECT"
-      }, tag);
-    } else if (peer !== this.peer) {
-      this.node.svc.err.send({
-        payload: {
-          peer,
-          port: this
-        },
-        type: "PORT_ALREADY_CONNECTED"
-      }, tag);
     }
   }
 
@@ -69,13 +54,6 @@ export class InPort<V> extends Port<V> implements IInPort<V> {
     if (peer) {
       this.peer = undefined;
       peer.disconnect(this, tag);
-      this.node.svc.evt.send({
-        payload: {
-          peer,
-          port: this
-        },
-        type: "PORT_DISCONNECT"
-      }, tag);
     }
   }
 

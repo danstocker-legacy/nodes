@@ -1,4 +1,3 @@
-import {IEventSource} from "../node";
 import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
@@ -9,12 +8,6 @@ import {Port} from "./Port";
  * Assigned node must implement the IEventSource interface.
  */
 export class OutPort<V> extends Port<V> implements IOutPort<V> {
-  /**
-   * Node the port is assigned to.
-   * Must be capable of emitting events.
-   */
-  public node: IEventSource;
-
   /**
    * Remote ports the current port is connecting to.
    * When set is empty, the port is not connected.
@@ -41,13 +34,6 @@ export class OutPort<V> extends Port<V> implements IOutPort<V> {
     if (!peers.has(peer)) {
       peers.add(peer);
       peer.connect(this, tag);
-      this.node.svc.evt.send({
-        payload: {
-          peer,
-          port: this
-        },
-        type: "PORT_CONNECT"
-      }, tag);
     }
   }
 
@@ -66,13 +52,6 @@ export class OutPort<V> extends Port<V> implements IOutPort<V> {
     } else if (peers.has(peer)) {
       peers.delete(peer);
       peer.disconnect(tag);
-      this.node.svc.evt.send({
-        payload: {
-          peer,
-          port: this
-        },
-        type: "PORT_DISCONNECT"
-      }, tag);
     }
   }
 
