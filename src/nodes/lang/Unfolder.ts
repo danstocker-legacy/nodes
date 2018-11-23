@@ -1,13 +1,5 @@
-import {
-  ErrorSource,
-  IErrorSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {IInPort, TErrorPorts, TInPorts, TOutPorts} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 /**
  * Callback generator to be passed to an Unfolder.
@@ -32,22 +24,19 @@ export type TUnfolderCallback<I, O> = (value: I) => IterableIterator<O>;
  * }));
  * @see {@link https://en.wikipedia.org/wiki/Anamorphism}
  */
-export class Unfolder<I, O> implements ISink, ISource, IErrorSource {
+export class Unfolder<I, O> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: I
   }>;
   public readonly out: TOutPorts<{
     $: O
   }>;
-  public readonly svc: TErrorPorts<"CALLBACK_ERROR">;
 
   private readonly cb: TUnfolderCallback<I, O>;
 
   constructor(cb: TUnfolderCallback<I, O>) {
     Sink.init.call(this, ["$"]);
     Source.init.call(this, ["$"]);
-    Serviced.init.call(this);
-    ErrorSource.init.call(this);
     this.cb = cb;
   }
 
@@ -58,13 +47,7 @@ export class Unfolder<I, O> implements ISink, ISource, IErrorSource {
         this.out.$.send(next, tag);
       }
     } catch (err) {
-      this.svc.err.send({
-        payload: {
-          err,
-          node: this
-        },
-        type: "CALLBACK_ERROR"
-      }, tag);
+      // TODO: Bounce inputs
     }
   }
 }

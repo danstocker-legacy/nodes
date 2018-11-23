@@ -1,13 +1,5 @@
-import {
-  ErrorSource,
-  IErrorSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {IInPort, TErrorPorts, TInPorts, TOutPorts} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 import {copy} from "../../utils";
 
 interface IFolderInput<V> {
@@ -33,14 +25,13 @@ export type TFolderCallback<I, O> = (
  * sum = new Folder((curr, next) => curr + next, 0);
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
-export class Folder<I, O> implements ISink, ISource, IErrorSource {
+export class Folder<I, O> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: IFolderInput<I>;
   }>;
   public readonly out: TOutPorts<{
     $: O;
   }>;
-  public readonly svc: TErrorPorts<"CALLBACK_ERROR">;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;
@@ -49,8 +40,6 @@ export class Folder<I, O> implements ISink, ISource, IErrorSource {
   constructor(cb: TFolderCallback<I, O>, initial?: O) {
     Sink.init.call(this, ["$"]);
     Source.init.call(this, ["$"]);
-    Serviced.init.call(this);
-    ErrorSource.init.call(this);
     this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);
@@ -71,13 +60,7 @@ export class Folder<I, O> implements ISink, ISource, IErrorSource {
         const folded = this.folded = this.cb(curr, next, tag);
         this.out.$.send(folded, tag);
       } catch (err) {
-        this.svc.err.send({
-          payload: {
-            err,
-            node: this
-          },
-          type: "CALLBACK_ERROR"
-        }, tag);
+        // TODO: Bounce inputs
       }
     }
   }

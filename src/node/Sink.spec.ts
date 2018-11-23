@@ -1,11 +1,10 @@
-import {TEventPorts, TInPorts} from "../port";
+import {TInPorts} from "../port";
 import {ISink} from "./ISink";
 import {Sink} from "./Sink";
 
 describe("Sink", function () {
   class TestSink implements ISink {
     public readonly in: TInPorts<{ foo: number }>;
-    public readonly svc: TEventPorts<any>;
 
     constructor() {
       Sink.init.call(this, ["foo"]);

@@ -1,27 +1,16 @@
-import {IInPort, InPort, TErrorPorts, TEventPorts, TInPorts} from "../port";
+import {IInPort, InPort, TInPorts} from "../port";
 import {DynamicSink} from "./DynamicSink";
-import {ErrorSource} from "./ErrorSource";
-import {EventSource} from "./EventSource";
 import {IDynamicSink} from "./IDynamicSink";
-import {IErrorSource} from "./IErrorSource";
-import {IEventSource} from "./IEventSource";
-import {Serviced} from "./Serviced";
 import {Sink} from "./Sink";
 
 describe("DynamicSink", function () {
-  class TestDynamicSink implements IDynamicSink, IEventSource, IErrorSource {
+  class TestDynamicSink implements IDynamicSink {
     public readonly in: TInPorts<{ [key: string]: any }>;
-    public readonly svc:
-      TEventPorts<DynamicSink.TEventTypes> &
-      TErrorPorts<DynamicSink.TErrorTypes>;
     public addPort = DynamicSink.addPort;
     public deletePort = DynamicSink.deletePort;
 
     constructor() {
       Sink.init.call(this);
-      Serviced.init.call(this);
-      EventSource.init.call(this);
-      ErrorSource.init.call(this);
     }
 
     public send(): void {
@@ -42,19 +31,6 @@ describe("DynamicSink", function () {
       expect(node.in.foo).toBe(port);
     });
 
-    it("should emit PORT_ADD event", function () {
-      const port = new InPort("foo", node);
-      spyOn(node.svc.evt, "send");
-      node.addPort(port, "1");
-      expect(node.svc.evt.send).toHaveBeenCalledWith({
-        payload: {
-          node,
-          port
-        },
-        type: "PORT_ADD"
-      }, "1");
-    });
-
     describe("when port already added", function () {
       let port: InPort<number>;
 
@@ -63,16 +39,9 @@ describe("DynamicSink", function () {
         node.addPort(port);
       });
 
-      it("should send error", function () {
-        spyOn(node.svc.err, "send");
-        node.addPort(port, "1");
-        expect(node.svc.err.send).toHaveBeenCalledWith({
-          payload: {
-            node,
-            port
-          },
-          type: "PORT_ADD_FAILURE"
-        }, "1");
+      it("should not add port", function () {
+        node.addPort(new InPort("bar", node), "2");
+        expect(node.in.foo).toBe(port);
       });
     });
   });
@@ -90,18 +59,6 @@ describe("DynamicSink", function () {
     it("should remove port", function () {
       node.deletePort(port);
       expect(node.in.foo).toBeUndefined();
-    });
-
-    it("should emit PORT_DELETE event", function () {
-      spyOn(node.svc.evt, "send");
-      node.deletePort(port, "1");
-      expect(node.svc.evt.send).toHaveBeenCalledWith({
-        payload: {
-          node,
-          port
-        },
-        type: "PORT_DELETE"
-      }, "1");
     });
   });
 });

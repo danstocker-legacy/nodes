@@ -1,13 +1,5 @@
-import {
-  ErrorSource,
-  IErrorSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {IInPort, TErrorPorts, TInPorts, TOutPorts} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
 
@@ -18,22 +10,19 @@ export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
  * // static callback
  * const mapper = new Mapper<number, string>(String);
  */
-export class Mapper<I, O> implements ISink, ISource, IErrorSource {
+export class Mapper<I, O> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: I;
   }>;
   public readonly out: TOutPorts<{
     $: O;
   }>;
-  public readonly svc: TErrorPorts<"CALLBACK_ERROR">;
 
   private readonly cb: TMapperCallback<I, O>;
 
   constructor(cb: TMapperCallback<I, O>) {
     Sink.init.call(this, ["$"]);
     Source.init.call(this, ["$"]);
-    Serviced.init.call(this);
-    ErrorSource.init.call(this);
     this.cb = cb;
   }
 
@@ -43,13 +32,7 @@ export class Mapper<I, O> implements ISink, ISource, IErrorSource {
         const mapped = this.cb(input, tag);
         this.out.$.send(mapped, tag);
       } catch (err) {
-        this.svc.err.send({
-          payload: {
-            err,
-            node: this
-          },
-          type: "CALLBACK_ERROR"
-        }, tag);
+        // TODO: Bounce inputs
       }
     }
   }

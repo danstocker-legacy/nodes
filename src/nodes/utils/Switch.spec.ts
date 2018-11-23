@@ -29,16 +29,7 @@ describe("Switch", function () {
     });
 
     describe("on invalid case", function () {
-      it("should send error", function () {
-        spyOn(node.svc.err, "send");
-        node.send(node.in.$, {case: "quux", val: 5} as any, "1");
-        expect(node.svc.err.send).toHaveBeenCalledWith({
-          payload: {
-            case: "quux"
-          },
-          type: "INVALID_CASE"
-        }, "1");
-      });
+      it("should bounce inputs");
     });
   });
 });

@@ -1,11 +1,10 @@
-import {TEventPorts, TOutPorts} from "../port";
+import {TOutPorts} from "../port";
 import {ISource} from "./ISource";
 import {Source} from "./Source";
 
 describe("Source", function () {
   class TestSource implements ISource {
     public readonly out: TOutPorts<{ foo: number }>;
-    public readonly svc: TEventPorts<any>;
 
     constructor() {
       Source.init.call(this);

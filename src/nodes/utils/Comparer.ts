@@ -1,13 +1,5 @@
-import {
-  ErrorSource,
-  IErrorSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {IInPort, TErrorPorts, TInPorts, TOutPorts} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
 
@@ -26,22 +18,19 @@ interface IComparerInputs<V> {
  * const comparer = new Comparer<number>((a, b) => a === b);
  * comparer.in.$.send({a: 4, b: 5}); // outputs `false`
  */
-export class Comparer<V> implements ISink, ISource, IErrorSource {
+export class Comparer<V> implements ISink, ISource {
   public readonly in: TInPorts<{
     $: IComparerInputs<V>;
   }>;
   public readonly out: TOutPorts<{
     $: boolean;
   }>;
-  public readonly svc: TErrorPorts<"CALLBACK_ERROR">;
 
   private readonly cb: TEqualityCallback<V>;
 
   constructor(cb: TEqualityCallback<V>) {
     Sink.init.call(this, ["$"]);
     Source.init.call(this, ["$"]);
-    Serviced.init.call(this);
-    ErrorSource.init.call(this);
     this.cb = cb;
   }
 
@@ -55,13 +44,7 @@ export class Comparer<V> implements ISink, ISource, IErrorSource {
         const equals = this.cb(value.a, value.b, tag);
         this.out.$.send(equals, tag);
       } catch (err) {
-        this.svc.err.send({
-          payload: {
-            err,
-            node: this
-          },
-          type: "CALLBACK_ERROR"
-        }, tag);
+        // TODO: Bounce inputs
       }
     }
   }

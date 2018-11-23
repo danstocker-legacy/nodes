@@ -32,17 +32,7 @@ describe("Comparer", function () {
         });
       });
 
-      it("should send error", function () {
-        spyOn(node.svc.err, "send");
-        node.send(node.in.$, {a: 5, b: 5}, "1");
-        expect(node.svc.err.send).toHaveBeenCalledWith({
-          payload: {
-            err: error,
-            node
-          },
-          type: "CALLBACK_ERROR"
-        }, "1");
-      });
+      it("should bounce inputs");
     });
   });
 });

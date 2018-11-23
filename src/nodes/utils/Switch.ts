@@ -1,13 +1,5 @@
-import {
-  ErrorSource,
-  IErrorSource,
-  ISink,
-  ISource,
-  Serviced,
-  Sink,
-  Source
-} from "../../node";
-import {IInPort, TErrorPorts, TInPorts, TOutPorts} from "../../port";
+import {ISink, ISource, Sink, Source} from "../../node";
+import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 interface ISwitchInputs<P extends string, T> {
   val: T;
@@ -31,12 +23,11 @@ type TSwitchOutputs<P extends string, T> = {
  * switch = new Switch(["foo", "bar", "baz");
  */
 export class Switch<P extends string, T>
-  implements ISink, ISource, IErrorSource {
+  implements ISink, ISource {
   public readonly in: TInPorts<{
     $: ISwitchInputs<P, T>
   }>;
   public readonly out: TOutPorts<TSwitchOutputs<P, T>>;
-  public svc: TErrorPorts<"INVALID_CASE">;
 
   /**
    * @param cases Strings identifying possible cases for switch.
@@ -44,8 +35,6 @@ export class Switch<P extends string, T>
   constructor(cases: Array<string>) {
     Sink.init.call(this, ["$"]);
     Source.init.call(this, cases);
-    Serviced.init.call(this);
-    ErrorSource.init.call(this);
   }
 
   public send(
@@ -59,12 +48,7 @@ export class Switch<P extends string, T>
       if (outPort) {
         outPort.send(value.val, tag);
       } else {
-        this.svc.err.send({
-          payload: {
-            case: name
-          },
-          type: "INVALID_CASE"
-        }, tag);
+        // TODO: Bounce inputs
       }
     }
   }
