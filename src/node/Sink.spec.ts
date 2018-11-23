@@ -1,7 +1,5 @@
 import {TEventPorts, TInPorts} from "../port";
-import {EventSource} from "./EventSource";
 import {ISink} from "./ISink";
-import {Serviced} from "./Serviced";
 import {Sink} from "./Sink";
 
 describe("Sink", function () {
@@ -11,8 +9,6 @@ describe("Sink", function () {
 
     constructor() {
       Sink.init.call(this, ["foo"]);
-      Serviced.init.call(this);
-      EventSource.init.call(this);
     }
 
     public send(): void {
