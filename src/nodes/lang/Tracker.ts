@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 import {IAny} from "../../utils";
 
@@ -20,8 +20,8 @@ export class Tracker<T extends IAny = IAny> implements ISink, ISource {
   private readonly values: T;
 
   constructor(fields: Array<string>) {
-    Sink.init.call(this, fields);
-    Source.init.call(this, ["$"]);
+    MSink.init.call(this, fields);
+    MSource.init.call(this, ["$"]);
     this.values = {} as T;
   }
 

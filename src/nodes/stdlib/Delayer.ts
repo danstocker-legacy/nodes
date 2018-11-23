@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 /**
@@ -18,8 +18,8 @@ export class Delayer<V> implements ISink, ISource {
    * @param ms Delay in milliseconds.
    */
   constructor(ms: number) {
-    Sink.init.call(this, ["$"]);
-    Source.init.call(this, ["$"]);
+    MSink.init.call(this, ["$"]);
+    MSource.init.call(this, ["$"]);
     this.ms = ms;
   }
 

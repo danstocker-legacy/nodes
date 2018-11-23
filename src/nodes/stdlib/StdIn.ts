@@ -1,4 +1,4 @@
-import {ISource, Source} from "../../node";
+import {ISource, MSource} from "../../node";
 import {OutPort, TOutPorts} from "../../port";
 
 /**
@@ -10,7 +10,7 @@ export class StdIn implements ISource {
   }>;
 
   constructor() {
-    Source.init.call(this);
+    MSource.init.call(this);
     this.out.$ = new OutPort("$", this);
     process.stdin.on("readable", this.onReadable.bind(this));
   }

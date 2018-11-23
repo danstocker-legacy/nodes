@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
@@ -21,8 +21,8 @@ export class Mapper<I, O> implements ISink, ISource {
   private readonly cb: TMapperCallback<I, O>;
 
   constructor(cb: TMapperCallback<I, O>) {
-    Sink.init.call(this, ["$"]);
-    Source.init.call(this, ["$"]);
+    MSink.init.call(this, ["$"]);
+    MSource.init.call(this, ["$"]);
     this.cb = cb;
   }
 

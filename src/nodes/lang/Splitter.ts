@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 import {IAny} from "../../utils";
 
@@ -18,8 +18,8 @@ export class Splitter<T extends IAny> implements ISink, ISource {
   public readonly out: TOutPorts<T>;
 
   constructor(fields: Array<string>) {
-    Sink.init.call(this, ["$"]);
-    Source.init.call(this, fields);
+    MSink.init.call(this, ["$"]);
+    MSource.init.call(this, fields);
   }
 
   public send(port: IInPort<T>, input: T, tag?: string): void {

@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 /**
@@ -35,8 +35,8 @@ export class Unfolder<I, O> implements ISink, ISource {
   private readonly cb: TUnfolderCallback<I, O>;
 
   constructor(cb: TUnfolderCallback<I, O>) {
-    Sink.init.call(this, ["$"]);
-    Source.init.call(this, ["$"]);
+    MSink.init.call(this, ["$"]);
+    MSource.init.call(this, ["$"]);
     this.cb = cb;
   }
 

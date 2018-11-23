@@ -1,16 +1,16 @@
 import {IOutPort, OutPort, TOutPorts} from "../port";
-import {DynamicSource} from "./DynamicSource";
 import {IDynamicSource} from "./IDynamicSource";
-import {Source} from "./Source";
+import {MDynamicSource} from "./MDynamicSource";
+import {MSource} from "./MSource";
 
-describe("DynamicSource", function () {
+describe("MDynamicSource", function () {
   class TestDynamicSource implements IDynamicSource {
     public readonly out: TOutPorts<{ [key: string]: any }>;
-    public addPort = DynamicSource.addPort;
-    public deletePort = DynamicSource.deletePort;
+    public addPort = MDynamicSource.addPort;
+    public deletePort = MDynamicSource.deletePort;
 
     constructor() {
-      Source.init.call(this);
+      MSource.init.call(this);
     }
   }
 

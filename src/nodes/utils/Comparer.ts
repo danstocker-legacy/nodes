@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
@@ -29,8 +29,8 @@ export class Comparer<V> implements ISink, ISource {
   private readonly cb: TEqualityCallback<V>;
 
   constructor(cb: TEqualityCallback<V>) {
-    Sink.init.call(this, ["$"]);
-    Source.init.call(this, ["$"]);
+    MSink.init.call(this, ["$"]);
+    MSource.init.call(this, ["$"]);
     this.cb = cb;
   }
 

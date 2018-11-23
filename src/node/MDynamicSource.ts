@@ -10,19 +10,19 @@ import {IDynamicSource} from "./IDynamicSource";
  * @example
  * class DynamicSinkNode implements IDynamicSource, IEventSource, IErrorSource {
  *   public out: TOutPorts<...>
- *   public addPort = DynamicSource.addPort;
- *   public deletePort = DynamicSource.deletePort;
+ *   public addPort = MDynamicSource.addPort;
+ *   public deletePort = MDynamicSource.deletePort;
  *   ...
  *   constructor() {
- *     Source.init.call(this);
- *     DynamicSource.init.call(this);
+ *     MSource.init.call(this);
+ *     MDynamicSource.init.call(this);
  *     ...
  *   }
  * }
  * @see ISource
- * @see Source
+ * @see MSource
  */
-export namespace DynamicSource {
+export namespace MDynamicSource {
   /**
    * Adds the specified port to the output port bundle.
    * Raises exception when port already exists.

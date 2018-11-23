@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 /**
@@ -20,8 +20,8 @@ export class Serializer<V> implements ISink, ISource {
   private readonly order: Array<string>;
 
   constructor() {
-    Sink.init.call(this, ["$", "tag"]);
-    Source.init.call(this, ["$"]);
+    MSink.init.call(this, ["$", "tag"]);
+    MSource.init.call(this, ["$"]);
     this.inputs = new Map();
     this.order = [];
   }

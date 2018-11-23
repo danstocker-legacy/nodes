@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 import {copy} from "../../utils";
 
@@ -38,8 +38,8 @@ export class Folder<I, O> implements ISink, ISource {
   private folded: O;
 
   constructor(cb: TFolderCallback<I, O>, initial?: O) {
-    Sink.init.call(this, ["$"]);
-    Source.init.call(this, ["$"]);
+    MSink.init.call(this, ["$"]);
+    MSource.init.call(this, ["$"]);
     this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);

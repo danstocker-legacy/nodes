@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 /**
@@ -17,8 +17,8 @@ export class Logger implements ISink, ISource {
   }>;
 
   constructor() {
-    Sink.init.call(this, ["err", "log", "warn"]);
-    Source.init.call(this, ["err", "log", "warn"]);
+    MSink.init.call(this, ["err", "log", "warn"]);
+    MSource.init.call(this, ["err", "log", "warn"]);
   }
 
   public send(port: IInPort<any>, input: any, tag?: string): void {

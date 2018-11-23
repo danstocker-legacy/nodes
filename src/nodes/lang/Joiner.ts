@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 type TInput<T> = T[keyof T];
@@ -24,8 +24,8 @@ export class Joiner<T> implements ISink, ISource {
   private readonly portCache: Map<string, Set<string | number>>;
 
   constructor(fields: Array<string>) {
-    Sink.init.call(this, fields);
-    Source.init.call(this, ["$"]);
+    MSink.init.call(this, fields);
+    MSource.init.call(this, ["$"]);
     this.fields = fields;
     this.inputCache = new Map();
     this.portCache = new Map();

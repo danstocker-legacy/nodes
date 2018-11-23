@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 interface ISwitchInputs<P extends string, T> {
@@ -33,8 +33,8 @@ export class Switch<P extends string, T>
    * @param cases Strings identifying possible cases for switch.
    */
   constructor(cases: Array<string>) {
-    Sink.init.call(this, ["$"]);
-    Source.init.call(this, cases);
+    MSink.init.call(this, ["$"]);
+    MSource.init.call(this, cases);
   }
 
   public send(

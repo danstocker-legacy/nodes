@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 type TFunnelInputs<P extends string, T> = {
@@ -26,8 +26,8 @@ export class Funnel<P extends string, T> implements ISink, ISource {
   }>;
 
   constructor(cases: Array<string>) {
-    Sink.init.call(this, cases);
-    Source.init.call(this, ["val", "case"]);
+    MSink.init.call(this, cases);
+    MSource.init.call(this, ["val", "case"]);
   }
 
   public send(

@@ -10,13 +10,13 @@ import {ISource} from "./ISource";
  *   public out: TOutPorts<...>
  *   ...
  *   constructor() {
- *     Source.init.call(this);
+ *     MSource.init.call(this);
  *     ...
  *   }
  * }
- * @see Source
+ * @see ISource
  */
-export namespace Source {
+export namespace MSource {
   /**
    * Adds "out" port bundle.
    * @param fields Port names in output port bundle.

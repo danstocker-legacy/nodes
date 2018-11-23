@@ -12,7 +12,7 @@ import {ISink} from "./ISink";
  *   ...
  * }
  * @see ISink
- * @see DynamicSink
+ * @see MDynamicSink
  */
 export interface IDynamicSink extends ISink {
   /**

@@ -1,4 +1,4 @@
-import {ISink, Sink} from "../../node";
+import {ISink, MSink} from "../../node";
 import {IInPort, TInPorts} from "../../port";
 
 /**
@@ -10,7 +10,7 @@ export class StdOut implements ISink {
   }>;
 
   constructor() {
-    Sink.init.call(this, ["$"]);
+    MSink.init.call(this, ["$"]);
   }
 
   public send(port: IInPort<string | Buffer>, input: string | Buffer): void {

@@ -10,13 +10,13 @@ import {ISink} from "./ISink";
  *   public in: TInPorts<...>
  *   ...
  *   constructor() {
- *     Sink.init.call(this, ["foo", "bar"]);
+ *     MSink.init.call(this, ["foo", "bar"]);
  *     ...
  *   }
  * }
  * @see ISink
  */
-export namespace Sink {
+export namespace MSink {
   /**
    * Adds "in" port bundle.
    * @param fields Port names in input port bundle.

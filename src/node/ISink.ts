@@ -2,13 +2,13 @@ import {IInPort, TInPorts} from "../port";
 
 /**
  * Defines a sink node.
- * Sink nodes receive data through input ports in the "in" port bundle.
+ * MSink nodes receive data through input ports in the "in" port bundle.
  * All atomic nodes that receive data should implement this interface.
  * @example
  * class SinkNode implements ISink {
  *   ...
  * }
- * @see Sink
+ * @see MSink
  */
 export interface ISink {
   /**

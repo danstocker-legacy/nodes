@@ -1,4 +1,4 @@
-import {ISink, Sink} from "../../node";
+import {ISink, MSink} from "../../node";
 import {IInPort, TInPorts} from "../../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
@@ -20,7 +20,7 @@ export class Listener implements ISink {
   private readonly cb: TListenerCallback;
 
   constructor(cb: TListenerCallback) {
-    Sink.init.call(this, ["$"]);
+    MSink.init.call(this, ["$"]);
     this.cb = cb;
   }
 

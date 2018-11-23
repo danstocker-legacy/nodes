@@ -1,13 +1,13 @@
 import {TInPorts} from "../port";
 import {ISink} from "./ISink";
-import {Sink} from "./Sink";
+import {MSink} from "./MSink";
 
-describe("Sink", function () {
+describe("MSink", function () {
   class TestSink implements ISink {
     public readonly in: TInPorts<{ foo: number }>;
 
     constructor() {
-      Sink.init.call(this, ["foo"]);
+      MSink.init.call(this, ["foo"]);
     }
 
     public send(): void {

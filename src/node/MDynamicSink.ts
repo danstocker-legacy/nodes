@@ -9,19 +9,19 @@ import {IDynamicSink} from "./IDynamicSink";
  * @example
  * class DynamicSinkNode implements IDynamicSink, IEventSource, IErrorSource {
  *   public in: TInPorts<...>
- *   public addPort = DynamicSink.addPort;
- *   public deletePort = DynamicSink.deletePort;
+ *   public addPort = MDynamicSink.addPort;
+ *   public deletePort = MDynamicSink.deletePort;
  *   ...
  *   constructor() {
- *     Sink.init.call(this);
- *     DynamicSink.init.call(this);
+ *     MSink.init.call(this);
+ *     MDynamicSink.init.call(this);
  *     ...
  *   }
  * }
  * @see ISink
- * @see Sink
+ * @see MSink
  */
-export namespace DynamicSink {
+export namespace MDynamicSink {
   /**
    * Error types specific to dynamic sink nodes.
    */

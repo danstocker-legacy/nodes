@@ -1,4 +1,4 @@
-import {ISource, Source} from "../../node";
+import {ISource, MSource} from "../../node";
 import {OutPort, TOutPorts} from "../../port";
 
 /**
@@ -13,7 +13,7 @@ export class Ticker implements ISource {
   }>;
 
   constructor(ms: number) {
-    Source.init.call(this);
+    MSource.init.call(this);
     setInterval(this.onInterval.bind(this), ms);
     this.out.$ = new OutPort("$", this);
   }

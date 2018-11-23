@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 interface IThrottlerInputs {
@@ -31,8 +31,8 @@ export class Throttler implements ISink, ISource {
   private readonly buffer: Array<string>;
 
   constructor() {
-    Sink.init.call(this, ["tag", "tick"]);
-    Source.init.call(this, ["$"]);
+    MSink.init.call(this, ["tag", "tick"]);
+    MSource.init.call(this, ["$"]);
     this.buffer = [];
   }
 

@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 import {TEqualityCallback} from "./Comparer";
 
@@ -26,8 +26,8 @@ export class Differ<V> implements ISink, ISource {
   private buffer: Array<V>;
 
   constructor(cb: TEqualityCallback<V>) {
-    Sink.init.call(this, ["$"]);
-    Source.init.call(this, ["$"]);
+    MSink.init.call(this, ["$"]);
+    MSource.init.call(this, ["$"]);
     this.cb = cb;
     this.buffer = [];
   }

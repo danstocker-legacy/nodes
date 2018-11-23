@@ -12,7 +12,7 @@ import {ISource} from "./ISource";
  *   ...
  * }
  * @see ISource
- * @see DynamicSource
+ * @see MDynamicSource
  */
 export interface IDynamicSource extends ISource {
   /**

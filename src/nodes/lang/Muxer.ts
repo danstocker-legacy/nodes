@@ -1,4 +1,4 @@
-import {ISink, ISource, Sink, Source} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 import {IAny, IMuxed} from "../../utils";
 
@@ -19,8 +19,8 @@ export class Muxer<T extends IAny = IAny> implements ISink, ISource {
   }>;
 
   constructor(fields: Array<string>) {
-    Sink.init.call(this, fields);
-    Source.init.call(this, ["$"]);
+    MSink.init.call(this, fields);
+    MSource.init.call(this, ["$"]);
   }
 
   public send(port: IInPort<T[keyof T]>, input: T[keyof T], tag?: string): void {
