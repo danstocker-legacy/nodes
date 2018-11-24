@@ -1,12 +1,11 @@
 import {IInPort, TInPorts, TOutPorts} from "../port";
+import {ValueOf} from "../utils";
 import {IBouncer} from "./IBouncer";
 import {ISink} from "./ISink";
 import {MBouncer} from "./MBouncer";
 import {MSink} from "./MSink";
 
 describe("MBouncer", function () {
-  type ValueOf<T> = T[keyof T];
-
   interface ITestBouncerInputs {
     foo: number;
     bar: boolean;

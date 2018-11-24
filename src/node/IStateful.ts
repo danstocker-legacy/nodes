@@ -1,7 +1,5 @@
-import {IOutPort} from "../port";
-import {ITree} from "../utils";
+import {TOutPorts} from "../port";
 
-// TODO is the tree necessary?
 export interface IStateful {
-  change: ITree<IOutPort<any>>;
+  change: TOutPorts<any>;
 }
