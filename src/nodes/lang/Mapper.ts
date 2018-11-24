@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
@@ -10,12 +10,15 @@ export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
  * // static callback
  * const mapper = new Mapper<number, string>(String);
  */
-export class Mapper<I, O> implements ISink, ISource {
+export class Mapper<I, O> implements ISink, ISource, IBouncer {
   public readonly in: TInPorts<{
     $: I;
   }>;
   public readonly out: TOutPorts<{
     $: O;
+  }>;
+  public readonly bounced: TOutPorts<{
+    $: I;
   }>;
 
   private readonly cb: TMapperCallback<I, O>;
@@ -23,16 +26,17 @@ export class Mapper<I, O> implements ISink, ISource {
   constructor(cb: TMapperCallback<I, O>) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
+    MBouncer.init.call(this, ["$"]);
     this.cb = cb;
   }
 
-  public send(port: IInPort<I>, input: I, tag?: string): void {
+  public send(port: IInPort<I>, value: I, tag?: string): void {
     if (port === this.in.$) {
       try {
-        const mapped = this.cb(input, tag);
+        const mapped = this.cb(value, tag);
         this.out.$.send(mapped, tag);
       } catch (err) {
-        // TODO: Bounce inputs
+        MBouncer.bounce.call(this, port, value, tag);
       }
     }
   }

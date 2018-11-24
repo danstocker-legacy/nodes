@@ -42,7 +42,11 @@ describe("Unfolder", function () {
         });
       });
 
-      it("should bounce inputs");
+      it("should bounce inputs", function () {
+        spyOn(node.bounced.$, "send");
+        node.send(node.in.$, [1, 2, 3], "1");
+        expect(node.bounced.$.send).toHaveBeenCalledWith([1, 2, 3], "1");
+      });
     });
   });
 });

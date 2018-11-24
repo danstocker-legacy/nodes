@@ -32,7 +32,11 @@ describe("Mapper", function () {
         });
       });
 
-      it("should bounce inputs");
+      it("should bounce inputs", function () {
+        spyOn(node.bounced.$, "send");
+        node.send(node.in.$, 5, "1");
+        expect(node.bounced.$.send).toHaveBeenCalledWith(5, "1");
+      });
     });
   });
 });

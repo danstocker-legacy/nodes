@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 /**
@@ -24,12 +24,15 @@ export type TUnfolderCallback<I, O> = (value: I) => IterableIterator<O>;
  * }));
  * @see {@link https://en.wikipedia.org/wiki/Anamorphism}
  */
-export class Unfolder<I, O> implements ISink, ISource {
+export class Unfolder<I, O> implements ISink, ISource, IBouncer {
   public readonly in: TInPorts<{
     $: I
   }>;
   public readonly out: TOutPorts<{
     $: O
+  }>;
+  public readonly bounced: TOutPorts<{
+    $: I
   }>;
 
   private readonly cb: TUnfolderCallback<I, O>;
@@ -37,6 +40,7 @@ export class Unfolder<I, O> implements ISink, ISource {
   constructor(cb: TUnfolderCallback<I, O>) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
+    MBouncer.init.call(this, ["$"]);
     this.cb = cb;
   }
 
@@ -47,7 +51,7 @@ export class Unfolder<I, O> implements ISink, ISource {
         this.out.$.send(next, tag);
       }
     } catch (err) {
-      // TODO: Bounce inputs
+      MBouncer.bounce.call(this, port, value, tag);
     }
   }
 }

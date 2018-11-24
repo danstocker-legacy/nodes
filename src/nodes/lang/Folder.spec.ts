@@ -60,7 +60,14 @@ describe("Folder", function () {
         });
       });
 
-      it("should bounce inputs");
+      it("should bounce inputs", function () {
+        spyOn(node.bounced.$, "send");
+        node.send(node.in.$, {res: false, val: 5}, "1");
+        expect(node.bounced.$.send).toHaveBeenCalledWith({
+          res: false,
+          val: 5
+        }, "1");
+      });
     });
   });
 });

@@ -32,7 +32,12 @@ describe("Comparer", function () {
         });
       });
 
-      it("should bounce inputs");
+      it("should bounce inputs", function () {
+        spyOn(node.bounced.$, "send");
+        node.send(node.in.$, {a: 5, b: 5}, "1");
+        expect(node.bounced.$.send)
+        .toHaveBeenCalledWith({a: 5, b: 5}, "1");
+      });
     });
   });
 });

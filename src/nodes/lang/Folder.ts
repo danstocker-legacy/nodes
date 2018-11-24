@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 import {copy} from "../../utils";
 
@@ -20,17 +20,21 @@ export type TFolderCallback<I, O> = (
  * Emits the next folded value for each input.
  * Takes a callback function which aggregates input values received since the
  * last reset signal.
+ * TODO: Make "res" an independent input.
  * @example
  * let sum: Folder<number, number>;
  * sum = new Folder((curr, next) => curr + next, 0);
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
-export class Folder<I, O> implements ISink, ISource {
+export class Folder<I, O> implements ISink, ISource, IBouncer {
   public readonly in: TInPorts<{
     $: IFolderInput<I>;
   }>;
   public readonly out: TOutPorts<{
     $: O;
+  }>;
+  public readonly bounced: TOutPorts<{
+    $: IFolderInput<I>;
   }>;
 
   private readonly cb: TFolderCallback<I, O>;
@@ -40,6 +44,7 @@ export class Folder<I, O> implements ISink, ISource {
   constructor(cb: TFolderCallback<I, O>, initial?: O) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
+    MBouncer.init.call(this, ["$"]);
     this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);
@@ -60,7 +65,7 @@ export class Folder<I, O> implements ISink, ISource {
         const folded = this.folded = this.cb(curr, next, tag);
         this.out.$.send(folded, tag);
       } catch (err) {
-        // TODO: Bounce inputs
+        MBouncer.bounce.call(this, port, value, tag);
       }
     }
   }

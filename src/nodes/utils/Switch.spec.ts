@@ -29,7 +29,14 @@ describe("Switch", function () {
     });
 
     describe("on invalid case", function () {
-      it("should bounce inputs");
+      it("should bounce inputs", function () {
+        spyOn(node.bounced.$, "send");
+        node.send(node.in.$, {case: "quux", val: 5} as any, "1");
+        expect(node.bounced.$.send).toHaveBeenCalledWith({
+          case: "quux",
+          val: 5
+        }, "1");
+      });
     });
   });
 });

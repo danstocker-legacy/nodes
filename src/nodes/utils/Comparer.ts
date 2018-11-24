@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
@@ -18,12 +18,15 @@ interface IComparerInputs<V> {
  * const comparer = new Comparer<number>((a, b) => a === b);
  * comparer.in.$.send({a: 4, b: 5}); // outputs `false`
  */
-export class Comparer<V> implements ISink, ISource {
+export class Comparer<V> implements ISink, ISource, IBouncer {
   public readonly in: TInPorts<{
     $: IComparerInputs<V>;
   }>;
   public readonly out: TOutPorts<{
     $: boolean;
+  }>;
+  public readonly bounced: TOutPorts<{
+    $: IComparerInputs<V>;
   }>;
 
   private readonly cb: TEqualityCallback<V>;
@@ -31,6 +34,7 @@ export class Comparer<V> implements ISink, ISource {
   constructor(cb: TEqualityCallback<V>) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
+    MBouncer.init.call(this, ["$"]);
     this.cb = cb;
   }
 
@@ -44,7 +48,7 @@ export class Comparer<V> implements ISink, ISource {
         const equals = this.cb(value.a, value.b, tag);
         this.out.$.send(equals, tag);
       } catch (err) {
-        // TODO: Bounce inputs
+        MBouncer.bounce.call(this, port, value, tag);
       }
     }
   }

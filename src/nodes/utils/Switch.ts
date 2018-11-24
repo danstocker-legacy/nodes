@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInPorts, TOutPorts} from "../../port";
 
 interface ISwitchInputs<P extends string, T> {
@@ -22,12 +22,14 @@ type TSwitchOutputs<P extends string, T> = {
  * let switch: Switch<"foo" | "bar" | "baz", number>;
  * switch = new Switch(["foo", "bar", "baz");
  */
-export class Switch<P extends string, T>
-  implements ISink, ISource {
+export class Switch<P extends string, T> implements ISink, ISource, IBouncer {
   public readonly in: TInPorts<{
     $: ISwitchInputs<P, T>
   }>;
   public readonly out: TOutPorts<TSwitchOutputs<P, T>>;
+  public readonly bounced: TOutPorts<{
+    $: ISwitchInputs<P, T>
+  }>;
 
   /**
    * @param cases Strings identifying possible cases for switch.
@@ -35,6 +37,7 @@ export class Switch<P extends string, T>
   constructor(cases: Array<string>) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, cases);
+    MBouncer.init.call(this, ["$"]);
   }
 
   public send(
@@ -48,7 +51,7 @@ export class Switch<P extends string, T>
       if (outPort) {
         outPort.send(value.val, tag);
       } else {
-        // TODO: Bounce inputs
+        MBouncer.bounce.call(this, port, value, tag);
       }
     }
   }
