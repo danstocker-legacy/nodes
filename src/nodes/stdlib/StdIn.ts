@@ -1,13 +1,15 @@
 import {ISource, MSource} from "../../node";
 import {OutPort, TOutBundle} from "../../port";
 
+interface IStdInOutputs {
+  $: string | Buffer;
+}
+
 /**
  * Takes input from `process.stdin` and sends it to output.
  */
 export class StdIn implements ISource {
-  public readonly out: TOutBundle<{
-    $: string | Buffer;
-  }>;
+  public readonly out: TOutBundle<IStdInOutputs>;
 
   constructor() {
     MSource.init.call(this);

@@ -2,6 +2,10 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IMuxed} from "../../utils";
 
+interface IDemuxerInputs<T> {
+  $: IMuxed<T>;
+}
+
 /**
  * De-multiplexes input.
  * Distributes impulses to output port specified by input.
@@ -12,9 +16,7 @@ import {IMuxed} from "../../utils";
  * // outputs `5` on port "foo"
  */
 export class Demuxer<T> implements ISink, ISource {
-  public readonly in: TInBundle<{
-    $: IMuxed<T>;
-  }>;
+  public readonly in: TInBundle<IDemuxerInputs<T>>;
   public readonly out: TOutBundle<T>;
 
   constructor(fields: Array<string>) {

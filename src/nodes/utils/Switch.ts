@@ -1,9 +1,13 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
-interface ISwitchInputs<C extends string, T> {
+interface ISwitchInput<C extends string, T> {
   $: T;
   case: C;
+}
+
+interface ISwitchInputs<C extends string, T> {
+  $: ISwitchInput<C, T>;
 }
 
 type TSwitchOutputs<C extends string, T> = {
@@ -23,13 +27,9 @@ type TSwitchOutputs<C extends string, T> = {
  * switch = new Switch(["foo", "bar", "baz");
  */
 export class Switch<C extends string, T> implements ISink, ISource, IBouncer {
-  public readonly in: TInBundle<{
-    $: ISwitchInputs<C, T>
-  }>;
+  public readonly in: TInBundle<ISwitchInputs<C, T>>;
   public readonly out: TOutBundle<TSwitchOutputs<C, T>>;
-  public readonly bounced: TOutBundle<{
-    $: ISwitchInputs<C, T>
-  }>;
+  public readonly bounced: TOutBundle<ISwitchInputs<C, T>>;
 
   /**
    * @param cases Strings identifying possible cases for switch.
@@ -41,8 +41,8 @@ export class Switch<C extends string, T> implements ISink, ISource, IBouncer {
   }
 
   public send(
-    port: IInPort<ISwitchInputs<C, T>>,
-    value: ISwitchInputs<C, T>,
+    port: IInPort<ISwitchInput<C, T>>,
+    value: ISwitchInput<C, T>,
     tag?: string
   ): void {
     if (port === this.in.$) {

@@ -1,20 +1,24 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
+interface ILoggerInputs {
+  log: any;
+  warn: any;
+  err: any;
+}
+
+interface ILoggerOutputs {
+  log: any;
+  warn: any;
+  err: any;
+}
+
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
 export class Logger implements ISink, ISource {
-  public readonly in: TInBundle<{
-    log: any;
-    warn: any;
-    err: any;
-  }>;
-  public readonly out: TOutBundle<{
-    log: any;
-    warn: any;
-    err: any;
-  }>;
+  public readonly in: TInBundle<ILoggerInputs>;
+  public readonly out: TOutBundle<ILoggerOutputs>;
 
   constructor() {
     MSink.init.call(this, ["err", "log", "warn"]);

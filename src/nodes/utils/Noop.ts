@@ -1,6 +1,14 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
+interface INoopInputs<V> {
+  $: V;
+}
+
+interface INoopOutputs<V> {
+  $: V;
+}
+
 /**
  * Forwards input without change.
  * Mostly used in composite nodes to distribute single input to multiple atomic
@@ -12,12 +20,8 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
  * noop.in.$.send(5);
  */
 export class Noop<V> implements ISink, ISource {
-  public readonly in: TInBundle<{
-    $: V;
-  }>;
-  public readonly out: TOutBundle<{
-    $: V;
-  }>;
+  public readonly in: TInBundle<INoopInputs<V>>;
+  public readonly out: TOutBundle<INoopOutputs<V>>;
 
   constructor() {
     MSink.init.call(this, ["$"]);

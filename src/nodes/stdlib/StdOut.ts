@@ -1,13 +1,15 @@
 import {ISink, MSink} from "../../node";
 import {IInPort, TInBundle} from "../../port";
 
+interface IStdOutInputs {
+  $: string | Buffer;
+}
+
 /**
  * Forwards input to `process.stdout`.
  */
 export class StdOut implements ISink {
-  public readonly in: TInBundle<{
-    $: string | Buffer;
-  }>;
+  public readonly in: TInBundle<IStdOutInputs>;
 
   constructor() {
     MSink.init.call(this, ["$"]);

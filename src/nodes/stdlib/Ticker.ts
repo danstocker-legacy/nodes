@@ -1,6 +1,10 @@
 import {ISource, MSource} from "../../node";
 import {OutPort, TOutBundle} from "../../port";
 
+interface ITickerOutputs {
+  $: true;
+}
+
 /**
  * Emits a tick at the specified intervals.
  * @example
@@ -8,9 +12,7 @@ import {OutPort, TOutBundle} from "../../port";
  * ticker.out.$.connect(new StdOut().in.$);
  */
 export class Ticker implements ISource {
-  public readonly out: TOutBundle<{
-    $: true
-  }>;
+  public readonly out: TOutBundle<ITickerOutputs>;
 
   constructor(ms: number) {
     MSource.init.call(this);

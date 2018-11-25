@@ -2,6 +2,14 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TEqualityCallback} from "./Comparer";
 
+interface IDifferInputs<V> {
+  $: V;
+}
+
+interface IDifferOutputs {
+  $: boolean;
+}
+
 /**
  * Compares each input with the previous and outputs whether they are
  * different, according to the specified equality callback.
@@ -15,12 +23,8 @@ import {TEqualityCallback} from "./Comparer";
  * differ.in.$.send(4) // outputs `true` (is different)
  */
 export class Differ<V> implements ISink, ISource {
-  public readonly in: TInBundle<{
-    $: V;
-  }>;
-  public readonly out: TOutBundle<{
-    $: boolean;
-  }>;
+  public readonly in: TInBundle<IDifferInputs<V>>;
+  public readonly out: TOutBundle<IDifferOutputs>;
 
   private readonly cb: TEqualityCallback<V>;
   private buffer: Array<V>;

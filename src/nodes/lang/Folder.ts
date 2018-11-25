@@ -10,6 +10,14 @@ interface IFolderInput<V> {
   $: V;
 }
 
+interface IFolderInputs<V> {
+  $: IFolderInput<V>;
+}
+
+interface IFolderOutputs<V> {
+  $: V;
+}
+
 export type TFolderCallback<I, O> = (
   curr: O,
   next: I,
@@ -26,15 +34,9 @@ export type TFolderCallback<I, O> = (
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
 export class Folder<I, O> implements ISink, ISource, IBouncer {
-  public readonly in: TInBundle<{
-    $: IFolderInput<I>;
-  }>;
-  public readonly out: TOutBundle<{
-    $: O;
-  }>;
-  public readonly bounced: TOutBundle<{
-    $: IFolderInput<I>;
-  }>;
+  public readonly in: TInBundle<IFolderInputs<I>>;
+  public readonly out: TOutBundle<IFolderOutputs<O>>;
+  public readonly bounced: TOutBundle<IFolderInputs<I>>;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;

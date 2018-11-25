@@ -8,6 +8,14 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
  */
 export type TUnfolderCallback<I, O> = (value: I) => IterableIterator<O>;
 
+interface IUnfolderInputs<V> {
+  $: V;
+}
+
+interface IUnfolderOutputs<V> {
+  $: V;
+}
+
 /**
  * Unfolds input values.
  * Emits several outputs for a single input.
@@ -25,15 +33,9 @@ export type TUnfolderCallback<I, O> = (value: I) => IterableIterator<O>;
  * @see {@link https://en.wikipedia.org/wiki/Anamorphism}
  */
 export class Unfolder<I, O> implements ISink, ISource, IBouncer {
-  public readonly in: TInBundle<{
-    $: I
-  }>;
-  public readonly out: TOutBundle<{
-    $: O
-  }>;
-  public readonly bounced: TOutBundle<{
-    $: I
-  }>;
+  public readonly in: TInBundle<IUnfolderInputs<I>>;
+  public readonly out: TOutBundle<IUnfolderOutputs<O>>;
+  public readonly bounced: TOutBundle<IUnfolderInputs<I>>;
 
   private readonly cb: TUnfolderCallback<I, O>;
 

@@ -1,7 +1,10 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
+import {ValueOf} from "../../utils";
 
-type TInput<T> = T[keyof T];
+interface IJoinerOutputs<T> {
+  $: T;
+}
 
 /**
  * Joins input values bearing the same tag. Produces a dictionary of port
@@ -15,9 +18,7 @@ type TInput<T> = T[keyof T];
  */
 export class Joiner<T> implements ISink, ISource {
   public readonly in: TInBundle<T>;
-  public readonly out: TOutBundle<{
-    $: T;
-  }>;
+  public readonly out: TOutBundle<IJoinerOutputs<T>>;
 
   private readonly fields: Array<string>;
   private readonly inputCache: Map<string, T>;
@@ -31,7 +32,7 @@ export class Joiner<T> implements ISink, ISource {
     this.portCache = new Map();
   }
 
-  public send(port: IInPort<TInput<T>>, input: TInput<T>, tag: string): void {
+  public send(port: IInPort<ValueOf<T>>, input: ValueOf<T>, tag: string): void {
     const name = port.name;
     if (port === this.in[name]) {
       const inputCache = this.inputCache;

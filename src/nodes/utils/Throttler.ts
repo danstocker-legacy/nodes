@@ -1,12 +1,15 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
+import {ValueOf} from "../../utils";
 
 interface IThrottlerInputs {
   tag: any;
   tick: boolean;
 }
 
-type TThrottlerInput = IThrottlerInputs[keyof IThrottlerInputs];
+interface IThrottlerOutputs {
+  $: boolean;
+}
 
 /**
  * Emits a boolean with the last received input tag: `true` exactly on tick,
@@ -24,9 +27,7 @@ type TThrottlerInput = IThrottlerInputs[keyof IThrottlerInputs];
  */
 export class Throttler implements ISink, ISource {
   public readonly in: TInBundle<IThrottlerInputs>;
-  public readonly out: TOutBundle<{
-    $: boolean
-  }>;
+  public readonly out: TOutBundle<IThrottlerOutputs>;
 
   private readonly buffer: Array<string>;
 
@@ -37,8 +38,8 @@ export class Throttler implements ISink, ISource {
   }
 
   public send(
-    port: IInPort<TThrottlerInput>,
-    value: TThrottlerInput,
+    port: IInPort<ValueOf<IThrottlerInputs>>,
+    value: ValueOf<IThrottlerInputs>,
     tag?: string
   ): void {
     const buffer = this.buffer;

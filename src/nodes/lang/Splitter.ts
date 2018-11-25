@@ -2,6 +2,10 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IAny} from "../../utils";
 
+interface ISplitterInputs<T> {
+  $: T;
+}
+
 /**
  * Splits synchronized values sets.
  * @example
@@ -12,9 +16,7 @@ import {IAny} from "../../utils";
  * splitter.out.bar.connect(C.in.$);
  */
 export class Splitter<T extends IAny> implements ISink, ISource {
-  public readonly in: TInBundle<{
-    $: T;
-  }>;
+  public readonly in: TInBundle<ISplitterInputs<T>>;
   public readonly out: TOutBundle<T>;
 
   constructor(fields: Array<string>) {

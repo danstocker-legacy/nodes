@@ -2,6 +2,10 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IAny, IMuxed} from "../../utils";
 
+interface IMuxerOutputs<T> {
+  $: IMuxed<T>;
+}
+
 /**
  * Multiplexes inputs.
  * Channels impulses from all input ports into a single output port,
@@ -14,9 +18,7 @@ import {IAny, IMuxed} from "../../utils";
  */
 export class Muxer<T extends IAny = IAny> implements ISink, ISource {
   public readonly in: TInBundle<T>;
-  public readonly out: TOutBundle<{
-    $: IMuxed<T>;
-  }>;
+  public readonly out: TOutBundle<IMuxerOutputs<T>>;
 
   constructor(fields: Array<string>) {
     MSink.init.call(this, fields);

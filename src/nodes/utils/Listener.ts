@@ -3,6 +3,10 @@ import {IInPort, TInBundle} from "../../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
 
+interface IListenerInputs {
+  $: any;
+}
+
 /**
  * Convenience node for hooking up callbacks to output ports.
  * @example
@@ -13,9 +17,7 @@ type TListenerCallback = (value: any, tag?: string) => void;
  * listener.in.$.disconnect();
  */
 export class Listener implements ISink {
-  public readonly in: TInBundle<{
-    $: any;
-  }>;
+  public readonly in: TInBundle<IListenerInputs>;
 
   private readonly cb: TListenerCallback;
 

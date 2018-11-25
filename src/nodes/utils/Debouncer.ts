@@ -1,6 +1,14 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
+interface IDebouncerInputs {
+  $: any;
+}
+
+interface IDebouncerOutputs {
+  $: boolean;
+}
+
 /**
  * Emits a boolean with the last received input tag: `true` when the specified
  * delay has passed since last received input tag, `false` when a new input is
@@ -15,12 +23,8 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
  * debouncer.out.$.connect(...);
  */
 export class Debouncer implements ISink, ISource {
-  public readonly in: TInBundle<{
-    $: any
-  }>;
-  public readonly out: TOutBundle<{
-    $: boolean
-  }>;
+  public readonly in: TInBundle<IDebouncerInputs>;
+  public readonly out: TOutBundle<IDebouncerOutputs>;
 
   private readonly ms: number;
   private readonly buffer: Array<string>;

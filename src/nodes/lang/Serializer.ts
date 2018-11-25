@@ -1,6 +1,15 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
+interface ISerializerInputs<V> {
+  $: V;
+  tag: string;
+}
+
+interface ISerializerOutputs<V> {
+  $: V;
+}
+
 /**
  * Forwards inputs matching the order of the reference input `tag`.
  * @example
@@ -8,13 +17,8 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
  * node = new Serializer();
  */
 export class Serializer<V> implements ISink, ISource {
-  public readonly in: TInBundle<{
-    $: V;
-    tag: string;
-  }>;
-  public readonly out: TOutBundle<{
-    $: V;
-  }>;
+  public readonly in: TInBundle<ISerializerInputs<V>>;
+  public readonly out: TOutBundle<ISerializerOutputs<V>>;
 
   private readonly inputs: Map<string, V>;
   private readonly order: Array<string>;
