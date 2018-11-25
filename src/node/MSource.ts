@@ -1,4 +1,4 @@
-import {OutPort, TOutPorts} from "../port";
+import {OutPort, TOutBundle} from "../port";
 import {ISource} from "./ISource";
 
 /**
@@ -7,7 +7,7 @@ import {ISource} from "./ISource";
  * To be mixed into classes that implement ISource.
  * @example
  * class SourceNode implements ISource {
- *   public out: TOutPorts<...>
+ *   public out: TOutBundle<...>
  *   ...
  *   constructor() {
  *     MSource.init.call(this);
@@ -22,7 +22,7 @@ export namespace MSource {
    * @param fields Port names in output port bundle.
    */
   export function init(this: ISource, fields: Array<string> = []): void {
-    const ports = this.out = {} as TOutPorts<any>;
+    const ports = this.out = {} as TOutBundle<any>;
     for (const field of fields) {
       ports[field] = new OutPort(field, this);
     }

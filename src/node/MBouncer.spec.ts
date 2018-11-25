@@ -1,4 +1,4 @@
-import {IInPort, TInPorts, TOutPorts} from "../port";
+import {IInPort, TInBundle, TOutBundle} from "../port";
 import {ValueOf} from "../utils";
 import {IBouncer} from "./IBouncer";
 import {ISink} from "./ISink";
@@ -12,8 +12,8 @@ describe("MBouncer", function () {
   }
 
   class TestBouncer implements IBouncer, ISink {
-    public readonly in: TInPorts<ITestBouncerInputs>;
-    public readonly bounced: TOutPorts<ITestBouncerInputs>;
+    public readonly in: TInBundle<ITestBouncerInputs>;
+    public readonly bounced: TOutBundle<ITestBouncerInputs>;
 
     constructor() {
       MSink.init.call(this, ["foo", "bar"]);

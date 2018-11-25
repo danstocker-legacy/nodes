@@ -1,11 +1,11 @@
-import {IInPort, InPort, TInPorts} from "../port";
+import {IInPort, InPort, TInBundle} from "../port";
 import {IDynamicSink} from "./IDynamicSink";
 import {MDynamicSink} from "./MDynamicSink";
 import {MSink} from "./MSink";
 
 describe("MDynamicSink", function () {
   class TestDynamicSink implements IDynamicSink {
-    public readonly in: TInPorts<{ [key: string]: any }>;
+    public readonly in: TInBundle<{ [key: string]: any }>;
     public addPort = MDynamicSink.addPort;
     public deletePort = MDynamicSink.deletePort;
 

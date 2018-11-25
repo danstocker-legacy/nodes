@@ -1,5 +1,5 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface IFilterInput<V> {
   val: V;
@@ -10,10 +10,10 @@ interface IFilterInput<V> {
  * Forwards default input to output when reference input is truthy.
  */
 export class Filter<V> implements ISink, ISource {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     $: IFilterInput<V>;
   }>;
-  public readonly out: TOutPorts<{
+  public readonly out: TOutBundle<{
     $: V;
   }>;
 

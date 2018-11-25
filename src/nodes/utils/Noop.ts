@@ -1,5 +1,5 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 /**
  * Forwards input without change.
@@ -12,10 +12,10 @@ import {IInPort, TInPorts, TOutPorts} from "../../port";
  * noop.in.$.send(5);
  */
 export class Noop<V> implements ISink, ISource {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     $: V;
   }>;
-  public readonly out: TOutPorts<{
+  public readonly out: TOutBundle<{
     $: V;
   }>;
 

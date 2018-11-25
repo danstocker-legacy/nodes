@@ -1,5 +1,5 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IAny, IMuxed} from "../../utils";
 
 /**
@@ -13,8 +13,8 @@ import {IAny, IMuxed} from "../../utils";
  * // outputs `{val: 5, name: "foo"}` on port "$"
  */
 export class Muxer<T extends IAny = IAny> implements ISink, ISource {
-  public readonly in: TInPorts<T>;
-  public readonly out: TOutPorts<{
+  public readonly in: TInBundle<T>;
+  public readonly out: TOutBundle<{
     $: IMuxed<T>;
   }>;
 

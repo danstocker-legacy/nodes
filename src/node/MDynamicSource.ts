@@ -9,7 +9,7 @@ import {IDynamicSource} from "./IDynamicSource";
  * IErrorSource.
  * @example
  * class DynamicSinkNode implements IDynamicSource, IEventSource, IErrorSource {
- *   public out: TOutPorts<...>
+ *   public out: TOutBundle<...>
  *   public addPort = MDynamicSource.addPort;
  *   public deletePort = MDynamicSource.deletePort;
  *   ...

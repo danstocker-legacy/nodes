@@ -1,5 +1,5 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 /**
  * Emits a boolean with the last received input tag: `true` when the specified
@@ -15,10 +15,10 @@ import {IInPort, TInPorts, TOutPorts} from "../../port";
  * debouncer.out.$.connect(...);
  */
 export class Debouncer implements ISink, ISource {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     $: any
   }>;
-  public readonly out: TOutPorts<{
+  public readonly out: TOutBundle<{
     $: boolean
   }>;
 

@@ -1,5 +1,5 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IAny} from "../../utils";
 
 /**
@@ -12,10 +12,10 @@ import {IAny} from "../../utils";
  * splitter.out.bar.connect(C.in.$);
  */
 export class Splitter<T extends IAny> implements ISink, ISource {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     $: T;
   }>;
-  public readonly out: TOutPorts<T>;
+  public readonly out: TOutBundle<T>;
 
   constructor(fields: Array<string>) {
     MSink.init.call(this, ["$"]);

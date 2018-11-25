@@ -1,11 +1,11 @@
-import {IOutPort, OutPort, TOutPorts} from "../port";
+import {IOutPort, OutPort, TOutBundle} from "../port";
 import {IDynamicSource} from "./IDynamicSource";
 import {MDynamicSource} from "./MDynamicSource";
 import {MSource} from "./MSource";
 
 describe("MDynamicSource", function () {
   class TestDynamicSource implements IDynamicSource {
-    public readonly out: TOutPorts<{ [key: string]: any }>;
+    public readonly out: TOutBundle<{ [key: string]: any }>;
     public addPort = MDynamicSource.addPort;
     public deletePort = MDynamicSource.deletePort;
 

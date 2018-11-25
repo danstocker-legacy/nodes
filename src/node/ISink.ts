@@ -1,4 +1,4 @@
-import {IInPort, TInPorts} from "../port";
+import {IInPort, TInBundle} from "../port";
 
 /**
  * Defines a sink node.
@@ -14,7 +14,7 @@ export interface ISink {
   /**
    * Bundle of ports through which the node receives data.
    */
-  in: TInPorts<any>;
+  in: TInBundle<any>;
 
   /**
    * Sends a value to the node though the specified input port, as part of

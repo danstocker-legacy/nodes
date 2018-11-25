@@ -1,5 +1,5 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IMuxed} from "../../utils";
 
 /**
@@ -12,10 +12,10 @@ import {IMuxed} from "../../utils";
  * // outputs `5` on port "foo"
  */
 export class Demuxer<T> implements ISink, ISource {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     $: IMuxed<T>;
   }>;
-  public readonly out: TOutPorts<T>;
+  public readonly out: TOutBundle<T>;
 
   constructor(fields: Array<string>) {
     MSink.init.call(this, ["$"]);

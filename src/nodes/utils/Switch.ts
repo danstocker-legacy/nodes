@@ -1,5 +1,5 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface ISwitchInputs<P extends string, T> {
   val: T;
@@ -23,11 +23,11 @@ type TSwitchOutputs<P extends string, T> = {
  * switch = new Switch(["foo", "bar", "baz");
  */
 export class Switch<P extends string, T> implements ISink, ISource, IBouncer {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     $: ISwitchInputs<P, T>
   }>;
-  public readonly out: TOutPorts<TSwitchOutputs<P, T>>;
-  public readonly bounced: TOutPorts<{
+  public readonly out: TOutBundle<TSwitchOutputs<P, T>>;
+  public readonly bounced: TOutBundle<{
     $: ISwitchInputs<P, T>
   }>;
 

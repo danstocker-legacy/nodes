@@ -1,5 +1,5 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 type TInput<T> = T[keyof T];
 
@@ -14,8 +14,8 @@ type TInput<T> = T[keyof T];
  * // joiner.out.$ will output {foo: 5, bar: true} for tag "1"
  */
 export class Joiner<T> implements ISink, ISource {
-  public readonly in: TInPorts<T>;
-  public readonly out: TOutPorts<{
+  public readonly in: TInBundle<T>;
+  public readonly out: TOutBundle<{
     $: T;
   }>;
 

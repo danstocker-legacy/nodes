@@ -1,10 +1,10 @@
-import {TInPorts} from "../port";
+import {TInBundle} from "../port";
 import {ISink} from "./ISink";
 import {MSink} from "./MSink";
 
 describe("MSink", function () {
   class TestSink implements ISink {
-    public readonly in: TInPorts<{ foo: number }>;
+    public readonly in: TInBundle<{ foo: number }>;
 
     constructor() {
       MSink.init.call(this, ["foo"]);

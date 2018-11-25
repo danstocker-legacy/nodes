@@ -1,4 +1,4 @@
-import {InPort, TInPorts} from "../port";
+import {InPort, TInBundle} from "../port";
 import {ISink} from "./ISink";
 
 /**
@@ -7,7 +7,7 @@ import {ISink} from "./ISink";
  * To be mixed into classes that implement ISink.
  * @example
  * class SinkNode implements ISink {
- *   public in: TInPorts<...>
+ *   public in: TInBundle<...>
  *   ...
  *   constructor() {
  *     MSink.init.call(this, ["foo", "bar"]);
@@ -22,7 +22,7 @@ export namespace MSink {
    * @param fields Port names in input port bundle.
    */
   export function init(this: ISink, fields: Array<string> = []): void {
-    const ports = this.in = {} as TInPorts<any>;
+    const ports = this.in = {} as TInBundle<any>;
     for (const field of fields) {
       ports[field] = new InPort(field, this);
     }

@@ -5,8 +5,8 @@ import {TPort} from "./TPort";
  * interface (I). Also defines the type of all ports (P) included.
  * Mostly used internally.
  * @example
- * const port: TPorts<{foo: number, bar: boolean}, TInPort<{foo: number, bar: boolean}>>
+ * const port: TBundle<{foo: number, bar: boolean}, TInPort<{foo: number, bar: boolean}>>
  */
-export type TPorts<I, P extends TPort<I>> = {
+export type TBundle<I, P extends TPort<I>> = {
   [K in keyof I]: P
 };

@@ -1,11 +1,11 @@
 import {ISource, MSource} from "../../node";
-import {OutPort, TOutPorts} from "../../port";
+import {OutPort, TOutBundle} from "../../port";
 
 /**
  * Takes input from `process.stdin` and sends it to output.
  */
 export class StdIn implements ISource {
-  public readonly out: TOutPorts<{
+  public readonly out: TOutBundle<{
     $: string | Buffer;
   }>;
 

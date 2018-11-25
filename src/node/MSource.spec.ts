@@ -1,10 +1,10 @@
-import {TOutPorts} from "../port";
+import {TOutBundle} from "../port";
 import {ISource} from "./ISource";
 import {MSource} from "./MSource";
 
 describe("MSource", function () {
   class TestSource implements ISource {
-    public readonly out: TOutPorts<{ foo: number }>;
+    public readonly out: TOutBundle<{ foo: number }>;
 
     constructor() {
       MSource.init.call(this);

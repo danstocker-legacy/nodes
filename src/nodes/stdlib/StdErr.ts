@@ -1,11 +1,11 @@
 import {ISink, MSink} from "../../node";
-import {IInPort, TInPorts} from "../../port";
+import {IInPort, TInBundle} from "../../port";
 
 /**
  * Forwards input to `process.stderr`.
  */
 export class StdErr implements ISink {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     $: string | Buffer;
   }>;
 

@@ -1,4 +1,4 @@
-import {TOutPorts} from "../port";
+import {TOutBundle} from "../port";
 
 /**
  * Defines a source node.
@@ -14,5 +14,5 @@ export interface ISource {
   /**
    * Bundle of ports through which the node emits data.
    */
-  out: TOutPorts<any>;
+  out: TOutBundle<any>;
 }

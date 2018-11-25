@@ -1,5 +1,5 @@
 import {ISource, MSource} from "../../node";
-import {OutPort, TOutPorts} from "../../port";
+import {OutPort, TOutBundle} from "../../port";
 
 /**
  * Emits a tick at the specified intervals.
@@ -8,7 +8,7 @@ import {OutPort, TOutPorts} from "../../port";
  * ticker.out.$.connect(new StdOut().in.$);
  */
 export class Ticker implements ISource {
-  public readonly out: TOutPorts<{
+  public readonly out: TOutBundle<{
     $: true
   }>;
 

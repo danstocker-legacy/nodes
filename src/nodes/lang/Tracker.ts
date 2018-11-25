@@ -1,5 +1,5 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IAny} from "../../utils";
 
 interface ITrackerOutputs<T> {
@@ -14,8 +14,8 @@ interface ITrackerOutputs<T> {
  * tracker = new Tracker(["foo", "bar"]);
  */
 export class Tracker<T extends IAny = IAny> implements ISink, ISource {
-  public readonly in: TInPorts<T>;
-  public readonly out: TOutPorts<ITrackerOutputs<T>>;
+  public readonly in: TInBundle<T>;
+  public readonly out: TOutBundle<ITrackerOutputs<T>>;
 
   private readonly values: T;
 

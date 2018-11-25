@@ -1,5 +1,5 @@
 import {ISink, MSink} from "../../node";
-import {IInPort, TInPorts} from "../../port";
+import {IInPort, TInBundle} from "../../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
 
@@ -13,7 +13,7 @@ type TListenerCallback = (value: any, tag?: string) => void;
  * listener.in.$.disconnect();
  */
 export class Listener implements ISink {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     $: any;
   }>;
 

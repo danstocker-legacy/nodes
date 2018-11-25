@@ -8,7 +8,7 @@ import {IDynamicSink} from "./IDynamicSink";
  * To be mixed into classes that implement IDynamicSink.
  * @example
  * class DynamicSinkNode implements IDynamicSink, IEventSource, IErrorSource {
- *   public in: TInPorts<...>
+ *   public in: TInBundle<...>
  *   public addPort = MDynamicSink.addPort;
  *   public deletePort = MDynamicSink.deletePort;
  *   ...

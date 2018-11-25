@@ -1,4 +1,4 @@
-import {IOutPort, TOutPorts} from "../port";
+import {IOutPort, TOutBundle} from "../port";
 import {ISource} from "./ISource";
 
 /**
@@ -19,7 +19,7 @@ export interface IDynamicSource extends ISource {
    * Bundle of ports through which the node emits data.
    * Imposes no restriction on port names.
    */
-  out: TOutPorts<{ [key: string]: any }>;
+  out: TOutBundle<{ [key: string]: any }>;
 
   /**
    * Adds the specified port to the output port bundle.

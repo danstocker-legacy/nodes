@@ -1,5 +1,5 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 /**
  * Callback generator to be passed to an Unfolder.
@@ -25,13 +25,13 @@ export type TUnfolderCallback<I, O> = (value: I) => IterableIterator<O>;
  * @see {@link https://en.wikipedia.org/wiki/Anamorphism}
  */
 export class Unfolder<I, O> implements ISink, ISource, IBouncer {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     $: I
   }>;
-  public readonly out: TOutPorts<{
+  public readonly out: TOutBundle<{
     $: O
   }>;
-  public readonly bounced: TOutPorts<{
+  public readonly bounced: TOutBundle<{
     $: I
   }>;
 

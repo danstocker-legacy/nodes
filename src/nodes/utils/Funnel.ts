@@ -1,5 +1,5 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 type TFunnelInputs<P extends string, T> = {
   [K in P]: T
@@ -19,8 +19,8 @@ type TFunnelInputs<P extends string, T> = {
  * funnel = new Funnel(["foo", "bar", "baz"]);
  */
 export class Funnel<P extends string, T> implements ISink, ISource {
-  public readonly in: TInPorts<TFunnelInputs<P, T>>;
-  public readonly out: TOutPorts<{
+  public readonly in: TInBundle<TFunnelInputs<P, T>>;
+  public readonly out: TOutBundle<{
     val: T;
     case: P;
   }>;

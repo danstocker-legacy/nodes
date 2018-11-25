@@ -1,5 +1,5 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 /**
  * Forwards previous input.
@@ -7,10 +7,10 @@ import {IInPort, TInPorts, TOutPorts} from "../../port";
  * original tag order is to be retained.
  */
 export class Shifter<V> implements ISink, ISource {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     $: V;
   }>;
-  public readonly out: TOutPorts<{
+  public readonly out: TOutBundle<{
     $: V;
   }>;
 

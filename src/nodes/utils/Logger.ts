@@ -1,16 +1,16 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 /**
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
 export class Logger implements ISink, ISource {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     log: any;
     warn: any;
     err: any;
   }>;
-  public readonly out: TOutPorts<{
+  public readonly out: TOutBundle<{
     log: any;
     warn: any;
     err: any;

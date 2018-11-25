@@ -1,4 +1,4 @@
-import {IInPort, TInPorts} from "../port";
+import {IInPort, TInBundle} from "../port";
 import {ISink} from "./ISink";
 
 /**
@@ -19,7 +19,7 @@ export interface IDynamicSink extends ISink {
    * Bundle of ports through which the node receives data.
    * Imposes no restriction on port names.
    */
-  in: TInPorts<{ [key: string]: any }>;
+  in: TInBundle<{ [key: string]: any }>;
 
   /**
    * Adds the specified port to the input port bundle.

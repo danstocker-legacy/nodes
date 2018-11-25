@@ -1,5 +1,5 @@
-import {TOutPorts} from "../port";
+import {TOutBundle} from "../port";
 
 export interface IStateful {
-  state: TOutPorts<any>;
+  state: TOutBundle<any>;
 }

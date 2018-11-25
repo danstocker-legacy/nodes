@@ -1,5 +1,5 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
 
@@ -19,13 +19,13 @@ interface IComparerInputs<V> {
  * comparer.in.$.send({a: 4, b: 5}); // outputs `false`
  */
 export class Comparer<V> implements ISink, ISource, IBouncer {
-  public readonly in: TInPorts<{
+  public readonly in: TInBundle<{
     $: IComparerInputs<V>;
   }>;
-  public readonly out: TOutPorts<{
+  public readonly out: TOutBundle<{
     $: boolean;
   }>;
-  public readonly bounced: TOutPorts<{
+  public readonly bounced: TOutBundle<{
     $: IComparerInputs<V>;
   }>;
 

@@ -1,8 +1,8 @@
-import {TOutPorts} from "../port";
+import {TOutBundle} from "../port";
 
 export interface IBouncer {
   /**
    * Bundle of ports for bouncing inputs.
    */
-  bounced: TOutPorts<any>;
+  bounced: TOutBundle<any>;
 }
