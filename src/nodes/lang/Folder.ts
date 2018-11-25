@@ -20,7 +20,6 @@ export type TFolderCallback<I, O> = (
  * Emits the next folded value for each input.
  * Takes a callback function which aggregates input values received since the
  * last reset signal.
- * TODO: Make "res" an independent input.
  * @example
  * let sum: Folder<number, number>;
  * sum = new Folder((curr, next) => curr + next, 0);
