@@ -1,5 +1,5 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, TInPorts, TOutPorts} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface IThrottlerInputs {
   tag: any;
@@ -23,8 +23,8 @@ type TThrottlerInput = IThrottlerInputs[keyof IThrottlerInputs];
  * throttler.out.$.connect(...);
  */
 export class Throttler implements ISink, ISource {
-  public readonly in: TInPorts<IThrottlerInputs>;
-  public readonly out: TOutPorts<{
+  public readonly in: TInBundle<IThrottlerInputs>;
+  public readonly out: TOutBundle<{
     $: boolean
   }>;
 
