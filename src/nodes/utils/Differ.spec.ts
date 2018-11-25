@@ -35,5 +35,23 @@ describe("Differ", function () {
         expect(node.out.$.send).toHaveBeenCalledWith(false, "2");
       });
     });
+
+    describe("when callback throws", function () {
+      let error: Error;
+
+      beforeEach(function () {
+        error = new Error();
+        node = new Differ(() => {
+          throw error;
+        });
+        node.send(node.in.$, 5, "1");
+      });
+
+      it("should bounce inputs", function () {
+        spyOn(node.bounced.$, "send");
+        node.send(node.in.$, 5, "2");
+        expect(node.bounced.$.send).toHaveBeenCalledWith(5, "2");
+      });
+    });
   });
 });

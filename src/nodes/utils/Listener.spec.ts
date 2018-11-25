@@ -21,5 +21,23 @@ describe("Listener", function () {
       node.send(node.in.$, 5, "1");
       expect(spy).toHaveBeenCalledWith(5, "1");
     });
+
+    describe("when callback throws", function () {
+      let error: Error;
+
+      beforeEach(function () {
+        error = new Error();
+        node = new Listener(() => {
+          throw error;
+        });
+      });
+
+      it("should bounce inputs", function () {
+        spyOn(node.bounced.$, "send");
+        node.send(node.in.$, 5, "1");
+        expect(node.bounced.$.send)
+        .toHaveBeenCalledWith(5, "1");
+      });
+    });
   });
 });
