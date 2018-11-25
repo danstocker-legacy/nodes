@@ -50,7 +50,7 @@ export class Comparer<V> implements ISink, ISource, IBouncer {
         const equals = this.cb(value.a, value.b, tag);
         this.out.$.send(equals, tag);
       } catch (err) {
-        MBouncer.bounce.call(this, port, value, tag);
+        this.bounced.$.send(value, tag);
       }
     }
   }

@@ -38,7 +38,7 @@ export class Mapper<I, O> implements ISink, ISource, IBouncer {
         const mapped = this.cb(value, tag);
         this.out.$.send(mapped, tag);
       } catch (err) {
-        MBouncer.bounce.call(this, port, value, tag);
+        this.bounced.$.send(value, tag);
       }
     }
   }

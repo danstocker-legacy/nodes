@@ -53,7 +53,7 @@ export class Unfolder<I, O> implements ISink, ISource, IBouncer {
         this.out.$.send(next, tag);
       }
     } catch (err) {
-      MBouncer.bounce.call(this, port, value, tag);
+      this.bounced.$.send(value, tag);
     }
   }
 }

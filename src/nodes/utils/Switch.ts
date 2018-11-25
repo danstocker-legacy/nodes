@@ -51,7 +51,7 @@ export class Switch<C extends string, T> implements ISink, ISource, IBouncer {
       if (outPort) {
         outPort.send(value.$, tag);
       } else {
-        MBouncer.bounce.call(this, port, value, tag);
+        this.bounced.$.send(value, tag);
       }
     }
   }

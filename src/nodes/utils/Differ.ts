@@ -47,7 +47,7 @@ export class Differ<V> implements ISink, ISource, IBouncer {
           const equals = this.cb(buffer.shift(), value);
           this.out.$.send(!equals, tag);
         } catch (err) {
-          MBouncer.bounce.call(this, port, value, tag);
+          this.bounced.$.send(value, tag);
         }
       } else {
         this.buffer = buffer;

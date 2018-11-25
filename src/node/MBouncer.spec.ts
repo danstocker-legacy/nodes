@@ -36,18 +36,4 @@ describe("MBouncer", function () {
       expect(node.bounced.bar).toBeDefined();
     });
   });
-
-  describe("bounce()", function () {
-    let node: TestBouncer;
-
-    beforeEach(function () {
-      node = new TestBouncer();
-    });
-
-    it("should send input to bounce bundle", function () {
-      spyOn(node.bounced.foo, "send");
-      MBouncer.bounce.call(node, node.in.foo, 5, "1");
-      expect(node.bounced.foo.send).toHaveBeenCalledWith(5, "1");
-    });
-  });
 });

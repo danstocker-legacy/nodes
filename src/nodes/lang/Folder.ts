@@ -66,7 +66,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
         const folded = this.folded = this.cb(curr, next, tag);
         this.out.$.send(folded, tag);
       } catch (err) {
-        MBouncer.bounce.call(this, port, value, tag);
+        this.bounced.$.send(value, tag);
       }
     }
   }

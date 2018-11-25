@@ -33,7 +33,7 @@ export class Listener implements ISink, IBouncer {
       try {
         this.cb(value, tag);
       } catch (err) {
-        MBouncer.bounce.call(this, port, value, tag);
+        this.bounced.$.send(value, tag);
       }
     }
   }
