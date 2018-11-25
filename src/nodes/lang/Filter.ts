@@ -2,7 +2,7 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface IFilterInput<V> {
-  val: V;
+  $: V;
   incl: boolean;
 }
 
@@ -24,7 +24,7 @@ export class Filter<V> implements ISink, ISource {
 
   public send(port: IInPort<IFilterInput<V>>, input: IFilterInput<V>, tag?: string): void {
     if (port === this.in.$ && input.incl) {
-      this.out.$.send(input.val, tag);
+      this.out.$.send(input.$, tag);
     }
   }
 }

@@ -19,7 +19,7 @@ describe("Filter", function () {
     describe("when ref is truthy", function () {
       it("should forward value", function () {
         spyOn(node.out.$, "send");
-        node.send(node.in.$, {val: 2, incl: true}, "1");
+        node.send(node.in.$, {$: 2, incl: true}, "1");
         expect(node.out.$.send).toHaveBeenCalledWith(2, "1");
       });
     });
@@ -27,7 +27,7 @@ describe("Filter", function () {
     describe("when ref is falsy", function () {
       it("should not forward value", function () {
         spyOn(node.out.$, "send");
-        node.send(node.in.$, {val: 2, incl: false}, "1");
+        node.send(node.in.$, {$: 2, incl: false}, "1");
         expect(node.out.$.send).not.toHaveBeenCalled();
       });
     });

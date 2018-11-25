@@ -7,7 +7,7 @@ describe("Funnel", function () {
       expect(node.in.foo).toBeDefined();
       expect(node.in.bar).toBeDefined();
       expect(node.in.baz).toBeDefined();
-      expect(node.out.val).toBeDefined();
+      expect(node.out.$).toBeDefined();
       expect(node.out.case).toBeDefined();
     });
   });
@@ -20,10 +20,10 @@ describe("Funnel", function () {
     });
 
     it("should forward to specified output", function () {
-      spyOn(node.out.val, "send");
+      spyOn(node.out.$, "send");
       spyOn(node.out.case, "send");
       node.in.foo.send(5, "1");
-      expect(node.out.val.send).toHaveBeenCalledWith(5, "1");
+      expect(node.out.$.send).toHaveBeenCalledWith(5, "1");
       expect(node.out.case.send).toHaveBeenCalledWith("foo", "1");
     });
   });

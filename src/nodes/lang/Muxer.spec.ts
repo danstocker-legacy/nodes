@@ -21,8 +21,8 @@ describe("Muxer", function () {
       spyOn(node.out.$, "send");
       node.send(node.in.foo, 5, "1");
       expect(node.out.$.send).toHaveBeenCalledWith({
-        name: "foo",
-        val: 5
+        $: 5,
+        name: "foo"
       }, "1");
     });
   });

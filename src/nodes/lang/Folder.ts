@@ -7,7 +7,7 @@ interface IFolderInput<V> {
   res: boolean;
 
   /** Next input value */
-  val: V;
+  $: V;
 }
 
 export type TFolderCallback<I, O> = (
@@ -56,7 +56,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
     tag?: string
   ): void {
     if (port === this.in.$) {
-      const next = value.val;
+      const next = value.$;
       const curr = value.res ?
         copy(this.initial) :
         this.folded;

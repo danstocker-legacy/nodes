@@ -10,5 +10,5 @@ export interface IMuxed<T> {
   /**
    * Multiplexed value.
    */
-  val: T[keyof T];
+  $: T[keyof T];
 }

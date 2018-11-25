@@ -1,13 +1,13 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
-interface ISwitchInputs<P extends string, T> {
-  val: T;
-  case: P;
+interface ISwitchInputs<C extends string, T> {
+  $: T;
+  case: C;
 }
 
-type TSwitchOutputs<P extends string, T> = {
-  [K in P]: T
+type TSwitchOutputs<C extends string, T> = {
+  [K in C]: T
 };
 
 /**
@@ -22,13 +22,13 @@ type TSwitchOutputs<P extends string, T> = {
  * let switch: Switch<"foo" | "bar" | "baz", number>;
  * switch = new Switch(["foo", "bar", "baz");
  */
-export class Switch<P extends string, T> implements ISink, ISource, IBouncer {
+export class Switch<C extends string, T> implements ISink, ISource, IBouncer {
   public readonly in: TInBundle<{
-    $: ISwitchInputs<P, T>
+    $: ISwitchInputs<C, T>
   }>;
-  public readonly out: TOutBundle<TSwitchOutputs<P, T>>;
+  public readonly out: TOutBundle<TSwitchOutputs<C, T>>;
   public readonly bounced: TOutBundle<{
-    $: ISwitchInputs<P, T>
+    $: ISwitchInputs<C, T>
   }>;
 
   /**
@@ -41,15 +41,15 @@ export class Switch<P extends string, T> implements ISink, ISource, IBouncer {
   }
 
   public send(
-    port: IInPort<ISwitchInputs<P, T>>,
-    value: ISwitchInputs<P, T>,
+    port: IInPort<ISwitchInputs<C, T>>,
+    value: ISwitchInputs<C, T>,
     tag?: string
   ): void {
     if (port === this.in.$) {
       const name = value.case;
       const outPort = this.out[name];
       if (outPort) {
-        outPort.send(value.val, tag);
+        outPort.send(value.$, tag);
       } else {
         MBouncer.bounce.call(this, port, value, tag);
       }

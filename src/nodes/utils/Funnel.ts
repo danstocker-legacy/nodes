@@ -21,13 +21,13 @@ type TFunnelInputs<P extends string, T> = {
 export class Funnel<P extends string, T> implements ISink, ISource {
   public readonly in: TInBundle<TFunnelInputs<P, T>>;
   public readonly out: TOutBundle<{
-    val: T;
+    $: T;
     case: P;
   }>;
 
   constructor(cases: Array<string>) {
     MSink.init.call(this, cases);
-    MSource.init.call(this, ["val", "case"]);
+    MSource.init.call(this, ["$", "case"]);
   }
 
   public send(
@@ -36,6 +36,6 @@ export class Funnel<P extends string, T> implements ISink, ISource {
     tag?: string
   ): void {
     this.out.case.send(port.name as P, tag);
-    this.out.val.send(value, tag);
+    this.out.$.send(value, tag);
   }
 }

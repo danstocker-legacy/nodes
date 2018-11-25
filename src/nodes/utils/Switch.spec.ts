@@ -22,7 +22,7 @@ describe("Switch", function () {
       spyOn(node.out.foo, "send");
       spyOn(node.out.bar, "send");
       spyOn(node.out.baz, "send");
-      node.in.$.send({case: "bar", val: 5}, "1");
+      node.in.$.send({case: "bar", $: 5}, "1");
       expect(node.out.foo.send).not.toHaveBeenCalled();
       expect(node.out.bar.send).toHaveBeenCalledWith(5, "1");
       expect(node.out.baz.send).not.toHaveBeenCalled();
@@ -31,10 +31,10 @@ describe("Switch", function () {
     describe("on invalid case", function () {
       it("should bounce inputs", function () {
         spyOn(node.bounced.$, "send");
-        node.send(node.in.$, {case: "quux", val: 5} as any, "1");
+        node.send(node.in.$, {case: "quux", $: 5} as any, "1");
         expect(node.bounced.$.send).toHaveBeenCalledWith({
-          case: "quux",
-          val: 5
+          $: 5,
+          case: "quux"
         }, "1");
       });
     });

@@ -25,7 +25,7 @@ export class Demuxer<T> implements ISink, ISource {
   public send(port: IInPort<IMuxed<T>>, input: IMuxed<T>, tag?: string): void {
     if (port === this.in.$) {
       const name = input.name;
-      this.out[name].send(input.val, tag);
+      this.out[name].send(input.$, tag);
     }
   }
 }
