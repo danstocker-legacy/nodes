@@ -1,5 +1,6 @@
 import {IBouncer, ISink, MBouncer, MSink} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
+import {FunctionStore} from "../../utils";
 
 type TListenerCallback = (value: any, tag?: string) => void;
 
@@ -10,7 +11,7 @@ interface IListenerInputs {
 /**
  * Convenience node for hooking up callbacks to output ports.
  * @example
- * const listener = new Listener((value, tag) => console.log(value, tag));
+ * const listener = new Listener("(value, tag) => console.log(value, tag)");
  * // to subscribe:
  * node.out.$.connect(listener.in.$);
  * // to unsubscribe:
@@ -22,10 +23,10 @@ export class Listener implements ISink, IBouncer {
 
   private readonly cb: TListenerCallback;
 
-  constructor(cb: TListenerCallback) {
+  constructor(cb: string) {
     MSink.init.call(this, ["$"]);
     MBouncer.init.call(this, ["$"]);
-    this.cb = cb;
+    this.cb = FunctionStore.get(cb);
   }
 
   public send(port: IInPort<any>, value: any, tag?: string): void {

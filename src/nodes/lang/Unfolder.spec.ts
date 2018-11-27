@@ -3,7 +3,7 @@ import {Unfolder} from "./Unfolder";
 describe("Unfolder", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Unfolder(() => null);
+      const node = new Unfolder("() => null");
       expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
@@ -14,12 +14,12 @@ describe("Unfolder", function () {
     let node: Unfolder<Array<number>, number>;
 
     beforeEach(function () {
-      node = new Unfolder(function* (value) {
+      node = new Unfolder(`function* (value) {
         value = value.slice();
         while (value.length > 0) {
           yield value.shift();
         }
-      });
+      }`);
     });
 
     it("should send unfolded values", function () {
@@ -37,9 +37,9 @@ describe("Unfolder", function () {
 
       beforeEach(function () {
         error = new Error();
-        node = new Unfolder(function* () {
+        node = new Unfolder(`function* () {
           throw error;
-        });
+        }`);
       });
 
       it("should bounce inputs", function () {

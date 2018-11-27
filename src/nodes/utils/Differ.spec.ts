@@ -3,7 +3,7 @@ import {Differ} from "./Differ";
 describe("Differ", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Differ(() => null);
+      const node = new Differ("() => null");
       expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
@@ -13,7 +13,7 @@ describe("Differ", function () {
     let node: Differ<number>;
 
     beforeEach(function () {
-      node = new Differ((a, b) => a === b);
+      node = new Differ("(a, b) => a === b");
     });
 
     describe("on first input", function () {
@@ -41,9 +41,9 @@ describe("Differ", function () {
 
       beforeEach(function () {
         error = new Error();
-        node = new Differ(() => {
+        node = new Differ(`() => {
           throw error;
-        });
+        }`);
         node.send(node.in.$, 5, "1");
       });
 

@@ -1,5 +1,6 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
+import {FunctionStore} from "../../utils";
 import {TEqualityCallback} from "./Comparer";
 
 interface IDifferInputs<V> {
@@ -17,7 +18,7 @@ interface IDifferOutputs {
  * Composite view:
  * TBD
  * @example
- * const differ = new Differ<number>((a, b) => a === b);
+ * const differ = new Differ<number>("(a, b) => a === b");
  * differ.in.$.send(5) // outputs `undefined` (first input)
  * differ.in.$.send(5) // outputs `false` (not different)
  * differ.in.$.send(4) // outputs `true` (is different)
@@ -30,11 +31,11 @@ export class Differ<V> implements ISink, ISource, IBouncer {
   private readonly cb: TEqualityCallback<V>;
   private buffer: Array<V>;
 
-  constructor(cb: TEqualityCallback<V>) {
+  constructor(cb: string) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
     MBouncer.init.call(this, ["$"]);
-    this.cb = cb;
+    this.cb = FunctionStore.get(cb);
     this.buffer = [];
   }
 
