@@ -3,7 +3,7 @@ import {Folder} from "./Folder";
 describe("Folder", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Folder("() => null");
+      const node = new Folder(() => null);
       expect(node.in.$).toBeDefined();
       expect(node.in.$).toBeDefined();
     });
@@ -13,7 +13,7 @@ describe("Folder", function () {
     let node: Folder<number, number>;
 
     beforeEach(function () {
-      node = new Folder("(curr, next) => curr + next", 1);
+      node = new Folder((curr, next) => curr + next, 1);
     });
 
     describe("before first truthy signal", function () {
@@ -55,9 +55,9 @@ describe("Folder", function () {
 
       beforeEach(function () {
         error = new Error();
-        node = new Folder(`() => {
+        node = new Folder(() => {
           throw error;
-        }`);
+        });
       });
 
       it("should bounce inputs", function () {

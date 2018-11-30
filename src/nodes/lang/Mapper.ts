@@ -1,6 +1,5 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
-import {FunctionStore} from "../../utils";
 
 export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
 
@@ -17,7 +16,7 @@ interface IMapperOutputs<V> {
  * callback, or one passed in through the pseudo-port "cb".
  * @example
  * // static callback
- * const mapper = new Mapper<number, string>("String");
+ * const mapper = new Mapper<number, string>(String);
  */
 export class Mapper<I, O> implements ISink, ISource, IBouncer {
   public readonly in: TInBundle<IMapperInputs<I>>;
@@ -26,11 +25,11 @@ export class Mapper<I, O> implements ISink, ISource, IBouncer {
 
   private readonly cb: TMapperCallback<I, O>;
 
-  constructor(cb: string) {
+  constructor(cb: TMapperCallback<I, O>) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
     MBouncer.init.call(this, ["$"]);
-    this.cb = FunctionStore.get(cb);
+    this.cb = cb;
   }
 
   public send(port: IInPort<I>, value: I, tag?: string): void {

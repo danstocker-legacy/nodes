@@ -1,6 +1,5 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
-import {FunctionStore} from "../../utils";
 
 /**
  * Callback generator to be passed to an Unfolder.
@@ -26,11 +25,11 @@ interface IUnfolderOutputs<V> {
  * within the aggregate, and whether unfolding the current aggregate is done.
  * @example
  * let flattener: Unfolder<Array<number>, number>;
- * flattener = new Unfolder(`(curr) => ({
+ * flattener = new Unfolder((curr) => ({
  *   curr,
  *   done: curr.length === 1,
  *   next: curr.shift()
- * })`);
+ * }));
  * @see {@link https://en.wikipedia.org/wiki/Anamorphism}
  */
 export class Unfolder<I, O> implements ISink, ISource, IBouncer {
@@ -40,11 +39,11 @@ export class Unfolder<I, O> implements ISink, ISource, IBouncer {
 
   private readonly cb: TUnfolderCallback<I, O>;
 
-  constructor(cb: string) {
+  constructor(cb: TUnfolderCallback<I, O>) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
     MBouncer.init.call(this, ["$"]);
-    this.cb = FunctionStore.get(cb);
+    this.cb = cb;
   }
 
   public send(port: IInPort<I>, value: I, tag?: string): void {

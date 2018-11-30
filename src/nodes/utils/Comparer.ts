@@ -1,6 +1,5 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
-import {FunctionStore} from "../../utils";
 
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
 
@@ -24,7 +23,7 @@ interface IComparerOutputs {
  * Composite view:
  * TBD
  * @example
- * const comparer = new Comparer<number>("(a, b) => a === b");
+ * const comparer = new Comparer<number>((a, b) => a === b);
  * comparer.in.$.send({a: 4, b: 5}); // outputs `false`
  */
 export class Comparer<V> implements ISink, ISource, IBouncer {
@@ -34,11 +33,11 @@ export class Comparer<V> implements ISink, ISource, IBouncer {
 
   private readonly cb: TEqualityCallback<V>;
 
-  constructor(cb: string) {
+  constructor(cb: TEqualityCallback<V>) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
     MBouncer.init.call(this, ["$"]);
-    this.cb = FunctionStore.get(cb);
+    this.cb = cb;
   }
 
   public send(

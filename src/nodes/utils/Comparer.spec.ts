@@ -3,7 +3,7 @@ import {Comparer} from "./Comparer";
 describe("Comparer", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Comparer("() => true");
+      const node = new Comparer(() => true);
       expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
@@ -13,7 +13,7 @@ describe("Comparer", function () {
     let node: Comparer<number>;
 
     beforeEach(function () {
-      node = new Comparer("(a, b) => a === b");
+      node = new Comparer((a, b) => a === b);
     });
 
     it("should send result of equality callback", function () {
@@ -27,9 +27,9 @@ describe("Comparer", function () {
 
       beforeEach(function () {
         error = new Error();
-        node = new Comparer(`() => {
+        node = new Comparer(() => {
           throw error;
-        }`);
+        });
       });
 
       it("should bounce inputs", function () {

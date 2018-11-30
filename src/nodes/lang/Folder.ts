@@ -1,6 +1,6 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
-import {copy, FunctionStore} from "../../utils";
+import {copy} from "../../utils";
 
 interface IFolderInput<V> {
   /** Reset signal */
@@ -30,7 +30,7 @@ export type TFolderCallback<I, O> = (
  * last reset signal.
  * @example
  * let sum: Folder<number, number>;
- * sum = new Folder("(curr, next) => curr + next, 0");
+ * sum = new Folder((curr, next) => curr + next, 0);
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
 export class Folder<I, O> implements ISink, ISource, IBouncer {
@@ -42,11 +42,11 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
   private readonly initial?: O;
   private folded: O;
 
-  constructor(cb: string, initial?: O) {
+  constructor(cb: TFolderCallback<I, O>, initial?: O) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
     MBouncer.init.call(this, ["$"]);
-    this.cb = FunctionStore.get(cb);
+    this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);
   }

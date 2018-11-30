@@ -1,5 +1,4 @@
 export * from "./utils";
-export {FunctionStore} from "./FunctionStore";
 export {IAny} from "./IAny";
 export {IJsonArray} from "./IJsonArray";
 export {IJsonObject} from "./IJsonObject";

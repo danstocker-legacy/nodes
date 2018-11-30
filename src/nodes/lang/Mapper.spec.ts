@@ -3,7 +3,7 @@ import {Mapper} from "./Mapper";
 describe("Mapper", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Mapper("String");
+      const node = new Mapper(String);
       expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
@@ -13,7 +13,7 @@ describe("Mapper", function () {
     let node: Mapper<number, string>;
 
     beforeEach(function () {
-      node = new Mapper("String");
+      node = new Mapper(String);
     });
 
     it("should", function () {
@@ -27,9 +27,9 @@ describe("Mapper", function () {
 
       beforeEach(function () {
         error = new Error();
-        node = new Mapper(`() => {
+        node = new Mapper(() => {
           throw error;
-        }`);
+        });
       });
 
       it("should bounce inputs", function () {
