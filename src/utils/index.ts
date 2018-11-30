@@ -6,5 +6,4 @@ export {IJsonObject} from "./IJsonObject";
 export {IMuxed} from "./IMuxed";
 export {TJsonPath} from "./TJsonPath";
 export {TJson} from "./TJson";
-export {Tree} from "./Tree";
 export {ValueOf} from "./ValueOf";
