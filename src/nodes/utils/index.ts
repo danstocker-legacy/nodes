@@ -7,3 +7,4 @@ export {Logger} from "./Logger";
 export {Noop} from "./Noop";
 export {Switch} from "./Switch";
 export {Throttler} from "./Throttler";
+export {Tracker} from "./Tracker";

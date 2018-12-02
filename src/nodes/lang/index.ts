@@ -8,5 +8,4 @@ export {Serializer} from "./Serializer";
 export {Shifter} from "./Shifter";
 export {Splitter} from "./Splitter";
 export {Tagger} from "./Tagger";
-export {Tracker} from "./Tracker";
 export {Unfolder} from "./Unfolder";
