@@ -14,7 +14,7 @@ interface IJoinerOutputs<T> {
  * joiner = new Joiner(["foo", "bar"]);
  * joiner.in.foo.send(5, "1");
  * joiner.in.bar.send(true, "1");
- * // joiner.out.$ will output {foo: 5, bar: true} for tag "1"
+ * // `joiner.out.$` will output `{foo: 5, bar: true}` for tag "1"
  */
 export class Joiner<T> implements ISink, ISource {
   public readonly in: TInBundle<T>;
