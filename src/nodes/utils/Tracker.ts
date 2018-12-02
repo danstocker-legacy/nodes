@@ -16,9 +16,9 @@ interface ITrackerOutputs<T> {
  * Outputs sets of inputs, where each value in the set reflects the latest
  * one received through its corresponding port.
  * Atomic equivalent of a composite node.
- * A ---+=> Tagger -+=> Joiner -> $
- * B ---+=> Tagger -+
- * C ---+=> Tagger -+
+ * A ---+=> Sampler -+=> Joiner -> $
+ * B ---+=> Sampler -+
+ * C ---+=> Sampler -+
  * ref -+
  * @example
  * let tracker: Tracker<{ foo: number, bar: number }>

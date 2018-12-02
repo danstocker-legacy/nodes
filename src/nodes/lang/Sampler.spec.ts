@@ -1,9 +1,9 @@
-import {Tagger} from "./Tagger";
+import {Sampler} from "./Sampler";
 
-describe("Tagger", function () {
+describe("Sampler", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Tagger();
+      const node = new Sampler();
       expect(node.in.$).toBeDefined();
       expect(node.in.tag).toBeDefined();
       expect(node.out.$).toBeDefined();
@@ -11,10 +11,10 @@ describe("Tagger", function () {
   });
 
   describe("#send()", function () {
-    let node: Tagger<number>;
+    let node: Sampler<number>;
 
     beforeEach(function () {
-      node = new Tagger();
+      node = new Sampler();
     });
 
     describe("on receiving value", function () {
