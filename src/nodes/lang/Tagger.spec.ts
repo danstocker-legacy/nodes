@@ -17,7 +17,15 @@ describe("Tagger", function () {
       node = new Tagger();
     });
 
-    describe("when sending tag", function () {
+    describe("on receiving value", function () {
+      it("should not send to output", function () {
+        spyOn(node.out.$, "send");
+        node.send(node.in.$, 5);
+        expect(node.out.$.send).not.toHaveBeenCalled();
+      });
+    });
+
+    describe("on receiving tag", function () {
       beforeEach(function () {
         node.send(node.in.$, 5);
       });
