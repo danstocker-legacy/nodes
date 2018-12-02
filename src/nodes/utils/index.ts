@@ -1,3 +1,4 @@
+export {Buffer} from "./Buffer";
 export {Comparer} from "./Comparer";
 export {Debouncer} from "./Debouncer";
 export {Differ} from "./Differ";
