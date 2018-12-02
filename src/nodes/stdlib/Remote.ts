@@ -1,13 +1,14 @@
 import * as net from "net";
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
+import {TJson} from "../../utils";
 
 interface IRemoteInputs {
-  $: any;
+  $: TJson;
 }
 
 interface IRemoteOutputs {
-  $: any;
+  $: TJson;
   connected: boolean;
   error: string;
 }
