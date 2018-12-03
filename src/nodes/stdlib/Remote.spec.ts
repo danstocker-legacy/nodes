@@ -58,6 +58,7 @@ describe("Remote", function () {
     it("should add ports", function () {
       const node = Remote.instance("127.0.0.1", 8124);
       expect(node.in.$).toBeDefined();
+      expect(node.in.touch).toBeDefined();
       expect(node.out.$).toBeDefined();
       expect(node.out.connected).toBeDefined();
       expect(node.out.error).toBeDefined();
@@ -119,29 +120,63 @@ describe("Remote", function () {
       node = Remote.instance("127.0.0.1", 8124);
     });
 
-    describe("when socket is connected", function () {
-      beforeEach(function () {
-        onConnect();
+    describe("when sending value", function () {
+      describe("when connected", function () {
+        beforeEach(function () {
+          onConnect();
+        });
+
+        it("should write wrapped & JSON stringified input to socket", function () {
+          const spy = spyOn(socket, "write");
+          node.send(node.in.$, "foo", "1");
+          expect(spy.calls.argsFor(0)[0]).toBe(`{"value":"foo","tag":"1"}`);
+        });
       });
 
-      it("should write wrapped & JSON stringified input to socket", function () {
-        const spy = spyOn(socket, "write");
-        node.send(node.in.$, "foo", "1");
-        expect(spy.calls.argsFor(0)[0]).toBe(`{"value":"foo","tag":"1"}`);
+      describe("when not connected", function () {
+        it("should bounce inputs", function () {
+          spyOn(node.bounced.$, "send");
+          node.send(node.in.$, "foo", "1");
+          expect(node.bounced.$.send).toHaveBeenCalledWith("foo", "1");
+        });
       });
     });
 
-    describe("when socket is closed", function () {
-      it("should bounce inputs", function () {
-        spyOn(node.bounced.$, "send");
-        node.send(node.in.$, "foo", "1");
-        expect(node.bounced.$.send).toHaveBeenCalledWith("foo", "1");
+    describe("when sending touch", function () {
+      describe("when not connected", function () {
+        it("should attempt to connect socket", function () {
+          spyOn(socket, "connect");
+          node.send(node.in.touch, null);
+          expect(socket.connect).toHaveBeenCalledWith(8124, "127.0.0.1");
+        });
       });
 
-      it("should attempt to connect", function () {
-        spyOn(socket, "connect");
-        node.send(node.in.$, "foo", "1");
-        expect(socket.connect).toHaveBeenCalledWith(8124, "127.0.0.1");
+      describe("when connected", function () {
+        beforeEach(function () {
+          onConnect();
+        });
+
+        it("should not attempt to connect socket", function () {
+          spyOn(socket, "connect");
+          node.send(node.in.touch, null);
+          expect(socket.connect).not.toHaveBeenCalled();
+        });
+      });
+
+      describe("when socket is connecting", function () {
+        beforeEach(function () {
+          socket.connecting = true;
+        });
+
+        afterEach(function () {
+          socket.connecting = false;
+        });
+
+        it("should not attempt to connect socket", function () {
+          spyOn(socket, "connect");
+          node.send(node.in.touch, null);
+          expect(socket.connect).not.toHaveBeenCalled();
+        });
       });
     });
   });

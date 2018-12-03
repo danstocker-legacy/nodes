@@ -1,10 +1,11 @@
 import * as net from "net";
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
-import {TJson} from "../../utils";
+import {TJson, ValueOf} from "../../utils";
 
 interface IRemoteInputs {
   $: TJson;
+  touch: any;
 }
 
 interface IRemoteOutputs {
@@ -53,7 +54,7 @@ export class Remote implements ISink, ISource, IBouncer {
    * @param port
    */
   private constructor(host: string, port: number) {
-    MSink.init.call(this, ["$"]);
+    MSink.init.call(this, ["$", "touch"]);
     MSource.init.call(this,
       ["$", "connected", "error"]);
     MBouncer.init.call(this, ["$"]);
@@ -70,25 +71,36 @@ export class Remote implements ISink, ISource, IBouncer {
     this.connected = false;
   }
 
-  public send(port: IInPort<any>, value: any, tag?: string): void {
-    if (port === this.in.$) {
-      const socket = this.socket;
-      if (this.connected) {
-        const buffer = this.buffer;
-        buffer.set(tag, value);
-        socket.write(
-          JSON.stringify({value, tag}),
-          (err: Error) => this.onWrite(err, tag));
-      } else {
-        // socket is not connected
-        // attempting to open connection
-        if (!socket.connecting) {
+  public send(
+    port: IInPort<ValueOf<IRemoteInputs>>,
+    value: ValueOf<IRemoteInputs>,
+    tag?: string
+  ): void {
+    const inPorts = this.in;
+    const socket = this.socket;
+    const connected = this.connected;
+    switch (port) {
+      case inPorts.$:
+        if (connected) {
+          const buffer = this.buffer;
+          buffer.set(tag, value);
+          socket.write(
+            JSON.stringify({value, tag}),
+            (err: Error) => this.onWrite(err, tag));
+        } else {
+          // socket is not connected
+          // bouncing inputs
+          this.bounced.$.send(value, tag);
+        }
+        break;
+
+      case inPorts.touch:
+        if (!connected && !socket.connecting) {
+          // socket is not connected and is not in the process of connecting
+          // attempting to open connection
           socket.connect(this.port, this.host);
         }
-
-        // bouncing inputs
-        this.bounced.$.send(value, tag);
-      }
+        break;
     }
   }
 
