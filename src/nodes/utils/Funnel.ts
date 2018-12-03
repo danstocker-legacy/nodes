@@ -1,12 +1,12 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
-type TFunnelInputs<C extends string, T> = {
-  [K in C]: T
+type TFunnelInputs<C extends string, V> = {
+  [K in C]: V
 };
 
-interface IFunnelOutputs<C extends string, T> {
-  $: T;
+interface IFunnelOutputs<C extends string, V> {
+  $: V;
   case: C;
 }
 
@@ -23,9 +23,9 @@ interface IFunnelOutputs<C extends string, T> {
  * let funnel: Funnel<"foo" | "bar" | "baz", number>;
  * funnel = new Funnel(["foo", "bar", "baz"]);
  */
-export class Funnel<C extends string, T> implements ISink, ISource {
-  public readonly in: TInBundle<TFunnelInputs<C, T>>;
-  public readonly out: TOutBundle<IFunnelOutputs<C, T>>;
+export class Funnel<C extends string, V> implements ISink, ISource {
+  public readonly in: TInBundle<TFunnelInputs<C, V>>;
+  public readonly out: TOutBundle<IFunnelOutputs<C, V>>;
 
   constructor(cases: Array<string>) {
     MSink.init.call(this, cases);
@@ -33,8 +33,8 @@ export class Funnel<C extends string, T> implements ISink, ISource {
   }
 
   public send(
-    port: IInPort<TFunnelInputs<C, T>>,
-    value: T,
+    port: IInPort<V>,
+    value: V,
     tag?: string
   ): void {
     this.out.case.send(port.name as C, tag);
