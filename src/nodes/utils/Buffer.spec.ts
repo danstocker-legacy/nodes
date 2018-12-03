@@ -5,7 +5,7 @@ describe("Buffer", function () {
     it("should add ports", function () {
       const node = new Buffer();
       expect(node.in.$).toBeDefined();
-      expect(node.in.paused).toBeDefined();
+      expect(node.in.open).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
   });
@@ -17,17 +17,9 @@ describe("Buffer", function () {
       node = new Buffer();
     });
 
-    describe("when buffer is paused", function () {
-      it("should should not send output", function () {
-        spyOn(node.out.$, "send");
-        node.send(node.in.$, 5, "1");
-        expect(node.out.$.send).not.toHaveBeenCalled();
-      });
-    });
-
-    describe("when buffer is not paused", function () {
+    describe("when buffer is open", function () {
       beforeEach(function () {
-        node.send(node.in.paused, false);
+        node.send(node.in.open, true);
       });
 
       it("should forward input", function () {
@@ -37,7 +29,21 @@ describe("Buffer", function () {
       });
     });
 
-    describe("on un-pausing buffer", function () {
+    describe("when buffer is not open", function () {
+      it("should should not send output", function () {
+        spyOn(node.out.$, "send");
+        node.send(node.in.$, 5, "1");
+        expect(node.out.$.send).not.toHaveBeenCalled();
+      });
+
+      it("should emit buffer size on `size`", function () {
+        spyOn(node.out.size, "send");
+        node.send(node.in.$, 5, "1");
+        expect(node.out.size.send).toHaveBeenCalledWith(1);
+      });
+    });
+
+    describe("on opening buffer", function () {
       beforeEach(function () {
         node.send(node.in.$, 5, "1");
         node.send(node.in.$, 3, "2");
@@ -46,12 +52,18 @@ describe("Buffer", function () {
 
       it("should send buffered inputs to output", function () {
         const spy = spyOn(node.out.$, "send");
-        node.send(node.in.paused, false);
+        node.send(node.in.open, true);
         expect(spy.calls.allArgs()).toEqual([
           [5, "1"],
           [3, "2"],
           [6, "3"]
         ]);
+      });
+
+      it("should emit buffer size on `size`", function () {
+        spyOn(node.out.size, "send");
+        node.send(node.in.open, true);
+        expect(node.out.size.send).toHaveBeenCalledWith(0);
       });
     });
   });

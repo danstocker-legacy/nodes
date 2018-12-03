@@ -4,15 +4,16 @@ import {ValueOf} from "../../utils";
 
 interface IBufferInputs<V> {
   $: V;
-  paused: boolean;
+  open: boolean;
 }
 
 interface IBufferOutputs<V> {
   $: V;
+  size: number;
 }
 
 /**
- * Buffers inputs when paused. Forwards input otherwise.
+ * Buffers inputs when open. Forwards input otherwise.
  * Atomic equivalent of a composite node.
  * Composite view:
  * TBD
@@ -24,13 +25,13 @@ export class Buffer<V> implements ISink, ISource {
   public readonly out: TOutBundle<IBufferOutputs<V>>;
 
   private readonly buffer: Array<[V, string]>;
-  private paused: boolean;
+  private open: boolean;
 
   constructor() {
-    MSink.init.call(this, ["$", "paused"]);
-    MSource.init.call(this, ["$"]);
+    MSink.init.call(this, ["$", "open"]);
+    MSource.init.call(this, ["$", "size"]);
     this.buffer = [];
-    this.paused = true;
+    this.open = false;
   }
 
   public send(
@@ -39,24 +40,31 @@ export class Buffer<V> implements ISink, ISource {
     tag?: string
   ): void {
     const inPorts = this.in;
+    const outPorts = this.out;
     switch (port) {
       case inPorts.$:
-        if (this.paused) {
-          this.buffer.push([value as V, tag]);
+        if (this.open) {
+          outPorts.$.send(value as V, tag);
         } else {
-          this.out.$.send(value as V, tag);
+          const buffer = this.buffer;
+          buffer.push([value as V, tag]);
+          outPorts.size.send(buffer.length);
         }
         break;
 
-      case inPorts.paused:
-        this.paused = value as boolean;
-        // if new value is false, release buffer contents
-        if (!value) {
+      case inPorts.open:
+        const openBefore = this.open;
+        const openAfter = value as boolean;
+        // if new value is true, release buffer contents
+        if (openAfter && !openBefore) {
+          this.open = openAfter;
           const buffer = this.buffer;
+          const $ = outPorts.$;
           while (buffer.length) {
             const next = buffer.shift();
-            this.out.$.send(next[0], next[1]);
+            $.send(next[0], next[1]);
           }
+          outPorts.size.send(buffer.length);
         }
         break;
     }
