@@ -14,7 +14,7 @@ interface IDebouncerOutputs {
  * delay has passed since last received input tag, `false` when a new input is
  * received before timer runs out.
  * Atomic equivalent of a composite node.
- * Commonly used in conjunction with Filter and Folder.
+ * Commonly used in conjunction with Picker and Folder.
  * Composite view:
  * TBD
  * @example

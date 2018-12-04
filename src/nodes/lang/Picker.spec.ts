@@ -1,25 +1,25 @@
-import {Filter} from "./Filter";
+import {Picker} from "./Picker";
 
-describe("Filter", function () {
+describe("Picker", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Filter();
+      const node = new Picker();
       expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
   });
 
   describe("#send()", function () {
-    let node: Filter<number>;
+    let node: Picker<number>;
 
     beforeEach(function () {
-      node = new Filter();
+      node = new Picker();
     });
 
     describe("when ref is truthy", function () {
       it("should forward value", function () {
         spyOn(node.out.$, "send");
-        node.send(node.in.$, {$: 2, incl: true}, "1");
+        node.send(node.in.$, {$: 2, include: true}, "1");
         expect(node.out.$.send).toHaveBeenCalledWith(2, "1");
       });
     });
@@ -27,7 +27,7 @@ describe("Filter", function () {
     describe("when ref is falsy", function () {
       it("should not forward value", function () {
         spyOn(node.out.$, "send");
-        node.send(node.in.$, {$: 2, incl: false}, "1");
+        node.send(node.in.$, {$: 2, include: false}, "1");
         expect(node.out.$.send).not.toHaveBeenCalled();
       });
     });
