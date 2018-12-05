@@ -12,7 +12,8 @@ import {IInPort, TInBundle} from "../port";
  */
 export interface ISink {
   /**
-   * Bundle of ports through which the node receives data.
+   * Data input port bundle.
+   * The node receives data through these ports.
    */
   i: TInBundle<any>;
 

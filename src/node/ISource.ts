@@ -12,7 +12,8 @@ import {TOutBundle} from "../port";
  */
 export interface ISource {
   /**
-   * Bundle of ports through which the node emits data.
+   * Data output port bundle.
+   * The node emits data through these ports.
    */
   o: TOutBundle<any>;
 }
