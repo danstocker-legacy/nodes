@@ -1,4 +1,3 @@
-import {ISink} from "../node";
 import {IInPort} from "./IInPort";
 import {IOutPort} from "./IOutPort";
 import {Port} from "./Port";
@@ -10,12 +9,6 @@ import {Port} from "./Port";
  */
 export class InPort<V> extends Port<V> implements IInPort<V> {
   /**
-   * Node the port is assigned to.
-   * Must be sink node that is capable of emitting events.
-   */
-  public node: ISink;
-
-  /**
    * Remote port the current port is connecting to.
    * When this is undefined, the port is not connected.
    */
@@ -25,7 +18,7 @@ export class InPort<V> extends Port<V> implements IInPort<V> {
    * @param name Identifies port in the context of its assigned node.
    * @param node Node the port is assigned to.
    */
-  constructor(name: string, node: ISink) {
+  constructor(name: string, node: any) {
     super(name, node);
   }
 

@@ -1,4 +1,3 @@
-import {ISink} from "../node";
 import {IOutPort} from "./IOutPort";
 import {IPort} from "./IPort";
 
@@ -7,12 +6,6 @@ import {IPort} from "./IPort";
  * Input ports are assigned to sink nodes, and connect to a single output port.
  */
 export interface IInPort<V> extends IPort<V> {
-  /**
-   * Node the port is assigned to.
-   * Must be sink node.
-   */
-  node: ISink;
-
   /**
    * Remote port the current port is connecting to.
    * When this is undefined, the port is not connected.
