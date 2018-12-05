@@ -1,12 +1,5 @@
 import * as net from "net";
-import {
-  IEvented,
-  ISource,
-  IStateful,
-  MEvented,
-  MSource,
-  MStateful
-} from "../../node";
+import {IEvented, IStateful, MEvented, MStateful} from "../../node";
 import {TOutBundle} from "../../port";
 import {Remote} from "./Remote";
 
