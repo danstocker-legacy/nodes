@@ -26,7 +26,7 @@ interface ITrackerOutputs<T> {
  */
 export class Tracker<T extends IAny = IAny> implements ISink, ISource {
   public readonly i: TInBundle<TTrackerInputs<T>>;
-  public readonly out: TOutBundle<ITrackerOutputs<T>>;
+  public readonly o: TOutBundle<ITrackerOutputs<T>>;
 
   /**
    * Stores last input values.
@@ -49,7 +49,7 @@ export class Tracker<T extends IAny = IAny> implements ISink, ISource {
     const name = port.name;
     if (port === inPorts.tag) {
       // sending shallow copy of current state
-      this.out.$.send(copy(values), tag);
+      this.o.$.send(copy(values), tag);
     } else if (port === this.i[name]) {
       // not the tag port, but it exists in node
       // updating input in state

@@ -22,7 +22,7 @@ interface IBufferOutputs<V> {
  */
 export class Buffer<V> implements ISink, ISource {
   public readonly i: TInBundle<IBufferInputs<V>>;
-  public readonly out: TOutBundle<IBufferOutputs<V>>;
+  public readonly o: TOutBundle<IBufferOutputs<V>>;
 
   private readonly buffer: Array<[V, string]>;
   private open: boolean;
@@ -40,7 +40,7 @@ export class Buffer<V> implements ISink, ISource {
     tag?: string
   ): void {
     const inPorts = this.i;
-    const outPorts = this.out;
+    const outPorts = this.o;
     switch (port) {
       case inPorts.$:
         if (this.open) {

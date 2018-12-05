@@ -5,8 +5,8 @@ describe("Demuxer", function () {
     it("should add ports", function () {
       const node = new Demuxer<{ foo: number, bar: number }>(["foo", "bar"]);
       expect(node.i.$).toBeDefined();
-      expect(node.out.foo).toBeDefined();
-      expect(node.out.bar).toBeDefined();
+      expect(node.o.foo).toBeDefined();
+      expect(node.o.bar).toBeDefined();
     });
   });
 
@@ -18,9 +18,9 @@ describe("Demuxer", function () {
     });
 
     it("should send multiplexed input to output", function () {
-      spyOn(node.out.foo, "send");
+      spyOn(node.o.foo, "send");
       node.send(node.i.$, {name: "foo", $: 5}, "1");
-      expect(node.out.foo.send).toHaveBeenCalledWith(5, "1");
+      expect(node.o.foo.send).toHaveBeenCalledWith(5, "1");
     });
   });
 });

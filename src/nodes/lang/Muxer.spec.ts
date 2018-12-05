@@ -6,7 +6,7 @@ describe("Muxer", function () {
       const node = new Muxer<{ foo: number, bar: number }>(["foo", "bar"]);
       expect(node.i.foo).toBeDefined();
       expect(node.i.bar).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -18,9 +18,9 @@ describe("Muxer", function () {
     });
 
     it("should send multiplexed input to output", function () {
-      spyOn(node.out.$, "send");
+      spyOn(node.o.$, "send");
       node.send(node.i.foo, 5, "1");
-      expect(node.out.$.send).toHaveBeenCalledWith({
+      expect(node.o.$.send).toHaveBeenCalledWith({
         $: 5,
         name: "foo"
       }, "1");

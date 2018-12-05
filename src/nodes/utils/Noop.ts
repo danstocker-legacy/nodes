@@ -21,7 +21,7 @@ interface INoopOutputs<V> {
  */
 export class Noop<V> implements ISink, ISource {
   public readonly i: TInBundle<INoopInputs<V>>;
-  public readonly out: TOutBundle<INoopOutputs<V>>;
+  public readonly o: TOutBundle<INoopOutputs<V>>;
 
   constructor() {
     MSink.init.call(this, ["$"]);
@@ -30,7 +30,7 @@ export class Noop<V> implements ISink, ISource {
 
   public send(port: IInPort<V>, input: V, tag?: string): void {
     if (port === this.i.$) {
-      this.out.$.send(input, tag);
+      this.o.$.send(input, tag);
     }
   }
 }

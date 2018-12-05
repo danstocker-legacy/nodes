@@ -5,7 +5,7 @@ describe("Differ", function () {
     it("should add ports", function () {
       const node = new Differ(() => null);
       expect(node.i.$).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -18,9 +18,9 @@ describe("Differ", function () {
 
     describe("on first input", function () {
       it("should send undefined", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, 5, "1");
-        expect(node.out.$.send).toHaveBeenCalledWith(undefined, "1");
+        expect(node.o.$.send).toHaveBeenCalledWith(undefined, "1");
       });
     });
 
@@ -30,9 +30,9 @@ describe("Differ", function () {
       });
 
       it("should send equality with previous", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, 5, "2");
-        expect(node.out.$.send).toHaveBeenCalledWith(false, "2");
+        expect(node.o.$.send).toHaveBeenCalledWith(false, "2");
       });
     });
 

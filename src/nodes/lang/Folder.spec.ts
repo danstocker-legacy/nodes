@@ -18,9 +18,9 @@ describe("Folder", function () {
 
     describe("before first truthy signal", function () {
       it("should apply callback to initial value", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, {res: false, $: 5}, "1");
-        expect(node.out.$.send).toHaveBeenCalledWith(6, "1");
+        expect(node.o.$.send).toHaveBeenCalledWith(6, "1");
       });
     });
 
@@ -31,9 +31,9 @@ describe("Folder", function () {
       });
 
       it("should apply callback to last reduced value", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, {res: false, $: 5}, "3");
-        expect(node.out.$.send).toHaveBeenCalledWith(11, "3");
+        expect(node.o.$.send).toHaveBeenCalledWith(11, "3");
       });
     });
 
@@ -44,9 +44,9 @@ describe("Folder", function () {
       });
 
       it("should reset reduced value", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, {res: true, $: 5}, "1");
-        expect(node.out.$.send).toHaveBeenCalledWith(6, "1");
+        expect(node.o.$.send).toHaveBeenCalledWith(6, "1");
       });
     });
 

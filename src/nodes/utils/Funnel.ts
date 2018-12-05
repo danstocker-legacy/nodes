@@ -25,7 +25,7 @@ interface IFunnelOutputs<C extends string, V> {
  */
 export class Funnel<C extends string, V> implements ISink, ISource {
   public readonly i: TInBundle<TFunnelInputs<C, V>>;
-  public readonly out: TOutBundle<IFunnelOutputs<C, V>>;
+  public readonly o: TOutBundle<IFunnelOutputs<C, V>>;
 
   constructor(cases: Array<string>) {
     MSink.init.call(this, cases);
@@ -37,7 +37,7 @@ export class Funnel<C extends string, V> implements ISink, ISource {
     value: V,
     tag?: string
   ): void {
-    this.out.case.send(port.name as C, tag);
-    this.out.$.send(value, tag);
+    this.o.case.send(port.name as C, tag);
+    this.o.$.send(value, tag);
   }
 }

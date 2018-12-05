@@ -16,7 +16,7 @@ describe("MSink", function () {
   }
 
   describe("init()", function () {
-    it("should add out property", function () {
+    it("should add i property", function () {
       const node = new TestSink();
       expect(node.i).toBeDefined();
     });

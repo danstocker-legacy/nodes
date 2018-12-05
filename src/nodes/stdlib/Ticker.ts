@@ -9,18 +9,18 @@ interface ITickerOutputs {
  * Emits a tick at the specified intervals.
  * @example
  * const ticker = new Ticker(5000);
- * ticker.out.$.connect(new StdOut().i.$);
+ * ticker.o.$.connect(new StdOut().i.$);
  */
 export class Ticker implements ISource {
-  public readonly out: TOutBundle<ITickerOutputs>;
+  public readonly o: TOutBundle<ITickerOutputs>;
 
   constructor(ms: number) {
     MSource.init.call(this);
     setInterval(this.onInterval.bind(this), ms);
-    this.out.$ = new OutPort("$", this);
+    this.o.$ = new OutPort("$", this);
   }
 
   private onInterval(): void {
-    this.out.$.send(true, null);
+    this.o.$.send(true, null);
   }
 }

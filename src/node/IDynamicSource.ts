@@ -4,7 +4,7 @@ import {ISource} from "./ISource";
 /**
  * Defines a dynamic source node.
  * Dynamic source nodes have a variable number of output ports on their
- * "out" port bundle.
+ * "o" port bundle.
  * All atomic nodes that emit data through variable number of output ports
  * should implement this interface.
  * @example
@@ -19,7 +19,7 @@ export interface IDynamicSource extends ISource {
    * Bundle of ports through which the node emits data.
    * Imposes no restriction on port names.
    */
-  out: TOutBundle<{ [key: string]: any }>;
+  o: TOutBundle<{ [key: string]: any }>;
 
   /**
    * Adds the specified port to the output port bundle.

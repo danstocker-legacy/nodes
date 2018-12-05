@@ -18,7 +18,7 @@ interface ILoggerOutputs {
  */
 export class Logger implements ISink, ISource {
   public readonly i: TInBundle<ILoggerInputs>;
-  public readonly out: TOutBundle<ILoggerOutputs>;
+  public readonly o: TOutBundle<ILoggerOutputs>;
 
   constructor() {
     MSink.init.call(this, ["err", "log", "warn"]);
@@ -27,7 +27,7 @@ export class Logger implements ISink, ISource {
 
   public send(port: IInPort<any>, input: any, tag?: string): void {
     const inPorts = this.i;
-    const outPorts = this.out;
+    const outPorts = this.o;
     switch (port) {
       case inPorts.log:
         outPorts.log.send(input, tag);

@@ -12,7 +12,7 @@ describe("Ticker", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Ticker(0);
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -25,9 +25,9 @@ describe("Ticker", function () {
     });
 
     it("should not send to output", function () {
-      spyOn(node.out.$, "send");
+      spyOn(node.o.$, "send");
       jasmine.clock().tick(100);
-      expect(node.out.$.send).not.toHaveBeenCalled();
+      expect(node.o.$.send).not.toHaveBeenCalled();
     });
   });
 
@@ -39,9 +39,9 @@ describe("Ticker", function () {
     });
 
     it("should send true to output", function () {
-      spyOn(node.out.$, "send");
+      spyOn(node.o.$, "send");
       jasmine.clock().tick(500);
-      expect(node.out.$.send).toHaveBeenCalledWith(true, null);
+      expect(node.o.$.send).toHaveBeenCalledWith(true, null);
     });
   });
 });

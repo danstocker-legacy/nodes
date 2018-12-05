@@ -19,13 +19,13 @@ interface ISamplerOutputs<V> {
  * const sampler = new Sampler<number>();
  * const ticker = new Ticker(1000);
  * const foo: ISource<{$: number}>; // emits tagged values
- * ticker.out.$.connect(sampler.i.$);
- * foo.out.$.connect(sampler.i.tag);
+ * ticker.o.$.connect(sampler.i.$);
+ * foo.o.$.connect(sampler.i.tag);
  * // `sampler` will output the last value from `ticker` on each input to `foo`
  */
 export class Sampler<V> implements ISink, ISource {
   public readonly i: TInBundle<ISamplerInputs<V>>;
-  public readonly out: TOutBundle<ISamplerOutputs<V>>;
+  public readonly o: TOutBundle<ISamplerOutputs<V>>;
 
   private buffer: V;
 
@@ -46,7 +46,7 @@ export class Sampler<V> implements ISink, ISource {
         break;
 
       case inPorts.tag:
-        this.out.$.send(this.buffer, tag);
+        this.o.$.send(this.buffer, tag);
         break;
     }
   }

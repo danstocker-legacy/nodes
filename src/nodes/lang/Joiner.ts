@@ -14,11 +14,11 @@ interface IJoinerOutputs<T> {
  * joiner = new Joiner(["foo", "bar"]);
  * joiner.i.foo.send(5, "1");
  * joiner.i.bar.send(true, "1");
- * // `joiner.out.$` will output `{foo: 5, bar: true}` for tag "1"
+ * // `joiner.o.$` will output `{foo: 5, bar: true}` for tag "1"
  */
 export class Joiner<T> implements ISink, ISource {
   public readonly i: TInBundle<T>;
-  public readonly out: TOutBundle<IJoinerOutputs<T>>;
+  public readonly o: TOutBundle<IJoinerOutputs<T>>;
 
   private readonly fields: Array<string>;
   private readonly inputCache: Map<string, T>;
@@ -58,7 +58,7 @@ export class Joiner<T> implements ISink, ISource {
         // releasing input set and cleaning up
         inputCache.delete(tag);
         portCache.delete(tag);
-        this.out.$.send(inputs, tag);
+        this.o.$.send(inputs, tag);
       }
     }
   }

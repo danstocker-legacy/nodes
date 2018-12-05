@@ -18,7 +18,7 @@ interface ISerializerOutputs<V> {
  */
 export class Serializer<V> implements ISink, ISource {
   public readonly i: TInBundle<ISerializerInputs<V>>;
-  public readonly out: TOutBundle<ISerializerOutputs<V>>;
+  public readonly o: TOutBundle<ISerializerOutputs<V>>;
 
   private readonly inputs: Map<string, V>;
   private readonly order: Array<string>;
@@ -51,7 +51,7 @@ export class Serializer<V> implements ISink, ISource {
   private release(): void {
     const inputs = this.inputs;
     const order = this.order;
-    const $ = this.out.$;
+    const $ = this.o.$;
     while (inputs.has(order[0])) {
       const nextTag = order.shift();
       const nextInput = inputs.get(nextTag);

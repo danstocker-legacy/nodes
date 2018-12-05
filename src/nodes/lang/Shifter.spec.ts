@@ -5,7 +5,7 @@ describe("Shifter", function () {
     it("should add ports", function () {
       const node = new Shifter();
       expect(node.i.$).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -22,9 +22,9 @@ describe("Shifter", function () {
       });
 
       it("should send undefined", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, 2, "2");
-        expect(node.out.$.send).toHaveBeenCalledWith(undefined, "2");
+        expect(node.o.$.send).toHaveBeenCalledWith(undefined, "2");
       });
     });
 
@@ -35,9 +35,9 @@ describe("Shifter", function () {
       });
 
       it("should forward displaced input value", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, 8, "3");
-        expect(node.out.$.send).toHaveBeenCalledWith(5, "3");
+        expect(node.o.$.send).toHaveBeenCalledWith(5, "3");
       });
     });
   });

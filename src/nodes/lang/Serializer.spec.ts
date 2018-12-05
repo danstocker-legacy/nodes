@@ -6,7 +6,7 @@ describe("Serializer", function () {
       const node = new Serializer();
       expect(node.i.$).toBeDefined();
       expect(node.i.tag).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -19,11 +19,11 @@ describe("Serializer", function () {
 
     describe("until first value is received", function () {
       it("should not forward", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.tag, null, "1");
         node.send(node.i.tag, null, "2");
         node.send(node.i.tag, null, "3");
-        expect(node.out.$.send).not.toHaveBeenCalled();
+        expect(node.o.$.send).not.toHaveBeenCalled();
       });
     });
 
@@ -35,9 +35,9 @@ describe("Serializer", function () {
       });
 
       it("should ot forward", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, 5, "2");
-        expect(node.out.$.send).not.toHaveBeenCalled();
+        expect(node.o.$.send).not.toHaveBeenCalled();
       });
     });
 
@@ -50,7 +50,7 @@ describe("Serializer", function () {
       });
 
       it("should release all available inputs", function () {
-        const spy = spyOn(node.out.$, "send");
+        const spy = spyOn(node.o.$, "send");
         node.send(node.i.$, 8, "1");
         const allArgs = spy.calls.allArgs();
         expect(allArgs).toEqual([
@@ -66,16 +66,16 @@ describe("Serializer", function () {
       });
 
       it("should not forward until tag arrives", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, 3, "2");
-        expect(node.out.$.send).not.toHaveBeenCalled();
+        expect(node.o.$.send).not.toHaveBeenCalled();
       });
 
       describe("and passing tag for which input is present", function () {
         it("should release input", function () {
-          spyOn(node.out.$, "send");
+          spyOn(node.o.$, "send");
           node.send(node.i.tag, null, "1");
-          expect(node.out.$.send).toHaveBeenCalledWith(5, "1");
+          expect(node.o.$.send).toHaveBeenCalledWith(5, "1");
         });
       });
     });

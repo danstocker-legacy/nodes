@@ -20,11 +20,11 @@ interface IDebouncerOutputs {
  * @example
  * const debouncer = new Debouncer(500);
  * debouncer.i.$.connect(...);
- * debouncer.out.$.connect(...);
+ * debouncer.o.$.connect(...);
  */
 export class Debouncer implements ISink, ISource {
   public readonly i: TInBundle<IDebouncerInputs>;
-  public readonly out: TOutBundle<IDebouncerOutputs>;
+  public readonly o: TOutBundle<IDebouncerOutputs>;
 
   private readonly ms: number;
   private readonly buffer: Array<string>;
@@ -50,11 +50,11 @@ export class Debouncer implements ISink, ISource {
         // interrupting timer & sending out last tag in buffer w/ false
         clearTimeout(timer);
         const next = buffer.shift();
-        this.out.$.send(false, next);
+        this.o.$.send(false, next);
       }
 
       this.timer = setTimeout(() => {
-        this.out.$.send(true, tag);
+        this.o.$.send(true, tag);
       }, this.ms);
     }
   }

@@ -34,7 +34,7 @@ interface IUnfolderOutputs<V> {
  */
 export class Unfolder<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IUnfolderInputs<I>>;
-  public readonly out: TOutBundle<IUnfolderOutputs<O>>;
+  public readonly o: TOutBundle<IUnfolderOutputs<O>>;
   public readonly re: TOutBundle<IUnfolderInputs<I>>;
 
   private readonly cb: TUnfolderCallback<I, O>;
@@ -50,7 +50,7 @@ export class Unfolder<I, O> implements ISink, ISource, IBouncer {
     try {
       const iterable = this.cb(value);
       for (const next of iterable) {
-        this.out.$.send(next, tag);
+        this.o.$.send(next, tag);
       }
     } catch (err) {
       this.re.$.send(value, tag);

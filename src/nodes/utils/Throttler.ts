@@ -21,13 +21,13 @@ interface IThrottlerOutputs {
  * @example
  * const throttler = new Throttler();
  * const ticker = new Ticker(1000);
- * ticker.out.$.connect(throttler.i.tick);
+ * ticker.o.$.connect(throttler.i.tick);
  * throttler.i.tag.connect(...);
- * throttler.out.$.connect(...);
+ * throttler.o.$.connect(...);
  */
 export class Throttler implements ISink, ISource {
   public readonly i: TInBundle<IThrottlerInputs>;
-  public readonly out: TOutBundle<IThrottlerOutputs>;
+  public readonly o: TOutBundle<IThrottlerOutputs>;
 
   private readonly buffer: Array<string>;
 
@@ -48,7 +48,7 @@ export class Throttler implements ISink, ISource {
         // clock ticked
         // sending out last tag w/ true
         if (buffer.length) {
-          this.out.$.send(true, buffer.shift());
+          this.o.$.send(true, buffer.shift());
         }
         break;
 
@@ -59,7 +59,7 @@ export class Throttler implements ISink, ISource {
         if (buffer.length > 1) {
           // there is a previous tag in buffer
           // sending out last tag w/ false
-          this.out.$.send(false, buffer.shift());
+          this.o.$.send(false, buffer.shift());
         }
         break;
     }

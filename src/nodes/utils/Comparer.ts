@@ -28,7 +28,7 @@ interface IComparerOutputs {
  */
 export class Comparer<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IComparerInputs<V>>;
-  public readonly out: TOutBundle<IComparerOutputs>;
+  public readonly o: TOutBundle<IComparerOutputs>;
   public readonly re: TOutBundle<IComparerInputs<V>>;
 
   private readonly cb: TEqualityCallback<V>;
@@ -48,7 +48,7 @@ export class Comparer<V> implements ISink, ISource, IBouncer {
     if (port === this.i.$) {
       try {
         const equals = this.cb(value.a, value.b, tag);
-        this.out.$.send(equals, tag);
+        this.o.$.send(equals, tag);
       } catch (err) {
         this.re.$.send(value, tag);
       }

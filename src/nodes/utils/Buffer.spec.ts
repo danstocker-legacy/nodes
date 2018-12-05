@@ -6,7 +6,7 @@ describe("Buffer", function () {
       const node = new Buffer();
       expect(node.i.$).toBeDefined();
       expect(node.i.open).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -23,23 +23,23 @@ describe("Buffer", function () {
       });
 
       it("should forward input", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, 5, "1");
-        expect(node.out.$.send).toHaveBeenCalledWith(5, "1");
+        expect(node.o.$.send).toHaveBeenCalledWith(5, "1");
       });
     });
 
     describe("when buffer is not open", function () {
       it("should should not send output", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, 5, "1");
-        expect(node.out.$.send).not.toHaveBeenCalled();
+        expect(node.o.$.send).not.toHaveBeenCalled();
       });
 
       it("should emit buffer size on `size`", function () {
-        spyOn(node.out.size, "send");
+        spyOn(node.o.size, "send");
         node.send(node.i.$, 5, "1");
-        expect(node.out.size.send).toHaveBeenCalledWith(1);
+        expect(node.o.size.send).toHaveBeenCalledWith(1);
       });
     });
 
@@ -51,7 +51,7 @@ describe("Buffer", function () {
       });
 
       it("should send buffered inputs to output", function () {
-        const spy = spyOn(node.out.$, "send");
+        const spy = spyOn(node.o.$, "send");
         node.send(node.i.open, true);
         expect(spy.calls.allArgs()).toEqual([
           [5, "1"],
@@ -61,9 +61,9 @@ describe("Buffer", function () {
       });
 
       it("should emit buffer size on `size`", function () {
-        spyOn(node.out.size, "send");
+        spyOn(node.o.size, "send");
         node.send(node.i.open, true);
-        expect(node.out.size.send).toHaveBeenCalledWith(0);
+        expect(node.o.size.send).toHaveBeenCalledWith(0);
       });
     });
   });

@@ -41,7 +41,7 @@ export class Remote implements ISink, ISource, IBouncer {
   }
 
   public readonly i: TInBundle<IRemoteInputs>;
-  public readonly out: TOutBundle<IRemoteOutputs>;
+  public readonly o: TOutBundle<IRemoteOutputs>;
   public readonly re: TOutBundle<IRemoteInputs>;
   public readonly host: string;
   public readonly port: number;
@@ -111,7 +111,7 @@ export class Remote implements ISink, ISource, IBouncer {
   private onConnect(): void {
     const connected = true;
     this.connected = connected;
-    this.out.connected.send(connected);
+    this.o.connected.send(connected);
   }
 
   /**
@@ -122,7 +122,7 @@ export class Remote implements ISink, ISource, IBouncer {
   private onClose(): void {
     const connected = false;
     this.connected = connected;
-    this.out.connected.send(connected);
+    this.o.connected.send(connected);
 
     // bouncing all inputs remaining in buffer
     const buffer = this.buffer;
@@ -140,7 +140,7 @@ export class Remote implements ISink, ISource, IBouncer {
    * @param err
    */
   private onError(err: Error): void {
-    this.out.error.send(String(err));
+    this.o.error.send(String(err));
   }
 
   /**

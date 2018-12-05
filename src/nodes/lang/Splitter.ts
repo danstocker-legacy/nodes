@@ -11,13 +11,13 @@ interface ISplitterInputs<T> {
  * @example
  * let splitter: Splitter<{foo: number, bar: boolean}>;
  * splitter = new Splitter(["foo", "bar"]);
- * splitter.i.$.connect(A.out.$);
- * splitter.out.foo.connect(B.i.$);
- * splitter.out.bar.connect(C.i.$);
+ * splitter.i.$.connect(A.o.$);
+ * splitter.o.foo.connect(B.i.$);
+ * splitter.o.bar.connect(C.i.$);
  */
 export class Splitter<T extends IAny> implements ISink, ISource {
   public readonly i: TInBundle<ISplitterInputs<T>>;
-  public readonly out: TOutBundle<T>;
+  public readonly o: TOutBundle<T>;
 
   constructor(fields: Array<string>) {
     MSink.init.call(this, ["$"]);
@@ -27,7 +27,7 @@ export class Splitter<T extends IAny> implements ISink, ISource {
   public send(port: IInPort<T>, input: T, tag?: string): void {
     if (port === this.i.$) {
       for (const [name, value] of Object.entries(input)) {
-        this.out[name].send(value, tag);
+        this.o[name].send(value, tag);
       }
     }
   }

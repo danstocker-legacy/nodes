@@ -5,7 +5,7 @@ import {MSource} from "./MSource";
 
 describe("MDynamicSource", function () {
   class TestDynamicSource implements IDynamicSource {
-    public readonly out: TOutBundle<{ [key: string]: any }>;
+    public readonly o: TOutBundle<{ [key: string]: any }>;
     public addPort = MDynamicSource.addPort;
     public deletePort = MDynamicSource.deletePort;
 
@@ -24,7 +24,7 @@ describe("MDynamicSource", function () {
     it("should add port", function () {
       const port = new OutPort("foo", node);
       node.addPort(port);
-      expect(node.out.foo).toBe(port);
+      expect(node.o.foo).toBe(port);
     });
 
     describe("when port already added", function () {
@@ -37,7 +37,7 @@ describe("MDynamicSource", function () {
 
       it("should not add port", function () {
         node.addPort(new OutPort("bar", node));
-        expect(node.out.foo).toBe(port);
+        expect(node.o.foo).toBe(port);
       });
     });
   });
@@ -54,7 +54,7 @@ describe("MDynamicSource", function () {
 
     it("should remove port", function () {
       node.deletePort(port);
-      expect(node.out.foo).toBeUndefined();
+      expect(node.o.foo).toBeUndefined();
     });
   });
 });

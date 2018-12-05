@@ -5,7 +5,7 @@ describe("Comparer", function () {
     it("should add ports", function () {
       const node = new Comparer(() => true);
       expect(node.i.$).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -17,9 +17,9 @@ describe("Comparer", function () {
     });
 
     it("should send result of equality callback", function () {
-      spyOn(node.out.$, "send");
+      spyOn(node.o.$, "send");
       node.send(node.i.$, {a: 5, b: 5}, "1");
-      expect(node.out.$.send).toHaveBeenCalledWith(true, "1");
+      expect(node.o.$.send).toHaveBeenCalledWith(true, "1");
     });
 
     describe("when callback throws", function () {

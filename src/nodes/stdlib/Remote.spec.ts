@@ -59,9 +59,9 @@ describe("Remote", function () {
       const node = Remote.instance("127.0.0.1", 8124);
       expect(node.i.$).toBeDefined();
       expect(node.i.touch).toBeDefined();
-      expect(node.out.$).toBeDefined();
-      expect(node.out.connected).toBeDefined();
-      expect(node.out.error).toBeDefined();
+      expect(node.o.$).toBeDefined();
+      expect(node.o.connected).toBeDefined();
+      expect(node.o.error).toBeDefined();
       expect(node.re.$).toBeDefined();
     });
   });
@@ -74,9 +74,9 @@ describe("Remote", function () {
     });
 
     it("should send connected flag to output", function () {
-      spyOn(node.out.connected, "send");
+      spyOn(node.o.connected, "send");
       onConnect();
-      expect(node.out.connected.send).toHaveBeenCalledWith(true);
+      expect(node.o.connected.send).toHaveBeenCalledWith(true);
     });
   });
 
@@ -88,9 +88,9 @@ describe("Remote", function () {
     });
 
     it("should send connected flag to output", function () {
-      spyOn(node.out.connected, "send");
+      spyOn(node.o.connected, "send");
       onClose();
-      expect(node.out.connected.send).toHaveBeenCalledWith(false);
+      expect(node.o.connected.send).toHaveBeenCalledWith(false);
     });
 
     describe("when there are inputs buffered", function () {

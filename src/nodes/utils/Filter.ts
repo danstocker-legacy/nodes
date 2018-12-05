@@ -25,7 +25,7 @@ interface IFilterOutputs<V> {
  */
 export class Filter<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IFilterInputs<V>>;
-  public readonly out: TOutBundle<IFilterOutputs<V>>;
+  public readonly o: TOutBundle<IFilterOutputs<V>>;
   public readonly re: TOutBundle<IFilterInputs<V>>;
 
   private readonly cb: TFilterCallback<V>;
@@ -42,11 +42,11 @@ export class Filter<V> implements ISink, ISource, IBouncer {
       try {
         const include = this.cb(value, tag);
         if (include) {
-          this.out.$.send(value, tag);
+          this.o.$.send(value, tag);
         }
       } catch (err) {
         this.re.$.send(value, tag);
-        this.out.error.send(String(err), tag);
+        this.o.error.send(String(err), tag);
       }
     }
   }

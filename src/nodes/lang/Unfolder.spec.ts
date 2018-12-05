@@ -5,7 +5,7 @@ describe("Unfolder", function () {
     it("should add ports", function () {
       const node = new Unfolder(() => null);
       expect(node.i.$).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -23,7 +23,7 @@ describe("Unfolder", function () {
     });
 
     it("should send unfolded values", function () {
-      const spy = spyOn(node.out.$, "send");
+      const spy = spyOn(node.o.$, "send");
       node.send(node.i.$, [1, 2, 3], "1");
       expect(spy.calls.allArgs()).toEqual([
         [1, "1"],

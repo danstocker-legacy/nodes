@@ -12,7 +12,7 @@ interface IListenerInputs {
  * @example
  * const listener = new Listener((value, tag) => console.log(value, tag));
  * // to subscribe:
- * node.out.$.connect(listener.i.$);
+ * node.o.$.connect(listener.i.$);
  * // to unsubscribe:
  * listener.i.$.disconnect();
  */

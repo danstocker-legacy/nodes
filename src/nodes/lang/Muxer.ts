@@ -18,7 +18,7 @@ interface IMuxerOutputs<T> {
  */
 export class Muxer<T extends IAny = IAny> implements ISink, ISource {
   public readonly i: TInBundle<T>;
-  public readonly out: TOutBundle<IMuxerOutputs<T>>;
+  public readonly o: TOutBundle<IMuxerOutputs<T>>;
 
   constructor(fields: Array<string>) {
     MSink.init.call(this, fields);
@@ -28,7 +28,7 @@ export class Muxer<T extends IAny = IAny> implements ISink, ISource {
   public send(port: IInPort<T[keyof T]>, input: T[keyof T], tag?: string): void {
     const name = port.name;
     if (port === this.i[name]) {
-      this.out.$.send({name, $: input}, tag);
+      this.o.$.send({name, $: input}, tag);
     }
   }
 }

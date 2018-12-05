@@ -6,7 +6,7 @@ describe("Joiner", function () {
       const node = new Joiner<{ foo: number, bar: boolean }>(["foo", "bar"]);
       expect(node.i.foo).toBeDefined();
       expect(node.i.bar).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -19,10 +19,10 @@ describe("Joiner", function () {
 
     describe("until there is a complete input set", function () {
       it("should not send to output", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.foo, 1, "1");
         node.send(node.i.bar, true, "2");
-        expect(node.out.$.send).not.toHaveBeenCalled();
+        expect(node.o.$.send).not.toHaveBeenCalled();
       });
     });
 
@@ -33,9 +33,9 @@ describe("Joiner", function () {
       });
 
       it("should send complete set to output", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.foo, 2, "2");
-        expect(node.out.$.send).toHaveBeenCalledWith({
+        expect(node.o.$.send).toHaveBeenCalledWith({
           bar: true,
           foo: 2
         }, "2");

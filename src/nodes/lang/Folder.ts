@@ -35,7 +35,7 @@ export type TFolderCallback<I, O> = (
  */
 export class Folder<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IFolderInputs<I>>;
-  public readonly out: TOutBundle<IFolderOutputs<O>>;
+  public readonly o: TOutBundle<IFolderOutputs<O>>;
   public readonly re: TOutBundle<IFolderInputs<I>>;
 
   private readonly cb: TFolderCallback<I, O>;
@@ -64,7 +64,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
 
       try {
         const folded = this.folded = this.cb(curr, next, tag);
-        this.out.$.send(folded, tag);
+        this.o.$.send(folded, tag);
       } catch (err) {
         this.re.$.send(value, tag);
       }

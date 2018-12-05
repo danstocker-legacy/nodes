@@ -4,7 +4,7 @@ import {MSource} from "./MSource";
 
 describe("MSource", function () {
   class TestSource implements ISource {
-    public readonly out: TOutBundle<{ foo: number }>;
+    public readonly o: TOutBundle<{ foo: number }>;
 
     constructor() {
       MSource.init.call(this);
@@ -12,9 +12,9 @@ describe("MSource", function () {
   }
 
   describe("init()", function () {
-    it("should add out property", function () {
+    it("should add o property", function () {
       const node = new TestSource();
-      expect(node.out).toBeDefined();
+      expect(node.o).toBeDefined();
     });
   });
 });

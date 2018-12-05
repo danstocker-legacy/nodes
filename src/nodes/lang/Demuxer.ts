@@ -17,7 +17,7 @@ interface IDemuxerInputs<T> {
  */
 export class Demuxer<T> implements ISink, ISource {
   public readonly i: TInBundle<IDemuxerInputs<T>>;
-  public readonly out: TOutBundle<T>;
+  public readonly o: TOutBundle<T>;
 
   constructor(fields: Array<string>) {
     MSink.init.call(this, ["$"]);
@@ -27,7 +27,7 @@ export class Demuxer<T> implements ISink, ISource {
   public send(port: IInPort<IMuxed<T>>, input: IMuxed<T>, tag?: string): void {
     if (port === this.i.$) {
       const name = input.name;
-      this.out[name].send(input.$, tag);
+      this.o[name].send(input.$, tag);
     }
   }
 }

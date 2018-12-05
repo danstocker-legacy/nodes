@@ -38,10 +38,10 @@ export class Server implements ISource {
 
   private static onData(data: Buffer | string, remote: Remote) {
     const wrapped = JSON.parse(String(data));
-    remote.out.$.send(wrapped.value, wrapped.tag);
+    remote.o.$.send(wrapped.value, wrapped.tag);
   }
 
-  public readonly out: TOutBundle<IServerOutputs>;
+  public readonly o: TOutBundle<IServerOutputs>;
   public readonly port: number;
   private readonly connections: Set<net.Socket>;
 
@@ -72,7 +72,7 @@ export class Server implements ISource {
 
     const connections = this.connections;
     connections.add(socket);
-    this.out.connections.send(connections.size);
+    this.o.connections.send(connections.size);
   }
 
   /**
@@ -81,7 +81,7 @@ export class Server implements ISource {
    * @param err
    */
   private onServerError(err: Error): void {
-    this.out.error.send(String(err));
+    this.o.error.send(String(err));
   }
 
   /**
@@ -92,7 +92,7 @@ export class Server implements ISource {
   private onSocketClose(socket: net.Socket): void {
     const connections = this.connections;
     connections.delete(socket);
-    this.out.connections.send(connections.size);
+    this.o.connections.send(connections.size);
   }
 
   /**
@@ -101,6 +101,6 @@ export class Server implements ISource {
    * @param err
    */
   private onSocketError(err: Error): void {
-    this.out.error.send(String(err));
+    this.o.error.send(String(err));
   }
 }

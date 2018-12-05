@@ -4,7 +4,7 @@ describe("StdIn", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const node = new StdIn();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -17,9 +17,9 @@ describe("StdIn", function () {
 
     it("should send chunk to output", function () {
       spyOn(process.stdin, "read").and.returnValue("foo");
-      spyOn(node.out.$, "send");
+      spyOn(node.o.$, "send");
       process.stdin.emit("readable");
-      expect(node.out.$.send).toHaveBeenCalledWith("foo");
+      expect(node.o.$.send).toHaveBeenCalledWith("foo");
     });
   });
 });

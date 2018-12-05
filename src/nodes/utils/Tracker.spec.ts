@@ -8,7 +8,7 @@ describe("Tracker", function () {
       expect(node.i.tag).toBeDefined();
       expect(node.i.foo).toBeDefined();
       expect(node.i.bar).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -21,9 +21,9 @@ describe("Tracker", function () {
 
     describe("on receiving value input", function () {
       it("should not send to output", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.foo, 5);
-        expect(node.out.$.send).not.toHaveBeenCalled();
+        expect(node.o.$.send).not.toHaveBeenCalled();
       });
     });
 
@@ -34,9 +34,9 @@ describe("Tracker", function () {
       });
 
       it("should send copy of lst input values to output", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.tag, null, "1");
-        expect(node.out.$.send).toHaveBeenCalledWith({
+        expect(node.o.$.send).toHaveBeenCalledWith({
           bar: 4,
           foo: 2
         }, "1");

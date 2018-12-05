@@ -19,7 +19,7 @@ interface IPickerOutputs<V> {
  */
 export class Picker<V> implements ISink, ISource {
   public readonly i: TInBundle<IPickerInputs<V>>;
-  public readonly out: TOutBundle<IPickerOutputs<V>>;
+  public readonly o: TOutBundle<IPickerOutputs<V>>;
 
   constructor() {
     MSink.init.call(this, ["$"]);
@@ -28,7 +28,7 @@ export class Picker<V> implements ISink, ISource {
 
   public send(port: IInPort<IPickerInput<V>>, input: IPickerInput<V>, tag?: string): void {
     if (port === this.i.$ && input.include) {
-      this.out.$.send(input.$, tag);
+      this.o.$.send(input.$, tag);
     }
   }
 }

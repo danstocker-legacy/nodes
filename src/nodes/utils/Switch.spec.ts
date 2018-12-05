@@ -5,9 +5,9 @@ describe("Switch", function () {
     it("should add ports", function () {
       const node = new Switch<"foo" | "bar" | "baz", number>(["foo", "bar", "baz"]);
       expect(node.i.$).toBeDefined();
-      expect(node.out.foo).toBeDefined();
-      expect(node.out.bar).toBeDefined();
-      expect(node.out.baz).toBeDefined();
+      expect(node.o.foo).toBeDefined();
+      expect(node.o.bar).toBeDefined();
+      expect(node.o.baz).toBeDefined();
     });
   });
 
@@ -19,13 +19,13 @@ describe("Switch", function () {
     });
 
     it("should forward to specified output", function () {
-      spyOn(node.out.foo, "send");
-      spyOn(node.out.bar, "send");
-      spyOn(node.out.baz, "send");
+      spyOn(node.o.foo, "send");
+      spyOn(node.o.bar, "send");
+      spyOn(node.o.baz, "send");
       node.i.$.send({case: "bar", $: 5}, "1");
-      expect(node.out.foo.send).not.toHaveBeenCalled();
-      expect(node.out.bar.send).toHaveBeenCalledWith(5, "1");
-      expect(node.out.baz.send).not.toHaveBeenCalled();
+      expect(node.o.foo.send).not.toHaveBeenCalled();
+      expect(node.o.bar.send).toHaveBeenCalledWith(5, "1");
+      expect(node.o.baz.send).not.toHaveBeenCalled();
     });
 
     describe("on invalid case", function () {

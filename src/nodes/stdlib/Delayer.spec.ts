@@ -13,7 +13,7 @@ describe("Delayer", function () {
     it("should add ports", function () {
       const node = new Delayer(0);
       expect(node.i.$).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -30,9 +30,9 @@ describe("Delayer", function () {
       });
 
       it("should not forward", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         jasmine.clock().tick(499);
-        expect(node.out.$.send).not.toHaveBeenCalled();
+        expect(node.o.$.send).not.toHaveBeenCalled();
       });
     });
 
@@ -42,9 +42,9 @@ describe("Delayer", function () {
       });
 
       it("should forward", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         jasmine.clock().tick(500);
-        expect(node.out.$.send).toHaveBeenCalledWith(5, "1");
+        expect(node.o.$.send).toHaveBeenCalledWith(5, "1");
       });
     });
   });

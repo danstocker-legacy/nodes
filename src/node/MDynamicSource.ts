@@ -9,7 +9,7 @@ import {IDynamicSource} from "./IDynamicSource";
  * IErrorSource.
  * @example
  * class DynamicSinkNode implements IDynamicSource, IEventSource, IErrorSource {
- *   public out: TOutBundle<...>
+ *   public o: TOutBundle<...>
  *   public addPort = MDynamicSource.addPort;
  *   public deletePort = MDynamicSource.deletePort;
  *   ...
@@ -35,7 +35,7 @@ export namespace MDynamicSource {
     tag?: string
   ): void {
     const name = port.name;
-    const ports = this.out;
+    const ports = this.o;
     ports[name] = port;
   }
 
@@ -52,7 +52,7 @@ export namespace MDynamicSource {
     tag?: string
   ): void {
     const name = port.name;
-    const ports = this.out;
+    const ports = this.o;
     if (port === ports[name]) {
       if (port.peers.size > 0) {
         port.disconnect();

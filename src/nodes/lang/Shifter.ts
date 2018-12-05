@@ -16,7 +16,7 @@ interface IShifterOutputs<V> {
  */
 export class Shifter<V> implements ISink, ISource {
   public readonly i: TInBundle<IShifterInputs<V>>;
-  public readonly out: TOutBundle<IShifterOutputs<V>>;
+  public readonly o: TOutBundle<IShifterOutputs<V>>;
 
   private readonly displacement: number;
   private readonly buffer: Array<V>;
@@ -36,9 +36,9 @@ export class Shifter<V> implements ISink, ISource {
     const buffer = this.buffer;
     buffer.push(input);
     if (buffer.length > displacement) {
-      this.out.$.send(buffer.shift(), tag);
+      this.o.$.send(buffer.shift(), tag);
     } else {
-      this.out.$.send(undefined, tag);
+      this.o.$.send(undefined, tag);
     }
   }
 }

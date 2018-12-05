@@ -5,7 +5,7 @@ describe("Filter", function () {
     it("should add ports", function () {
       const node = new Filter(() => null);
       expect(node.i.$).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
       expect(node.re.$).toBeDefined();
     });
   });
@@ -19,17 +19,17 @@ describe("Filter", function () {
 
     describe("when input satisfies callback", function () {
       it("should forward input", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, 5, "1");
-        expect(node.out.$.send).toHaveBeenCalledWith(5, "1");
+        expect(node.o.$.send).toHaveBeenCalledWith(5, "1");
       });
     });
 
     describe("when input doesn't satisfy callback", function () {
       it("should not forward input", function () {
-        spyOn(node.out.$, "send");
+        spyOn(node.o.$, "send");
         node.send(node.i.$, 4, "1");
-        expect(node.out.$.send).not.toHaveBeenCalled();
+        expect(node.o.$.send).not.toHaveBeenCalled();
       });
     });
 
@@ -47,9 +47,9 @@ describe("Filter", function () {
       });
 
       it("should send error to output", function () {
-        spyOn(node.out.error, "send");
+        spyOn(node.o.error, "send");
         node.send(node.i.$, 5, "1");
-        expect(node.out.error.send).toHaveBeenCalledWith("Error: foo", "1");
+        expect(node.o.error.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });
   });

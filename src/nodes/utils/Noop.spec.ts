@@ -5,7 +5,7 @@ describe("Noop", function () {
     it("should add ports", function () {
       const node = new Noop<number>();
       expect(node.i.$).toBeDefined();
-      expect(node.out.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
     });
   });
 
@@ -17,9 +17,9 @@ describe("Noop", function () {
     });
 
     it("should", function () {
-      spyOn(node.out.$, "send");
+      spyOn(node.o.$, "send");
       node.send(node.i.$, 5, "1");
-      expect(node.out.$.send).toHaveBeenCalledWith(5, "1");
+      expect(node.o.$.send).toHaveBeenCalledWith(5, "1");
     });
   });
 });
