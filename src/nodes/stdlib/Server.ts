@@ -1,11 +1,21 @@
 import * as net from "net";
-import {ISource, MSource} from "../../node";
+import {
+  IEvented,
+  ISource,
+  IStateful,
+  MEvented,
+  MSource,
+  MStateful
+} from "../../node";
 import {TOutBundle} from "../../port";
 import {Remote} from "./Remote";
 
-interface IServerOutputs {
+interface IServerStateOut {
   connections: number;
-  error: string;
+}
+
+interface IServerEvents {
+  err: string;
 }
 
 const instances = new Map<number, Server>();
@@ -15,7 +25,7 @@ const instances = new Map<number, Server>();
  * Outputs connection count (`connections`) and `error`. (Both untagged.)
  * There is usually a single instance of it available.
  */
-export class Server implements ISource {
+export class Server implements IStateful, IEvented {
   /**
    * Creates OR retrieves Server instance.
    * @param port
@@ -41,12 +51,14 @@ export class Server implements ISource {
     remote.o.$.send(wrapped.value, wrapped.tag);
   }
 
-  public readonly o: TOutBundle<IServerOutputs>;
+  public readonly so: TOutBundle<IServerStateOut>;
+  public readonly e: TOutBundle<IServerEvents>;
   public readonly port: number;
   private readonly connections: Set<net.Socket>;
 
   private constructor(port: number) {
-    MSource.init.call(this, ["connections", "error"]);
+    MStateful.init.call(this, ["connections"]);
+    MEvented.init.call(this, ["err"]);
 
     const server = new net.Server();
     server.on("connection",
@@ -72,7 +84,7 @@ export class Server implements ISource {
 
     const connections = this.connections;
     connections.add(socket);
-    this.o.connections.send(connections.size);
+    this.so.connections.send(connections.size);
   }
 
   /**
@@ -81,7 +93,7 @@ export class Server implements ISource {
    * @param err
    */
   private onServerError(err: Error): void {
-    this.o.error.send(String(err));
+    this.e.err.send(String(err));
   }
 
   /**
@@ -92,7 +104,7 @@ export class Server implements ISource {
   private onSocketClose(socket: net.Socket): void {
     const connections = this.connections;
     connections.delete(socket);
-    this.o.connections.send(connections.size);
+    this.so.connections.send(connections.size);
   }
 
   /**
@@ -101,6 +113,6 @@ export class Server implements ISource {
    * @param err
    */
   private onSocketError(err: Error): void {
-    this.o.error.send(String(err));
+    this.e.err.send(String(err));
   }
 }

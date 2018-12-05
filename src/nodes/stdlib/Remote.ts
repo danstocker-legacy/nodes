@@ -1,22 +1,44 @@
 import * as net from "net";
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
+import {
+  IBouncer,
+  IControllable,
+  IEvented,
+  ISink,
+  ISource,
+  IStateful,
+  MBouncer,
+  MControllable,
+  MEvented,
+  MSink,
+  MSource,
+  MStateful
+} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TJson, ValueOf} from "../../utils";
 
 interface IRemoteInputs {
   $: TJson;
-  touch: any;
 }
 
 interface IRemoteOutputs {
   $: TJson;
+}
+
+interface IRemoteStateIn {
+  touch: any;
+}
+
+interface IRemoteStateOut {
   connected: boolean;
-  error: string;
+}
+
+interface IRemoteEvents {
+  err: string;
 }
 
 const instances = new Map<string, Remote>();
 
-export class Remote implements ISink, ISource, IBouncer {
+export class Remote implements ISink, ISource, IStateful, IControllable, IBouncer, IEvented {
   /**
    * Retrieves OR creates a new Remote instance.
    * @param host
@@ -42,7 +64,10 @@ export class Remote implements ISink, ISource, IBouncer {
 
   public readonly i: TInBundle<IRemoteInputs>;
   public readonly o: TOutBundle<IRemoteOutputs>;
+  public readonly si: TInBundle<IRemoteStateIn>;
+  public readonly so: TOutBundle<IRemoteStateOut>;
   public readonly re: TOutBundle<IRemoteInputs>;
+  public readonly e: TOutBundle<IRemoteEvents>;
   public readonly host: string;
   public readonly port: number;
   private readonly socket: net.Socket;
@@ -54,10 +79,12 @@ export class Remote implements ISink, ISource, IBouncer {
    * @param port
    */
   private constructor(host: string, port: number) {
-    MSink.init.call(this, ["$", "touch"]);
-    MSource.init.call(this,
-      ["$", "connected", "error"]);
+    MSink.init.call(this, ["$"]);
+    MSource.init.call(this, ["$"]);
+    MControllable.init.call(this, ["touch"]);
+    MStateful.init.call(this, ["connected"]);
     MBouncer.init.call(this, ["$"]);
+    MEvented.init.call(this, ["err"]);
 
     const socket = new net.Socket();
     socket.on("connect", () => this.onConnect());
@@ -76,11 +103,10 @@ export class Remote implements ISink, ISource, IBouncer {
     value: ValueOf<IRemoteInputs>,
     tag?: string
   ): void {
-    const inPorts = this.i;
     const socket = this.socket;
     const connected = this.connected;
     switch (port) {
-      case inPorts.$:
+      case this.i.$:
         if (connected) {
           const buffer = this.buffer;
           buffer.set(tag, value);
@@ -94,7 +120,7 @@ export class Remote implements ISink, ISource, IBouncer {
         }
         break;
 
-      case inPorts.touch:
+      case this.si.touch:
         if (!connected && !socket.connecting) {
           // socket is not connected and is not in the process of connecting
           // attempting to open connection
@@ -111,7 +137,7 @@ export class Remote implements ISink, ISource, IBouncer {
   private onConnect(): void {
     const connected = true;
     this.connected = connected;
-    this.o.connected.send(connected);
+    this.so.connected.send(connected);
   }
 
   /**
@@ -122,7 +148,7 @@ export class Remote implements ISink, ISource, IBouncer {
   private onClose(): void {
     const connected = false;
     this.connected = connected;
-    this.o.connected.send(connected);
+    this.so.connected.send(connected);
 
     // bouncing all inputs remaining in buffer
     const buffer = this.buffer;
@@ -140,7 +166,7 @@ export class Remote implements ISink, ISource, IBouncer {
    * @param err
    */
   private onError(err: Error): void {
-    this.o.error.send(String(err));
+    this.e.err.send(String(err));
   }
 
   /**
