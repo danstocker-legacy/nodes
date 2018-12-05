@@ -4,6 +4,7 @@ import {Remote} from "./Remote";
 describe("Remote", function () {
   let onConnect: () => void;
   let onClose: () => void;
+  let onError: (err: Error) => void;
   let onWrite: (err: Error) => void;
   const socket = {
     connect: () => null,
@@ -15,6 +16,9 @@ describe("Remote", function () {
           break;
         case "close":
           onClose = cb;
+          break;
+        case "error":
+          onError = cb;
           break;
       }
     },
@@ -45,16 +49,6 @@ describe("Remote", function () {
   });
 
   describe("constructor", function () {
-    it("should assign host property", function () {
-      const node = Remote.instance("127.0.0.1", 8124);
-      expect(node.host).toBe("127.0.0.1");
-    });
-
-    it("should assign port property", function () {
-      const node = Remote.instance("127.0.0.1", 8124);
-      expect(node.port).toBe(8124);
-    });
-
     it("should add ports", function () {
       const node = Remote.instance("127.0.0.1", 8124);
       expect(node.i.$).toBeDefined();
@@ -109,6 +103,63 @@ describe("Remote", function () {
           ["bar", "2"],
           ["baz", "3"]
         ]);
+      });
+    });
+  });
+
+  describe("on error", function () {
+    let node: Remote;
+
+    beforeEach(function () {
+      node = Remote.instance("127.0.0.1", 8124);
+    });
+
+    it("should emit error", function () {
+      spyOn(node.e.err, "send");
+      onError(new Error("foo"));
+      expect(node.e.err.send).toHaveBeenCalledWith("Error: foo");
+    });
+
+    describe("when there are inputs buffered", function () {
+      beforeEach(function () {
+        onConnect();
+        node.i.$.send("foo", "1");
+        node.i.$.send("bar", "2");
+        node.i.$.send("baz", "3");
+      });
+
+      it("should bounce buffered inputs", function () {
+        const spy = spyOn(node.re.$, "send");
+        onError(new Error("foo"));
+        expect(spy.calls.allArgs()).toEqual([
+          ["foo", "1"],
+          ["bar", "2"],
+          ["baz", "3"]
+        ]);
+      });
+    });
+  });
+
+  describe("on writing to socket", function () {
+    let node: Remote;
+
+    beforeEach(function () {
+      node = Remote.instance("127.0.0.1", 8124);
+      onConnect();
+      node.send(node.i.$, "foo", "1");
+    });
+
+    describe("on error", function () {
+      it("should emit error", function () {
+        spyOn(node.e.err, "send");
+        onWrite(new Error("foo"));
+        expect(node.e.err.send).toHaveBeenCalledWith("Error: foo");
+      });
+
+      it("should bounce affected input", function () {
+        spyOn(node.re.$, "send");
+        onWrite(new Error("foo"));
+        expect(node.re.$.send).toHaveBeenCalledWith("foo", "1");
       });
     });
   });

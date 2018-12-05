@@ -36,7 +36,7 @@ describe("Server", function () {
       }
     },
     remoteAddress: "99.99.99.99",
-    remotePort: 9999
+    remotePort: 8889
   };
 
   beforeEach(function () {
@@ -49,7 +49,7 @@ describe("Server", function () {
     it("should cache instances by port", function () {
       const node = Server.instance(8888);
       expect(Server.instance(8888)).toBe(node);
-      expect(Server.instance(9999)).not.toBe(node);
+      expect(Server.instance(8889)).not.toBe(node);
     });
   });
 
@@ -66,11 +66,6 @@ describe("Server", function () {
       const node = Server.instance(8888);
       expect(node.so.connections).toBeDefined();
       expect(node.e.err).toBeDefined();
-    });
-
-    it("should assign port property", function () {
-      const node = Server.instance(8888);
-      expect(node.port).toBe(8888);
     });
 
     it("should start listening", function () {
@@ -130,11 +125,11 @@ describe("Server", function () {
 
     beforeEach(function () {
       node = Server.instance(8888);
-      remote = Remote.instance("99.99.99.99", 9999);
+      remote = Remote.instance("99.99.99.99", 8889);
       onConnection(socket);
     });
 
-    it("should send stringified error", function () {
+    it("should send parsed data to Remote node", function () {
       spyOn(remote.o.$, "send");
       onData(`{"tag":1,"value":"foo"}`);
       expect(remote.o.$.send).toHaveBeenCalledWith("foo", 1);

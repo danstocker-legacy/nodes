@@ -68,8 +68,8 @@ export class Remote implements ISink, ISource, IStateful, IControllable, IBounce
   public readonly so: TOutBundle<IRemoteStateOut>;
   public readonly re: TOutBundle<IRemoteInputs>;
   public readonly e: TOutBundle<IRemoteEvents>;
-  public readonly host: string;
-  public readonly port: number;
+  private readonly host: string;
+  private readonly port: number;
   private readonly socket: net.Socket;
   private readonly buffer: Map<string, any>;
   private connected: boolean;
@@ -112,7 +112,7 @@ export class Remote implements ISink, ISource, IStateful, IControllable, IBounce
           buffer.set(tag, value);
           socket.write(
             JSON.stringify({value, tag}),
-            (err: Error) => this.onWrite(err, tag));
+            (err: Error) => this.onWrite(err, value, tag));
         } else {
           // socket is not connected
           // bouncing inputs
@@ -127,6 +127,19 @@ export class Remote implements ISink, ISource, IStateful, IControllable, IBounce
           socket.connect(this.port, this.host);
         }
         break;
+    }
+  }
+
+  /**
+   * Bounces all buffered inputs.
+   */
+  private bounceAll() {
+    const buffer = this.buffer;
+    if (buffer.size > 0) {
+      const re = this.re.$;
+      for (const [tag, value] of this.buffer.entries()) {
+        re.send(value, tag);
+      }
     }
   }
 
@@ -149,15 +162,7 @@ export class Remote implements ISink, ISource, IStateful, IControllable, IBounce
     const connected = false;
     this.connected = connected;
     this.so.connected.send(connected);
-
-    // bouncing all inputs remaining in buffer
-    const buffer = this.buffer;
-    if (buffer.size > 0) {
-      const bounced = this.re.$;
-      for (const [tag, value] of this.buffer.entries()) {
-        bounced.send(value, tag);
-      }
-    }
+    this.bounceAll();
   }
 
   /**
@@ -167,17 +172,21 @@ export class Remote implements ISink, ISource, IStateful, IControllable, IBounce
    */
   private onError(err: Error): void {
     this.e.err.send(String(err));
+    this.bounceAll();
   }
 
   /**
    * Handles socket write outcome.
    * Removes affected input from buffer when successful.
    * @param err
+   * @param value
    * @param tag
    */
-  private onWrite(err: Error, tag?: string): void {
-    if (!err) {
-      this.buffer.delete(tag);
+  private onWrite(err: Error, value: TJson, tag?: string): void {
+    if (err) {
+      this.e.err.send(String(err));
+      this.re.$.send(value, tag);
     }
+    this.buffer.delete(tag);
   }
 }

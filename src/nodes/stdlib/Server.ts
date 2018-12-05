@@ -46,7 +46,7 @@ export class Server implements IStateful, IEvented {
 
   public readonly so: TOutBundle<IServerStateOut>;
   public readonly e: TOutBundle<IServerEvents>;
-  public readonly port: number;
+  private readonly port: number;
   private readonly connections: Set<net.Socket>;
 
   private constructor(port: number) {
