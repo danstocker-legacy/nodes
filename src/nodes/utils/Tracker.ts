@@ -1,12 +1,8 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
-import {copy, IAny, ValueOf} from "../../utils";
+import {IAny, ValueOf} from "../../utils";
 
-interface ITagInputs {
-  tag: any;
-}
-
-type TTrackerInputs<T> = T & ITagInputs;
+type TTrackerInputs<T> = T;
 
 interface ITrackerOutputs<T> {
   $: T;
@@ -16,16 +12,15 @@ interface ITrackerOutputs<T> {
  * Outputs sets of inputs, where each value in the set reflects the latest
  * one received through its corresponding port.
  * Atomic equivalent of a composite node.
- * A ---+=> Sampler -+=> Joiner -> $
- * B ---+=> Sampler -+
- * C ---+=> Sampler -+
- * ref -+
- * TODO: Remove ref and move back to /lang?
+ * A ----> $:Sampler:$ -+=> A,B:Joiner:$ -> $
+ * B --> smp:           |
+ * B ----> $:Sampler:$ -+
+ * A --> smp:
  * @example
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
  */
-export class Tracker<T extends IAny = IAny> implements ISink, ISource {
+export class Tracker<T extends IAny> implements ISink, ISource {
   public readonly i: TInBundle<TTrackerInputs<T>>;
   public readonly o: TOutBundle<ITrackerOutputs<T>>;
 
@@ -35,7 +30,7 @@ export class Tracker<T extends IAny = IAny> implements ISink, ISource {
   private readonly values: T;
 
   constructor(fields: Array<string>) {
-    MSink.init.call(this, fields.concat("tag"));
+    MSink.init.call(this, fields);
     MSource.init.call(this, ["$"]);
     this.values = {} as T;
   }
@@ -45,16 +40,11 @@ export class Tracker<T extends IAny = IAny> implements ISink, ISource {
     input: ValueOf<TTrackerInputs<T>>,
     tag?: string
   ): void {
-    const inPorts = this.i;
-    const values = this.values;
     const name = port.name;
-    if (port === inPorts.tag) {
-      // sending shallow copy of current state
-      this.o.$.send(copy(values), tag);
-    } else if (port === this.i[name]) {
-      // not the tag port, but it exists in node
-      // updating input in state
+    if (port === this.i[name]) {
+      const values = this.values;
       values[name] = input;
+      this.o.$.send(values, tag);
     }
   }
 }

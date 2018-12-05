@@ -4,8 +4,7 @@ import {Tracker} from "./Tracker";
 describe("Tracker", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Tracker(["foo", "bar"]);
-      expect(node.i.tag).toBeDefined();
+      const node = new Tracker<{ foo: number, bar: boolean }>(["foo", "bar"]);
       expect(node.i.foo).toBeDefined();
       expect(node.i.bar).toBeDefined();
       expect(node.o.$).toBeDefined();
@@ -13,34 +12,16 @@ describe("Tracker", function () {
   });
 
   describe("#send()", function () {
-    let node: Tracker<{ foo: number, bar: number }>;
+    let node: Tracker<{ foo: number, bar: boolean }>;
 
     beforeEach(function () {
       node = new Tracker(["foo", "bar"]);
     });
 
-    describe("on receiving value input", function () {
-      it("should not send to output", function () {
-        spyOn(node.o.$, "send");
-        node.send(node.i.foo, 5);
-        expect(node.o.$.send).not.toHaveBeenCalled();
-      });
-    });
-
-    describe("on receiving tag", function () {
-      beforeEach(function () {
-        node.send(node.i.foo, 2);
-        node.send(node.i.bar, 4);
-      });
-
-      it("should send copy of lst input values to output", function () {
-        spyOn(node.o.$, "send");
-        node.send(node.i.tag, null, "1");
-        expect(node.o.$.send).toHaveBeenCalledWith({
-          bar: 4,
-          foo: 2
-        }, "1");
-      });
+    it("should forward all cached inputs", function () {
+      spyOn(node.o.$, "send");
+      node.send(node.i.foo, 2, "2");
+      expect(node.o.$.send).toHaveBeenCalledWith({foo: 2}, "2");
     });
   });
 });
