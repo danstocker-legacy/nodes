@@ -17,10 +17,10 @@ interface INoopOutputs<V> {
  * @example
  * let noop: Noop<number>
  * noop = new Noop();
- * noop.in.$.send(5);
+ * noop.i.$.send(5);
  */
 export class Noop<V> implements ISink, ISource {
-  public readonly in: TInBundle<INoopInputs<V>>;
+  public readonly i: TInBundle<INoopInputs<V>>;
   public readonly out: TOutBundle<INoopOutputs<V>>;
 
   constructor() {
@@ -29,7 +29,7 @@ export class Noop<V> implements ISink, ISource {
   }
 
   public send(port: IInPort<V>, input: V, tag?: string): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       this.out.$.send(input, tag);
     }
   }

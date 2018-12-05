@@ -24,7 +24,7 @@ interface IFunnelOutputs<C extends string, V> {
  * funnel = new Funnel(["foo", "bar", "baz"]);
  */
 export class Funnel<C extends string, V> implements ISink, ISource {
-  public readonly in: TInBundle<TFunnelInputs<C, V>>;
+  public readonly i: TInBundle<TFunnelInputs<C, V>>;
   public readonly out: TOutBundle<IFunnelOutputs<C, V>>;
 
   constructor(cases: Array<string>) {

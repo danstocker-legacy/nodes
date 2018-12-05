@@ -13,7 +13,7 @@ interface IDelayerOutputs<V> {
  * Forwards input with the specified delay.
  */
 export class Delayer<V> implements ISink, ISource {
-  public readonly in: TInBundle<IDelayerInputs<V>>;
+  public readonly i: TInBundle<IDelayerInputs<V>>;
   public readonly out: TOutBundle<IDelayerOutputs<V>>;
 
   private readonly ms: number;
@@ -28,7 +28,7 @@ export class Delayer<V> implements ISink, ISource {
   }
 
   public send(port: IInPort<V>, value: V, tag?: string): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       setTimeout(() => this.out.$.send(value, tag), this.ms);
     }
   }

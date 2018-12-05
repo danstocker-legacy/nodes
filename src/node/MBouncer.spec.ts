@@ -12,7 +12,7 @@ describe("MBouncer", function () {
   }
 
   class TestBouncer implements IBouncer, ISink {
-    public readonly in: TInBundle<ITestBouncerInputs>;
+    public readonly i: TInBundle<ITestBouncerInputs>;
     public readonly re: TOutBundle<ITestBouncerInputs>;
 
     constructor() {

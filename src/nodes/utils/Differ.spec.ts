@@ -4,7 +4,7 @@ describe("Differ", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Differ(() => null);
-      expect(node.in.$).toBeDefined();
+      expect(node.i.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
   });
@@ -19,19 +19,19 @@ describe("Differ", function () {
     describe("on first input", function () {
       it("should send undefined", function () {
         spyOn(node.out.$, "send");
-        node.send(node.in.$, 5, "1");
+        node.send(node.i.$, 5, "1");
         expect(node.out.$.send).toHaveBeenCalledWith(undefined, "1");
       });
     });
 
     describe("for subsequent inputs", function () {
       beforeEach(function () {
-        node.send(node.in.$, 5, "1");
+        node.send(node.i.$, 5, "1");
       });
 
       it("should send equality with previous", function () {
         spyOn(node.out.$, "send");
-        node.send(node.in.$, 5, "2");
+        node.send(node.i.$, 5, "2");
         expect(node.out.$.send).toHaveBeenCalledWith(false, "2");
       });
     });
@@ -44,12 +44,12 @@ describe("Differ", function () {
         node = new Differ(() => {
           throw error;
         });
-        node.send(node.in.$, 5, "1");
+        node.send(node.i.$, 5, "1");
       });
 
       it("should bounce inputs", function () {
         spyOn(node.re.$, "send");
-        node.send(node.in.$, 5, "2");
+        node.send(node.i.$, 5, "2");
         expect(node.re.$.send).toHaveBeenCalledWith(5, "2");
       });
     });

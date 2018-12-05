@@ -4,7 +4,7 @@ describe("Comparer", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Comparer(() => true);
-      expect(node.in.$).toBeDefined();
+      expect(node.i.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
   });
@@ -18,7 +18,7 @@ describe("Comparer", function () {
 
     it("should send result of equality callback", function () {
       spyOn(node.out.$, "send");
-      node.send(node.in.$, {a: 5, b: 5}, "1");
+      node.send(node.i.$, {a: 5, b: 5}, "1");
       expect(node.out.$.send).toHaveBeenCalledWith(true, "1");
     });
 
@@ -34,7 +34,7 @@ describe("Comparer", function () {
 
       it("should bounce inputs", function () {
         spyOn(node.re.$, "send");
-        node.send(node.in.$, {a: 5, b: 5}, "1");
+        node.send(node.i.$, {a: 5, b: 5}, "1");
         expect(node.re.$.send)
         .toHaveBeenCalledWith({a: 5, b: 5}, "1");
       });

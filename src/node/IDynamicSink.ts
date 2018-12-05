@@ -3,7 +3,7 @@ import {ISink} from "./ISink";
 
 /**
  * Defines a dynamic sink node.
- * Dynamic sink nodes have a variable number of input ports on their "in"
+ * Dynamic sink nodes have a variable number of input ports on their "i"
  * port bundle.
  * All atomic nodes that receive data through variable number of input ports
  * should implement this interface.
@@ -19,7 +19,7 @@ export interface IDynamicSink extends ISink {
    * Bundle of ports through which the node receives data.
    * Imposes no restriction on port names.
    */
-  in: TInBundle<{ [key: string]: any }>;
+  i: TInBundle<{ [key: string]: any }>;
 
   /**
    * Adds the specified port to the input port bundle.

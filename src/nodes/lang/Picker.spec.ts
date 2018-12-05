@@ -4,7 +4,7 @@ describe("Picker", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Picker();
-      expect(node.in.$).toBeDefined();
+      expect(node.i.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
   });
@@ -19,7 +19,7 @@ describe("Picker", function () {
     describe("when ref is truthy", function () {
       it("should forward value", function () {
         spyOn(node.out.$, "send");
-        node.send(node.in.$, {$: 2, include: true}, "1");
+        node.send(node.i.$, {$: 2, include: true}, "1");
         expect(node.out.$.send).toHaveBeenCalledWith(2, "1");
       });
     });
@@ -27,7 +27,7 @@ describe("Picker", function () {
     describe("when ref is falsy", function () {
       it("should not forward value", function () {
         spyOn(node.out.$, "send");
-        node.send(node.in.$, {$: 2, include: false}, "1");
+        node.send(node.i.$, {$: 2, include: false}, "1");
         expect(node.out.$.send).not.toHaveBeenCalled();
       });
     });

@@ -27,7 +27,7 @@ type TSwitchOutputs<C extends string, T> = {
  * switch = new Switch(["foo", "bar", "baz");
  */
 export class Switch<C extends string, T> implements ISink, ISource, IBouncer {
-  public readonly in: TInBundle<ISwitchInputs<C, T>>;
+  public readonly i: TInBundle<ISwitchInputs<C, T>>;
   public readonly out: TOutBundle<TSwitchOutputs<C, T>>;
   public readonly re: TOutBundle<ISwitchInputs<C, T>>;
 
@@ -45,7 +45,7 @@ export class Switch<C extends string, T> implements ISink, ISource, IBouncer {
     value: ISwitchInput<C, T>,
     tag?: string
   ): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       const name = value.case;
       const outPort = this.out[name];
       if (outPort) {

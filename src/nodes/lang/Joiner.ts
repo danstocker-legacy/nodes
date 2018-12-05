@@ -12,12 +12,12 @@ interface IJoinerOutputs<T> {
  * @example
  * let joiner: Joiner<{foo: number, bar: boolean}>;
  * joiner = new Joiner(["foo", "bar"]);
- * joiner.in.foo.send(5, "1");
- * joiner.in.bar.send(true, "1");
+ * joiner.i.foo.send(5, "1");
+ * joiner.i.bar.send(true, "1");
  * // `joiner.out.$` will output `{foo: 5, bar: true}` for tag "1"
  */
 export class Joiner<T> implements ISink, ISource {
-  public readonly in: TInBundle<T>;
+  public readonly i: TInBundle<T>;
   public readonly out: TOutBundle<IJoinerOutputs<T>>;
 
   private readonly fields: Array<string>;
@@ -34,7 +34,7 @@ export class Joiner<T> implements ISink, ISource {
 
   public send(port: IInPort<ValueOf<T>>, input: ValueOf<T>, tag: string): void {
     const name = port.name;
-    if (port === this.in[name]) {
+    if (port === this.i[name]) {
       const inputCache = this.inputCache;
       let inputs = inputCache.get(tag);
       if (!inputs) {

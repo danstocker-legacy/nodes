@@ -4,7 +4,7 @@ describe("StdErr", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const node = new StdErr();
-      expect(node.in.$).toBeDefined();
+      expect(node.i.$).toBeDefined();
     });
   });
 
@@ -17,7 +17,7 @@ describe("StdErr", function () {
 
     it("should pass value to stderr", function () {
       spyOn(process.stderr, "write");
-      node.send(node.in.$, "5");
+      node.send(node.i.$, "5");
       expect(process.stderr.write).toHaveBeenCalledWith("5");
     });
   });

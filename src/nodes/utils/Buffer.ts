@@ -21,7 +21,7 @@ interface IBufferOutputs<V> {
  * TBD
  */
 export class Buffer<V> implements ISink, ISource {
-  public readonly in: TInBundle<IBufferInputs<V>>;
+  public readonly i: TInBundle<IBufferInputs<V>>;
   public readonly out: TOutBundle<IBufferOutputs<V>>;
 
   private readonly buffer: Array<[V, string]>;
@@ -39,7 +39,7 @@ export class Buffer<V> implements ISink, ISource {
     value: ValueOf<IBufferInputs<V>>,
     tag?: string
   ): void {
-    const inPorts = this.in;
+    const inPorts = this.i;
     const outPorts = this.out;
     switch (port) {
       case inPorts.$:

@@ -8,7 +8,7 @@ import {IDynamicSink} from "./IDynamicSink";
  * To be mixed into classes that implement IDynamicSink.
  * @example
  * class DynamicSinkNode implements IDynamicSink, IEventSource, IErrorSource {
- *   public in: TInBundle<...>
+ *   public i: TInBundle<...>
  *   public addPort = MDynamicSink.addPort;
  *   public deletePort = MDynamicSink.deletePort;
  *   ...
@@ -39,7 +39,7 @@ export namespace MDynamicSink {
     tag?: string
   ): void {
     const name = port.name;
-    const ports = this.in;
+    const ports = this.i;
     ports[name] = port;
   }
 
@@ -56,7 +56,7 @@ export namespace MDynamicSink {
     tag?: string
   ): void {
     const name = port.name;
-    const ports = this.in;
+    const ports = this.i;
     if (port === ports[name]) {
       if (port.peer) {
         port.disconnect();

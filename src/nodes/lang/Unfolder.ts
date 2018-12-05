@@ -33,7 +33,7 @@ interface IUnfolderOutputs<V> {
  * @see {@link https://en.wikipedia.org/wiki/Anamorphism}
  */
 export class Unfolder<I, O> implements ISink, ISource, IBouncer {
-  public readonly in: TInBundle<IUnfolderInputs<I>>;
+  public readonly i: TInBundle<IUnfolderInputs<I>>;
   public readonly out: TOutBundle<IUnfolderOutputs<O>>;
   public readonly re: TOutBundle<IUnfolderInputs<I>>;
 

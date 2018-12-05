@@ -25,7 +25,7 @@ interface ITrackerOutputs<T> {
  * tracker = new Tracker(["foo", "bar"]);
  */
 export class Tracker<T extends IAny = IAny> implements ISink, ISource {
-  public readonly in: TInBundle<TTrackerInputs<T>>;
+  public readonly i: TInBundle<TTrackerInputs<T>>;
   public readonly out: TOutBundle<ITrackerOutputs<T>>;
 
   /**
@@ -44,13 +44,13 @@ export class Tracker<T extends IAny = IAny> implements ISink, ISource {
     input: ValueOf<TTrackerInputs<T>>,
     tag?: string
   ): void {
-    const inPorts = this.in;
+    const inPorts = this.i;
     const values = this.values;
     const name = port.name;
     if (port === inPorts.tag) {
       // sending shallow copy of current state
       this.out.$.send(copy(values), tag);
-    } else if (port === this.in[name]) {
+    } else if (port === this.i[name]) {
       // not the tag port, but it exists in node
       // updating input in state
       values[name] = input;

@@ -17,7 +17,7 @@ interface ILoggerOutputs {
  * Forwards logs, warnings, and errors to connected sink nodes.
  */
 export class Logger implements ISink, ISource {
-  public readonly in: TInBundle<ILoggerInputs>;
+  public readonly i: TInBundle<ILoggerInputs>;
   public readonly out: TOutBundle<ILoggerOutputs>;
 
   constructor() {
@@ -26,7 +26,7 @@ export class Logger implements ISink, ISource {
   }
 
   public send(port: IInPort<any>, input: any, tag?: string): void {
-    const inPorts = this.in;
+    const inPorts = this.i;
     const outPorts = this.out;
     switch (port) {
       case inPorts.log:

@@ -4,9 +4,9 @@ describe("Funnel", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Funnel<"foo" | "bar" | "baz", number>(["foo", "bar", "baz"]);
-      expect(node.in.foo).toBeDefined();
-      expect(node.in.bar).toBeDefined();
-      expect(node.in.baz).toBeDefined();
+      expect(node.i.foo).toBeDefined();
+      expect(node.i.bar).toBeDefined();
+      expect(node.i.baz).toBeDefined();
       expect(node.out.$).toBeDefined();
       expect(node.out.case).toBeDefined();
     });
@@ -22,7 +22,7 @@ describe("Funnel", function () {
     it("should forward to specified output", function () {
       spyOn(node.out.$, "send");
       spyOn(node.out.case, "send");
-      node.in.foo.send(5, "1");
+      node.i.foo.send(5, "1");
       expect(node.out.$.send).toHaveBeenCalledWith(5, "1");
       expect(node.out.case.send).toHaveBeenCalledWith("foo", "1");
     });

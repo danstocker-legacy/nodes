@@ -40,7 +40,7 @@ export class Remote implements ISink, ISource, IBouncer {
     instances.clear();
   }
 
-  public readonly in: TInBundle<IRemoteInputs>;
+  public readonly i: TInBundle<IRemoteInputs>;
   public readonly out: TOutBundle<IRemoteOutputs>;
   public readonly re: TOutBundle<IRemoteInputs>;
   public readonly host: string;
@@ -76,7 +76,7 @@ export class Remote implements ISink, ISource, IBouncer {
     value: ValueOf<IRemoteInputs>,
     tag?: string
   ): void {
-    const inPorts = this.in;
+    const inPorts = this.i;
     const socket = this.socket;
     const connected = this.connected;
     switch (port) {

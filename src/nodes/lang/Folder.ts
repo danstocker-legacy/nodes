@@ -34,7 +34,7 @@ export type TFolderCallback<I, O> = (
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
 export class Folder<I, O> implements ISink, ISource, IBouncer {
-  public readonly in: TInBundle<IFolderInputs<I>>;
+  public readonly i: TInBundle<IFolderInputs<I>>;
   public readonly out: TOutBundle<IFolderOutputs<O>>;
   public readonly re: TOutBundle<IFolderInputs<I>>;
 
@@ -56,7 +56,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
     value: IFolderInput<I>,
     tag?: string
   ): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       const next = value.$;
       const curr = value.res ?
         copy(this.initial) :

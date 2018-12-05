@@ -4,7 +4,7 @@ describe("StdOut", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const node: StdOut = new StdOut();
-      expect(node.in.$).toBeDefined();
+      expect(node.i.$).toBeDefined();
     });
   });
 
@@ -17,7 +17,7 @@ describe("StdOut", function () {
 
     it("should pass value to stdout", function () {
       spyOn(process.stdout, "write");
-      node.send(node.in.$, "5");
+      node.send(node.i.$, "5");
       expect(process.stdout.write).toHaveBeenCalledWith("5");
     });
   });

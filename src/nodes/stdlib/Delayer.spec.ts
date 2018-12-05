@@ -12,7 +12,7 @@ describe("Delayer", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Delayer(0);
-      expect(node.in.$).toBeDefined();
+      expect(node.i.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
   });
@@ -26,7 +26,7 @@ describe("Delayer", function () {
 
     describe("until delay has passed", function () {
       beforeEach(function () {
-        node.send(node.in.$, 5, "1");
+        node.send(node.i.$, 5, "1");
       });
 
       it("should not forward", function () {
@@ -38,7 +38,7 @@ describe("Delayer", function () {
 
     describe("when delay has passed", function () {
       beforeEach(function () {
-        node.send(node.in.$, 5, "1");
+        node.send(node.i.$, 5, "1");
       });
 
       it("should forward", function () {

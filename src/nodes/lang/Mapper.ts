@@ -19,7 +19,7 @@ interface IMapperOutputs<V> {
  * const mapper = new Mapper<number, string>(String);
  */
 export class Mapper<I, O> implements ISink, ISource, IBouncer {
-  public readonly in: TInBundle<IMapperInputs<I>>;
+  public readonly i: TInBundle<IMapperInputs<I>>;
   public readonly out: TOutBundle<IMapperOutputs<O>>;
   public readonly re: TOutBundle<IMapperInputs<I>>;
 
@@ -33,7 +33,7 @@ export class Mapper<I, O> implements ISink, ISource, IBouncer {
   }
 
   public send(port: IInPort<I>, value: I, tag?: string): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       try {
         const mapped = this.cb(value, tag);
         this.out.$.send(mapped, tag);

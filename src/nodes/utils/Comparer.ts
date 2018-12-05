@@ -24,10 +24,10 @@ interface IComparerOutputs {
  * TBD
  * @example
  * const comparer = new Comparer<number>((a, b) => a === b);
- * comparer.in.$.send({a: 4, b: 5}); // outputs `false`
+ * comparer.i.$.send({a: 4, b: 5}); // outputs `false`
  */
 export class Comparer<V> implements ISink, ISource, IBouncer {
-  public readonly in: TInBundle<IComparerInputs<V>>;
+  public readonly i: TInBundle<IComparerInputs<V>>;
   public readonly out: TOutBundle<IComparerOutputs>;
   public readonly re: TOutBundle<IComparerInputs<V>>;
 
@@ -45,7 +45,7 @@ export class Comparer<V> implements ISink, ISource, IBouncer {
     value: IComparerInput<V>,
     tag?: string
   ): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       try {
         const equals = this.cb(value.a, value.b, tag);
         this.out.$.send(equals, tag);

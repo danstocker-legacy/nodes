@@ -15,7 +15,7 @@ interface IShifterOutputs<V> {
  * original tag order is to be retained.
  */
 export class Shifter<V> implements ISink, ISource {
-  public readonly in: TInBundle<IShifterInputs<V>>;
+  public readonly i: TInBundle<IShifterInputs<V>>;
   public readonly out: TOutBundle<IShifterOutputs<V>>;
 
   private readonly displacement: number;

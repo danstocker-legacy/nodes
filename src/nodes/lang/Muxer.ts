@@ -13,11 +13,11 @@ interface IMuxerOutputs<T> {
  * @example
  * let muxer: Muxer<{foo: number, bar: boolean}>;
  * muxer = new Muxer(["foo", "bar"]);
- * muxer.in.foo.send(5);
+ * muxer.i.foo.send(5);
  * // outputs `{$: 5, name: "foo"}` on port "$"
  */
 export class Muxer<T extends IAny = IAny> implements ISink, ISource {
-  public readonly in: TInBundle<T>;
+  public readonly i: TInBundle<T>;
   public readonly out: TOutBundle<IMuxerOutputs<T>>;
 
   constructor(fields: Array<string>) {
@@ -27,7 +27,7 @@ export class Muxer<T extends IAny = IAny> implements ISink, ISource {
 
   public send(port: IInPort<T[keyof T]>, input: T[keyof T], tag?: string): void {
     const name = port.name;
-    if (port === this.in[name]) {
+    if (port === this.i[name]) {
       this.out.$.send({name, $: input}, tag);
     }
   }

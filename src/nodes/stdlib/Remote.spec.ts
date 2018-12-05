@@ -57,8 +57,8 @@ describe("Remote", function () {
 
     it("should add ports", function () {
       const node = Remote.instance("127.0.0.1", 8124);
-      expect(node.in.$).toBeDefined();
-      expect(node.in.touch).toBeDefined();
+      expect(node.i.$).toBeDefined();
+      expect(node.i.touch).toBeDefined();
       expect(node.out.$).toBeDefined();
       expect(node.out.connected).toBeDefined();
       expect(node.out.error).toBeDefined();
@@ -96,9 +96,9 @@ describe("Remote", function () {
     describe("when there are inputs buffered", function () {
       beforeEach(function () {
         onConnect();
-        node.in.$.send("foo", "1");
-        node.in.$.send("bar", "2");
-        node.in.$.send("baz", "3");
+        node.i.$.send("foo", "1");
+        node.i.$.send("bar", "2");
+        node.i.$.send("baz", "3");
       });
 
       it("should bounce buffered inputs", function () {
@@ -128,7 +128,7 @@ describe("Remote", function () {
 
         it("should write wrapped & JSON stringified input to socket", function () {
           const spy = spyOn(socket, "write");
-          node.send(node.in.$, "foo", "1");
+          node.send(node.i.$, "foo", "1");
           expect(spy.calls.argsFor(0)[0]).toBe(`{"value":"foo","tag":"1"}`);
         });
       });
@@ -136,7 +136,7 @@ describe("Remote", function () {
       describe("when not connected", function () {
         it("should bounce inputs", function () {
           spyOn(node.re.$, "send");
-          node.send(node.in.$, "foo", "1");
+          node.send(node.i.$, "foo", "1");
           expect(node.re.$.send).toHaveBeenCalledWith("foo", "1");
         });
       });
@@ -146,7 +146,7 @@ describe("Remote", function () {
       describe("when not connected", function () {
         it("should attempt to connect socket", function () {
           spyOn(socket, "connect");
-          node.send(node.in.touch, null);
+          node.send(node.i.touch, null);
           expect(socket.connect).toHaveBeenCalledWith(8124, "127.0.0.1");
         });
       });
@@ -158,7 +158,7 @@ describe("Remote", function () {
 
         it("should not attempt to connect socket", function () {
           spyOn(socket, "connect");
-          node.send(node.in.touch, null);
+          node.send(node.i.touch, null);
           expect(socket.connect).not.toHaveBeenCalled();
         });
       });
@@ -174,7 +174,7 @@ describe("Remote", function () {
 
         it("should not attempt to connect socket", function () {
           spyOn(socket, "connect");
-          node.send(node.in.touch, null);
+          node.send(node.i.touch, null);
           expect(socket.connect).not.toHaveBeenCalled();
         });
       });

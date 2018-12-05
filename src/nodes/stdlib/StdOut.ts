@@ -9,14 +9,14 @@ interface IStdOutInputs {
  * Forwards input to `process.stdout`.
  */
 export class StdOut implements ISink {
-  public readonly in: TInBundle<IStdOutInputs>;
+  public readonly i: TInBundle<IStdOutInputs>;
 
   constructor() {
     MSink.init.call(this, ["$"]);
   }
 
   public send(port: IInPort<string | Buffer>, input: string | Buffer): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       process.stdout.write(input);
     }
   }

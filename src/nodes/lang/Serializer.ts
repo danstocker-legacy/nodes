@@ -17,7 +17,7 @@ interface ISerializerOutputs<V> {
  * node = new Serializer();
  */
 export class Serializer<V> implements ISink, ISource {
-  public readonly in: TInBundle<ISerializerInputs<V>>;
+  public readonly i: TInBundle<ISerializerInputs<V>>;
   public readonly out: TOutBundle<ISerializerOutputs<V>>;
 
   private readonly inputs: Map<string, V>;
@@ -31,7 +31,7 @@ export class Serializer<V> implements ISink, ISource {
   }
 
   public send(port: IInPort<V | string>, input: V | string, tag?: string): void {
-    const ports = this.in;
+    const ports = this.i;
     switch (port) {
       case ports.tag:
         this.order.push(tag);

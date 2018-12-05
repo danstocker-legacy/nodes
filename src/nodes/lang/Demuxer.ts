@@ -12,11 +12,11 @@ interface IDemuxerInputs<T> {
  * @example
  * let demuxer: Demuxer<{foo: number, bar: boolean}>;
  * demuxer = new Demuxer(["foo", "bar"]);
- * demuxer.in.$.send({name: "foo", 5});
+ * demuxer.i.$.send({name: "foo", 5});
  * // outputs `5` on port "foo"
  */
 export class Demuxer<T> implements ISink, ISource {
-  public readonly in: TInBundle<IDemuxerInputs<T>>;
+  public readonly i: TInBundle<IDemuxerInputs<T>>;
   public readonly out: TOutBundle<T>;
 
   constructor(fields: Array<string>) {
@@ -25,7 +25,7 @@ export class Demuxer<T> implements ISink, ISource {
   }
 
   public send(port: IInPort<IMuxed<T>>, input: IMuxed<T>, tag?: string): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       const name = input.name;
       this.out[name].send(input.$, tag);
     }

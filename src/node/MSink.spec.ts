@@ -4,7 +4,7 @@ import {MSink} from "./MSink";
 
 describe("MSink", function () {
   class TestSink implements ISink {
-    public readonly in: TInBundle<{ foo: number }>;
+    public readonly i: TInBundle<{ foo: number }>;
 
     constructor() {
       MSink.init.call(this, ["foo"]);
@@ -18,7 +18,7 @@ describe("MSink", function () {
   describe("init()", function () {
     it("should add out property", function () {
       const node = new TestSink();
-      expect(node.in).toBeDefined();
+      expect(node.i).toBeDefined();
     });
   });
 });

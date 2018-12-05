@@ -18,12 +18,12 @@ interface IDifferOutputs {
  * TBD
  * @example
  * const differ = new Differ<number>((a, b) => a === b);
- * differ.in.$.send(5) // outputs `undefined` (first input)
- * differ.in.$.send(5) // outputs `false` (not different)
- * differ.in.$.send(4) // outputs `true` (is different)
+ * differ.i.$.send(5) // outputs `undefined` (first input)
+ * differ.i.$.send(5) // outputs `false` (not different)
+ * differ.i.$.send(4) // outputs `true` (is different)
  */
 export class Differ<V> implements ISink, ISource, IBouncer {
-  public readonly in: TInBundle<IDifferInputs<V>>;
+  public readonly i: TInBundle<IDifferInputs<V>>;
   public readonly out: TOutBundle<IDifferOutputs>;
   public readonly re: TOutBundle<IDifferInputs<V>>;
 
@@ -39,7 +39,7 @@ export class Differ<V> implements ISink, ISource, IBouncer {
   }
 
   public send(port: IInPort<V>, value: V, tag?: string): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       const buffer = this.buffer;
       buffer.push(value);
       if (buffer.length > 1) {

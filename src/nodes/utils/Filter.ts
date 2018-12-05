@@ -20,11 +20,11 @@ interface IFilterOutputs<V> {
  *   $[$,include]:Mapper:$ -> $
  * @example
  * const filter = new Filter<number>((a) => a%2);
- * filter.in.$.send(1); // outputs 1
- * filter.in.$.send(2); // will not output
+ * filter.i.$.send(1); // outputs 1
+ * filter.i.$.send(2); // will not output
  */
 export class Filter<V> implements ISink, ISource, IBouncer {
-  public readonly in: TInBundle<IFilterInputs<V>>;
+  public readonly i: TInBundle<IFilterInputs<V>>;
   public readonly out: TOutBundle<IFilterOutputs<V>>;
   public readonly re: TOutBundle<IFilterInputs<V>>;
 
@@ -38,7 +38,7 @@ export class Filter<V> implements ISink, ISource, IBouncer {
   }
 
   public send(port: IInPort<V>, value: V, tag?: string): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       try {
         const include = this.cb(value, tag);
         if (include) {

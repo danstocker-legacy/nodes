@@ -4,7 +4,7 @@ describe("Mapper", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Mapper(String);
-      expect(node.in.$).toBeDefined();
+      expect(node.i.$).toBeDefined();
       expect(node.out.$).toBeDefined();
     });
   });
@@ -18,7 +18,7 @@ describe("Mapper", function () {
 
     it("should", function () {
       spyOn(node.out.$, "send");
-      node.send(node.in.$, 5, "1");
+      node.send(node.i.$, 5, "1");
       expect(node.out.$.send).toHaveBeenCalledWith("5", "1");
     });
 
@@ -34,7 +34,7 @@ describe("Mapper", function () {
 
       it("should bounce inputs", function () {
         spyOn(node.re.$, "send");
-        node.send(node.in.$, 5, "1");
+        node.send(node.i.$, 5, "1");
         expect(node.re.$.send).toHaveBeenCalledWith(5, "1");
       });
     });

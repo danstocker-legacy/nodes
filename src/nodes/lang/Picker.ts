@@ -18,7 +18,7 @@ interface IPickerOutputs<V> {
  * Forwards default input to output when reference input is truthy.
  */
 export class Picker<V> implements ISink, ISource {
-  public readonly in: TInBundle<IPickerInputs<V>>;
+  public readonly i: TInBundle<IPickerInputs<V>>;
   public readonly out: TOutBundle<IPickerOutputs<V>>;
 
   constructor() {
@@ -27,7 +27,7 @@ export class Picker<V> implements ISink, ISource {
   }
 
   public send(port: IInPort<IPickerInput<V>>, input: IPickerInput<V>, tag?: string): void {
-    if (port === this.in.$ && input.include) {
+    if (port === this.i.$ && input.include) {
       this.out.$.send(input.$, tag);
     }
   }

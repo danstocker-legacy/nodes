@@ -19,11 +19,11 @@ interface IDebouncerOutputs {
  * TBD
  * @example
  * const debouncer = new Debouncer(500);
- * debouncer.in.$.connect(...);
+ * debouncer.i.$.connect(...);
  * debouncer.out.$.connect(...);
  */
 export class Debouncer implements ISink, ISource {
-  public readonly in: TInBundle<IDebouncerInputs>;
+  public readonly i: TInBundle<IDebouncerInputs>;
   public readonly out: TOutBundle<IDebouncerOutputs>;
 
   private readonly ms: number;
@@ -41,7 +41,7 @@ export class Debouncer implements ISink, ISource {
   }
 
   public send(port: IInPort<any>, value: any, tag: string): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       const timer = this.timer;
       const buffer = this.buffer;
       buffer.push(tag);

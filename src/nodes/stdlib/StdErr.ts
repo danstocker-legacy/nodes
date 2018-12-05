@@ -9,14 +9,14 @@ interface IStdErrInputs {
  * Forwards input to `process.stderr`.
  */
 export class StdErr implements ISink {
-  public readonly in: TInBundle<IStdErrInputs>;
+  public readonly i: TInBundle<IStdErrInputs>;
 
   constructor() {
     MSink.init.call(this, ["$"]);
   }
 
   public send(port: IInPort<string | Buffer>, input: string | Buffer): void {
-    if (port === this.in.$) {
+    if (port === this.i.$) {
       process.stderr.write(input);
     }
   }
