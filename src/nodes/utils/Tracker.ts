@@ -20,6 +20,7 @@ interface ITrackerOutputs<T> {
  * B ---+=> Sampler -+
  * C ---+=> Sampler -+
  * ref -+
+ * TODO: Remove ref and move back to /lang?
  * @example
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);
