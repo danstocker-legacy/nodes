@@ -3,8 +3,16 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
 interface ISamplerInputs<V> {
+  /**
+   * Input value to be sampled.
+   */
   $: V;
-  tag: any;
+
+  /**
+   * Dictates sampling frequency. Output inherits the tag of the impulse
+   * coming through this port.
+   */
+  smp: any;
 }
 
 interface ISamplerOutputs<V> {
@@ -12,7 +20,7 @@ interface ISamplerOutputs<V> {
 }
 
 /**
- * Emits the last known input value on every tag received.
+ * Emits the last known input value on every `smp` received.
  * The purpose of `Sampler` is to make untagged (or differently tagged) inputs
  * consumable by `Joiner`.
  * @example
@@ -20,7 +28,7 @@ interface ISamplerOutputs<V> {
  * const ticker = new Ticker(1000);
  * const foo: ISource<{$: number}>; // emits tagged values
  * ticker.o.$.connect(sampler.i.$);
- * foo.o.$.connect(sampler.i.tag);
+ * foo.o.$.connect(sampler.i.smp);
  * // `sampler` will output the last value from `ticker` on each input to `foo`
  */
 export class Sampler<V> implements ISink, ISource {
@@ -30,7 +38,7 @@ export class Sampler<V> implements ISink, ISource {
   private buffer: V;
 
   constructor() {
-    MSink.init.call(this, ["$", "tag"]);
+    MSink.init.call(this, ["$", "smp"]);
     MSource.init.call(this, ["$"]);
   }
 
@@ -45,7 +53,7 @@ export class Sampler<V> implements ISink, ISource {
         this.buffer = value;
         break;
 
-      case inPorts.tag:
+      case inPorts.smp:
         this.o.$.send(this.buffer, tag);
         break;
     }

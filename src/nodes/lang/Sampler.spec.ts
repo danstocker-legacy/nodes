@@ -5,7 +5,7 @@ describe("Sampler", function () {
     it("should add ports", function () {
       const node = new Sampler();
       expect(node.i.$).toBeDefined();
-      expect(node.i.tag).toBeDefined();
+      expect(node.i.smp).toBeDefined();
       expect(node.o.$).toBeDefined();
     });
   });
@@ -25,14 +25,14 @@ describe("Sampler", function () {
       });
     });
 
-    describe("on receiving tag", function () {
+    describe("on receiving smp", function () {
       beforeEach(function () {
         node.send(node.i.$, 5);
       });
 
       it("should release buffered value with tag", function () {
         spyOn(node.o.$, "send");
-        node.send(node.i.tag, null, "1");
+        node.send(node.i.smp, null, "1");
         expect(node.o.$.send).toHaveBeenCalledWith(5, "1");
       });
     });
