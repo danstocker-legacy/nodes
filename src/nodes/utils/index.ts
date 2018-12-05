@@ -2,6 +2,7 @@ export {Buffer} from "./Buffer";
 export {Comparer} from "./Comparer";
 export {Debouncer} from "./Debouncer";
 export {Differ} from "./Differ";
+export {Filter} from "./Filter";
 export {Funnel} from "./Funnel";
 export {Listener} from "./Listener";
 export {Logger} from "./Logger";
