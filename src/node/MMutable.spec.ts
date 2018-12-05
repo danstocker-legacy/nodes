@@ -1,19 +1,19 @@
 import {TInBundle} from "../port";
-import {IControllable} from "./IControllable";
-import {MControllable} from "./MControllable";
+import {IMutable} from "./IMutable";
+import {MMutable} from "./MMutable";
 
-describe("MControllable", function () {
-  class TestControllable implements IControllable {
+describe("MMutable", function () {
+  class TestMutable implements IMutable {
     public readonly si: TInBundle<{ foo: number, bar: boolean }>;
 
     constructor() {
-      MControllable.init.call(this, ["foo", "bar"]);
+      MMutable.init.call(this, ["foo", "bar"]);
     }
   }
 
   describe("init()", function () {
     it("should add si bundle", function () {
-      const node = new TestControllable();
+      const node = new TestMutable();
       expect(node.si).toBeDefined();
       expect(node.si.foo).toBeDefined();
       expect(node.si.bar).toBeDefined();

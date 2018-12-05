@@ -1,9 +1,9 @@
 import {
-  IControllable,
+  IMutable,
   ISink,
   ISource,
   IStateful,
-  MControllable,
+  MMutable,
   MSink,
   MSource, MStateful
 } from "../../node";
@@ -34,7 +34,7 @@ interface IBufferStateOut {
  * @example
  * TBD
  */
-export class Buffer<V> implements ISink, ISource, IControllable, IStateful {
+export class Buffer<V> implements ISink, ISource, IMutable, IStateful {
   public readonly i: TInBundle<IBufferInputs<V>>;
   public readonly o: TOutBundle<IBufferOutputs<V>>;
   public readonly si: TInBundle<IBufferStateIn>;
@@ -46,7 +46,7 @@ export class Buffer<V> implements ISink, ISource, IControllable, IStateful {
   constructor() {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
-    MControllable.init.call(this, ["open"]);
+    MMutable.init.call(this, ["open"]);
     MStateful.init.call(this, ["size"]);
     this.buffer = [];
     this.open = false;

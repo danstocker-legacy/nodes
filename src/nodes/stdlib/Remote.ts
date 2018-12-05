@@ -1,14 +1,14 @@
 import * as net from "net";
 import {
   IBouncer,
-  IControllable,
   IEvented,
+  IMutable,
   ISink,
   ISource,
   IStateful,
   MBouncer,
-  MControllable,
   MEvented,
+  MMutable,
   MSink,
   MSource,
   MStateful
@@ -38,7 +38,7 @@ interface IRemoteEvents {
 
 const instances = new Map<string, Remote>();
 
-export class Remote implements ISink, ISource, IStateful, IControllable, IBouncer, IEvented {
+export class Remote implements ISink, ISource, IStateful, IMutable, IBouncer, IEvented {
   /**
    * Retrieves OR creates a new Remote instance.
    * @param host
@@ -81,7 +81,7 @@ export class Remote implements ISink, ISource, IStateful, IControllable, IBounce
   private constructor(host: string, port: number) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
-    MControllable.init.call(this, ["con"]);
+    MMutable.init.call(this, ["con"]);
     MStateful.init.call(this, ["con"]);
     MBouncer.init.call(this, ["$"]);
     MEvented.init.call(this, ["err"]);

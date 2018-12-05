@@ -1,8 +1,8 @@
 import {InPort, TInBundle} from "../port";
-import {IControllable} from "./IControllable";
+import {IMutable} from "./IMutable";
 
-export namespace MControllable {
-  export function init(this: IControllable, fields: Array<string>) {
+export namespace MMutable {
+  export function init(this: IMutable, fields: Array<string>) {
     const ports = this.si = {} as TInBundle<any>;
     for (const field of fields) {
       ports[field] = new InPort(field, this);
