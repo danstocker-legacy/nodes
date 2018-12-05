@@ -21,7 +21,7 @@ export namespace MSink {
    * Adds "i" port bundle.
    * @param fields Port names in input port bundle.
    */
-  export function init(this: ISink, fields: Array<string> = []): void {
+  export function init(this: ISink, fields: Array<string>): void {
     const ports = this.i = {} as TInBundle<any>;
     for (const field of fields) {
       ports[field] = new InPort(field, this);

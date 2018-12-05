@@ -14,7 +14,7 @@ import {IDynamicSource} from "./IDynamicSource";
  *   public deletePort = MDynamicSource.deletePort;
  *   ...
  *   constructor() {
- *     MSource.init.call(this);
+ *     MSource.init.call(this, []);
  *     MDynamicSource.init.call(this);
  *     ...
  *   }

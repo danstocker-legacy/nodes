@@ -10,7 +10,7 @@ describe("MDynamicSource", function () {
     public deletePort = MDynamicSource.deletePort;
 
     constructor() {
-      MSource.init.call(this);
+      MSource.init.call(this, []);
     }
   }
 

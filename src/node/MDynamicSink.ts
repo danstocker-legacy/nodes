@@ -13,7 +13,7 @@ import {IDynamicSink} from "./IDynamicSink";
  *   public deletePort = MDynamicSink.deletePort;
  *   ...
  *   constructor() {
- *     MSink.init.call(this);
+ *     MSink.init.call(this, []);
  *     MDynamicSink.init.call(this);
  *     ...
  *   }

@@ -12,8 +12,7 @@ export class StdIn implements ISource {
   public readonly o: TOutBundle<IStdInOutputs>;
 
   constructor() {
-    MSource.init.call(this);
-    this.o.$ = new OutPort("$", this);
+    MSource.init.call(this, ["$"]);
     process.stdin.on("readable", this.onReadable.bind(this));
   }
 

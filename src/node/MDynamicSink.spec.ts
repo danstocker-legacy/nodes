@@ -10,7 +10,7 @@ describe("MDynamicSink", function () {
     public deletePort = MDynamicSink.deletePort;
 
     constructor() {
-      MSink.init.call(this);
+      MSink.init.call(this, []);
     }
 
     public send(): void {

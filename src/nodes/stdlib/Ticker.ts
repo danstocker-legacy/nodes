@@ -15,9 +15,8 @@ export class Ticker implements ISource {
   public readonly o: TOutBundle<ITickerOutputs>;
 
   constructor(ms: number) {
-    MSource.init.call(this);
+    MSource.init.call(this, ["$"]);
     setInterval(this.onInterval.bind(this), ms);
-    this.o.$ = new OutPort("$", this);
   }
 
   private onInterval(): void {

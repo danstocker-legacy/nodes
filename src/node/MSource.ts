@@ -10,7 +10,7 @@ import {ISource} from "./ISource";
  *   public o: TOutBundle<...>
  *   ...
  *   constructor() {
- *     MSource.init.call(this);
+ *     MSource.init.call(this, ["foo", "bar"]);
  *     ...
  *   }
  * }
@@ -21,7 +21,7 @@ export namespace MSource {
    * Adds "o" port bundle.
    * @param fields Port names in output port bundle.
    */
-  export function init(this: ISource, fields: Array<string> = []): void {
+  export function init(this: ISource, fields: Array<string>): void {
     const ports = this.o = {} as TOutBundle<any>;
     for (const field of fields) {
       ports[field] = new OutPort(field, this);
