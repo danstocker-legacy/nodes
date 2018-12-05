@@ -9,6 +9,7 @@ describe("Remote", function () {
   const socket = {
     connect: () => null,
     connecting: false,
+    end: () => null,
     on: (event, cb) => {
       switch (event) {
         case "connect":
@@ -53,8 +54,8 @@ describe("Remote", function () {
       const node = Remote.instance("127.0.0.1", 8124);
       expect(node.i.$).toBeDefined();
       expect(node.o.$).toBeDefined();
-      expect(node.si.touch).toBeDefined();
-      expect(node.so.connected).toBeDefined();
+      expect(node.si.con).toBeDefined();
+      expect(node.so.con).toBeDefined();
       expect(node.re.$).toBeDefined();
       expect(node.e.err).toBeDefined();
     });
@@ -67,10 +68,10 @@ describe("Remote", function () {
       node = Remote.instance("127.0.0.1", 8124);
     });
 
-    it("should send connected flag to output", function () {
-      spyOn(node.so.connected, "send");
+    it("should send `con` flag to output", function () {
+      spyOn(node.so.con, "send");
       onConnect();
-      expect(node.so.connected.send).toHaveBeenCalledWith(true);
+      expect(node.so.con.send).toHaveBeenCalledWith(true);
     });
   });
 
@@ -81,10 +82,10 @@ describe("Remote", function () {
       node = Remote.instance("127.0.0.1", 8124);
     });
 
-    it("should send connected flag to output", function () {
-      spyOn(node.so.connected, "send");
+    it("should send `con` flag to output", function () {
+      spyOn(node.so.con, "send");
       onClose();
-      expect(node.so.connected.send).toHaveBeenCalledWith(false);
+      expect(node.so.con.send).toHaveBeenCalledWith(false);
     });
 
     describe("when there are inputs buffered", function () {
@@ -193,40 +194,80 @@ describe("Remote", function () {
       });
     });
 
-    describe("when sending touch", function () {
-      describe("when not connected", function () {
-        it("should attempt to connect socket", function () {
-          spyOn(socket, "connect");
-          node.send(node.si.touch, null);
-          expect(socket.connect).toHaveBeenCalledWith(8124, "127.0.0.1");
+    describe("when sending `con`", function () {
+      describe("(true)", function () {
+        describe("when not connected", function () {
+          it("should attempt to connect socket", function () {
+            spyOn(socket, "connect");
+            node.send(node.si.con, true);
+            expect(socket.connect).toHaveBeenCalledWith(8124, "127.0.0.1");
+          });
+        });
+
+        describe("when connected", function () {
+          beforeEach(function () {
+            onConnect();
+          });
+
+          it("should not attempt to connect socket", function () {
+            spyOn(socket, "connect");
+            node.send(node.si.con, true);
+            expect(socket.connect).not.toHaveBeenCalled();
+          });
+        });
+
+        describe("when socket is connecting", function () {
+          beforeEach(function () {
+            socket.connecting = true;
+          });
+
+          afterEach(function () {
+            socket.connecting = false;
+          });
+
+          it("should not attempt to connect socket", function () {
+            spyOn(socket, "connect");
+            node.send(node.si.con, true);
+            expect(socket.connect).not.toHaveBeenCalled();
+          });
         });
       });
 
-      describe("when connected", function () {
-        beforeEach(function () {
-          onConnect();
+      describe("(false)", function () {
+        describe("when not connected", function () {
+          it("should not close connection", function () {
+            spyOn(socket, "end");
+            node.send(node.si.con, false);
+            expect(socket.end).not.toHaveBeenCalled();
+          });
         });
 
-        it("should not attempt to connect socket", function () {
-          spyOn(socket, "connect");
-          node.send(node.si.touch, null);
-          expect(socket.connect).not.toHaveBeenCalled();
-        });
-      });
+        describe("when connected", function () {
+          beforeEach(function () {
+            onConnect();
+          });
 
-      describe("when socket is connecting", function () {
-        beforeEach(function () {
-          socket.connecting = true;
-        });
-
-        afterEach(function () {
-          socket.connecting = false;
+          it("should close connection", function () {
+            spyOn(socket, "end");
+            node.send(node.si.con, false);
+            expect(socket.end).toHaveBeenCalled();
+          });
         });
 
-        it("should not attempt to connect socket", function () {
-          spyOn(socket, "connect");
-          node.send(node.si.touch, null);
-          expect(socket.connect).not.toHaveBeenCalled();
+        describe("when socket is connecting", function () {
+          beforeEach(function () {
+            socket.connecting = true;
+          });
+
+          afterEach(function () {
+            socket.connecting = false;
+          });
+
+          it("should close connection", function () {
+            spyOn(socket, "end");
+            node.send(node.si.con, false);
+            expect(socket.end).toHaveBeenCalled();
+          });
         });
       });
     });

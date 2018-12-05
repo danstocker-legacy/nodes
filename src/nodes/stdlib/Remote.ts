@@ -25,11 +25,11 @@ interface IRemoteOutputs {
 }
 
 interface IRemoteStateIn {
-  touch: any;
+  con: boolean;
 }
 
 interface IRemoteStateOut {
-  connected: boolean;
+  con: boolean;
 }
 
 interface IRemoteEvents {
@@ -81,8 +81,8 @@ export class Remote implements ISink, ISource, IStateful, IControllable, IBounce
   private constructor(host: string, port: number) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
-    MControllable.init.call(this, ["touch"]);
-    MStateful.init.call(this, ["connected"]);
+    MControllable.init.call(this, ["con"]);
+    MStateful.init.call(this, ["con"]);
     MBouncer.init.call(this, ["$"]);
     MEvented.init.call(this, ["err"]);
 
@@ -120,11 +120,16 @@ export class Remote implements ISink, ISource, IStateful, IControllable, IBounce
         }
         break;
 
-      case this.si.touch:
-        if (!connected && !socket.connecting) {
+      case this.si.con:
+        if (value && !connected && !socket.connecting) {
           // socket is not connected and is not in the process of connecting
           // attempting to open connection
           socket.connect(this.port, this.host);
+        } else if (!value && (connected || socket.connecting)) {
+          // TODO: Can we call end() while connecting?
+          // socket is connected or is in the process of connecting
+          // closing connection
+          socket.end();
         }
         break;
     }
@@ -150,7 +155,7 @@ export class Remote implements ISink, ISource, IStateful, IControllable, IBounce
   private onConnect(): void {
     const connected = true;
     this.connected = connected;
-    this.so.connected.send(connected);
+    this.so.con.send(connected);
   }
 
   /**
@@ -161,7 +166,7 @@ export class Remote implements ISink, ISource, IStateful, IControllable, IBounce
   private onClose(): void {
     const connected = false;
     this.connected = connected;
-    this.so.connected.send(connected);
+    this.so.con.send(connected);
     this.bounceAll();
   }
 
