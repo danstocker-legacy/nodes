@@ -48,9 +48,9 @@ describe("Differ", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.bounced.$, "send");
+        spyOn(node.re.$, "send");
         node.send(node.in.$, 5, "2");
-        expect(node.bounced.$.send).toHaveBeenCalledWith(5, "2");
+        expect(node.re.$.send).toHaveBeenCalledWith(5, "2");
       });
     });
   });

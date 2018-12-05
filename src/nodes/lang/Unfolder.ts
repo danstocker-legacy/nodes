@@ -35,7 +35,7 @@ interface IUnfolderOutputs<V> {
 export class Unfolder<I, O> implements ISink, ISource, IBouncer {
   public readonly in: TInBundle<IUnfolderInputs<I>>;
   public readonly out: TOutBundle<IUnfolderOutputs<O>>;
-  public readonly bounced: TOutBundle<IUnfolderInputs<I>>;
+  public readonly re: TOutBundle<IUnfolderInputs<I>>;
 
   private readonly cb: TUnfolderCallback<I, O>;
 
@@ -53,7 +53,7 @@ export class Unfolder<I, O> implements ISink, ISource, IBouncer {
         this.out.$.send(next, tag);
       }
     } catch (err) {
-      this.bounced.$.send(value, tag);
+      this.re.$.send(value, tag);
     }
   }
 }

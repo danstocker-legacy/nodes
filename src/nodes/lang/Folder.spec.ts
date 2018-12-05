@@ -61,9 +61,9 @@ describe("Folder", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.bounced.$, "send");
+        spyOn(node.re.$, "send");
         node.send(node.in.$, {res: false, $: 5}, "1");
-        expect(node.bounced.$.send).toHaveBeenCalledWith({
+        expect(node.re.$.send).toHaveBeenCalledWith({
           $: 5,
           res: false
         }, "1");

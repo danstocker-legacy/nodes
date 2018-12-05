@@ -29,7 +29,7 @@ interface IComparerOutputs {
 export class Comparer<V> implements ISink, ISource, IBouncer {
   public readonly in: TInBundle<IComparerInputs<V>>;
   public readonly out: TOutBundle<IComparerOutputs>;
-  public readonly bounced: TOutBundle<IComparerInputs<V>>;
+  public readonly re: TOutBundle<IComparerInputs<V>>;
 
   private readonly cb: TEqualityCallback<V>;
 
@@ -50,7 +50,7 @@ export class Comparer<V> implements ISink, ISource, IBouncer {
         const equals = this.cb(value.a, value.b, tag);
         this.out.$.send(equals, tag);
       } catch (err) {
-        this.bounced.$.send(value, tag);
+        this.re.$.send(value, tag);
       }
     }
   }

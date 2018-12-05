@@ -6,7 +6,7 @@ describe("Filter", function () {
       const node = new Filter(() => null);
       expect(node.in.$).toBeDefined();
       expect(node.out.$).toBeDefined();
-      expect(node.bounced.$).toBeDefined();
+      expect(node.re.$).toBeDefined();
     });
   });
 
@@ -41,9 +41,9 @@ describe("Filter", function () {
       });
 
       it("should bounce input", function () {
-        spyOn(node.bounced.$, "send");
+        spyOn(node.re.$, "send");
         node.send(node.in.$, 5, "1");
-        expect(node.bounced.$.send).toHaveBeenCalledWith(5, "1");
+        expect(node.re.$.send).toHaveBeenCalledWith(5, "1");
       });
 
       it("should send error to output", function () {

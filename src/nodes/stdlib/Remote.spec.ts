@@ -62,7 +62,7 @@ describe("Remote", function () {
       expect(node.out.$).toBeDefined();
       expect(node.out.connected).toBeDefined();
       expect(node.out.error).toBeDefined();
-      expect(node.bounced.$).toBeDefined();
+      expect(node.re.$).toBeDefined();
     });
   });
 
@@ -102,7 +102,7 @@ describe("Remote", function () {
       });
 
       it("should bounce buffered inputs", function () {
-        const spy = spyOn(node.bounced.$, "send");
+        const spy = spyOn(node.re.$, "send");
         onClose();
         expect(spy.calls.allArgs()).toEqual([
           ["foo", "1"],
@@ -135,9 +135,9 @@ describe("Remote", function () {
 
       describe("when not connected", function () {
         it("should bounce inputs", function () {
-          spyOn(node.bounced.$, "send");
+          spyOn(node.re.$, "send");
           node.send(node.in.$, "foo", "1");
-          expect(node.bounced.$.send).toHaveBeenCalledWith("foo", "1");
+          expect(node.re.$.send).toHaveBeenCalledWith("foo", "1");
         });
       });
     });

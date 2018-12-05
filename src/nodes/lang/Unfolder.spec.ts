@@ -43,9 +43,9 @@ describe("Unfolder", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.bounced.$, "send");
+        spyOn(node.re.$, "send");
         node.send(node.in.$, [1, 2, 3], "1");
-        expect(node.bounced.$.send).toHaveBeenCalledWith([1, 2, 3], "1");
+        expect(node.re.$.send).toHaveBeenCalledWith([1, 2, 3], "1");
       });
     });
   });

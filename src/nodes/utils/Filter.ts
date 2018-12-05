@@ -26,7 +26,7 @@ interface IFilterOutputs<V> {
 export class Filter<V> implements ISink, ISource, IBouncer {
   public readonly in: TInBundle<IFilterInputs<V>>;
   public readonly out: TOutBundle<IFilterOutputs<V>>;
-  public readonly bounced: TOutBundle<IFilterInputs<V>>;
+  public readonly re: TOutBundle<IFilterInputs<V>>;
 
   private readonly cb: TFilterCallback<V>;
 
@@ -45,7 +45,7 @@ export class Filter<V> implements ISink, ISource, IBouncer {
           this.out.$.send(value, tag);
         }
       } catch (err) {
-        this.bounced.$.send(value, tag);
+        this.re.$.send(value, tag);
         this.out.error.send(String(err), tag);
       }
     }

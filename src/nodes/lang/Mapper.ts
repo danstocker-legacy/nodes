@@ -21,7 +21,7 @@ interface IMapperOutputs<V> {
 export class Mapper<I, O> implements ISink, ISource, IBouncer {
   public readonly in: TInBundle<IMapperInputs<I>>;
   public readonly out: TOutBundle<IMapperOutputs<O>>;
-  public readonly bounced: TOutBundle<IMapperInputs<I>>;
+  public readonly re: TOutBundle<IMapperInputs<I>>;
 
   private readonly cb: TMapperCallback<I, O>;
 
@@ -38,7 +38,7 @@ export class Mapper<I, O> implements ISink, ISource, IBouncer {
         const mapped = this.cb(value, tag);
         this.out.$.send(mapped, tag);
       } catch (err) {
-        this.bounced.$.send(value, tag);
+        this.re.$.send(value, tag);
       }
     }
   }

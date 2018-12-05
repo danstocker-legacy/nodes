@@ -42,7 +42,7 @@ export class Remote implements ISink, ISource, IBouncer {
 
   public readonly in: TInBundle<IRemoteInputs>;
   public readonly out: TOutBundle<IRemoteOutputs>;
-  public readonly bounced: TOutBundle<IRemoteInputs>;
+  public readonly re: TOutBundle<IRemoteInputs>;
   public readonly host: string;
   public readonly port: number;
   private readonly socket: net.Socket;
@@ -90,7 +90,7 @@ export class Remote implements ISink, ISource, IBouncer {
         } else {
           // socket is not connected
           // bouncing inputs
-          this.bounced.$.send(value, tag);
+          this.re.$.send(value, tag);
         }
         break;
 
@@ -127,7 +127,7 @@ export class Remote implements ISink, ISource, IBouncer {
     // bouncing all inputs remaining in buffer
     const buffer = this.buffer;
     if (buffer.size > 0) {
-      const bounced = this.bounced.$;
+      const bounced = this.re.$;
       for (const [tag, value] of this.buffer.entries()) {
         bounced.send(value, tag);
       }

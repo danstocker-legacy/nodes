@@ -25,7 +25,7 @@ interface IDifferOutputs {
 export class Differ<V> implements ISink, ISource, IBouncer {
   public readonly in: TInBundle<IDifferInputs<V>>;
   public readonly out: TOutBundle<IDifferOutputs>;
-  public readonly bounced: TOutBundle<IDifferInputs<V>>;
+  public readonly re: TOutBundle<IDifferInputs<V>>;
 
   private readonly cb: TEqualityCallback<V>;
   private buffer: Array<V>;
@@ -47,7 +47,7 @@ export class Differ<V> implements ISink, ISource, IBouncer {
           const equals = this.cb(buffer.shift(), value);
           this.out.$.send(!equals, tag);
         } catch (err) {
-          this.bounced.$.send(value, tag);
+          this.re.$.send(value, tag);
         }
       } else {
         this.buffer = buffer;

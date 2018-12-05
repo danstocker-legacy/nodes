@@ -13,7 +13,7 @@ describe("MBouncer", function () {
 
   class TestBouncer implements IBouncer, ISink {
     public readonly in: TInBundle<ITestBouncerInputs>;
-    public readonly bounced: TOutBundle<ITestBouncerInputs>;
+    public readonly re: TOutBundle<ITestBouncerInputs>;
 
     constructor() {
       MSink.init.call(this, ["foo", "bar"]);
@@ -32,8 +32,8 @@ describe("MBouncer", function () {
   describe("init()", function () {
     it("should add ports", function () {
       const node = new TestBouncer();
-      expect(node.bounced.foo).toBeDefined();
-      expect(node.bounced.bar).toBeDefined();
+      expect(node.re.foo).toBeDefined();
+      expect(node.re.bar).toBeDefined();
     });
   });
 });

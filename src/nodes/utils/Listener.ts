@@ -18,7 +18,7 @@ interface IListenerInputs {
  */
 export class Listener implements ISink, IBouncer {
   public readonly in: TInBundle<IListenerInputs>;
-  public readonly bounced: TOutBundle<IListenerInputs>;
+  public readonly re: TOutBundle<IListenerInputs>;
 
   private readonly cb: TListenerCallback;
 
@@ -33,7 +33,7 @@ export class Listener implements ISink, IBouncer {
       try {
         this.cb(value, tag);
       } catch (err) {
-        this.bounced.$.send(value, tag);
+        this.re.$.send(value, tag);
       }
     }
   }
