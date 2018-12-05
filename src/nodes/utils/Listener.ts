@@ -1,10 +1,22 @@
-import {IBouncer, ISink, MBouncer, MSink} from "../../node";
+import {
+  IBouncer,
+  IEvented,
+  ISink,
+  MBouncer,
+  MEvented,
+  MSink,
+  MSource
+} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
 
 interface IListenerInputs {
   $: any;
+}
+
+interface IListenerEvents {
+  err: string;
 }
 
 /**
@@ -16,15 +28,17 @@ interface IListenerInputs {
  * // to unsubscribe:
  * listener.i.$.disconnect();
  */
-export class Listener implements ISink, IBouncer {
+export class Listener implements ISink, IBouncer, IEvented {
   public readonly i: TInBundle<IListenerInputs>;
   public readonly re: TOutBundle<IListenerInputs>;
+  public readonly e: TOutBundle<IListenerEvents>;
 
   private readonly cb: TListenerCallback;
 
   constructor(cb: TListenerCallback) {
     MSink.init.call(this, ["$"]);
     MBouncer.init.call(this, ["$"]);
+    MEvented.init.call(this, ["err"]);
     this.cb = cb;
   }
 
@@ -34,6 +48,7 @@ export class Listener implements ISink, IBouncer {
         this.cb(value, tag);
       } catch (err) {
         this.re.$.send(value, tag);
+        this.e.err.send(String(err), tag);
       }
     }
   }

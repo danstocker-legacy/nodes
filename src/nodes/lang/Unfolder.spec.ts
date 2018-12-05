@@ -6,6 +6,8 @@ describe("Unfolder", function () {
       const node = new Unfolder(() => null);
       expect(node.i.$).toBeDefined();
       expect(node.o.$).toBeDefined();
+      expect(node.re.$).toBeDefined();
+      expect(node.e.err).toBeDefined();
     });
   });
 
@@ -33,12 +35,9 @@ describe("Unfolder", function () {
     });
 
     describe("when callback throws", function () {
-      let error: Error;
-
       beforeEach(function () {
-        error = new Error();
         node = new Unfolder(function* () {
-          throw error;
+          throw new Error("foo");
         });
       });
 
@@ -46,6 +45,12 @@ describe("Unfolder", function () {
         spyOn(node.re.$, "send");
         node.send(node.i.$, [1, 2, 3], "1");
         expect(node.re.$.send).toHaveBeenCalledWith([1, 2, 3], "1");
+      });
+
+      it("should send error to output", function () {
+        spyOn(node.e.err, "send");
+        node.send(node.i.$, [1, 2, 3], "1");
+        expect(node.e.err.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });
   });

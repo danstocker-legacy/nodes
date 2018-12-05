@@ -1,4 +1,13 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
+import {
+  IBouncer,
+  IEvented,
+  ISink,
+  ISource,
+  MBouncer,
+  MEvented,
+  MSink,
+  MSource
+} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 /**
@@ -14,6 +23,10 @@ interface IUnfolderInputs<V> {
 
 interface IUnfolderOutputs<V> {
   $: V;
+}
+
+interface IUnfolderEvents {
+  err: string;
 }
 
 /**
@@ -32,10 +45,11 @@ interface IUnfolderOutputs<V> {
  * }));
  * @see {@link https://en.wikipedia.org/wiki/Anamorphism}
  */
-export class Unfolder<I, O> implements ISink, ISource, IBouncer {
+export class Unfolder<I, O> implements ISink, ISource, IBouncer, IEvented {
   public readonly i: TInBundle<IUnfolderInputs<I>>;
   public readonly o: TOutBundle<IUnfolderOutputs<O>>;
   public readonly re: TOutBundle<IUnfolderInputs<I>>;
+  public readonly e: TOutBundle<IUnfolderEvents>;
 
   private readonly cb: TUnfolderCallback<I, O>;
 
@@ -43,6 +57,7 @@ export class Unfolder<I, O> implements ISink, ISource, IBouncer {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
     MBouncer.init.call(this, ["$"]);
+    MEvented.init.call(this, ["err"]);
     this.cb = cb;
   }
 
@@ -54,6 +69,7 @@ export class Unfolder<I, O> implements ISink, ISource, IBouncer {
       }
     } catch (err) {
       this.re.$.send(value, tag);
+      this.e.err.send(String(err), tag);
     }
   }
 }

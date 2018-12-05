@@ -1,4 +1,12 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
+import {
+  IBouncer,
+  IEvented,
+  ISink,
+  ISource,
+  MBouncer, MEvented,
+  MSink,
+  MSource
+} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TEqualityCallback} from "./Comparer";
 
@@ -8,6 +16,10 @@ interface IDifferInputs<V> {
 
 interface IDifferOutputs {
   $: boolean;
+}
+
+interface IDifferEvents {
+  err: string;
 }
 
 /**
@@ -22,10 +34,11 @@ interface IDifferOutputs {
  * differ.i.$.send(5) // outputs `false` (not different)
  * differ.i.$.send(4) // outputs `true` (is different)
  */
-export class Differ<V> implements ISink, ISource, IBouncer {
+export class Differ<V> implements ISink, ISource, IBouncer, IEvented {
   public readonly i: TInBundle<IDifferInputs<V>>;
   public readonly o: TOutBundle<IDifferOutputs>;
   public readonly re: TOutBundle<IDifferInputs<V>>;
+  public readonly e: TOutBundle<IDifferEvents>;
 
   private readonly cb: TEqualityCallback<V>;
   private buffer: Array<V>;
@@ -34,6 +47,7 @@ export class Differ<V> implements ISink, ISource, IBouncer {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
     MBouncer.init.call(this, ["$"]);
+    MEvented.init.call(this, ["err"]);
     this.cb = cb;
     this.buffer = [];
   }
@@ -48,6 +62,7 @@ export class Differ<V> implements ISink, ISource, IBouncer {
           this.o.$.send(!equals, tag);
         } catch (err) {
           this.re.$.send(value, tag);
+          this.e.err.send(String(err), tag);
         }
       } else {
         this.buffer = buffer;

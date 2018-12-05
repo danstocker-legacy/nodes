@@ -6,6 +6,8 @@ describe("Comparer", function () {
       const node = new Comparer(() => true);
       expect(node.i.$).toBeDefined();
       expect(node.o.$).toBeDefined();
+      expect(node.re.$).toBeDefined();
+      expect(node.e.err).toBeDefined();
     });
   });
 
@@ -23,12 +25,9 @@ describe("Comparer", function () {
     });
 
     describe("when callback throws", function () {
-      let error: Error;
-
       beforeEach(function () {
-        error = new Error();
         node = new Comparer(() => {
-          throw error;
+          throw new Error("foo");
         });
       });
 
@@ -37,6 +36,12 @@ describe("Comparer", function () {
         node.send(node.i.$, {a: 5, b: 5}, "1");
         expect(node.re.$.send)
         .toHaveBeenCalledWith({a: 5, b: 5}, "1");
+      });
+
+      it("should send error to output", function () {
+        spyOn(node.e.err, "send");
+        node.send(node.i.$, {a: 5, b: 5}, "1");
+        expect(node.e.err.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });
   });

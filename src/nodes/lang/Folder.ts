@@ -1,4 +1,13 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
+import {
+  IBouncer,
+  IEvented,
+  ISink,
+  ISource,
+  MBouncer,
+  MEvented,
+  MSink,
+  MSource
+} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {copy} from "../../utils";
 
@@ -18,6 +27,10 @@ interface IFolderOutputs<V> {
   $: V;
 }
 
+interface IFolderEvents {
+  err: string;
+}
+
 export type TFolderCallback<I, O> = (
   curr: O,
   next: I,
@@ -33,10 +46,11 @@ export type TFolderCallback<I, O> = (
  * sum = new Folder((curr, next) => curr + next, 0);
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
-export class Folder<I, O> implements ISink, ISource, IBouncer {
+export class Folder<I, O> implements ISink, ISource, IBouncer, IEvented {
   public readonly i: TInBundle<IFolderInputs<I>>;
   public readonly o: TOutBundle<IFolderOutputs<O>>;
   public readonly re: TOutBundle<IFolderInputs<I>>;
+  public readonly e: TOutBundle<IFolderEvents>;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;
@@ -46,6 +60,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
     MBouncer.init.call(this, ["$"]);
+    MEvented.init.call(this, ["err"]);
     this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);
@@ -67,6 +82,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
         this.o.$.send(folded, tag);
       } catch (err) {
         this.re.$.send(value, tag);
+        this.e.err.send(String(err), tag);
       }
     }
   }

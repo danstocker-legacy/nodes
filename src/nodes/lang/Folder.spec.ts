@@ -5,7 +5,9 @@ describe("Folder", function () {
     it("should add ports", function () {
       const node = new Folder(() => null);
       expect(node.i.$).toBeDefined();
-      expect(node.i.$).toBeDefined();
+      expect(node.o.$).toBeDefined();
+      expect(node.re.$).toBeDefined();
+      expect(node.e.err).toBeDefined();
     });
   });
 
@@ -51,12 +53,9 @@ describe("Folder", function () {
     });
 
     describe("when callback throws", function () {
-      let error: Error;
-
       beforeEach(function () {
-        error = new Error();
         node = new Folder(() => {
-          throw error;
+          throw new Error("foo");
         });
       });
 
@@ -67,6 +66,12 @@ describe("Folder", function () {
           $: 5,
           res: false
         }, "1");
+      });
+
+      it("should send error to output", function () {
+        spyOn(node.e.err, "send");
+        node.send(node.i.$, {res: false, $: 5}, "1");
+        expect(node.e.err.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });
   });
