@@ -19,7 +19,7 @@ describe("Picker", function () {
     describe("when ref is truthy", function () {
       it("should forward value", function () {
         spyOn(node.o.$, "send");
-        node.send(node.i.$, {$: 2, include: true}, "1");
+        node.send(node.i.$, {$: 2, fwd: true}, "1");
         expect(node.o.$.send).toHaveBeenCalledWith(2, "1");
       });
     });
@@ -27,7 +27,7 @@ describe("Picker", function () {
     describe("when ref is falsy", function () {
       it("should not forward value", function () {
         spyOn(node.o.$, "send");
-        node.send(node.i.$, {$: 2, include: false}, "1");
+        node.send(node.i.$, {$: 2, fwd: false}, "1");
         expect(node.o.$.send).not.toHaveBeenCalled();
       });
     });

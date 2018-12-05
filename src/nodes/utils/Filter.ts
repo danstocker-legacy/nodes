@@ -16,8 +16,8 @@ interface IFilterOutputs<V> {
  * Forwards input that satisfies the specified tester callback.
  * Atomic equivalent of a composite node.
  * Composite view:
- * $ -> $:Mapper:$[$,include] -> $[$,include]:Picker:$[$,include] ->
- *   $[$,include]:Mapper:$ -> $
+ * $ -> $:Mapper:$[$,fwd] -> $[$,fwd]:Picker:$[$,fwd] ->
+ *   $[$,fwd]:Mapper:$ -> $
  * @example
  * const filter = new Filter<number>((a) => a%2);
  * filter.i.$.send(1); // outputs 1

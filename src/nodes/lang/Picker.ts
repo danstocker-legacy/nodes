@@ -2,8 +2,15 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface IPickerInput<V> {
+  /**
+   * Value that may or may not be picked for forwarding.
+   */
   $: V;
-  include: boolean;
+
+  /**
+   * Whether to forward value ($).
+   */
+  fwd: boolean;
 }
 
 interface IPickerInputs<V> {
@@ -27,7 +34,7 @@ export class Picker<V> implements ISink, ISource {
   }
 
   public send(port: IInPort<IPickerInput<V>>, input: IPickerInput<V>, tag?: string): void {
-    if (port === this.i.$ && input.include) {
+    if (port === this.i.$ && input.fwd) {
       this.o.$.send(input.$, tag);
     }
   }
