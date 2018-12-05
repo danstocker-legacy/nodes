@@ -1,4 +1,12 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
+import {
+  IBouncer,
+  IEvented,
+  ISink,
+  ISource,
+  MBouncer, MEvented,
+  MSink,
+  MSource
+} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 export type TFilterCallback<V> = (value: V, tag?: string) => boolean;
@@ -9,31 +17,35 @@ interface IFilterInputs<V> {
 
 interface IFilterOutputs<V> {
   $: V;
-  error: string;
+}
+
+interface IFilterEvents {
+  err: string;
 }
 
 /**
  * Forwards input that satisfies the specified tester callback.
  * Atomic equivalent of a composite node.
  * Composite view:
- * $ -> $:Mapper:$[$,fwd] -> $[$,fwd]:Picker:$[$,fwd] ->
- *   $[$,fwd]:Mapper:$ -> $
+ * $ -> $:Mapper:$[$,fwd] -> $[$,fwd]:Picker:$[$,fwd] -> $[$,fwd]:Mapper:$ -> $
  * @example
  * const filter = new Filter<number>((a) => a%2);
  * filter.i.$.send(1); // outputs 1
  * filter.i.$.send(2); // will not output
  */
-export class Filter<V> implements ISink, ISource, IBouncer {
+export class Filter<V> implements ISink, ISource, IBouncer, IEvented {
   public readonly i: TInBundle<IFilterInputs<V>>;
   public readonly o: TOutBundle<IFilterOutputs<V>>;
   public readonly re: TOutBundle<IFilterInputs<V>>;
+  public readonly e: TOutBundle<IFilterEvents>;
 
   private readonly cb: TFilterCallback<V>;
 
   constructor(cb: TFilterCallback<V>) {
     MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$", "error"]);
+    MSource.init.call(this, ["$"]);
     MBouncer.init.call(this, ["$"]);
+    MEvented.init.call(this, ["err"]);
     this.cb = cb;
   }
 
@@ -46,7 +58,7 @@ export class Filter<V> implements ISink, ISource, IBouncer {
         }
       } catch (err) {
         this.re.$.send(value, tag);
-        this.o.error.send(String(err), tag);
+        this.e.err.send(String(err), tag);
       }
     }
   }

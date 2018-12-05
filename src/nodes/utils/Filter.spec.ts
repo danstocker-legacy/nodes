@@ -7,6 +7,7 @@ describe("Filter", function () {
       expect(node.i.$).toBeDefined();
       expect(node.o.$).toBeDefined();
       expect(node.re.$).toBeDefined();
+      expect(node.e.err).toBeDefined();
     });
   });
 
@@ -47,9 +48,9 @@ describe("Filter", function () {
       });
 
       it("should send error to output", function () {
-        spyOn(node.o.error, "send");
+        spyOn(node.e.err, "send");
         node.send(node.i.$, 5, "1");
-        expect(node.o.error.send).toHaveBeenCalledWith("Error: foo", "1");
+        expect(node.e.err.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });
   });
