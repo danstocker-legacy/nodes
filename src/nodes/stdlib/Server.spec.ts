@@ -35,7 +35,7 @@ describe("Server", function () {
           break;
       }
     },
-    remoteAddress: "99.99.99.99",
+    remoteAddress: "192.168.0.101",
     remotePort: 8889
   };
 
@@ -125,7 +125,7 @@ describe("Server", function () {
 
     beforeEach(function () {
       node = Server.instance("localhost", 8888);
-      remote = Remote.instance("99.99.99.99", 8889);
+      remote = Remote.instance("192.168.0.101", 8889, "localhost", 8888);
       onConnection(socket);
     });
 

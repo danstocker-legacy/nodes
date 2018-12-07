@@ -41,15 +41,22 @@ const instances = new Map<string, Remote>();
 export class Remote implements ISink, ISource, IStateful, IMutable, IBouncer, IEvented {
   /**
    * Retrieves OR creates a new Remote instance.
-   * @param host
-   * @param port
+   * @param remoteHost Remote server address
+   * @param remotePort Remote server port
+   * @param localHost Local server address
+   * @param localPort Local server port
    */
-  public static instance(host: string, port: number): Remote {
+  public static instance(
+    remoteHost: string,
+    remotePort: number,
+    localHost: string,
+    localPort: number
+  ): Remote {
     // retrieving / storing instance in cache
-    const key = `${host}:${port}`;
+    const key = `${remoteHost}:${remotePort}-${localHost}:${localPort}`;
     let instance = instances.get(key);
     if (!instance) {
-      instance = new Remote(host, port);
+      instance = new Remote(remoteHost, remotePort, localHost, localPort);
       instances.set(key, instance);
     }
     return instance;
@@ -68,17 +75,24 @@ export class Remote implements ISink, ISource, IStateful, IMutable, IBouncer, IE
   public readonly so: TOutBundle<IRemoteStateOut>;
   public readonly re: TOutBundle<IRemoteInputs>;
   public readonly e: TOutBundle<IRemoteEvents>;
-  private readonly host: string;
-  private readonly port: number;
+  private readonly remoteHost: string;
+  private readonly remotePort: number;
   private readonly socket: net.Socket;
   private readonly buffer: Map<string, any>;
   private connected: boolean;
 
   /**
-   * @param host
-   * @param port
+   * @param remoteHost
+   * @param remotePort
+   * @param localHost
+   * @param localPort
    */
-  private constructor(host: string, port: number) {
+  private constructor(
+    remoteHost: string,
+    remotePort: number,
+    localHost: string,
+    localPort: number
+  ) {
     MSink.init.call(this, ["$"]);
     MSource.init.call(this, ["$"]);
     MMutable.init.call(this, ["con"]);
@@ -91,8 +105,8 @@ export class Remote implements ISink, ISource, IStateful, IMutable, IBouncer, IE
     socket.on("close", () => this.onClose());
     socket.on("error", (err: Error) => this.onError(err));
 
-    this.host = host;
-    this.port = port;
+    this.remoteHost = remoteHost;
+    this.remotePort = remotePort;
     this.socket = socket;
     this.buffer = new Map();
     this.connected = false;
@@ -124,7 +138,7 @@ export class Remote implements ISink, ISource, IStateful, IMutable, IBouncer, IE
         if (value && !connected && !socket.connecting) {
           // socket is not connected and is not in the process of connecting
           // attempting to open connection
-          socket.connect(this.port, this.host);
+          socket.connect(this.remotePort, this.remoteHost);
         } else if (!value && (connected || socket.connecting)) {
           // TODO: Can we call end() while connecting?
           // socket is connected or is in the process of connecting

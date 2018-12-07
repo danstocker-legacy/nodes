@@ -47,6 +47,8 @@ export class Server implements IStateful, IEvented {
 
   public readonly so: TOutBundle<IServerStateOut>;
   public readonly e: TOutBundle<IServerEvents>;
+  private readonly host: string;
+  private readonly port: number;
   private readonly connections: Set<net.Socket>;
 
   private constructor(host: string, port: number) {
@@ -59,6 +61,8 @@ export class Server implements IStateful, IEvented {
     server.on("error", (err: Error) => this.onServerError(err));
     server.listen(port, host);
 
+    this.host = host;
+    this.port = port;
     this.connections = new Set();
   }
 
@@ -68,7 +72,8 @@ export class Server implements IStateful, IEvented {
    * @param socket
    */
   private onConnection(socket: net.Socket): void {
-    const remote = Remote.instance(socket.remoteAddress, socket.remotePort);
+    const remote = Remote.instance(
+      socket.remoteAddress, socket.remotePort, this.host, this.port);
     socket.on("data",
       (data: Buffer | string) => Server.onData(data, remote));
     socket.on("close", () => this.onSocketClose(socket));

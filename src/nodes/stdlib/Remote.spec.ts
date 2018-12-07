@@ -35,23 +35,32 @@ describe("Remote", function () {
 
   describe(".instance()", function () {
     it("should cache instances by host & port", function () {
-      const node = Remote.instance("127.0.0.1", 8124);
-      expect(Remote.instance("127.0.0.1", 8124)).toBe(node);
-      expect(Remote.instance("127.0.0.1", 9000)).not.toBe(node);
+      const node = Remote.instance(
+        "192.168.0.101", 8889, "127.0.0.1", 8888);
+      expect(Remote.instance(
+        "192.168.0.101", 8889, "127.0.0.1", 8888)
+      ).toBe(node);
+      expect(Remote.instance(
+        "192.168.0.101", 8890, "127.0.0.1", 8888)
+      ).not.toBe(node);
     });
   });
 
   describe(".clear()", function () {
     it("should clear instance cache", function () {
-      const node = Remote.instance("127.0.0.1", 8124);
+      const node = Remote.instance(
+        "192.168.0.101", 8889, "127.0.0.1", 8888);
       Remote.clear();
-      expect(Remote.instance("127.0.0.1", 8124)).not.toBe(node);
+      expect(Remote.instance(
+        "192.168.0.101", 8889, "127.0.0.1", 8888)
+      ).not.toBe(node);
     });
   });
 
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = Remote.instance("127.0.0.1", 8124);
+      const node = Remote.instance(
+        "192.168.0.101", 8889, "127.0.0.1", 8888);
       expect(node.i.$).toBeDefined();
       expect(node.o.$).toBeDefined();
       expect(node.si.con).toBeDefined();
@@ -65,7 +74,8 @@ describe("Remote", function () {
     let node: Remote;
 
     beforeEach(function () {
-      node = Remote.instance("127.0.0.1", 8124);
+      node = Remote.instance(
+        "192.168.0.101", 8889, "127.0.0.1", 8888);
     });
 
     it("should send `con` flag to output", function () {
@@ -79,7 +89,8 @@ describe("Remote", function () {
     let node: Remote;
 
     beforeEach(function () {
-      node = Remote.instance("127.0.0.1", 8124);
+      node = Remote.instance(
+        "192.168.0.101", 8889, "127.0.0.1", 8888);
     });
 
     it("should send `con` flag to output", function () {
@@ -112,7 +123,8 @@ describe("Remote", function () {
     let node: Remote;
 
     beforeEach(function () {
-      node = Remote.instance("127.0.0.1", 8124);
+      node = Remote.instance(
+        "192.168.0.101", 8889, "127.0.0.1", 8888);
     });
 
     it("should emit error", function () {
@@ -145,7 +157,8 @@ describe("Remote", function () {
     let node: Remote;
 
     beforeEach(function () {
-      node = Remote.instance("127.0.0.1", 8124);
+      node = Remote.instance(
+        "192.168.0.101", 8889, "127.0.0.1", 8888);
       onConnect();
       node.send(node.i.$, "foo", "1");
     });
@@ -169,7 +182,8 @@ describe("Remote", function () {
     let node: Remote;
 
     beforeEach(function () {
-      node = Remote.instance("127.0.0.1", 8124);
+      node = Remote.instance(
+        "192.168.0.101", 8889, "127.0.0.1", 8888);
     });
 
     describe("when sending value", function () {
@@ -200,7 +214,7 @@ describe("Remote", function () {
           it("should attempt to connect socket", function () {
             spyOn(socket, "connect");
             node.send(node.si.con, true);
-            expect(socket.connect).toHaveBeenCalledWith(8124, "127.0.0.1");
+            expect(socket.connect).toHaveBeenCalledWith(8889, "192.168.0.101");
           });
         });
 
