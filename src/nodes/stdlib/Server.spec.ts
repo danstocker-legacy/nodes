@@ -47,31 +47,31 @@ describe("Server", function () {
 
   describe(".instance()", function () {
     it("should cache instances by port", function () {
-      const node = Server.instance(8888);
-      expect(Server.instance(8888)).toBe(node);
-      expect(Server.instance(8889)).not.toBe(node);
+      const node = Server.instance("localhost", 8888);
+      expect(Server.instance("localhost", 8888)).toBe(node);
+      expect(Server.instance("localhost", 8889)).not.toBe(node);
     });
   });
 
   describe(".clear()", function () {
     it("should clear instance cache", function () {
-      const node = Server.instance(8888);
+      const node = Server.instance("localhost", 8888);
       Server.clear();
-      expect(Server.instance(8888)).not.toBe(node);
+      expect(Server.instance("localhost", 8888)).not.toBe(node);
     });
   });
 
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = Server.instance(8888);
+      const node = Server.instance("localhost", 8888);
       expect(node.so.connections).toBeDefined();
       expect(node.e.err).toBeDefined();
     });
 
     it("should start listening", function () {
       spyOn(server, "listen");
-      const node = Server.instance(8888);
-      expect(server.listen).toHaveBeenCalledWith(8888);
+      const node = Server.instance("localhost", 8888);
+      expect(server.listen).toHaveBeenCalledWith(8888, "localhost");
     });
   });
 
@@ -79,7 +79,7 @@ describe("Server", function () {
     let node: Server;
 
     beforeEach(function () {
-      node = Server.instance(8888);
+      node = Server.instance("localhost", 8888);
     });
 
     it("should send number of connections", function () {
@@ -93,7 +93,7 @@ describe("Server", function () {
     let node: Server;
 
     beforeEach(function () {
-      node = Server.instance(8888);
+      node = Server.instance("localhost", 8888);
     });
 
     it("should send parsed & unwrapped data to remote", function () {
@@ -108,7 +108,7 @@ describe("Server", function () {
     let node: Server;
 
     beforeEach(function () {
-      node = Server.instance(8888);
+      node = Server.instance("localhost", 8888);
       onConnection(socket);
     });
 
@@ -124,7 +124,7 @@ describe("Server", function () {
     let remote: Remote;
 
     beforeEach(function () {
-      node = Server.instance(8888);
+      node = Server.instance("localhost", 8888);
       remote = Remote.instance("99.99.99.99", 8889);
       onConnection(socket);
     });

@@ -21,12 +21,13 @@ const instances = new Map<number, Server>();
 export class Server implements IStateful, IEvented {
   /**
    * Creates OR retrieves Server instance.
+   * @param host
    * @param port
    */
-  public static instance(port: number): Server {
+  public static instance(host: string, port: number): Server {
     let instance = instances.get(port);
     if (!instance) {
-      instance = new Server(port);
+      instance = new Server(host, port);
       instances.set(port, instance);
     }
     return instance;
@@ -46,10 +47,9 @@ export class Server implements IStateful, IEvented {
 
   public readonly so: TOutBundle<IServerStateOut>;
   public readonly e: TOutBundle<IServerEvents>;
-  private readonly port: number;
   private readonly connections: Set<net.Socket>;
 
-  private constructor(port: number) {
+  private constructor(host: string, port: number) {
     MStateful.init.call(this, ["connections"]);
     MEvented.init.call(this, ["err"]);
 
@@ -57,9 +57,8 @@ export class Server implements IStateful, IEvented {
     server.on("connection",
       (socket: net.Socket) => this.onConnection(socket));
     server.on("error", (err: Error) => this.onServerError(err));
-    server.listen(port);
+    server.listen(port, host);
 
-    this.port = port;
     this.connections = new Set();
   }
 
