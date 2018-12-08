@@ -1,5 +1,5 @@
 import * as net from "net";
-import {IEvented, IStateful, MEvented, MStateful} from "../../node";
+import {IEvented, ISource, MEvented, MSource} from "../../node";
 import {TOutBundle} from "../../port";
 import {Remote} from "./Remote";
 
@@ -18,7 +18,7 @@ const instances = new Map<number, Server>();
  * Outputs connection count (`connections`) and `error`. (Both untagged.)
  * There is usually a single instance of it available.
  */
-export class Server implements IStateful, IEvented {
+export class Server implements ISource, IEvented {
   /**
    * Creates OR retrieves Server instance.
    * @param host
@@ -45,14 +45,14 @@ export class Server implements IStateful, IEvented {
     remote.o.$.send(wrapped.value, wrapped.tag);
   }
 
-  public readonly so: TOutBundle<IServerStateOut>;
+  public readonly o: TOutBundle<IServerStateOut>;
   public readonly e: TOutBundle<IServerEvents>;
   private readonly host: string;
   private readonly port: number;
   private readonly connections: Set<net.Socket>;
 
   private constructor(host: string, port: number) {
-    MStateful.init.call(this, ["connections"]);
+    MSource.init.call(this, ["connections"]);
     MEvented.init.call(this, ["err"]);
 
     const server = new net.Server();
@@ -81,7 +81,7 @@ export class Server implements IStateful, IEvented {
 
     const connections = this.connections;
     connections.add(socket);
-    this.so.connections.send(connections.size);
+    this.o.connections.send(connections.size);
   }
 
   /**
@@ -101,7 +101,7 @@ export class Server implements IStateful, IEvented {
   private onSocketClose(socket: net.Socket): void {
     const connections = this.connections;
     connections.delete(socket);
-    this.so.connections.send(connections.size);
+    this.o.connections.send(connections.size);
   }
 
   /**

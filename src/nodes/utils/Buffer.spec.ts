@@ -7,7 +7,7 @@ describe("Buffer", function () {
       expect(node.i.$).toBeDefined();
       expect(node.i.open).toBeDefined();
       expect(node.o.$).toBeDefined();
-      expect(node.so.size).toBeDefined();
+      expect(node.o.size).toBeDefined();
     });
   });
 
@@ -38,9 +38,9 @@ describe("Buffer", function () {
       });
 
       it("should emit buffer size on `size`", function () {
-        spyOn(node.so.size, "send");
+        spyOn(node.o.size, "send");
         node.send(node.i.$, 5, "1");
-        expect(node.so.size.send).toHaveBeenCalledWith(1);
+        expect(node.o.size.send).toHaveBeenCalledWith(1);
       });
     });
 
@@ -62,9 +62,9 @@ describe("Buffer", function () {
       });
 
       it("should emit buffer size on `size`", function () {
-        spyOn(node.so.size, "send");
+        spyOn(node.o.size, "send");
         node.send(node.i.open, true);
-        expect(node.so.size.send).toHaveBeenCalledWith(0);
+        expect(node.o.size.send).toHaveBeenCalledWith(0);
       });
     });
   });

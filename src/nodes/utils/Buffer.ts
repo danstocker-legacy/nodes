@@ -1,4 +1,4 @@
-import {ISink, ISource, IStateful, MSink, MSource, MStateful} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
@@ -26,18 +26,16 @@ interface IBufferStateOut {
  * @example
  * TBD
  */
-export class Buffer<V> implements ISink, ISource, IStateful {
+export class Buffer<V> implements ISink, ISource {
   public readonly i: TInBundle<IBufferInputs<V> & IBufferStateIn>;
-  public readonly o: TOutBundle<IBufferOutputs<V>>;
-  public readonly so: TOutBundle<IBufferStateOut>;
+  public readonly o: TOutBundle<IBufferOutputs<V> & IBufferStateOut>;
 
   private readonly buffer: Array<[V, string]>;
   private open: boolean;
 
   constructor() {
     MSink.init.call(this, ["$", "open"]);
-    MSource.init.call(this, ["$"]);
-    MStateful.init.call(this, ["size"]);
+    MSource.init.call(this, ["$", "size"]);
     this.buffer = [];
     this.open = false;
   }
@@ -54,7 +52,7 @@ export class Buffer<V> implements ISink, ISource, IStateful {
         } else {
           const buffer = this.buffer;
           buffer.push([value as V, tag]);
-          this.so.size.send(buffer.length);
+          this.o.size.send(buffer.length);
         }
         break;
 
@@ -70,7 +68,7 @@ export class Buffer<V> implements ISink, ISource, IStateful {
             const next = buffer.shift();
             $.send(next[0], next[1]);
           }
-          this.so.size.send(buffer.length);
+          this.o.size.send(buffer.length);
         }
         break;
     }

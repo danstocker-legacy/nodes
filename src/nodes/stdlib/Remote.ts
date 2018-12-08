@@ -4,12 +4,10 @@ import {
   IEvented,
   ISink,
   ISource,
-  IStateful,
   MBouncer,
   MEvented,
   MSink,
-  MSource,
-  MStateful
+  MSource
 } from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TJson, ValueOf} from "../../utils";
@@ -36,7 +34,7 @@ interface IRemoteEvents {
 
 const instances = new Map<string, Remote>();
 
-export class Remote implements ISink, ISource, IStateful, IBouncer, IEvented {
+export class Remote implements ISink, ISource, IBouncer, IEvented {
   /**
    * Retrieves OR creates a new Remote instance.
    * @param remoteHost Remote server address
@@ -68,8 +66,7 @@ export class Remote implements ISink, ISource, IStateful, IBouncer, IEvented {
   }
 
   public readonly i: TInBundle<IRemoteInputs & IRemoteStateIn>;
-  public readonly o: TOutBundle<IRemoteOutputs>;
-  public readonly so: TOutBundle<IRemoteStateOut>;
+  public readonly o: TOutBundle<IRemoteOutputs & IRemoteStateOut>;
   public readonly re: TOutBundle<IRemoteInputs>;
   public readonly e: TOutBundle<IRemoteEvents>;
   private readonly remoteHost: string;
@@ -91,8 +88,7 @@ export class Remote implements ISink, ISource, IStateful, IBouncer, IEvented {
     localPort: number
   ) {
     MSink.init.call(this, ["$", "con"]);
-    MSource.init.call(this, ["$"]);
-    MStateful.init.call(this, ["con"]);
+    MSource.init.call(this, ["$", "con"]);
     MBouncer.init.call(this, ["$"]);
     MEvented.init.call(this, ["err"]);
 
@@ -165,7 +161,7 @@ export class Remote implements ISink, ISource, IStateful, IBouncer, IEvented {
   private onConnect(): void {
     const connected = true;
     this.connected = connected;
-    this.so.con.send(connected);
+    this.o.con.send(connected);
   }
 
   /**
@@ -176,7 +172,7 @@ export class Remote implements ISink, ISource, IStateful, IBouncer, IEvented {
   private onClose(): void {
     const connected = false;
     this.connected = connected;
-    this.so.con.send(connected);
+    this.o.con.send(connected);
     this.bounceAll();
   }
 

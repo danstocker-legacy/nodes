@@ -64,7 +64,7 @@ describe("Remote", function () {
       expect(node.i.$).toBeDefined();
       expect(node.i.con).toBeDefined();
       expect(node.o.$).toBeDefined();
-      expect(node.so.con).toBeDefined();
+      expect(node.o.con).toBeDefined();
       expect(node.re.$).toBeDefined();
       expect(node.e.err).toBeDefined();
     });
@@ -79,9 +79,9 @@ describe("Remote", function () {
     });
 
     it("should send `con` flag to output", function () {
-      spyOn(node.so.con, "send");
+      spyOn(node.o.con, "send");
       onConnect();
-      expect(node.so.con.send).toHaveBeenCalledWith(true);
+      expect(node.o.con.send).toHaveBeenCalledWith(true);
     });
   });
 
@@ -94,9 +94,9 @@ describe("Remote", function () {
     });
 
     it("should send `con` flag to output", function () {
-      spyOn(node.so.con, "send");
+      spyOn(node.o.con, "send");
       onClose();
-      expect(node.so.con.send).toHaveBeenCalledWith(false);
+      expect(node.o.con.send).toHaveBeenCalledWith(false);
     });
 
     describe("when there are inputs buffered", function () {

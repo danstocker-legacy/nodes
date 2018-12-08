@@ -64,7 +64,7 @@ describe("Server", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = Server.instance("localhost", 8888);
-      expect(node.so.connections).toBeDefined();
+      expect(node.o.connections).toBeDefined();
       expect(node.e.err).toBeDefined();
     });
 
@@ -83,9 +83,9 @@ describe("Server", function () {
     });
 
     it("should send number of connections", function () {
-      spyOn(node.so.connections, "send");
+      spyOn(node.o.connections, "send");
       onConnection(socket);
-      expect(node.so.connections.send).toHaveBeenCalledWith(1);
+      expect(node.o.connections.send).toHaveBeenCalledWith(1);
     });
   });
 
@@ -113,9 +113,9 @@ describe("Server", function () {
     });
 
     it("should send number of connections", function () {
-      spyOn(node.so.connections, "send");
+      spyOn(node.o.connections, "send");
       onSocketClose();
-      expect(node.so.connections.send).toHaveBeenCalledWith(0);
+      expect(node.o.connections.send).toHaveBeenCalledWith(0);
     });
   });
 
