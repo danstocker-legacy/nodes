@@ -62,8 +62,8 @@ describe("Remote", function () {
       const node = Remote.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888);
       expect(node.i.$).toBeDefined();
+      expect(node.i.con).toBeDefined();
       expect(node.o.$).toBeDefined();
-      expect(node.si.con).toBeDefined();
       expect(node.so.con).toBeDefined();
       expect(node.re.$).toBeDefined();
       expect(node.e.err).toBeDefined();
@@ -213,7 +213,7 @@ describe("Remote", function () {
         describe("when not connected", function () {
           it("should attempt to connect socket", function () {
             spyOn(socket, "connect");
-            node.send(node.si.con, true);
+            node.send(node.i.con, true);
             expect(socket.connect).toHaveBeenCalledWith(8889, "192.168.0.101");
           });
         });
@@ -225,7 +225,7 @@ describe("Remote", function () {
 
           it("should not attempt to connect socket", function () {
             spyOn(socket, "connect");
-            node.send(node.si.con, true);
+            node.send(node.i.con, true);
             expect(socket.connect).not.toHaveBeenCalled();
           });
         });
@@ -241,7 +241,7 @@ describe("Remote", function () {
 
           it("should not attempt to connect socket", function () {
             spyOn(socket, "connect");
-            node.send(node.si.con, true);
+            node.send(node.i.con, true);
             expect(socket.connect).not.toHaveBeenCalled();
           });
         });
@@ -251,7 +251,7 @@ describe("Remote", function () {
         describe("when not connected", function () {
           it("should not close connection", function () {
             spyOn(socket, "end");
-            node.send(node.si.con, false);
+            node.send(node.i.con, false);
             expect(socket.end).not.toHaveBeenCalled();
           });
         });
@@ -263,7 +263,7 @@ describe("Remote", function () {
 
           it("should close connection", function () {
             spyOn(socket, "end");
-            node.send(node.si.con, false);
+            node.send(node.i.con, false);
             expect(socket.end).toHaveBeenCalled();
           });
         });
@@ -279,7 +279,7 @@ describe("Remote", function () {
 
           it("should close connection", function () {
             spyOn(socket, "end");
-            node.send(node.si.con, false);
+            node.send(node.i.con, false);
             expect(socket.end).toHaveBeenCalled();
           });
         });

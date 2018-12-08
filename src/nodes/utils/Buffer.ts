@@ -1,12 +1,4 @@
-import {
-  IMutable,
-  ISink,
-  ISource,
-  IStateful,
-  MMutable,
-  MSink,
-  MSource, MStateful
-} from "../../node";
+import {ISink, ISource, IStateful, MSink, MSource, MStateful} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
@@ -34,19 +26,17 @@ interface IBufferStateOut {
  * @example
  * TBD
  */
-export class Buffer<V> implements ISink, ISource, IMutable, IStateful {
-  public readonly i: TInBundle<IBufferInputs<V>>;
+export class Buffer<V> implements ISink, ISource, IStateful {
+  public readonly i: TInBundle<IBufferInputs<V> & IBufferStateIn>;
   public readonly o: TOutBundle<IBufferOutputs<V>>;
-  public readonly si: TInBundle<IBufferStateIn>;
   public readonly so: TOutBundle<IBufferStateOut>;
 
   private readonly buffer: Array<[V, string]>;
   private open: boolean;
 
   constructor() {
-    MSink.init.call(this, ["$"]);
+    MSink.init.call(this, ["$", "open"]);
     MSource.init.call(this, ["$"]);
-    MMutable.init.call(this, ["open"]);
     MStateful.init.call(this, ["size"]);
     this.buffer = [];
     this.open = false;
@@ -68,7 +58,7 @@ export class Buffer<V> implements ISink, ISource, IMutable, IStateful {
         }
         break;
 
-      case this.si.open:
+      case this.i.open:
         const openBefore = this.open;
         const openAfter = value as boolean;
         // if new value is true, release buffer contents

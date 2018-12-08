@@ -5,8 +5,8 @@ describe("Buffer", function () {
     it("should add ports", function () {
       const node = new Buffer();
       expect(node.i.$).toBeDefined();
+      expect(node.i.open).toBeDefined();
       expect(node.o.$).toBeDefined();
-      expect(node.si.open).toBeDefined();
       expect(node.so.size).toBeDefined();
     });
   });
@@ -20,7 +20,7 @@ describe("Buffer", function () {
 
     describe("when buffer is open", function () {
       beforeEach(function () {
-        node.send(node.si.open, true);
+        node.send(node.i.open, true);
       });
 
       it("should forward input", function () {
@@ -53,7 +53,7 @@ describe("Buffer", function () {
 
       it("should send buffered inputs to output", function () {
         const spy = spyOn(node.o.$, "send");
-        node.send(node.si.open, true);
+        node.send(node.i.open, true);
         expect(spy.calls.allArgs()).toEqual([
           [5, "1"],
           [3, "2"],
@@ -63,7 +63,7 @@ describe("Buffer", function () {
 
       it("should emit buffer size on `size`", function () {
         spyOn(node.so.size, "send");
-        node.send(node.si.open, true);
+        node.send(node.i.open, true);
         expect(node.so.size.send).toHaveBeenCalledWith(0);
       });
     });

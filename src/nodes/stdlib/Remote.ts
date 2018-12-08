@@ -2,13 +2,11 @@ import * as net from "net";
 import {
   IBouncer,
   IEvented,
-  IMutable,
   ISink,
   ISource,
   IStateful,
   MBouncer,
   MEvented,
-  MMutable,
   MSink,
   MSource,
   MStateful
@@ -38,7 +36,7 @@ interface IRemoteEvents {
 
 const instances = new Map<string, Remote>();
 
-export class Remote implements ISink, ISource, IStateful, IMutable, IBouncer, IEvented {
+export class Remote implements ISink, ISource, IStateful, IBouncer, IEvented {
   /**
    * Retrieves OR creates a new Remote instance.
    * @param remoteHost Remote server address
@@ -69,9 +67,8 @@ export class Remote implements ISink, ISource, IStateful, IMutable, IBouncer, IE
     instances.clear();
   }
 
-  public readonly i: TInBundle<IRemoteInputs>;
+  public readonly i: TInBundle<IRemoteInputs & IRemoteStateIn>;
   public readonly o: TOutBundle<IRemoteOutputs>;
-  public readonly si: TInBundle<IRemoteStateIn>;
   public readonly so: TOutBundle<IRemoteStateOut>;
   public readonly re: TOutBundle<IRemoteInputs>;
   public readonly e: TOutBundle<IRemoteEvents>;
@@ -93,9 +90,8 @@ export class Remote implements ISink, ISource, IStateful, IMutable, IBouncer, IE
     localHost: string,
     localPort: number
   ) {
-    MSink.init.call(this, ["$"]);
+    MSink.init.call(this, ["$", "con"]);
     MSource.init.call(this, ["$"]);
-    MMutable.init.call(this, ["con"]);
     MStateful.init.call(this, ["con"]);
     MBouncer.init.call(this, ["$"]);
     MEvented.init.call(this, ["err"]);
@@ -134,7 +130,7 @@ export class Remote implements ISink, ISource, IStateful, IMutable, IBouncer, IE
         }
         break;
 
-      case this.si.con:
+      case this.i.con:
         if (value && !connected && !socket.connecting) {
           // socket is not connected and is not in the process of connecting
           // attempting to open connection
