@@ -1,9 +1,9 @@
-import {Joiner} from "./Joiner";
+import {Syncer} from "./Syncer";
 
-describe("Joiner", function () {
+describe("Syncer", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Joiner<{ foo: number, bar: boolean }>(["foo", "bar"]);
+      const node = new Syncer<{ foo: number, bar: boolean }>(["foo", "bar"]);
       expect(node.i.foo).toBeDefined();
       expect(node.i.bar).toBeDefined();
       expect(node.o.$).toBeDefined();
@@ -11,10 +11,10 @@ describe("Joiner", function () {
   });
 
   describe("#send()", function () {
-    let node: Joiner<{ foo: number, bar: boolean }>;
+    let node: Syncer<{ foo: number, bar: boolean }>;
 
     beforeEach(function () {
-      node = new Joiner(["foo", "bar"]);
+      node = new Syncer(["foo", "bar"]);
     });
 
     describe("until there is a complete input set", function () {

@@ -2,7 +2,7 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
-interface IJoinerOutputs<T> {
+interface ISyncerOutputs<T> {
   $: T;
 }
 
@@ -10,15 +10,15 @@ interface IJoinerOutputs<T> {
  * Joins input values bearing the same tag. Produces a dictionary of port
  * name - value pairs.
  * @example
- * let joiner: Joiner<{foo: number, bar: boolean}>;
- * joiner = new Joiner(["foo", "bar"]);
- * joiner.i.foo.send(5, "1");
- * joiner.i.bar.send(true, "1");
- * // `joiner.o.$` will output `{foo: 5, bar: true}` for tag "1"
+ * let syncer: Syncer<{foo: number, bar: boolean}>;
+ * syncer = new Syncer(["foo", "bar"]);
+ * syncer.i.foo.send(5, "1");
+ * syncer.i.bar.send(true, "1");
+ * // `syncer.o.$` will output `{foo: 5, bar: true}` for tag "1"
  */
-export class Joiner<T> implements ISink, ISource {
+export class Syncer<T> implements ISink, ISource {
   public readonly i: TInBundle<T>;
-  public readonly o: TOutBundle<IJoinerOutputs<T>>;
+  public readonly o: TOutBundle<ISyncerOutputs<T>>;
 
   private readonly fields: Array<string>;
   private readonly inputCache: Map<string, T>;

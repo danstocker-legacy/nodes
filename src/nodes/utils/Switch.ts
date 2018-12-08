@@ -18,7 +18,7 @@ type TSwitchOutputs<C extends string, T> = {
  * Forwards input to one of the possible outputs.
  * Atomic equivalent of a composite node.
  * Composite view:
- * $ -----#=> Joiner -> Mapper -> Demuxer -+-> A
+ * $ -----#=> Syncer -> Mapper -> Demuxer -+-> A
  * case --/                                +-> B
  *                                         +-> C
  *                                         ...

@@ -12,7 +12,7 @@ interface ITrackerOutputs<T> {
  * Outputs sets of inputs, where each value in the set reflects the latest
  * one received through its corresponding port.
  * Atomic equivalent of a composite node.
- * A ----> $:Sampler:$ -+=> A,B:Joiner:$ -> $
+ * A ----> $:Sampler:$ -+=> A,B:Syncer:$ -> $
  * B --> smp:           |
  * B ----> $:Sampler:$ -+
  * A --> smp:
