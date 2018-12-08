@@ -1,13 +1,4 @@
-import {
-  IBouncer,
-  IEvented,
-  ISink,
-  ISource,
-  MBouncer,
-  MEvented,
-  MSink,
-  MSource
-} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
@@ -39,19 +30,17 @@ interface IComparerEvents {
  * const comparer = new Comparer<number>((a, b) => a === b);
  * comparer.i.$.send({a: 4, b: 5}); // outputs `false`
  */
-export class Comparer<V> implements ISink, ISource, IBouncer, IEvented {
+export class Comparer<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IComparerInputs<V>>;
-  public readonly o: TOutBundle<IComparerOutputs>;
+  public readonly o: TOutBundle<IComparerOutputs & IComparerEvents>;
   public readonly re: TOutBundle<IComparerInputs<V>>;
-  public readonly e: TOutBundle<IComparerEvents>;
 
   private readonly cb: TEqualityCallback<V>;
 
   constructor(cb: TEqualityCallback<V>) {
     MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$"]);
+    MSource.init.call(this, ["$", "err"]);
     MBouncer.init.call(this, ["$"]);
-    MEvented.init.call(this, ["err"]);
     this.cb = cb;
   }
 
@@ -66,7 +55,7 @@ export class Comparer<V> implements ISink, ISource, IBouncer, IEvented {
         this.o.$.send(equals, tag);
       } catch (err) {
         this.re.$.send(value, tag);
-        this.e.err.send(String(err), tag);
+        this.o.err.send(String(err), tag);
       }
     }
   }

@@ -6,8 +6,8 @@ describe("Folder", function () {
       const node = new Folder(() => null);
       expect(node.i.$).toBeDefined();
       expect(node.o.$).toBeDefined();
+      expect(node.o.err).toBeDefined();
       expect(node.re.$).toBeDefined();
-      expect(node.e.err).toBeDefined();
     });
   });
 
@@ -69,9 +69,9 @@ describe("Folder", function () {
       });
 
       it("should send error to output", function () {
-        spyOn(node.e.err, "send");
+        spyOn(node.o.err, "send");
         node.send(node.i.$, {res: false, $: 5}, "1");
-        expect(node.e.err.send).toHaveBeenCalledWith("Error: foo", "1");
+        expect(node.o.err.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });
   });

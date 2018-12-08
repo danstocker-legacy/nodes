@@ -1,5 +1,5 @@
 import * as net from "net";
-import {IEvented, ISource, MEvented, MSource} from "../../node";
+import {ISource, MSource} from "../../node";
 import {TOutBundle} from "../../port";
 import {Remote} from "./Remote";
 
@@ -18,7 +18,7 @@ const instances = new Map<number, Server>();
  * Outputs connection count (`connections`) and `error`. (Both untagged.)
  * There is usually a single instance of it available.
  */
-export class Server implements ISource, IEvented {
+export class Server implements ISource {
   /**
    * Creates OR retrieves Server instance.
    * @param host
@@ -45,15 +45,13 @@ export class Server implements ISource, IEvented {
     remote.o.$.send(wrapped.value, wrapped.tag);
   }
 
-  public readonly o: TOutBundle<IServerStateOut>;
-  public readonly e: TOutBundle<IServerEvents>;
+  public readonly o: TOutBundle<IServerStateOut & IServerEvents>;
   private readonly host: string;
   private readonly port: number;
   private readonly connections: Set<net.Socket>;
 
   private constructor(host: string, port: number) {
-    MSource.init.call(this, ["connections"]);
-    MEvented.init.call(this, ["err"]);
+    MSource.init.call(this, ["connections", "err"]);
 
     const server = new net.Server();
     server.on("connection",
@@ -90,7 +88,7 @@ export class Server implements ISource, IEvented {
    * @param err
    */
   private onServerError(err: Error): void {
-    this.e.err.send(String(err));
+    this.o.err.send(String(err));
   }
 
   /**
@@ -110,6 +108,6 @@ export class Server implements ISource, IEvented {
    * @param err
    */
   private onSocketError(err: Error): void {
-    this.e.err.send(String(err));
+    this.o.err.send(String(err));
   }
 }

@@ -5,8 +5,8 @@ describe("Listener", function () {
     it("should open ports", function () {
       const node = new Listener(() => null);
       expect(node.i.$).toBeDefined();
+      expect(node.o.err).toBeDefined();
       expect(node.re.$).toBeDefined();
-      expect(node.e.err).toBeDefined();
     });
   });
 
@@ -39,9 +39,9 @@ describe("Listener", function () {
       });
 
       it("should send error to output", function () {
-        spyOn(node.e.err, "send");
+        spyOn(node.o.err, "send");
         node.send(node.i.$, 5, "1");
-        expect(node.e.err.send).toHaveBeenCalledWith("Error: foo", "1");
+        expect(node.o.err.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });
   });

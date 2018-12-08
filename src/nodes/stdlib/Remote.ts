@@ -1,14 +1,5 @@
 import * as net from "net";
-import {
-  IBouncer,
-  IEvented,
-  ISink,
-  ISource,
-  MBouncer,
-  MEvented,
-  MSink,
-  MSource
-} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TJson, ValueOf} from "../../utils";
 
@@ -34,7 +25,7 @@ interface IRemoteEvents {
 
 const instances = new Map<string, Remote>();
 
-export class Remote implements ISink, ISource, IBouncer, IEvented {
+export class Remote implements ISink, ISource, IBouncer {
   /**
    * Retrieves OR creates a new Remote instance.
    * @param remoteHost Remote server address
@@ -66,9 +57,8 @@ export class Remote implements ISink, ISource, IBouncer, IEvented {
   }
 
   public readonly i: TInBundle<IRemoteInputs & IRemoteStateIn>;
-  public readonly o: TOutBundle<IRemoteOutputs & IRemoteStateOut>;
+  public readonly o: TOutBundle<IRemoteOutputs & IRemoteStateOut & IRemoteEvents>;
   public readonly re: TOutBundle<IRemoteInputs>;
-  public readonly e: TOutBundle<IRemoteEvents>;
   private readonly remoteHost: string;
   private readonly remotePort: number;
   private readonly socket: net.Socket;
@@ -88,9 +78,8 @@ export class Remote implements ISink, ISource, IBouncer, IEvented {
     localPort: number
   ) {
     MSink.init.call(this, ["$", "con"]);
-    MSource.init.call(this, ["$", "con"]);
+    MSource.init.call(this, ["$", "con", "err"]);
     MBouncer.init.call(this, ["$"]);
-    MEvented.init.call(this, ["err"]);
 
     const socket = new net.Socket();
     socket.on("connect", () => this.onConnect());
@@ -182,7 +171,7 @@ export class Remote implements ISink, ISource, IBouncer, IEvented {
    * @param err
    */
   private onError(err: Error): void {
-    this.e.err.send(String(err));
+    this.o.err.send(String(err));
     this.bounceAll();
   }
 
@@ -195,7 +184,7 @@ export class Remote implements ISink, ISource, IBouncer, IEvented {
    */
   private onWrite(err: Error, value: TJson, tag?: string): void {
     if (err) {
-      this.e.err.send(String(err));
+      this.o.err.send(String(err));
       this.re.$.send(value, tag);
     }
     this.buffer.delete(tag);

@@ -65,8 +65,8 @@ describe("Remote", function () {
       expect(node.i.con).toBeDefined();
       expect(node.o.$).toBeDefined();
       expect(node.o.con).toBeDefined();
+      expect(node.o.err).toBeDefined();
       expect(node.re.$).toBeDefined();
-      expect(node.e.err).toBeDefined();
     });
   });
 
@@ -128,9 +128,9 @@ describe("Remote", function () {
     });
 
     it("should emit error", function () {
-      spyOn(node.e.err, "send");
+      spyOn(node.o.err, "send");
       onError(new Error("foo"));
-      expect(node.e.err.send).toHaveBeenCalledWith("Error: foo");
+      expect(node.o.err.send).toHaveBeenCalledWith("Error: foo");
     });
 
     describe("when there are inputs buffered", function () {
@@ -165,9 +165,9 @@ describe("Remote", function () {
 
     describe("on error", function () {
       it("should emit error", function () {
-        spyOn(node.e.err, "send");
+        spyOn(node.o.err, "send");
         onWrite(new Error("foo"));
-        expect(node.e.err.send).toHaveBeenCalledWith("Error: foo");
+        expect(node.o.err.send).toHaveBeenCalledWith("Error: foo");
       });
 
       it("should bounce affected input", function () {

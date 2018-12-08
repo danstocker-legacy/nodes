@@ -6,8 +6,8 @@ describe("Differ", function () {
       const node = new Differ(() => null);
       expect(node.i.$).toBeDefined();
       expect(node.o.$).toBeDefined();
+      expect(node.o.err).toBeDefined();
       expect(node.re.$).toBeDefined();
-      expect(node.e.err).toBeDefined();
     });
   });
 
@@ -53,9 +53,9 @@ describe("Differ", function () {
       });
 
       it("should send error to output", function () {
-        spyOn(node.e.err, "send");
+        spyOn(node.o.err, "send");
         node.send(node.i.$, 5, "2");
-        expect(node.e.err.send).toHaveBeenCalledWith("Error: foo", "2");
+        expect(node.o.err.send).toHaveBeenCalledWith("Error: foo", "2");
       });
     });
   });

@@ -65,7 +65,7 @@ describe("Server", function () {
     it("should add ports", function () {
       const node = Server.instance("localhost", 8888);
       expect(node.o.connections).toBeDefined();
-      expect(node.e.err).toBeDefined();
+      expect(node.o.err).toBeDefined();
     });
 
     it("should start listening", function () {
@@ -98,9 +98,9 @@ describe("Server", function () {
 
     it("should send parsed & unwrapped data to remote", function () {
       const error = new Error("foo");
-      spyOn(node.e.err, "send");
+      spyOn(node.o.err, "send");
       onServerError(error);
-      expect(node.e.err.send).toHaveBeenCalledWith("Error: foo");
+      expect(node.o.err.send).toHaveBeenCalledWith("Error: foo");
     });
   });
 

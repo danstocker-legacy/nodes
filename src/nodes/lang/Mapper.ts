@@ -1,13 +1,4 @@
-import {
-  IBouncer,
-  IEvented,
-  ISink,
-  ISource,
-  MBouncer,
-  MEvented,
-  MSink,
-  MSource
-} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
@@ -31,19 +22,17 @@ interface IMapperEvents {
  * // static callback
  * const mapper = new Mapper<number, string>(String);
  */
-export class Mapper<I, O> implements ISink, ISource, IBouncer, IEvented {
+export class Mapper<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IMapperInputs<I>>;
-  public readonly o: TOutBundle<IMapperOutputs<O>>;
+  public readonly o: TOutBundle<IMapperOutputs<O> & IMapperEvents>;
   public readonly re: TOutBundle<IMapperInputs<I>>;
-  public readonly e: TOutBundle<IMapperEvents>;
 
   private readonly cb: TMapperCallback<I, O>;
 
   constructor(cb: TMapperCallback<I, O>) {
     MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$"]);
+    MSource.init.call(this, ["$", "err"]);
     MBouncer.init.call(this, ["$"]);
-    MEvented.init.call(this, ["err"]);
     this.cb = cb;
   }
 
@@ -54,7 +43,7 @@ export class Mapper<I, O> implements ISink, ISource, IBouncer, IEvented {
         this.o.$.send(mapped, tag);
       } catch (err) {
         this.re.$.send(value, tag);
-        this.e.err.send(String(err), tag);
+        this.o.err.send(String(err), tag);
       }
     }
   }
