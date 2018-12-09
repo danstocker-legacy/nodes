@@ -1,4 +1,4 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 export type TFilterCallback<V> = (value: V, tag?: string) => boolean;
@@ -8,6 +8,7 @@ interface IFilterInputs<V> {
 }
 
 interface IFilterOutputs<V> {
+  b_d_val: V;
   d_val: V;
   ev_err: string;
 }
@@ -22,17 +23,15 @@ interface IFilterOutputs<V> {
  * filter.i.$.send(1); // outputs 1
  * filter.i.$.send(2); // will not output
  */
-export class Filter<V> implements ISink, ISource, IBouncer {
+export class Filter<V> implements ISink, ISource {
   public readonly i: TInBundle<IFilterInputs<V>>;
   public readonly o: TOutBundle<IFilterOutputs<V>>;
-  public readonly re: TOutBundle<IFilterInputs<V>>;
 
   private readonly cb: TFilterCallback<V>;
 
   constructor(cb: TFilterCallback<V>) {
     MSink.init.call(this, ["d_val"]);
-    MSource.init.call(this, ["d_val", "ev_err"]);
-    MBouncer.init.call(this, ["d_val"]);
+    MSource.init.call(this, ["b_d_val", "d_val", "ev_err"]);
     this.cb = cb;
   }
 
@@ -44,7 +43,7 @@ export class Filter<V> implements ISink, ISource, IBouncer {
           this.o.d_val.send(value, tag);
         }
       } catch (err) {
-        this.re.d_val.send(value, tag);
+        this.o.b_d_val.send(value, tag);
         this.o.ev_err.send(String(err), tag);
       }
     }

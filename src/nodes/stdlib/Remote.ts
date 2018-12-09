@@ -1,5 +1,5 @@
 import * as net from "net";
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TJson, ValueOf} from "../../utils";
 
@@ -9,6 +9,7 @@ interface IRemoteInputs {
 }
 
 interface IRemoteOutputs {
+  b_d_wrap: TJson;
   d_wrap: TJson;
   st_conn: boolean;
   ev_err: string;
@@ -16,7 +17,7 @@ interface IRemoteOutputs {
 
 const instances = new Map<string, Remote>();
 
-export class Remote implements ISink, ISource, IBouncer {
+export class Remote implements ISink, ISource {
   /**
    * Retrieves OR creates a new Remote instance.
    * @param remoteHost Remote server address
@@ -49,7 +50,6 @@ export class Remote implements ISink, ISource, IBouncer {
 
   public readonly i: TInBundle<IRemoteInputs>;
   public readonly o: TOutBundle<IRemoteOutputs>;
-  public readonly re: TOutBundle<IRemoteInputs>;
   private readonly remoteHost: string;
   private readonly remotePort: number;
   private readonly socket: net.Socket;
@@ -69,8 +69,7 @@ export class Remote implements ISink, ISource, IBouncer {
     localPort: number
   ) {
     MSink.init.call(this, ["d_wrap", "st_conn"]);
-    MSource.init.call(this, ["d_wrap", "st_conn", "ev_err"]);
-    MBouncer.init.call(this, ["d_wrap"]);
+    MSource.init.call(this, ["b_d_wrap", "d_wrap", "st_conn", "ev_err"]);
 
     const socket = new net.Socket();
     socket.on("connect", () => this.onConnect());
@@ -102,7 +101,7 @@ export class Remote implements ISink, ISource, IBouncer {
         } else {
           // socket is not connected
           // bouncing inputs
-          this.re.d_wrap.send(value, tag);
+          this.o.b_d_wrap.send(value, tag);
         }
         break;
 
@@ -127,7 +126,7 @@ export class Remote implements ISink, ISource, IBouncer {
   private bounceAll() {
     const buffer = this.buffer;
     if (buffer.size > 0) {
-      const re = this.re.d_wrap;
+      const re = this.o.b_d_wrap;
       for (const [tag, value] of this.buffer.entries()) {
         re.send(value, tag);
       }
@@ -175,8 +174,8 @@ export class Remote implements ISink, ISource, IBouncer {
    */
   private onWrite(err: Error, value: TJson, tag?: string): void {
     if (err) {
+      this.o.b_d_wrap.send(value, tag);
       this.o.ev_err.send(String(err));
-      this.re.d_wrap.send(value, tag);
     }
     this.buffer.delete(tag);
   }

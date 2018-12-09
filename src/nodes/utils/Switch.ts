@@ -1,18 +1,22 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
+import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
-interface ISwitchInput<C extends string, T> {
-  d_val: T;
+interface ISwitchInput<C extends string, V> {
+  d_val: V;
   st_pos: C;
 }
 
-interface ISwitchInputs<C extends string, T> {
-  sync: ISwitchInput<C, T>;
+interface ISwitchInputs<C extends string, V> {
+  sync: ISwitchInput<C, V>;
 }
 
-type TSwitchOutputs<C extends string, T> = {
-  [K in C]: T
+type TSwitchOutputs<C extends string, V> = {
+  [K in C]: V
 };
+
+interface ISwitchBounced<C extends string, V> {
+  b_sync: ISwitchInput<C, V>;
+}
 
 /**
  * Forwards input to one of the possible outputs.
@@ -26,32 +30,30 @@ type TSwitchOutputs<C extends string, T> = {
  * let switch: Switch<"foo" | "bar" | "baz", number>;
  * switch = new Switch(["foo", "bar", "baz");
  */
-export class Switch<C extends string, T> implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<ISwitchInputs<C, T>>;
-  public readonly o: TOutBundle<TSwitchOutputs<C, T>>;
-  public readonly re: TOutBundle<ISwitchInputs<C, T>>;
+export class Switch<C extends string, V> implements ISink, ISource {
+  public readonly i: TInBundle<ISwitchInputs<C, V>>;
+  public readonly o: TOutBundle<TSwitchOutputs<C, V> & ISwitchBounced<C, V>>;
 
   /**
    * @param positions Strings identifying possible cases for switch.
    */
   constructor(positions: Array<string>) {
     MSink.init.call(this, ["sync"]);
-    MSource.init.call(this, positions);
-    MBouncer.init.call(this, ["sync"]);
+    MSource.init.call(this, ["b_sync"].concat(positions));
   }
 
   public send(
-    port: IInPort<ISwitchInput<C, T>>,
-    value: ISwitchInput<C, T>,
+    port: IInPort<ISwitchInput<C, V>>,
+    value: ISwitchInput<C, V>,
     tag?: string
   ): void {
     if (port === this.i.sync) {
       const name = value.st_pos;
       const outPort = this.o[name];
       if (outPort) {
-        outPort.send(value.d_val, tag);
+        outPort.send(value.d_val as any, tag);
       } else {
-        this.re.sync.send(value, tag);
+        this.o.b_sync.send(value as any, tag);
       }
     }
   }

@@ -63,10 +63,10 @@ describe("Remote", function () {
         "192.168.0.101", 8889, "127.0.0.1", 8888);
       expect(node.i.d_wrap).toBeDefined();
       expect(node.i.st_conn).toBeDefined();
+      expect(node.o.b_d_wrap).toBeDefined();
       expect(node.o.d_wrap).toBeDefined();
       expect(node.o.st_conn).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
-      expect(node.re.d_wrap).toBeDefined();
     });
   });
 
@@ -108,7 +108,7 @@ describe("Remote", function () {
       });
 
       it("should bounce buffered inputs", function () {
-        const spy = spyOn(node.re.d_wrap, "send");
+        const spy = spyOn(node.o.b_d_wrap, "send");
         onClose();
         expect(spy.calls.allArgs()).toEqual([
           ["foo", "1"],
@@ -142,7 +142,7 @@ describe("Remote", function () {
       });
 
       it("should bounce buffered inputs", function () {
-        const spy = spyOn(node.re.d_wrap, "send");
+        const spy = spyOn(node.o.b_d_wrap, "send");
         onError(new Error("foo"));
         expect(spy.calls.allArgs()).toEqual([
           ["foo", "1"],
@@ -171,9 +171,9 @@ describe("Remote", function () {
       });
 
       it("should bounce affected input", function () {
-        spyOn(node.re.d_wrap, "send");
+        spyOn(node.o.b_d_wrap, "send");
         onWrite(new Error("foo"));
-        expect(node.re.d_wrap.send).toHaveBeenCalledWith("foo", "1");
+        expect(node.o.b_d_wrap.send).toHaveBeenCalledWith("foo", "1");
       });
     });
   });
@@ -201,9 +201,9 @@ describe("Remote", function () {
 
       describe("when not connected", function () {
         it("should bounce inputs", function () {
-          spyOn(node.re.d_wrap, "send");
+          spyOn(node.o.b_d_wrap, "send");
           node.send(node.i.d_wrap, "foo", "1");
-          expect(node.re.d_wrap.send).toHaveBeenCalledWith("foo", "1");
+          expect(node.o.b_d_wrap.send).toHaveBeenCalledWith("foo", "1");
         });
       });
     });

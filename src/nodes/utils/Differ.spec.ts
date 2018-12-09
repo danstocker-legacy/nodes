@@ -5,9 +5,9 @@ describe("Differ", function () {
     it("should add ports", function () {
       const node = new Differ(() => null);
       expect(node.i.d_val).toBeDefined();
+      expect(node.o.b_d_val).toBeDefined();
       expect(node.o.d_diff).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
-      expect(node.re.d_val).toBeDefined();
     });
   });
 
@@ -47,9 +47,9 @@ describe("Differ", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.re.d_val, "send");
+        spyOn(node.o.b_d_val, "send");
         node.send(node.i.d_val, 5, "2");
-        expect(node.re.d_val.send).toHaveBeenCalledWith(5, "2");
+        expect(node.o.b_d_val.send).toHaveBeenCalledWith(5, "2");
       });
 
       it("should send error to output", function () {
