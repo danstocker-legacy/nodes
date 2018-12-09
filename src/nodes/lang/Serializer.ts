@@ -2,16 +2,16 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface ISerializerInputs<V> {
-  $: V;
-  tag: string;
+  d_val: V;
+  d_tag: string;
 }
 
 interface ISerializerOutputs<V> {
-  $: V;
+  d_val: V;
 }
 
 /**
- * Forwards inputs matching the order of the reference input `tag`.
+ * Forwards inputs matching the order of the reference input `d_tag`.
  * @example
  * let node: Serializer<number>;
  * node = new Serializer();
@@ -24,8 +24,8 @@ export class Serializer<V> implements ISink, ISource {
   private readonly order: Array<string>;
 
   constructor() {
-    MSink.init.call(this, ["$", "tag"]);
-    MSource.init.call(this, ["$"]);
+    MSink.init.call(this, ["d_val", "d_tag"]);
+    MSource.init.call(this, ["d_val"]);
     this.inputs = new Map();
     this.order = [];
   }
@@ -33,12 +33,12 @@ export class Serializer<V> implements ISink, ISource {
   public send(port: IInPort<V | string>, input: V | string, tag?: string): void {
     const ports = this.i;
     switch (port) {
-      case ports.tag:
+      case ports.d_tag:
         this.order.push(tag);
         this.release();
         break;
 
-      case ports.$:
+      case ports.d_val:
         this.inputs.set(tag, input as V);
         this.release();
         break;
@@ -51,7 +51,7 @@ export class Serializer<V> implements ISink, ISource {
   private release(): void {
     const inputs = this.inputs;
     const order = this.order;
-    const $ = this.o.$;
+    const $ = this.o.d_val;
     while (inputs.has(order[0])) {
       const nextTag = order.shift();
       const nextInput = inputs.get(nextTag);

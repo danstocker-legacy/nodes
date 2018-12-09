@@ -39,7 +39,7 @@ export class Server implements ISource {
 
   private static onData(data: Buffer | string, remote: Remote) {
     const wrapped = JSON.parse(String(data));
-    remote.o.$.send(wrapped.value, wrapped.tag);
+    remote.o.d_wra.send(wrapped.value, wrapped.tag);
   }
 
   public readonly o: TOutBundle<IServerOutputs>;

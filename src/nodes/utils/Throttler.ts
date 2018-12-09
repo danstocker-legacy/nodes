@@ -3,12 +3,12 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
 interface IThrottlerInputs {
-  tag: any;
+  ev_sig: any;
   ev_tick: boolean;
 }
 
 interface IThrottlerOutputs {
-  $: boolean;
+  ev_thro: boolean;
 }
 
 /**
@@ -32,8 +32,8 @@ export class Throttler implements ISink, ISource {
   private readonly buffer: Array<string>;
 
   constructor() {
-    MSink.init.call(this, ["tag", "ev_tick"]);
-    MSource.init.call(this, ["$"]);
+    MSink.init.call(this, ["ev_sig", "ev_tick"]);
+    MSource.init.call(this, ["ev_thro"]);
     this.buffer = [];
   }
 
@@ -48,18 +48,18 @@ export class Throttler implements ISink, ISource {
         // clock ticked
         // sending out last tag w/ true
         if (buffer.length) {
-          this.o.$.send(true, buffer.shift());
+          this.o.ev_thro.send(true, buffer.shift());
         }
         break;
 
-      case this.i.tag:
+      case this.i.ev_sig:
         // new tag arrived
         buffer.push(tag);
 
         if (buffer.length > 1) {
           // there is a previous tag in buffer
           // sending out last tag w/ false
-          this.o.$.send(false, buffer.shift());
+          this.o.ev_thro.send(false, buffer.shift());
         }
         break;
     }

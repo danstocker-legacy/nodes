@@ -4,11 +4,11 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
 
 interface IMapperInputs<V> {
-  $: V;
+  d_val: V;
 }
 
 interface IMapperOutputs<V> {
-  $: V;
+  d_val: V;
   ev_err: string;
 }
 
@@ -27,19 +27,19 @@ export class Mapper<I, O> implements ISink, ISource, IBouncer {
   private readonly cb: TMapperCallback<I, O>;
 
   constructor(cb: TMapperCallback<I, O>) {
-    MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$", "ev_err"]);
-    MBouncer.init.call(this, ["$"]);
+    MSink.init.call(this, ["d_val"]);
+    MSource.init.call(this, ["d_val", "ev_err"]);
+    MBouncer.init.call(this, ["d_val"]);
     this.cb = cb;
   }
 
   public send(port: IInPort<I>, value: I, tag?: string): void {
-    if (port === this.i.$) {
+    if (port === this.i.d_val) {
       try {
         const mapped = this.cb(value, tag);
-        this.o.$.send(mapped, tag);
+        this.o.d_val.send(mapped, tag);
       } catch (err) {
-        this.re.$.send(value, tag);
+        this.re.d_val.send(value, tag);
         this.o.ev_err.send(String(err), tag);
       }
     }

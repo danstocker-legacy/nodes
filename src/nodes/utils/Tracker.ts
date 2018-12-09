@@ -5,7 +5,7 @@ import {IAny, ValueOf} from "../../utils";
 type TTrackerInputs<T> = T;
 
 interface ITrackerOutputs<T> {
-  $: T;
+  tra: T;
 }
 
 /**
@@ -31,7 +31,7 @@ export class Tracker<T extends IAny> implements ISink, ISource {
 
   constructor(fields: Array<string>) {
     MSink.init.call(this, fields);
-    MSource.init.call(this, ["$"]);
+    MSource.init.call(this, ["tra"]);
     this.values = {} as T;
   }
 
@@ -44,7 +44,7 @@ export class Tracker<T extends IAny> implements ISink, ISource {
     if (port === this.i[name]) {
       const values = this.values;
       values[name] = input;
-      this.o.$.send(values, tag);
+      this.o.tra.send(values, tag);
     }
   }
 }

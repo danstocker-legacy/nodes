@@ -4,10 +4,10 @@ describe("Unfolder", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Unfolder(() => null);
-      expect(node.i.$).toBeDefined();
-      expect(node.o.$).toBeDefined();
+      expect(node.i.d_fol).toBeDefined();
+      expect(node.o.d_val).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
-      expect(node.re.$).toBeDefined();
+      expect(node.re.d_fol).toBeDefined();
     });
   });
 
@@ -25,8 +25,8 @@ describe("Unfolder", function () {
     });
 
     it("should send unfolded values", function () {
-      const spy = spyOn(node.o.$, "send");
-      node.send(node.i.$, [1, 2, 3], "1");
+      const spy = spyOn(node.o.d_val, "send");
+      node.send(node.i.d_fol, [1, 2, 3], "1");
       expect(spy.calls.allArgs()).toEqual([
         [1, "1"],
         [2, "1"],
@@ -42,14 +42,14 @@ describe("Unfolder", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.re.$, "send");
-        node.send(node.i.$, [1, 2, 3], "1");
-        expect(node.re.$.send).toHaveBeenCalledWith([1, 2, 3], "1");
+        spyOn(node.re.d_fol, "send");
+        node.send(node.i.d_fol, [1, 2, 3], "1");
+        expect(node.re.d_fol.send).toHaveBeenCalledWith([1, 2, 3], "1");
       });
 
       it("should send error to output", function () {
         spyOn(node.o.ev_err, "send");
-        node.send(node.i.$, [1, 2, 3], "1");
+        node.send(node.i.d_fol, [1, 2, 3], "1");
         expect(node.o.ev_err.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });

@@ -2,12 +2,12 @@ import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface ISwitchInput<C extends string, T> {
-  $: T;
-  case: C;
+  d_val: T;
+  st_pos: C;
 }
 
 interface ISwitchInputs<C extends string, T> {
-  $: ISwitchInput<C, T>;
+  sy: ISwitchInput<C, T>;
 }
 
 type TSwitchOutputs<C extends string, T> = {
@@ -18,10 +18,10 @@ type TSwitchOutputs<C extends string, T> = {
  * Forwards input to one of the possible outputs.
  * Atomic equivalent of a composite node.
  * Composite view:
- * $ -----#=> Syncer -> Mapper -> Demuxer -+-> A
- * case --/                                +-> B
- *                                         +-> C
- *                                         ...
+ * d_val ---#=> Syncer -> Mapper -> Demuxer -+-> A
+ * st_pos --/                                +-> B
+ *                                           +-> C
+ *                                           ...
  * @example
  * let switch: Switch<"foo" | "bar" | "baz", number>;
  * switch = new Switch(["foo", "bar", "baz");
@@ -32,12 +32,12 @@ export class Switch<C extends string, T> implements ISink, ISource, IBouncer {
   public readonly re: TOutBundle<ISwitchInputs<C, T>>;
 
   /**
-   * @param cases Strings identifying possible cases for switch.
+   * @param positions Strings identifying possible cases for switch.
    */
-  constructor(cases: Array<string>) {
-    MSink.init.call(this, ["$"]);
-    MSource.init.call(this, cases);
-    MBouncer.init.call(this, ["$"]);
+  constructor(positions: Array<string>) {
+    MSink.init.call(this, ["sy"]);
+    MSource.init.call(this, positions);
+    MBouncer.init.call(this, ["sy"]);
   }
 
   public send(
@@ -45,13 +45,13 @@ export class Switch<C extends string, T> implements ISink, ISource, IBouncer {
     value: ISwitchInput<C, T>,
     tag?: string
   ): void {
-    if (port === this.i.$) {
-      const name = value.case;
+    if (port === this.i.sy) {
+      const name = value.st_pos;
       const outPort = this.o[name];
       if (outPort) {
-        outPort.send(value.$, tag);
+        outPort.send(value.d_val, tag);
       } else {
-        this.re.$.send(value, tag);
+        this.re.sy.send(value, tag);
       }
     }
   }

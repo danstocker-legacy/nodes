@@ -2,7 +2,7 @@ import {ISource, MSource} from "../../node";
 import {OutPort, TOutBundle} from "../../port";
 
 interface ITickerOutputs {
-  $: true;
+  ev_tick: true;
 }
 
 /**
@@ -15,11 +15,11 @@ export class Ticker implements ISource {
   public readonly o: TOutBundle<ITickerOutputs>;
 
   constructor(ms: number) {
-    MSource.init.call(this, ["$"]);
+    MSource.init.call(this, ["ev_tick"]);
     setInterval(this.onInterval.bind(this), ms);
   }
 
   private onInterval(): void {
-    this.o.$.send(true, null);
+    this.o.ev_tick.send(true, null);
   }
 }

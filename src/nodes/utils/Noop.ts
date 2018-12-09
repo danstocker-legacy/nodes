@@ -2,11 +2,11 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface INoopInputs<V> {
-  $: V;
+  d_val: V;
 }
 
 interface INoopOutputs<V> {
-  $: V;
+  d_val: V;
 }
 
 /**
@@ -24,13 +24,13 @@ export class Noop<V> implements ISink, ISource {
   public readonly o: TOutBundle<INoopOutputs<V>>;
 
   constructor() {
-    MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$"]);
+    MSink.init.call(this, ["d_val"]);
+    MSource.init.call(this, ["d_val"]);
   }
 
   public send(port: IInPort<V>, input: V, tag?: string): void {
-    if (port === this.i.$) {
-      this.o.$.send(input, tag);
+    if (port === this.i.d_val) {
+      this.o.d_val.send(input, tag);
     }
   }
 }

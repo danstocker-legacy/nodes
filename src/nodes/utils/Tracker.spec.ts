@@ -7,7 +7,7 @@ describe("Tracker", function () {
       const node = new Tracker<{ foo: number, bar: boolean }>(["foo", "bar"]);
       expect(node.i.foo).toBeDefined();
       expect(node.i.bar).toBeDefined();
-      expect(node.o.$).toBeDefined();
+      expect(node.o.tra).toBeDefined();
     });
   });
 
@@ -19,9 +19,9 @@ describe("Tracker", function () {
     });
 
     it("should forward all cached inputs", function () {
-      spyOn(node.o.$, "send");
+      spyOn(node.o.tra, "send");
       node.send(node.i.foo, 2, "2");
-      expect(node.o.$.send).toHaveBeenCalledWith({foo: 2}, "2");
+      expect(node.o.tra.send).toHaveBeenCalledWith({foo: 2}, "2");
     });
   });
 });

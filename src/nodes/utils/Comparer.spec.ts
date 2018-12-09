@@ -4,10 +4,10 @@ describe("Comparer", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Comparer(() => true);
-      expect(node.i.$).toBeDefined();
-      expect(node.o.$).toBeDefined();
+      expect(node.i.sy).toBeDefined();
+      expect(node.o.d_eq).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
-      expect(node.re.$).toBeDefined();
+      expect(node.re.sy).toBeDefined();
     });
   });
 
@@ -19,9 +19,9 @@ describe("Comparer", function () {
     });
 
     it("should send result of equality callback", function () {
-      spyOn(node.o.$, "send");
-      node.send(node.i.$, {a: 5, b: 5}, "1");
-      expect(node.o.$.send).toHaveBeenCalledWith(true, "1");
+      spyOn(node.o.d_eq, "send");
+      node.send(node.i.sy, {d_a: 5, d_b: 5}, "1");
+      expect(node.o.d_eq.send).toHaveBeenCalledWith(true, "1");
     });
 
     describe("when callback throws", function () {
@@ -32,15 +32,15 @@ describe("Comparer", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.re.$, "send");
-        node.send(node.i.$, {a: 5, b: 5}, "1");
-        expect(node.re.$.send)
-        .toHaveBeenCalledWith({a: 5, b: 5}, "1");
+        spyOn(node.re.sy, "send");
+        node.send(node.i.sy, {d_a: 5, d_b: 5}, "1");
+        expect(node.re.sy.send)
+        .toHaveBeenCalledWith({d_a: 5, d_b: 5}, "1");
       });
 
       it("should send error to output", function () {
         spyOn(node.o.ev_err, "send");
-        node.send(node.i.$, {a: 5, b: 5}, "1");
+        node.send(node.i.sy, {d_a: 5, d_b: 5}, "1");
         expect(node.o.ev_err.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });

@@ -3,7 +3,7 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IMuxed} from "../../utils";
 
 interface IDemuxerInputs<T> {
-  $: IMuxed<T>;
+  d_mux: IMuxed<T>;
 }
 
 /**
@@ -20,14 +20,14 @@ export class Demuxer<T> implements ISink, ISource {
   public readonly o: TOutBundle<T>;
 
   constructor(fields: Array<string>) {
-    MSink.init.call(this, ["$"]);
+    MSink.init.call(this, ["d_mux"]);
     MSource.init.call(this, fields);
   }
 
   public send(port: IInPort<IMuxed<T>>, input: IMuxed<T>, tag?: string): void {
-    if (port === this.i.$) {
+    if (port === this.i.d_mux) {
       const name = input.name;
-      this.o[name].send(input.$, tag);
+      this.o[name].send(input.val, tag);
     }
   }
 }

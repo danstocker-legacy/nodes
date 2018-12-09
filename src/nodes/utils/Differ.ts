@@ -3,11 +3,11 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TEqualityCallback} from "./Comparer";
 
 interface IDifferInputs<V> {
-  $: V;
+  d_val: V;
 }
 
 interface IDifferOutputs {
-  $: boolean;
+  d_diff: boolean;
   ev_err: string;
 }
 
@@ -32,28 +32,28 @@ export class Differ<V> implements ISink, ISource, IBouncer {
   private buffer: Array<V>;
 
   constructor(cb: TEqualityCallback<V>) {
-    MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$", "ev_err"]);
-    MBouncer.init.call(this, ["$"]);
+    MSink.init.call(this, ["d_val"]);
+    MSource.init.call(this, ["d_diff", "ev_err"]);
+    MBouncer.init.call(this, ["d_val"]);
     this.cb = cb;
     this.buffer = [];
   }
 
   public send(port: IInPort<V>, value: V, tag?: string): void {
-    if (port === this.i.$) {
+    if (port === this.i.d_val) {
       const buffer = this.buffer;
       buffer.push(value);
       if (buffer.length > 1) {
         try {
           const equals = this.cb(buffer.shift(), value);
-          this.o.$.send(!equals, tag);
+          this.o.d_diff.send(!equals, tag);
         } catch (err) {
-          this.re.$.send(value, tag);
+          this.re.d_val.send(value, tag);
           this.o.ev_err.send(String(err), tag);
         }
       } else {
         this.buffer = buffer;
-        this.o.$.send(undefined, tag);
+        this.o.d_diff.send(undefined, tag);
       }
     }
   }

@@ -9,11 +9,11 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 export type TUnfolderCallback<I, O> = (value: I) => IterableIterator<O>;
 
 interface IUnfolderInputs<V> {
-  $: V;
+  d_fol: V;
 }
 
 interface IUnfolderOutputs<V> {
-  $: V;
+  d_val: V;
   ev_err: string;
 }
 
@@ -41,9 +41,9 @@ export class Unfolder<I, O> implements ISink, ISource, IBouncer {
   private readonly cb: TUnfolderCallback<I, O>;
 
   constructor(cb: TUnfolderCallback<I, O>) {
-    MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$", "ev_err"]);
-    MBouncer.init.call(this, ["$"]);
+    MSink.init.call(this, ["d_fol"]);
+    MSource.init.call(this, ["d_val", "ev_err"]);
+    MBouncer.init.call(this, ["d_fol"]);
     this.cb = cb;
   }
 
@@ -51,10 +51,10 @@ export class Unfolder<I, O> implements ISink, ISource, IBouncer {
     try {
       const iterable = this.cb(value);
       for (const next of iterable) {
-        this.o.$.send(next, tag);
+        this.o.d_val.send(next, tag);
       }
     } catch (err) {
-      this.re.$.send(value, tag);
+      this.re.d_fol.send(value, tag);
       this.o.ev_err.send(String(err), tag);
     }
   }

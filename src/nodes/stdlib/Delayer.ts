@@ -2,11 +2,11 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface IDelayerInputs<V> {
-  $: V;
+  d_val: V;
 }
 
 interface IDelayerOutputs<V> {
-  $: V;
+  d_val: V;
 }
 
 /**
@@ -22,14 +22,14 @@ export class Delayer<V> implements ISink, ISource {
    * @param ms Delay in milliseconds.
    */
   constructor(ms: number) {
-    MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$"]);
+    MSink.init.call(this, ["d_val"]);
+    MSource.init.call(this, ["d_val"]);
     this.ms = ms;
   }
 
   public send(port: IInPort<V>, value: V, tag?: string): void {
-    if (port === this.i.$) {
-      setTimeout(() => this.o.$.send(value, tag), this.ms);
+    if (port === this.i.d_val) {
+      setTimeout(() => this.o.d_val.send(value, tag), this.ms);
     }
   }
 }

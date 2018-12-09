@@ -2,7 +2,7 @@ import {ISink, MSink} from "../../node";
 import {IInPort, TInBundle} from "../../port";
 
 interface IStdErrInputs {
-  $: string | Buffer;
+  d_val: string | Buffer;
 }
 
 /**
@@ -12,11 +12,11 @@ export class StdErr implements ISink {
   public readonly i: TInBundle<IStdErrInputs>;
 
   constructor() {
-    MSink.init.call(this, ["$"]);
+    MSink.init.call(this, ["d_val"]);
   }
 
   public send(port: IInPort<string | Buffer>, input: string | Buffer): void {
-    if (port === this.i.$) {
+    if (port === this.i.d_val) {
       process.stderr.write(input);
     }
   }

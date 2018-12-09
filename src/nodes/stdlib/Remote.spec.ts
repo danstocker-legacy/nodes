@@ -61,12 +61,12 @@ describe("Remote", function () {
     it("should add ports", function () {
       const node = Remote.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888);
-      expect(node.i.$).toBeDefined();
+      expect(node.i.d_wra).toBeDefined();
       expect(node.i.st_conn).toBeDefined();
-      expect(node.o.$).toBeDefined();
+      expect(node.o.d_wra).toBeDefined();
       expect(node.o.st_conn).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
-      expect(node.re.$).toBeDefined();
+      expect(node.re.d_wra).toBeDefined();
     });
   });
 
@@ -102,13 +102,13 @@ describe("Remote", function () {
     describe("when there are inputs buffered", function () {
       beforeEach(function () {
         onConnect();
-        node.i.$.send("foo", "1");
-        node.i.$.send("bar", "2");
-        node.i.$.send("baz", "3");
+        node.i.d_wra.send("foo", "1");
+        node.i.d_wra.send("bar", "2");
+        node.i.d_wra.send("baz", "3");
       });
 
       it("should bounce buffered inputs", function () {
-        const spy = spyOn(node.re.$, "send");
+        const spy = spyOn(node.re.d_wra, "send");
         onClose();
         expect(spy.calls.allArgs()).toEqual([
           ["foo", "1"],
@@ -136,13 +136,13 @@ describe("Remote", function () {
     describe("when there are inputs buffered", function () {
       beforeEach(function () {
         onConnect();
-        node.i.$.send("foo", "1");
-        node.i.$.send("bar", "2");
-        node.i.$.send("baz", "3");
+        node.i.d_wra.send("foo", "1");
+        node.i.d_wra.send("bar", "2");
+        node.i.d_wra.send("baz", "3");
       });
 
       it("should bounce buffered inputs", function () {
-        const spy = spyOn(node.re.$, "send");
+        const spy = spyOn(node.re.d_wra, "send");
         onError(new Error("foo"));
         expect(spy.calls.allArgs()).toEqual([
           ["foo", "1"],
@@ -160,7 +160,7 @@ describe("Remote", function () {
       node = Remote.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888);
       onConnect();
-      node.send(node.i.$, "foo", "1");
+      node.send(node.i.d_wra, "foo", "1");
     });
 
     describe("on error", function () {
@@ -171,9 +171,9 @@ describe("Remote", function () {
       });
 
       it("should bounce affected input", function () {
-        spyOn(node.re.$, "send");
+        spyOn(node.re.d_wra, "send");
         onWrite(new Error("foo"));
-        expect(node.re.$.send).toHaveBeenCalledWith("foo", "1");
+        expect(node.re.d_wra.send).toHaveBeenCalledWith("foo", "1");
       });
     });
   });
@@ -194,16 +194,16 @@ describe("Remote", function () {
 
         it("should write wrapped & JSON stringified input to socket", function () {
           const spy = spyOn(socket, "write");
-          node.send(node.i.$, "foo", "1");
+          node.send(node.i.d_wra, "foo", "1");
           expect(spy.calls.argsFor(0)[0]).toBe(`{"value":"foo","tag":"1"}`);
         });
       });
 
       describe("when not connected", function () {
         it("should bounce inputs", function () {
-          spyOn(node.re.$, "send");
-          node.send(node.i.$, "foo", "1");
-          expect(node.re.$.send).toHaveBeenCalledWith("foo", "1");
+          spyOn(node.re.d_wra, "send");
+          node.send(node.i.d_wra, "foo", "1");
+          expect(node.re.d_wra.send).toHaveBeenCalledWith("foo", "1");
         });
       });
     });

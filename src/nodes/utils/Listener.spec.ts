@@ -4,9 +4,9 @@ describe("Listener", function () {
   describe("constructor", function () {
     it("should open ports", function () {
       const node = new Listener(() => null);
-      expect(node.i.$).toBeDefined();
+      expect(node.i.d_val).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
-      expect(node.re.$).toBeDefined();
+      expect(node.re.d_val).toBeDefined();
     });
   });
 
@@ -20,7 +20,7 @@ describe("Listener", function () {
     });
 
     it("should", function () {
-      node.send(node.i.$, 5, "1");
+      node.send(node.i.d_val, 5, "1");
       expect(spy).toHaveBeenCalledWith(5, "1");
     });
 
@@ -32,15 +32,15 @@ describe("Listener", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.re.$, "send");
-        node.send(node.i.$, 5, "1");
-        expect(node.re.$.send)
+        spyOn(node.re.d_val, "send");
+        node.send(node.i.d_val, 5, "1");
+        expect(node.re.d_val.send)
         .toHaveBeenCalledWith(5, "1");
       });
 
       it("should send error to output", function () {
         spyOn(node.o.ev_err, "send");
-        node.send(node.i.$, 5, "1");
+        node.send(node.i.d_val, 5, "1");
         expect(node.o.ev_err.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });

@@ -4,8 +4,8 @@ describe("Shifter", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Shifter();
-      expect(node.i.$).toBeDefined();
-      expect(node.o.$).toBeDefined();
+      expect(node.i.d_val).toBeDefined();
+      expect(node.o.d_val).toBeDefined();
     });
   });
 
@@ -18,26 +18,26 @@ describe("Shifter", function () {
 
     describe("until displacement is reached", function () {
       beforeEach(function () {
-        node.send(node.i.$, 5, "1");
+        node.send(node.i.d_val, 5, "1");
       });
 
       it("should send undefined", function () {
-        spyOn(node.o.$, "send");
-        node.send(node.i.$, 2, "2");
-        expect(node.o.$.send).toHaveBeenCalledWith(undefined, "2");
+        spyOn(node.o.d_val, "send");
+        node.send(node.i.d_val, 2, "2");
+        expect(node.o.d_val.send).toHaveBeenCalledWith(undefined, "2");
       });
     });
 
     describe("after displacement passed", function () {
       beforeEach(function () {
-        node.send(node.i.$, 5, "1");
-        node.send(node.i.$, 2, "2");
+        node.send(node.i.d_val, 5, "1");
+        node.send(node.i.d_val, 2, "2");
       });
 
       it("should forward displaced input value", function () {
-        spyOn(node.o.$, "send");
-        node.send(node.i.$, 8, "3");
-        expect(node.o.$.send).toHaveBeenCalledWith(5, "3");
+        spyOn(node.o.d_val, "send");
+        node.send(node.i.d_val, 8, "3");
+        expect(node.o.d_val.send).toHaveBeenCalledWith(5, "3");
       });
     });
   });

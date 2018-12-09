@@ -4,16 +4,16 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
 
 interface IComparerInput<V> {
-  a: V;
-  b: V;
+  d_a: V;
+  d_b: V;
 }
 
 interface IComparerInputs<V> {
-  $: IComparerInput<V>;
+  sy: IComparerInput<V>;
 }
 
 interface IComparerOutputs {
-  $: boolean;
+  d_eq: boolean;
   ev_err: string;
 }
 
@@ -35,9 +35,9 @@ export class Comparer<V> implements ISink, ISource, IBouncer {
   private readonly cb: TEqualityCallback<V>;
 
   constructor(cb: TEqualityCallback<V>) {
-    MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$", "ev_err"]);
-    MBouncer.init.call(this, ["$"]);
+    MSink.init.call(this, ["sy"]);
+    MSource.init.call(this, ["d_eq", "ev_err"]);
+    MBouncer.init.call(this, ["sy"]);
     this.cb = cb;
   }
 
@@ -46,12 +46,12 @@ export class Comparer<V> implements ISink, ISource, IBouncer {
     value: IComparerInput<V>,
     tag?: string
   ): void {
-    if (port === this.i.$) {
+    if (port === this.i.sy) {
       try {
-        const equals = this.cb(value.a, value.b, tag);
-        this.o.$.send(equals, tag);
+        const equals = this.cb(value.d_a, value.d_b, tag);
+        this.o.d_eq.send(equals, tag);
       } catch (err) {
-        this.re.$.send(value, tag);
+        this.re.sy.send(value, tag);
         this.o.ev_err.send(String(err), tag);
       }
     }

@@ -6,7 +6,7 @@ interface ISamplerInputs<V> {
   /**
    * Input value to be sampled.
    */
-  $: V;
+  d_val: V;
 
   /**
    * Dictates sampling frequency. Output inherits the tag of the impulse
@@ -16,7 +16,7 @@ interface ISamplerInputs<V> {
 }
 
 interface ISamplerOutputs<V> {
-  $: V;
+  d_val: V;
 }
 
 /**
@@ -38,8 +38,8 @@ export class Sampler<V> implements ISink, ISource {
   private buffer: V;
 
   constructor() {
-    MSink.init.call(this, ["$", "ev_smp"]);
-    MSource.init.call(this, ["$"]);
+    MSink.init.call(this, ["d_val", "ev_smp"]);
+    MSource.init.call(this, ["d_val"]);
   }
 
   public send(
@@ -49,12 +49,12 @@ export class Sampler<V> implements ISink, ISource {
   ): void {
     const inPorts = this.i;
     switch (port) {
-      case inPorts.$:
+      case inPorts.d_val:
         this.buffer = value;
         break;
 
       case inPorts.ev_smp:
-        this.o.$.send(this.buffer, tag);
+        this.o.d_val.send(this.buffer, tag);
         break;
     }
   }

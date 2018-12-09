@@ -2,15 +2,15 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface ILoggerInputs {
-  log: any;
-  warn: any;
-  err: any;
+  d_log: any;
+  d_warn: any;
+  d_err: any;
 }
 
 interface ILoggerOutputs {
-  log: any;
-  warn: any;
-  err: any;
+  d_log: any;
+  d_warn: any;
+  d_err: any;
 }
 
 /**
@@ -21,22 +21,22 @@ export class Logger implements ISink, ISource {
   public readonly o: TOutBundle<ILoggerOutputs>;
 
   constructor() {
-    MSink.init.call(this, ["err", "log", "warn"]);
-    MSource.init.call(this, ["err", "log", "warn"]);
+    MSink.init.call(this, ["d_err", "d_log", "d_warn"]);
+    MSource.init.call(this, ["d_err", "d_log", "d_warn"]);
   }
 
   public send(port: IInPort<any>, input: any, tag?: string): void {
     const inPorts = this.i;
     const outPorts = this.o;
     switch (port) {
-      case inPorts.log:
-        outPorts.log.send(input, tag);
+      case inPorts.d_log:
+        outPorts.d_log.send(input, tag);
         break;
-      case inPorts.warn:
-        outPorts.warn.send(input, tag);
+      case inPorts.d_warn:
+        outPorts.d_warn.send(input, tag);
         break;
-      case inPorts.err:
-        outPorts.err.send(input, tag);
+      case inPorts.d_err:
+        outPorts.d_err.send(input, tag);
         break;
     }
   }

@@ -4,12 +4,12 @@ describe("Logger", function () {
   describe("constructor", function () {
     it("should initialize ports", function () {
       const node: Logger = new Logger();
-      expect(node.i.log).toBeDefined();
-      expect(node.i.warn).toBeDefined();
-      expect(node.i.err).toBeDefined();
-      expect(node.o.log).toBeDefined();
-      expect(node.o.warn).toBeDefined();
-      expect(node.o.err).toBeDefined();
+      expect(node.i.d_log).toBeDefined();
+      expect(node.i.d_warn).toBeDefined();
+      expect(node.i.d_err).toBeDefined();
+      expect(node.o.d_log).toBeDefined();
+      expect(node.o.d_warn).toBeDefined();
+      expect(node.o.d_err).toBeDefined();
     });
   });
 
@@ -21,21 +21,21 @@ describe("Logger", function () {
     });
 
     it("should forward log", function () {
-      spyOn(node.o.log, "send");
-      node.send(node.i.log, 5, "1");
-      expect(node.o.log.send).toHaveBeenCalledWith(5, "1");
+      spyOn(node.o.d_log, "send");
+      node.send(node.i.d_log, 5, "1");
+      expect(node.o.d_log.send).toHaveBeenCalledWith(5, "1");
     });
 
     it("should forward warn", function () {
-      spyOn(node.o.warn, "send");
-      node.send(node.i.warn, 5, "1");
-      expect(node.o.warn.send).toHaveBeenCalledWith(5, "1");
+      spyOn(node.o.d_warn, "send");
+      node.send(node.i.d_warn, 5, "1");
+      expect(node.o.d_warn.send).toHaveBeenCalledWith(5, "1");
     });
 
     it("should forward err", function () {
-      spyOn(node.o.err, "send");
-      node.send(node.i.err, 5, "1");
-      expect(node.o.err.send).toHaveBeenCalledWith(5, "1");
+      spyOn(node.o.d_err, "send");
+      node.send(node.i.d_err, 5, "1");
+      expect(node.o.d_err.send).toHaveBeenCalledWith(5, "1");
     });
   });
 });

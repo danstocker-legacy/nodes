@@ -3,18 +3,12 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
 interface IBufferInputs<V> {
-  $: V;
-}
-
-interface IBufferOutputs<V> {
-  $: V;
-}
-
-interface IBufferStateIn {
+  d_val: V;
   st_open: boolean;
 }
 
-interface IBufferStateOut {
+interface IBufferOutputs<V> {
+  d_val: V;
   st_size: number;
 }
 
@@ -27,28 +21,28 @@ interface IBufferStateOut {
  * TBD
  */
 export class Buffer<V> implements ISink, ISource {
-  public readonly i: TInBundle<IBufferInputs<V> & IBufferStateIn>;
-  public readonly o: TOutBundle<IBufferOutputs<V> & IBufferStateOut>;
+  public readonly i: TInBundle<IBufferInputs<V>>;
+  public readonly o: TOutBundle<IBufferOutputs<V>>;
 
   private readonly buffer: Array<[V, string]>;
   private open: boolean;
 
   constructor() {
-    MSink.init.call(this, ["$", "st_open"]);
-    MSource.init.call(this, ["$", "st_size"]);
+    MSink.init.call(this, ["d_val", "st_open"]);
+    MSource.init.call(this, ["d_val", "st_size"]);
     this.buffer = [];
     this.open = false;
   }
 
   public send(
-    port: IInPort<ValueOf<IBufferInputs<V>> | ValueOf<IBufferStateIn>>,
-    value: ValueOf<IBufferInputs<V>> | ValueOf<IBufferStateIn>,
+    port: IInPort<ValueOf<IBufferInputs<V>>>,
+    value: ValueOf<IBufferInputs<V>>,
     tag?: string
   ): void {
     switch (port) {
-      case this.i.$:
+      case this.i.d_val:
         if (this.open) {
-          this.o.$.send(value as V, tag);
+          this.o.d_val.send(value as V, tag);
         } else {
           const buffer = this.buffer;
           buffer.push([value as V, tag]);
@@ -63,10 +57,10 @@ export class Buffer<V> implements ISink, ISource {
         if (openAfter && !openBefore) {
           this.open = openAfter;
           const buffer = this.buffer;
-          const $ = this.o.$;
+          const d_val = this.o.d_val;
           while (buffer.length) {
             const next = buffer.shift();
-            $.send(next[0], next[1]);
+            d_val.send(next[0], next[1]);
           }
           this.o.st_size.send(buffer.length);
         }

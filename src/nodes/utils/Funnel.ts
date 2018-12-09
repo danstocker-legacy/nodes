@@ -6,7 +6,7 @@ type TFunnelInputs<C extends string, V> = {
 };
 
 interface IFunnelOutputs<C extends string, V> {
-  $: V;
+  d_val: V;
   st_pos: C;
 }
 
@@ -29,7 +29,7 @@ export class Funnel<C extends string, V> implements ISink, ISource {
 
   constructor(cases: Array<string>) {
     MSink.init.call(this, cases);
-    MSource.init.call(this, ["$", "st_pos"]);
+    MSource.init.call(this, ["d_val", "st_pos"]);
   }
 
   public send(
@@ -38,6 +38,6 @@ export class Funnel<C extends string, V> implements ISink, ISource {
     tag?: string
   ): void {
     this.o.st_pos.send(port.name as C, tag);
-    this.o.$.send(value, tag);
+    this.o.d_val.send(value, tag);
   }
 }

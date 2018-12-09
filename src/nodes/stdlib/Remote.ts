@@ -4,12 +4,12 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TJson, ValueOf} from "../../utils";
 
 interface IRemoteInputs {
-  $: TJson;
+  d_wra: TJson;
   st_conn: boolean;
 }
 
 interface IRemoteOutputs {
-  $: TJson;
+  d_wra: TJson;
   st_conn: boolean;
   ev_err: string;
 }
@@ -68,9 +68,9 @@ export class Remote implements ISink, ISource, IBouncer {
     localHost: string,
     localPort: number
   ) {
-    MSink.init.call(this, ["$", "st_conn"]);
-    MSource.init.call(this, ["$", "st_conn", "ev_err"]);
-    MBouncer.init.call(this, ["$"]);
+    MSink.init.call(this, ["d_wra", "st_conn"]);
+    MSource.init.call(this, ["d_wra", "st_conn", "ev_err"]);
+    MBouncer.init.call(this, ["d_wra"]);
 
     const socket = new net.Socket();
     socket.on("connect", () => this.onConnect());
@@ -92,7 +92,7 @@ export class Remote implements ISink, ISource, IBouncer {
     const socket = this.socket;
     const connected = this.connected;
     switch (port) {
-      case this.i.$:
+      case this.i.d_wra:
         if (connected) {
           const buffer = this.buffer;
           buffer.set(tag, value);
@@ -102,7 +102,7 @@ export class Remote implements ISink, ISource, IBouncer {
         } else {
           // socket is not connected
           // bouncing inputs
-          this.re.$.send(value, tag);
+          this.re.d_wra.send(value, tag);
         }
         break;
 
@@ -127,7 +127,7 @@ export class Remote implements ISink, ISource, IBouncer {
   private bounceAll() {
     const buffer = this.buffer;
     if (buffer.size > 0) {
-      const re = this.re.$;
+      const re = this.re.d_wra;
       for (const [tag, value] of this.buffer.entries()) {
         re.send(value, tag);
       }
@@ -176,7 +176,7 @@ export class Remote implements ISink, ISource, IBouncer {
   private onWrite(err: Error, value: TJson, tag?: string): void {
     if (err) {
       this.o.ev_err.send(String(err));
-      this.re.$.send(value, tag);
+      this.re.d_wra.send(value, tag);
     }
     this.buffer.delete(tag);
   }

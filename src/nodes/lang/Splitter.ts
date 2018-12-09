@@ -3,7 +3,7 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IAny} from "../../utils";
 
 interface ISplitterInputs<T> {
-  $: T;
+  sy: T;
 }
 
 /**
@@ -20,12 +20,12 @@ export class Splitter<T extends IAny> implements ISink, ISource {
   public readonly o: TOutBundle<T>;
 
   constructor(fields: Array<string>) {
-    MSink.init.call(this, ["$"]);
+    MSink.init.call(this, ["sy"]);
     MSource.init.call(this, fields);
   }
 
   public send(port: IInPort<T>, input: T, tag?: string): void {
-    if (port === this.i.$) {
+    if (port === this.i.sy) {
       for (const [name, value] of Object.entries(input)) {
         this.o[name].send(value, tag);
       }
