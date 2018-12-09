@@ -130,9 +130,9 @@ describe("Server", function () {
     });
 
     it("should send parsed data to Remote node", function () {
-      spyOn(remote.o.d_wra, "send");
+      spyOn(remote.o.d_wrap, "send");
       onData(`{"tag":1,"value":"foo"}`);
-      expect(remote.o.d_wra.send).toHaveBeenCalledWith("foo", 1);
+      expect(remote.o.d_wrap.send).toHaveBeenCalledWith("foo", 1);
     });
   });
 });
