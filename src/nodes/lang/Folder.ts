@@ -11,7 +11,7 @@ interface IFolderInput<V> {
 }
 
 interface IFolderInputs<V> {
-  sy: IFolderInput<V>;
+  sync: IFolderInput<V>;
 }
 
 interface IFolderOutputs<V> {
@@ -44,9 +44,9 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
   private folded: O;
 
   constructor(cb: TFolderCallback<I, O>, initial?: O) {
-    MSink.init.call(this, ["sy"]);
+    MSink.init.call(this, ["sync"]);
     MSource.init.call(this, ["d_fol", "ev_err"]);
-    MBouncer.init.call(this, ["sy"]);
+    MBouncer.init.call(this, ["sync"]);
     this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);
@@ -57,7 +57,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
     value: IFolderInput<I>,
     tag?: string
   ): void {
-    if (port === this.i.sy) {
+    if (port === this.i.sync) {
       const next = value.d_val;
       const curr = value.ev_res ?
         copy(this.initial) :
@@ -67,7 +67,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
         const folded = this.folded = this.cb(curr, next, tag);
         this.o.d_fol.send(folded, tag);
       } catch (err) {
-        this.re.sy.send(value, tag);
+        this.re.sync.send(value, tag);
         this.o.ev_err.send(String(err), tag);
       }
     }

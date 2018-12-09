@@ -7,7 +7,7 @@ interface ISwitchInput<C extends string, T> {
 }
 
 interface ISwitchInputs<C extends string, T> {
-  sy: ISwitchInput<C, T>;
+  sync: ISwitchInput<C, T>;
 }
 
 type TSwitchOutputs<C extends string, T> = {
@@ -35,9 +35,9 @@ export class Switch<C extends string, T> implements ISink, ISource, IBouncer {
    * @param positions Strings identifying possible cases for switch.
    */
   constructor(positions: Array<string>) {
-    MSink.init.call(this, ["sy"]);
+    MSink.init.call(this, ["sync"]);
     MSource.init.call(this, positions);
-    MBouncer.init.call(this, ["sy"]);
+    MBouncer.init.call(this, ["sync"]);
   }
 
   public send(
@@ -45,13 +45,13 @@ export class Switch<C extends string, T> implements ISink, ISource, IBouncer {
     value: ISwitchInput<C, T>,
     tag?: string
   ): void {
-    if (port === this.i.sy) {
+    if (port === this.i.sync) {
       const name = value.st_pos;
       const outPort = this.o[name];
       if (outPort) {
         outPort.send(value.d_val, tag);
       } else {
-        this.re.sy.send(value, tag);
+        this.re.sync.send(value, tag);
       }
     }
   }

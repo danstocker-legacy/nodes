@@ -3,7 +3,7 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
 interface ISyncerOutputs<T> {
-  sy: T;
+  sync: T;
 }
 
 /**
@@ -26,7 +26,7 @@ export class Syncer<T> implements ISink, ISource {
 
   constructor(fields: Array<string>) {
     MSink.init.call(this, fields);
-    MSource.init.call(this, ["sy"]);
+    MSource.init.call(this, ["sync"]);
     this.fields = fields;
     this.inputCache = new Map();
     this.portCache = new Map();
@@ -58,7 +58,7 @@ export class Syncer<T> implements ISink, ISource {
         // releasing input set and cleaning up
         inputCache.delete(tag);
         portCache.delete(tag);
-        this.o.sy.send(inputs, tag);
+        this.o.sync.send(inputs, tag);
       }
     }
   }

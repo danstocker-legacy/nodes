@@ -14,7 +14,7 @@ interface IPickerInput<V> {
 }
 
 interface IPickerInputs<V> {
-  sy: IPickerInput<V>;
+  sync: IPickerInput<V>;
 }
 
 interface IPickerOutputs<V> {
@@ -30,12 +30,12 @@ export class Picker<V> implements ISink, ISource {
   public readonly o: TOutBundle<IPickerOutputs<V>>;
 
   constructor() {
-    MSink.init.call(this, ["sy"]);
+    MSink.init.call(this, ["sync"]);
     MSource.init.call(this, ["d_val"]);
   }
 
   public send(port: IInPort<IPickerInput<V>>, input: IPickerInput<V>, tag?: string): void {
-    if (port === this.i.sy && input.st_fwd) {
+    if (port === this.i.sync && input.st_fwd) {
       this.o.d_val.send(input.d_val, tag);
     }
   }
