@@ -13,9 +13,9 @@ interface ITrackerOutputs<T> {
  * one received through its corresponding port.
  * Atomic equivalent of a composite node.
  * A ----> $:Sampler:$ -+=> A,B:Syncer:$ -> $
- * B --> smp:           |
+ * B --> ev_smp:           |
  * B ----> $:Sampler:$ -+
- * A --> smp:
+ * A --> ev_smp:
  * @example
  * let tracker: Tracker<{ foo: number, bar: number }>
  * tracker = new Tracker(["foo", "bar"]);

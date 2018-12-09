@@ -4,7 +4,7 @@ import {ValueOf} from "../../utils";
 
 interface IThrottlerInputs {
   tag: any;
-  tick: boolean;
+  ev_tick: boolean;
 }
 
 interface IThrottlerOutputs {
@@ -21,7 +21,7 @@ interface IThrottlerOutputs {
  * @example
  * const throttler = new Throttler();
  * const ticker = new Ticker(1000);
- * ticker.o.$.connect(throttler.i.tick);
+ * ticker.o.$.connect(throttler.i.ev_tick);
  * throttler.i.tag.connect(...);
  * throttler.o.$.connect(...);
  */
@@ -32,7 +32,7 @@ export class Throttler implements ISink, ISource {
   private readonly buffer: Array<string>;
 
   constructor() {
-    MSink.init.call(this, ["tag", "tick"]);
+    MSink.init.call(this, ["tag", "ev_tick"]);
     MSource.init.call(this, ["$"]);
     this.buffer = [];
   }
@@ -44,7 +44,7 @@ export class Throttler implements ISink, ISource {
   ): void {
     const buffer = this.buffer;
     switch (port) {
-      case this.i.tick:
+      case this.i.ev_tick:
         // clock ticked
         // sending out last tag w/ true
         if (buffer.length) {

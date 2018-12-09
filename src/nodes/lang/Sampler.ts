@@ -12,7 +12,7 @@ interface ISamplerInputs<V> {
    * Dictates sampling frequency. Output inherits the tag of the impulse
    * coming through this port.
    */
-  smp: any;
+  ev_smp: any;
 }
 
 interface ISamplerOutputs<V> {
@@ -20,7 +20,7 @@ interface ISamplerOutputs<V> {
 }
 
 /**
- * Emits the last known input value on every `smp` received.
+ * Emits the last known input value on every `ev_smp` received.
  * The purpose of `Sampler` is to make untagged (or differently tagged) inputs
  * consumable by `Syncer`.
  * @example
@@ -28,7 +28,7 @@ interface ISamplerOutputs<V> {
  * const ticker = new Ticker(1000);
  * const foo: ISource<{$: number}>; // emits tagged values
  * ticker.o.$.connect(sampler.i.$);
- * foo.o.$.connect(sampler.i.smp);
+ * foo.o.$.connect(sampler.i.ev_smp);
  * // `sampler` will output the last value from `ticker` on each input to `foo`
  */
 export class Sampler<V> implements ISink, ISource {
@@ -38,7 +38,7 @@ export class Sampler<V> implements ISink, ISource {
   private buffer: V;
 
   constructor() {
-    MSink.init.call(this, ["$", "smp"]);
+    MSink.init.call(this, ["$", "ev_smp"]);
     MSource.init.call(this, ["$"]);
   }
 
@@ -53,7 +53,7 @@ export class Sampler<V> implements ISink, ISource {
         this.buffer = value;
         break;
 
-      case inPorts.smp:
+      case inPorts.ev_smp:
         this.o.$.send(this.buffer, tag);
         break;
     }

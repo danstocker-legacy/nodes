@@ -7,7 +7,7 @@ type TFunnelInputs<C extends string, V> = {
 
 interface IFunnelOutputs<C extends string, V> {
   $: V;
-  case: C;
+  st_pos: C;
 }
 
 /**
@@ -16,7 +16,7 @@ interface IFunnelOutputs<C extends string, V> {
  * Atomic equivalent of a composite node.
  * Composite view:
  * A -+-> Muxer -> Mapper -> Splitter =#-> $
- * B -+                                +-> case
+ * B -+                                +-> st_pos
  * C -+
  * ...
  * @example
@@ -29,7 +29,7 @@ export class Funnel<C extends string, V> implements ISink, ISource {
 
   constructor(cases: Array<string>) {
     MSink.init.call(this, cases);
-    MSource.init.call(this, ["$", "case"]);
+    MSource.init.call(this, ["$", "st_pos"]);
   }
 
   public send(
@@ -37,7 +37,7 @@ export class Funnel<C extends string, V> implements ISink, ISource {
     value: V,
     tag?: string
   ): void {
-    this.o.case.send(port.name as C, tag);
+    this.o.st_pos.send(port.name as C, tag);
     this.o.$.send(value, tag);
   }
 }

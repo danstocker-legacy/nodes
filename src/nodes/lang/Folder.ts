@@ -4,7 +4,7 @@ import {copy} from "../../utils";
 
 interface IFolderInput<V> {
   /** Reset signal */
-  res: boolean;
+  ev_res: boolean;
 
   /** Next input value */
   $: V;
@@ -16,10 +16,7 @@ interface IFolderInputs<V> {
 
 interface IFolderOutputs<V> {
   $: V;
-}
-
-interface IFolderEvents {
-  err: string;
+  ev_err: string;
 }
 
 export type TFolderCallback<I, O> = (
@@ -39,7 +36,7 @@ export type TFolderCallback<I, O> = (
  */
 export class Folder<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IFolderInputs<I>>;
-  public readonly o: TOutBundle<IFolderOutputs<O> & IFolderEvents>;
+  public readonly o: TOutBundle<IFolderOutputs<O>>;
   public readonly re: TOutBundle<IFolderInputs<I>>;
 
   private readonly cb: TFolderCallback<I, O>;
@@ -48,7 +45,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
 
   constructor(cb: TFolderCallback<I, O>, initial?: O) {
     MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$", "err"]);
+    MSource.init.call(this, ["$", "ev_err"]);
     MBouncer.init.call(this, ["$"]);
     this.cb = cb;
     this.initial = initial;
@@ -62,7 +59,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
   ): void {
     if (port === this.i.$) {
       const next = value.$;
-      const curr = value.res ?
+      const curr = value.ev_res ?
         copy(this.initial) :
         this.folded;
 
@@ -71,7 +68,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
         this.o.$.send(folded, tag);
       } catch (err) {
         this.re.$.send(value, tag);
-        this.o.err.send(String(err), tag);
+        this.o.ev_err.send(String(err), tag);
       }
     }
   }

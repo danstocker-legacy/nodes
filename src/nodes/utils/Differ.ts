@@ -8,10 +8,7 @@ interface IDifferInputs<V> {
 
 interface IDifferOutputs {
   $: boolean;
-}
-
-interface IDifferEvents {
-  err: string;
+  ev_err: string;
 }
 
 /**
@@ -28,7 +25,7 @@ interface IDifferEvents {
  */
 export class Differ<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IDifferInputs<V>>;
-  public readonly o: TOutBundle<IDifferOutputs & IDifferEvents>;
+  public readonly o: TOutBundle<IDifferOutputs>;
   public readonly re: TOutBundle<IDifferInputs<V>>;
 
   private readonly cb: TEqualityCallback<V>;
@@ -36,7 +33,7 @@ export class Differ<V> implements ISink, ISource, IBouncer {
 
   constructor(cb: TEqualityCallback<V>) {
     MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$", "err"]);
+    MSource.init.call(this, ["$", "ev_err"]);
     MBouncer.init.call(this, ["$"]);
     this.cb = cb;
     this.buffer = [];
@@ -52,7 +49,7 @@ export class Differ<V> implements ISink, ISource, IBouncer {
           this.o.$.send(!equals, tag);
         } catch (err) {
           this.re.$.send(value, tag);
-          this.o.err.send(String(err), tag);
+          this.o.ev_err.send(String(err), tag);
         }
       } else {
         this.buffer = buffer;

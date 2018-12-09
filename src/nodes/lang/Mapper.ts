@@ -9,10 +9,7 @@ interface IMapperInputs<V> {
 
 interface IMapperOutputs<V> {
   $: V;
-}
-
-interface IMapperEvents {
-  err: string;
+  ev_err: string;
 }
 
 /**
@@ -24,14 +21,14 @@ interface IMapperEvents {
  */
 export class Mapper<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IMapperInputs<I>>;
-  public readonly o: TOutBundle<IMapperOutputs<O> & IMapperEvents>;
+  public readonly o: TOutBundle<IMapperOutputs<O>>;
   public readonly re: TOutBundle<IMapperInputs<I>>;
 
   private readonly cb: TMapperCallback<I, O>;
 
   constructor(cb: TMapperCallback<I, O>) {
     MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$", "err"]);
+    MSource.init.call(this, ["$", "ev_err"]);
     MBouncer.init.call(this, ["$"]);
     this.cb = cb;
   }
@@ -43,7 +40,7 @@ export class Mapper<I, O> implements ISink, ISource, IBouncer {
         this.o.$.send(mapped, tag);
       } catch (err) {
         this.re.$.send(value, tag);
-        this.o.err.send(String(err), tag);
+        this.o.ev_err.send(String(err), tag);
       }
     }
   }

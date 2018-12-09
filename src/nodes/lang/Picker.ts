@@ -10,7 +10,7 @@ interface IPickerInput<V> {
   /**
    * Whether to forward value ($).
    */
-  fwd: boolean;
+  st_fwd: boolean;
 }
 
 interface IPickerInputs<V> {
@@ -34,7 +34,7 @@ export class Picker<V> implements ISink, ISource {
   }
 
   public send(port: IInPort<IPickerInput<V>>, input: IPickerInput<V>, tag?: string): void {
-    if (port === this.i.$ && input.fwd) {
+    if (port === this.i.$ && input.st_fwd) {
       this.o.$.send(input.$, tag);
     }
   }

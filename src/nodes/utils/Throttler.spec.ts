@@ -5,7 +5,7 @@ describe("Throttler", function () {
     it("should add ports", function () {
       const node = new Throttler();
       expect(node.i.tag).toBeDefined();
-      expect(node.i.tick).toBeDefined();
+      expect(node.i.ev_tick).toBeDefined();
       expect(node.o.$).toBeDefined();
     });
   });
@@ -44,7 +44,7 @@ describe("Throttler", function () {
 
       it("should send true with previous tag", function () {
         spyOn(node.o.$, "send");
-        node.send(node.i.tick, true);
+        node.send(node.i.ev_tick, true);
         expect(node.o.$.send).toHaveBeenCalledWith(true, "1");
       });
     });

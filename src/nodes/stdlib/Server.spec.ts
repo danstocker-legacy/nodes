@@ -64,8 +64,8 @@ describe("Server", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = Server.instance("localhost", 8888);
-      expect(node.o.connections).toBeDefined();
-      expect(node.o.err).toBeDefined();
+      expect(node.o.st_conc).toBeDefined();
+      expect(node.o.ev_err).toBeDefined();
     });
 
     it("should start listening", function () {
@@ -83,9 +83,9 @@ describe("Server", function () {
     });
 
     it("should send number of connections", function () {
-      spyOn(node.o.connections, "send");
+      spyOn(node.o.st_conc, "send");
       onConnection(socket);
-      expect(node.o.connections.send).toHaveBeenCalledWith(1);
+      expect(node.o.st_conc.send).toHaveBeenCalledWith(1);
     });
   });
 
@@ -98,9 +98,9 @@ describe("Server", function () {
 
     it("should send parsed & unwrapped data to remote", function () {
       const error = new Error("foo");
-      spyOn(node.o.err, "send");
+      spyOn(node.o.ev_err, "send");
       onServerError(error);
-      expect(node.o.err.send).toHaveBeenCalledWith("Error: foo");
+      expect(node.o.ev_err.send).toHaveBeenCalledWith("Error: foo");
     });
   });
 
@@ -113,9 +113,9 @@ describe("Server", function () {
     });
 
     it("should send number of connections", function () {
-      spyOn(node.o.connections, "send");
+      spyOn(node.o.st_conc, "send");
       onSocketClose();
-      expect(node.o.connections.send).toHaveBeenCalledWith(0);
+      expect(node.o.st_conc.send).toHaveBeenCalledWith(0);
     });
   });
 

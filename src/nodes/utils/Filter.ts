@@ -12,14 +12,14 @@ interface IFilterOutputs<V> {
 }
 
 interface IFilterEvents {
-  err: string;
+  ev_err: string;
 }
 
 /**
  * Forwards input that satisfies the specified tester callback.
  * Atomic equivalent of a composite node.
  * Composite view:
- * $ -> $:Mapper:$[$,fwd] -> $[$,fwd]:Picker:$[$,fwd] -> $[$,fwd]:Mapper:$ -> $
+ * $ -> $:Mapper:$[$,st_fwd] -> $[$,st_fwd]:Picker:$[$,st_fwd] -> $[$,st_fwd]:Mapper:$ -> $
  * @example
  * const filter = new Filter<number>((a) => a%2);
  * filter.i.$.send(1); // outputs 1
@@ -34,7 +34,7 @@ export class Filter<V> implements ISink, ISource, IBouncer {
 
   constructor(cb: TFilterCallback<V>) {
     MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$", "err"]);
+    MSource.init.call(this, ["$", "ev_err"]);
     MBouncer.init.call(this, ["$"]);
     this.cb = cb;
   }
@@ -48,7 +48,7 @@ export class Filter<V> implements ISink, ISource, IBouncer {
         }
       } catch (err) {
         this.re.$.send(value, tag);
-        this.o.err.send(String(err), tag);
+        this.o.ev_err.send(String(err), tag);
       }
     }
   }

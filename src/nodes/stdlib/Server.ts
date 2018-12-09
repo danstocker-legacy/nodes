@@ -3,12 +3,9 @@ import {ISource, MSource} from "../../node";
 import {TOutBundle} from "../../port";
 import {Remote} from "./Remote";
 
-interface IServerStateOut {
-  connections: number;
-}
-
-interface IServerEvents {
-  err: string;
+interface IServerOutputs {
+  st_conc: number;
+  ev_err: string;
 }
 
 const instances = new Map<number, Server>();
@@ -45,13 +42,13 @@ export class Server implements ISource {
     remote.o.$.send(wrapped.value, wrapped.tag);
   }
 
-  public readonly o: TOutBundle<IServerStateOut & IServerEvents>;
+  public readonly o: TOutBundle<IServerOutputs>;
   private readonly host: string;
   private readonly port: number;
   private readonly connections: Set<net.Socket>;
 
   private constructor(host: string, port: number) {
-    MSource.init.call(this, ["connections", "err"]);
+    MSource.init.call(this, ["st_conc", "ev_err"]);
 
     const server = new net.Server();
     server.on("connection",
@@ -79,7 +76,7 @@ export class Server implements ISource {
 
     const connections = this.connections;
     connections.add(socket);
-    this.o.connections.send(connections.size);
+    this.o.st_conc.send(connections.size);
   }
 
   /**
@@ -88,7 +85,7 @@ export class Server implements ISource {
    * @param err
    */
   private onServerError(err: Error): void {
-    this.o.err.send(String(err));
+    this.o.ev_err.send(String(err));
   }
 
   /**
@@ -99,7 +96,7 @@ export class Server implements ISource {
   private onSocketClose(socket: net.Socket): void {
     const connections = this.connections;
     connections.delete(socket);
-    this.o.connections.send(connections.size);
+    this.o.st_conc.send(connections.size);
   }
 
   /**
@@ -108,6 +105,6 @@ export class Server implements ISource {
    * @param err
    */
   private onSocketError(err: Error): void {
-    this.o.err.send(String(err));
+    this.o.ev_err.send(String(err));
   }
 }

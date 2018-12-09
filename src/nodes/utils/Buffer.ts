@@ -11,11 +11,11 @@ interface IBufferOutputs<V> {
 }
 
 interface IBufferStateIn {
-  open: boolean;
+  st_open: boolean;
 }
 
 interface IBufferStateOut {
-  size: number;
+  st_size: number;
 }
 
 /**
@@ -34,8 +34,8 @@ export class Buffer<V> implements ISink, ISource {
   private open: boolean;
 
   constructor() {
-    MSink.init.call(this, ["$", "open"]);
-    MSource.init.call(this, ["$", "size"]);
+    MSink.init.call(this, ["$", "st_open"]);
+    MSource.init.call(this, ["$", "st_size"]);
     this.buffer = [];
     this.open = false;
   }
@@ -52,11 +52,11 @@ export class Buffer<V> implements ISink, ISource {
         } else {
           const buffer = this.buffer;
           buffer.push([value as V, tag]);
-          this.o.size.send(buffer.length);
+          this.o.st_size.send(buffer.length);
         }
         break;
 
-      case this.i.open:
+      case this.i.st_open:
         const openBefore = this.open;
         const openAfter = value as boolean;
         // if new value is true, release buffer contents
@@ -68,7 +68,7 @@ export class Buffer<V> implements ISink, ISource {
             const next = buffer.shift();
             $.send(next[0], next[1]);
           }
-          this.o.size.send(buffer.length);
+          this.o.st_size.send(buffer.length);
         }
         break;
     }

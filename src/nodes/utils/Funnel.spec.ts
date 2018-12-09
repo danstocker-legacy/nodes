@@ -8,7 +8,7 @@ describe("Funnel", function () {
       expect(node.i.bar).toBeDefined();
       expect(node.i.baz).toBeDefined();
       expect(node.o.$).toBeDefined();
-      expect(node.o.case).toBeDefined();
+      expect(node.o.st_pos).toBeDefined();
     });
   });
 
@@ -21,10 +21,10 @@ describe("Funnel", function () {
 
     it("should forward to specified output", function () {
       spyOn(node.o.$, "send");
-      spyOn(node.o.case, "send");
+      spyOn(node.o.st_pos, "send");
       node.i.foo.send(5, "1");
       expect(node.o.$.send).toHaveBeenCalledWith(5, "1");
-      expect(node.o.case.send).toHaveBeenCalledWith("foo", "1");
+      expect(node.o.st_pos.send).toHaveBeenCalledWith("foo", "1");
     });
   });
 });

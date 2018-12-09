@@ -8,7 +8,7 @@ interface IListenerInputs {
 }
 
 interface IListenerEvents {
-  err: string;
+  ev_err: string;
 }
 
 /**
@@ -29,7 +29,7 @@ export class Listener implements ISink, ISource, IBouncer {
 
   constructor(cb: TListenerCallback) {
     MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["err"]);
+    MSource.init.call(this, ["ev_err"]);
     MBouncer.init.call(this, ["$"]);
     this.cb = cb;
   }
@@ -40,7 +40,7 @@ export class Listener implements ISink, ISource, IBouncer {
         this.cb(value, tag);
       } catch (err) {
         this.re.$.send(value, tag);
-        this.o.err.send(String(err), tag);
+        this.o.ev_err.send(String(err), tag);
       }
     }
   }

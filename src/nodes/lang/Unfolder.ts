@@ -14,10 +14,7 @@ interface IUnfolderInputs<V> {
 
 interface IUnfolderOutputs<V> {
   $: V;
-}
-
-interface IUnfolderEvents {
-  err: string;
+  ev_err: string;
 }
 
 /**
@@ -38,14 +35,14 @@ interface IUnfolderEvents {
  */
 export class Unfolder<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IUnfolderInputs<I>>;
-  public readonly o: TOutBundle<IUnfolderOutputs<O> & IUnfolderEvents>;
+  public readonly o: TOutBundle<IUnfolderOutputs<O>>;
   public readonly re: TOutBundle<IUnfolderInputs<I>>;
 
   private readonly cb: TUnfolderCallback<I, O>;
 
   constructor(cb: TUnfolderCallback<I, O>) {
     MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$", "err"]);
+    MSource.init.call(this, ["$", "ev_err"]);
     MBouncer.init.call(this, ["$"]);
     this.cb = cb;
   }
@@ -58,7 +55,7 @@ export class Unfolder<I, O> implements ISink, ISource, IBouncer {
       }
     } catch (err) {
       this.re.$.send(value, tag);
-      this.o.err.send(String(err), tag);
+      this.o.ev_err.send(String(err), tag);
     }
   }
 }

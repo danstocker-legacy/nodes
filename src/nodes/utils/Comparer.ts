@@ -14,10 +14,7 @@ interface IComparerInputs<V> {
 
 interface IComparerOutputs {
   $: boolean;
-}
-
-interface IComparerEvents {
-  err: string;
+  ev_err: string;
 }
 
 /**
@@ -32,14 +29,14 @@ interface IComparerEvents {
  */
 export class Comparer<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IComparerInputs<V>>;
-  public readonly o: TOutBundle<IComparerOutputs & IComparerEvents>;
+  public readonly o: TOutBundle<IComparerOutputs>;
   public readonly re: TOutBundle<IComparerInputs<V>>;
 
   private readonly cb: TEqualityCallback<V>;
 
   constructor(cb: TEqualityCallback<V>) {
     MSink.init.call(this, ["$"]);
-    MSource.init.call(this, ["$", "err"]);
+    MSource.init.call(this, ["$", "ev_err"]);
     MBouncer.init.call(this, ["$"]);
     this.cb = cb;
   }
@@ -55,7 +52,7 @@ export class Comparer<V> implements ISink, ISource, IBouncer {
         this.o.$.send(equals, tag);
       } catch (err) {
         this.re.$.send(value, tag);
-        this.o.err.send(String(err), tag);
+        this.o.ev_err.send(String(err), tag);
       }
     }
   }
