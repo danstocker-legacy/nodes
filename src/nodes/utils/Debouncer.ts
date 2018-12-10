@@ -9,6 +9,9 @@ interface IDebouncerInputs {
 interface IDebouncerOutputs {
   /** Debounce signal. Emitted for each incoming signal. */
   d_deb: boolean;
+
+  /** Debounce signal. Emitted on timeout only. */
+  ev_deb: any;
 }
 
 /**
@@ -19,7 +22,6 @@ interface IDebouncerOutputs {
  * Commonly used in conjunction with `Picker` and `Folder`.
  * Composite view:
  * TBD
- * TODO: Add `ev_deb`, emitted only on debounce.
  * @example
  * const debouncer = new Debouncer(500);
  * debouncer.i.d_sig.connect(...);
@@ -38,7 +40,7 @@ export class Debouncer implements ISink, ISource {
    */
   constructor(ms: number) {
     MSink.init.call(this, ["d_sig"]);
-    MSource.init.call(this, ["d_deb"]);
+    MSource.init.call(this, ["d_deb", "ev_deb"]);
     this.ms = ms;
     this.buffer = [];
   }
@@ -58,6 +60,7 @@ export class Debouncer implements ISink, ISource {
 
       this.timer = setTimeout(() => {
         this.o.d_deb.send(true, tag);
+        this.o.ev_deb.send(null, tag);
       }, this.ms);
     }
   }
