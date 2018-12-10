@@ -11,10 +11,10 @@ interface IMuxerOutputs<T> {
  * Channels impulses from all input ports into a single output port,
  * adding the input port's name.
  * @example
- * let muxer: Muxer<{foo: number, bar: boolean}>;
- * muxer = new Muxer(["foo", "bar"]);
- * muxer.i.foo.send(5);
- * // outputs `{$: 5, name: "foo"}` on port "$"
+ * let muxer: Muxer<{d_foo: number, d_bar: boolean}>;
+ * muxer = new Muxer(["fd_oo", "d_bar"]);
+ * muxer.i.d_foo.send(5);
+ * // outputs `{d_foo: 5, name: "foo"}` on port "d_mux"
  */
 export class Muxer<T extends IAny = IAny> implements ISink, ISource {
   public readonly i: TInBundle<T>;
