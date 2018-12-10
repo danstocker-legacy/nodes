@@ -19,7 +19,7 @@ describe("Switch", function () {
       node = new Switch(["foo", "bar", "baz"]);
     });
 
-    describe("when sending to `synced`", function () {
+    describe("when sending to `mul`", function () {
       it("should forward to specified output", function () {
         spyOn(node.o.foo, "send");
         spyOn(node.o.bar, "send");
