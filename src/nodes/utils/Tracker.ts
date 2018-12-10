@@ -12,13 +12,13 @@ interface ITrackerOutputs<T> {
  * Outputs sets of inputs, where each value in the set reflects the latest
  * one received through its corresponding port.
  * Atomic equivalent of a composite node.
- * A ----> $:Sampler:$ -+=> A,B:Syncer:$ -> $
- * B --> ev_smp:           |
- * B ----> $:Sampler:$ -+
- * A --> ev_smp:
+ * d_A ---> d_val:Sampler:$ -+=> d_A,d_B:Syncer:sync -> tra
+ * d_B --> ev_smp:"          |
+ * d_B ---> d_val:Sampler:$ -+
+ * d_A --> ev_smp:"
  * @example
- * let tracker: Tracker<{ foo: number, bar: number }>
- * tracker = new Tracker(["foo", "bar"]);
+ * let tracker: Tracker<{ d_foo: number, d_bar: number }>
+ * tracker = new Tracker(["d_foo", "d_bar"]);
  */
 export class Tracker<T extends IAny> implements ISink, ISource {
   public readonly i: TInBundle<TTrackerInputs<T>>;
@@ -29,6 +29,10 @@ export class Tracker<T extends IAny> implements ISink, ISource {
    */
   private readonly values: T;
 
+  /**
+   * @param fields Must be prefixed by their corresponding domains. ("d_" /
+   * "st_" / "ev_": data, state, event, etc.)
+   */
   constructor(fields: Array<string>) {
     MSink.init.call(this, fields);
     MSource.init.call(this, ["tra"]);
