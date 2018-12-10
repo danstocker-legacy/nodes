@@ -3,12 +3,22 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
 interface IBufferInputs<V> {
+  /** Value to be buffered. */
   d_val: V;
+
+  /**
+   * "Open" state of buffer.
+   * When buffer is open, it releases contents then forwards input. When
+   * buffer is closed, it buffers inputs in the order they arrive.
+   */
   st_open: boolean;
 }
 
 interface IBufferOutputs<V> {
+  /** Value forwarded or released from buffer. */
   d_val: V;
+
+  /** Buffer size. */
   st_size: number;
 }
 
@@ -17,6 +27,7 @@ interface IBufferOutputs<V> {
  * Atomic equivalent of a composite node.
  * Composite view:
  * TBD
+ * TODO: Add multiple inputs port.
  * @example
  * TBD
  */

@@ -1,13 +1,16 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
-type TFunnelInputs<C extends string, V> = {
-  [K in C]: V
+type TFunnelInputs<P extends string, V> = {
+  [K in P]: V
 };
 
-interface IFunnelOutputs<C extends string, V> {
+interface IFunnelOutputs<P extends string, V> {
+  /** Captured value. */
   d_val: V;
-  st_pos: C;
+
+  /** Affected position. */
+  st_pos: P;
 }
 
 /**
@@ -15,20 +18,25 @@ interface IFunnelOutputs<C extends string, V> {
  * Outputs which input the value came through.
  * Atomic equivalent of a composite node.
  * Composite view:
- * A -+-> Muxer -> Mapper -> Splitter =#-> $
- * B -+                                +-> st_pos
- * C -+
+ * d_A -+-> d_val:Muxer:d_mux -> d_val:Mapper:d_val -> d_mul:Splitter:d_val =#-> d_val
+ * d_B -+                                                                    +-> st_pos
+ * d_C -/
  * ...
  * @example
- * let funnel: Funnel<"foo" | "bar" | "baz", number>;
- * funnel = new Funnel(["foo", "bar", "baz"]);
+ * let funnel: Funnel<"d_foo" | "d_bar" | "d_baz", number>;
+ * funnel = new Funnel(["d_foo", "d_bar", "d_baz"]);
  */
-export class Funnel<C extends string, V> implements ISink, ISource {
-  public readonly i: TInBundle<TFunnelInputs<C, V>>;
-  public readonly o: TOutBundle<IFunnelOutputs<C, V>>;
+export class Funnel<P extends string, V> implements ISink, ISource {
+  public readonly i: TInBundle<TFunnelInputs<P, V>>;
+  public readonly o: TOutBundle<IFunnelOutputs<P, V>>;
 
-  constructor(cases: Array<string>) {
-    MSink.init.call(this, cases);
+  /**
+   * @param positions Possible positions the funnel expects input from. Must
+   * be prefixed with each positions's respective domain. ("d_" / "st_" /
+   * "ev_": data, state, event, etc.)
+   */
+  constructor(positions: Array<string>) {
+    MSink.init.call(this, positions);
     MSource.init.call(this, ["d_val", "st_pos"]);
   }
 
@@ -37,7 +45,7 @@ export class Funnel<C extends string, V> implements ISink, ISource {
     value: V,
     tag?: string
   ): void {
-    this.o.st_pos.send(port.name as C, tag);
+    this.o.st_pos.send(port.name as P, tag);
     this.o.d_val.send(value, tag);
   }
 }

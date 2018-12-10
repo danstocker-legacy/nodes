@@ -3,6 +3,11 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IMuxed} from "../../utils";
 
 interface IDemuxerInputs<T> {
+  /**
+   * Multiplexed value.
+   * Possible values of property `name` is one of the fields passed to
+   * constructor.
+   */
   d_mux: IMuxed<T>;
 }
 

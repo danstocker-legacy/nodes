@@ -3,12 +3,18 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TEqualityCallback} from "./Comparer";
 
 interface IDifferInputs<V> {
+  /** Value to be diffed. */
   d_val: V;
 }
 
 interface IDifferOutputs<V> {
+  /** Bounced input value. */
   b_d_val: V;
+
+  /** Non-equality of subsequent inputs. */
   d_diff: boolean;
+
+  /** Error message. */
   ev_err: string;
 }
 
@@ -20,9 +26,9 @@ interface IDifferOutputs<V> {
  * TBD
  * @example
  * const differ = new Differ<number>((a, b) => a === b);
- * differ.i.$.send(5) // outputs `undefined` (first input)
- * differ.i.$.send(5) // outputs `false` (not different)
- * differ.i.$.send(4) // outputs `true` (is different)
+ * differ.i.d_val.send(5) // emits `undefined` (first input)
+ * differ.i.d_val.send(5) // emits `false` (not different)
+ * differ.i.d_val.send(4) // emits `true` (is different)
  */
 export class Differ<V> implements ISink, ISource {
   public readonly i: TInBundle<IDifferInputs<V>>;

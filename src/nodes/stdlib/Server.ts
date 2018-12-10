@@ -4,7 +4,10 @@ import {TOutBundle} from "../../port";
 import {Remote} from "./Remote";
 
 interface IServerOutputs {
+  /** Connection count. */
   st_conc: number;
+
+  /** Error message. */
   ev_err: string;
 }
 

@@ -4,12 +4,18 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
 
 interface IMapperInputs<V> {
+  /** Value to be mapped */
   d_val: V;
 }
 
 interface IMapperOutputs<I, O> {
+  /** Bounced input value */
   b_d_val: I;
+
+  /** Mapped value */
   d_val: O;
+
+  /** Error message */
   ev_err: string;
 }
 
@@ -17,8 +23,8 @@ interface IMapperOutputs<I, O> {
  * Maps input value to an output value, as specified by a static mapper
  * callback, or one passed in through the pseudo-port "cb".
  * @example
- * // static callback
  * const mapper = new Mapper<number, string>(String);
+ * mapper.i.d_val.send(5, "1"); // o.d_val -> "5", "1"
  */
 export class Mapper<I, O> implements ISink, ISource {
   public readonly i: TInBundle<IMapperInputs<I>>;

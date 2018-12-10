@@ -3,6 +3,10 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
 interface IJoinerOutputs<T> {
+  /**
+   * Multiple named values.
+   * Names match the fields passed to constructor.
+   */
   mul: T;
 }
 

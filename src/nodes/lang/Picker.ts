@@ -2,22 +2,20 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface IPickerInput<V> {
-  /**
-   * Value that may or may not be picked for forwarding.
-   */
+  /** Value to be forwarded. */
   d_val: V;
 
-  /**
-   * Whether to forward value ($).
-   */
+  /** Whether to forward value. */
   st_fwd: boolean;
 }
 
 interface IPickerInputs<V> {
+  /** Multiple inputs, including `d_val` and `st_fwd`. */
   mul: IPickerInput<V>;
 }
 
 interface IPickerOutputs<V> {
+  /** Forwarded value. */
   d_val: V;
 }
 

@@ -3,6 +3,8 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface ISerializerInputs<V> {
   d_val: V;
+
+  /** Reference input, defining tag order. */
   d_tag: string;
 }
 

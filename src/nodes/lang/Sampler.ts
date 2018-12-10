@@ -3,19 +3,15 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
 interface ISamplerInputs<V> {
-  /**
-   * Input value to be sampled.
-   */
+  /** Value to be sampled. */
   d_val: V;
 
-  /**
-   * Dictates sampling frequency. Output inherits the tag of the impulse
-   * coming through this port.
-   */
+  /** Sampling impulse. Output inherits the tag. */
   ev_smp: any;
 }
 
 interface ISamplerOutputs<V> {
+  /** Sampled value. */
   d_val: V;
 }
 

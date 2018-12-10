@@ -3,12 +3,15 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
 interface IThrottlerInputs {
-  ev_sig: any;
+  /** Signal to be throttled. */
+  d_sig: any;
+
   ev_tick: boolean;
 }
 
 interface IThrottlerOutputs {
-  ev_thro: boolean;
+  /** Throttle signal. Emitted on each incoming signal. */
+  d_thro: boolean;
 }
 
 /**
@@ -21,9 +24,9 @@ interface IThrottlerOutputs {
  * @example
  * const throttler = new Throttler();
  * const ticker = new Ticker(1000);
- * ticker.o.$.connect(throttler.i.ev_tick);
- * throttler.i.tag.connect(...);
- * throttler.o.$.connect(...);
+ * ticker.o.ev_tick.connect(throttler.i.ev_tick);
+ * throttler.i.d_sig.connect(...);
+ * throttler.o.d_thro.connect(...);
  */
 export class Throttler implements ISink, ISource {
   public readonly i: TInBundle<IThrottlerInputs>;
@@ -32,8 +35,8 @@ export class Throttler implements ISink, ISource {
   private readonly buffer: Array<string>;
 
   constructor() {
-    MSink.init.call(this, ["ev_sig", "ev_tick"]);
-    MSource.init.call(this, ["ev_thro"]);
+    MSink.init.call(this, ["d_sig", "ev_tick"]);
+    MSource.init.call(this, ["d_thro"]);
     this.buffer = [];
   }
 
@@ -48,18 +51,18 @@ export class Throttler implements ISink, ISource {
         // clock ticked
         // sending out last tag w/ true
         if (buffer.length) {
-          this.o.ev_thro.send(true, buffer.shift());
+          this.o.d_thro.send(true, buffer.shift());
         }
         break;
 
-      case this.i.ev_sig:
+      case this.i.d_sig:
         // new tag arrived
         buffer.push(tag);
 
         if (buffer.length > 1) {
           // there is a previous tag in buffer
           // sending out last tag w/ false
-          this.o.ev_thro.send(false, buffer.shift());
+          this.o.d_thro.send(false, buffer.shift());
         }
         break;
     }

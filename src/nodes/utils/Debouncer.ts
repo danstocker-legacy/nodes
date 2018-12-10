@@ -2,11 +2,13 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 interface IDebouncerInputs {
-  ev_sig: any;
+  /** Signal to be debounced. */
+  d_sig: any;
 }
 
 interface IDebouncerOutputs {
-  ev_deb: boolean;
+  /** Debounce signal. Emitted for each incoming signal. */
+  d_deb: boolean;
 }
 
 /**
@@ -14,13 +16,14 @@ interface IDebouncerOutputs {
  * delay has passed since last received input tag, `false` when a new input is
  * received before timer runs out.
  * Atomic equivalent of a composite node.
- * Commonly used in conjunction with Picker and Folder.
+ * Commonly used in conjunction with `Picker` and `Folder`.
  * Composite view:
  * TBD
+ * TODO: Add `ev_deb`, emitted only on debounce.
  * @example
  * const debouncer = new Debouncer(500);
- * debouncer.i.$.connect(...);
- * debouncer.o.$.connect(...);
+ * debouncer.i.d_sig.connect(...);
+ * debouncer.o.d_deb.connect(...);
  */
 export class Debouncer implements ISink, ISource {
   public readonly i: TInBundle<IDebouncerInputs>;
@@ -34,14 +37,14 @@ export class Debouncer implements ISink, ISource {
    * @param ms Debounce delay in milliseconds.
    */
   constructor(ms: number) {
-    MSink.init.call(this, ["ev_sig"]);
-    MSource.init.call(this, ["ev_deb"]);
+    MSink.init.call(this, ["d_sig"]);
+    MSource.init.call(this, ["d_deb"]);
     this.ms = ms;
     this.buffer = [];
   }
 
   public send(port: IInPort<any>, value: any, tag: string): void {
-    if (port === this.i.ev_sig) {
+    if (port === this.i.d_sig) {
       const timer = this.timer;
       const buffer = this.buffer;
       buffer.push(tag);
@@ -50,11 +53,11 @@ export class Debouncer implements ISink, ISource {
         // interrupting timer & sending out last tag in buffer w/ false
         clearTimeout(timer);
         const next = buffer.shift();
-        this.o.ev_deb.send(false, next);
+        this.o.d_deb.send(false, next);
       }
 
       this.timer = setTimeout(() => {
-        this.o.ev_deb.send(true, tag);
+        this.o.d_deb.send(true, tag);
       }, this.ms);
     }
   }

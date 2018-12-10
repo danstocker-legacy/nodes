@@ -4,17 +4,26 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
 
 interface IComparerInput<V> {
+  /** First operand. */
   d_a: V;
+
+  /** Second operand. */
   d_b: V;
 }
 
 interface IComparerInputs<V> {
+  /** Multiple inputs containing `d_a` and `d_b`. */
   mul: IComparerInput<V>;
 }
 
 interface IComparerOutputs<V> {
+  /** Bounced multiple inputs. */
   b_mul: IComparerInput<V>;
+
+  /** Equality of operands. */
   d_eq: boolean;
+
+  /** Error message */
   ev_err: string;
 }
 

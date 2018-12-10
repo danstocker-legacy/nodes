@@ -4,14 +4,24 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TJson, ValueOf} from "../../utils";
 
 interface IRemoteInputs {
+  /** Wrapped value. */
   d_wrap: TJson;
+
+  /** "Connected" state. */
   st_conn: boolean;
 }
 
 interface IRemoteOutputs {
+  /** Bounced wrapped value. */
   b_d_wrap: TJson;
+
+  /** Wrapped value emitted by remote server. */
   d_wrap: TJson;
+
+  /** "Connected" state. Not guaranteed to match `i.st_conn`. */
   st_conn: boolean;
+
+  /** Error message. */
   ev_err: string;
 }
 

@@ -3,6 +3,10 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IAny} from "../../utils";
 
 interface ISplitterInputs<T> {
+  /**
+   * Multiple named values.
+   * Names match the fields passed to constructor.
+   */
   mul: T;
 }
 

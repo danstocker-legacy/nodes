@@ -11,12 +11,18 @@ interface IFolderInput<V> {
 }
 
 interface IFolderInputs<V> {
+  /** Multiple inputs, containing both `ev_red` and `d_val`. */
   mul: IFolderInput<V>;
 }
 
 interface IFolderOutputs<I, O> {
+  /** Bounced multiple inputs. */
   b_mul: IFolderInput<I>;
+
+  /** Folded value */
   d_fold: O;
+
+  /** Error message */
   ev_err: string;
 }
 
@@ -30,6 +36,7 @@ export type TFolderCallback<I, O> = (
  * Emits the next folded value for each input.
  * Takes a callback function which aggregates input values received since the
  * last reset signal.
+ * TODO: Add independent data & event ports.
  * @example
  * let sum: Folder<number, number>;
  * sum = new Folder((curr, next) => curr + next, 0);

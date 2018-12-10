@@ -8,7 +8,10 @@ interface IListenerInputs {
 }
 
 interface IListenerOutputs {
+  /** Bounced input. */
   b_d_val: any;
+
+  /** Error message */
   ev_err: string;
 }
 
@@ -17,9 +20,9 @@ interface IListenerOutputs {
  * @example
  * const listener = new Listener((value, tag) => console.log(value, tag));
  * // to subscribe:
- * node.o.$.connect(listener.i.$);
+ * node.o.d_val.connect(listener.i.d_val);
  * // to unsubscribe:
- * listener.i.$.disconnect();
+ * listener.i.d_val.disconnect();
  */
 export class Listener implements ISink, ISource {
   public readonly i: TInBundle<IListenerInputs>;

@@ -17,7 +17,7 @@ interface INoopOutputs<V> {
  * @example
  * let noop: Noop<number>
  * noop = new Noop();
- * noop.i.$.send(5);
+ * noop.i.d_val.send(5); // emits 5
  */
 export class Noop<V> implements ISink, ISource {
   public readonly i: TInBundle<INoopInputs<V>>;

@@ -2,11 +2,15 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, IOutPort, TInBundle, TOutBundle} from "../../port";
 
 interface ISwitchInput<P extends string, V> {
+  /** Value to be sent to one of the outputs. */
   d_val: V;
+
+  /** Switch position. Takes immediately. */
   st_pos: P;
 }
 
 interface ISwitchInputs<P extends string, V> {
+  /** Multiple inputs, containing `d_val` and `st_pos`. */
   mul: ISwitchInput<P, V>;
 }
 
@@ -15,7 +19,10 @@ type TSwitchOutputs<P extends string, V> = {
 };
 
 interface ISwitchBounced<P extends string, V> {
+  /** Bounced multiple inputs */
   b_mul: ISwitchInput<P, V>;
+
+  /** Bounced input value */
   b_d_val: V;
 }
 
@@ -23,13 +30,13 @@ interface ISwitchBounced<P extends string, V> {
  * Forwards input to one of the possible outputs.
  * Atomic equivalent of a composite node.
  * Composite view:
- * d_val ---#=> Joiner -> Mapper -> Demuxer -+-> A
- * st_pos --/                                +-> B
- *                                           +-> P
- *                                           ...
+ * d_val ---#=> d_#:Joiner:d_mul -> d_val:Mapper:d_val -> d_mux:Demuxer:d_val -+-> A
+ * st_pos --/                                                                  +-> B
+ *                                                                             +-> P
+ *                                                                             ...
  * @example
- * let switch: Switch<"foo" | "bar" | "baz", number>;
- * switch = new Switch(["foo", "bar", "baz");
+ * let switch: Switch<"d_foo" | "d_bar" | "d_baz", number>;
+ * switch = new Switch(["d_foo", "d_bar", "d_baz");
  */
 export class Switch<P extends string, V> implements ISink, ISource {
   public readonly i: TInBundle<ISwitchInputs<P, V> & ISwitchInput<P, V>>;
@@ -43,7 +50,9 @@ export class Switch<P extends string, V> implements ISink, ISource {
   private position: P;
 
   /**
-   * @param positions Strings identifying possible cases for switch.
+   * @param positions Possible positions the switch may take. Must be
+   * prefixed with each positions's respective domain. ("d_" / "st_" /
+   * "ev_": data, state, event, etc.)
    */
   constructor(positions: Array<string>) {
     MSink.init.call(this, ["mul", "d_val", "st_pos"]);

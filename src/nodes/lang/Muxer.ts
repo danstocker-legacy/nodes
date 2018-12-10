@@ -3,6 +3,11 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IAny, IMuxed} from "../../utils";
 
 interface IMuxerOutputs<T> {
+  /**
+   * Multiplexed value.
+   * Possible values of property `name` is one of the fields passed to
+   * constructor.
+   */
   d_mux: IMuxed<T>;
 }
 
@@ -20,6 +25,10 @@ export class Muxer<T extends IAny = IAny> implements ISink, ISource {
   public readonly i: TInBundle<T>;
   public readonly o: TOutBundle<IMuxerOutputs<T>>;
 
+  /**
+   * @param fields Must be prefixed by their corresponding domains. ("d_" /
+   * "st_" / "ev_": data, state, event, etc.)
+   */
   constructor(fields: Array<string>) {
     MSink.init.call(this, fields);
     MSource.init.call(this, ["d_mux"]);

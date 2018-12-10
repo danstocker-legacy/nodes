@@ -41,7 +41,7 @@ describe("Ticker", function () {
     it("should send true to output", function () {
       spyOn(node.o.ev_tick, "send");
       jasmine.clock().tick(500);
-      expect(node.o.ev_tick.send).toHaveBeenCalledWith(true, null);
+      expect(node.o.ev_tick.send).toHaveBeenCalledWith(true);
     });
   });
 });

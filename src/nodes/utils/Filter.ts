@@ -4,12 +4,18 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 export type TFilterCallback<V> = (value: V, tag?: string) => boolean;
 
 interface IFilterInputs<V> {
+  /** Value to be filtered. */
   d_val: V;
 }
 
 interface IFilterOutputs<V> {
+  /** Bounced input. */
   b_d_val: V;
+
+  /** Filtered output. */
   d_val: V;
+
+  /** Error message. */
   ev_err: string;
 }
 
@@ -17,11 +23,11 @@ interface IFilterOutputs<V> {
  * Forwards input that satisfies the specified tester callback.
  * Atomic equivalent of a composite node.
  * Composite view:
- * $ -> $:Mapper:$[$,st_fwd] -> $[$,st_fwd]:Picker:$[$,st_fwd] -> $[$,st_fwd]:Mapper:$ -> $
+ * d_val -> d_val:Mapper:d_val -> d_val:Picker:d_val -> d_val:Mapper:d_val -> d_val
  * @example
  * const filter = new Filter<number>((a) => a%2);
- * filter.i.$.send(1); // outputs 1
- * filter.i.$.send(2); // will not output
+ * filter.i.d_val.send(1); // outputs 1
+ * filter.i.d_val.send(2); // will not output
  */
 export class Filter<V> implements ISink, ISource {
   public readonly i: TInBundle<IFilterInputs<V>>;
