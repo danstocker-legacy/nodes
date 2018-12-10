@@ -4,6 +4,7 @@ describe("Buffer", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Buffer();
+      expect(node.i.mul).toBeDefined();
       expect(node.i.d_val).toBeDefined();
       expect(node.i.st_open).toBeDefined();
       expect(node.o.d_val).toBeDefined();
@@ -18,40 +19,64 @@ describe("Buffer", function () {
       node = new Buffer();
     });
 
-    describe("when buffer is open", function () {
-      beforeEach(function () {
-        node.send(node.i.st_open, true);
+    describe("when sending to `mul`", function () {
+      describe("on opening buffer", function () {
+        it("should emit buffered inputs on `o.d_val`");
+        it("should emit buffer size on `o.st_size`");
+        it("should forward input");
       });
 
-      it("should forward input", function () {
-        spyOn(node.o.d_val, "send");
-        node.send(node.i.d_val, 5, "1");
-        expect(node.o.d_val.send).toHaveBeenCalledWith(5, "1");
-      });
-    });
-
-    describe("when buffer is not open", function () {
-      it("should should not send output", function () {
-        spyOn(node.o.d_val, "send");
-        node.send(node.i.d_val, 5, "1");
-        expect(node.o.d_val.send).not.toHaveBeenCalled();
+      describe("when buffer is open", function () {
+        it("should forward input");
       });
 
-      it("should emit buffer size on `st_size`", function () {
-        spyOn(node.o.st_size, "send");
-        node.send(node.i.d_val, 5, "1");
-        expect(node.o.st_size.send).toHaveBeenCalledWith(1);
+      describe("on closing buffer", function () {
+        it("should should not emit on `o.d_val`");
+        it("should emit buffer size on `st_size`");
+      });
+
+      describe("when buffer is closed", function () {
+        it("should should not emit on `o.d_val`");
+        it("should emit buffer size on `st_size`");
       });
     });
 
-    describe("on opening buffer", function () {
+    describe("when sending to `d_val`", function () {
+      describe("when buffer is open", function () {
+        beforeEach(function () {
+          node.send(node.i.st_open, true);
+        });
+
+        it("should forward input", function () {
+          spyOn(node.o.d_val, "send");
+          node.send(node.i.d_val, 5, "1");
+          expect(node.o.d_val.send).toHaveBeenCalledWith(5, "1");
+        });
+      });
+
+      describe("when buffer is closed", function () {
+        it("should should not emit on `o.d_val`", function () {
+          spyOn(node.o.d_val, "send");
+          node.send(node.i.d_val, 5, "1");
+          expect(node.o.d_val.send).not.toHaveBeenCalled();
+        });
+
+        it("should emit buffer size on `o.st_size`", function () {
+          spyOn(node.o.st_size, "send");
+          node.send(node.i.d_val, 5, "1");
+          expect(node.o.st_size.send).toHaveBeenCalledWith(1, "1");
+        });
+      });
+    });
+
+    describe("on opening buffer through `st_open`", function () {
       beforeEach(function () {
         node.send(node.i.d_val, 5, "1");
         node.send(node.i.d_val, 3, "2");
         node.send(node.i.d_val, 6, "3");
       });
 
-      it("should send buffered inputs to output", function () {
+      it("should emit buffered inputs on `o.d_val`", function () {
         const spy = spyOn(node.o.d_val, "send");
         node.send(node.i.st_open, true);
         expect(spy.calls.allArgs()).toEqual([
@@ -63,8 +88,8 @@ describe("Buffer", function () {
 
       it("should emit buffer size on `st_size`", function () {
         spyOn(node.o.st_size, "send");
-        node.send(node.i.st_open, true);
-        expect(node.o.st_size.send).toHaveBeenCalledWith(0);
+        node.send(node.i.st_open, true, "1");
+        expect(node.o.st_size.send).toHaveBeenCalledWith(0, "1");
       });
     });
   });
