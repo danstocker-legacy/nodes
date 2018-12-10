@@ -22,7 +22,7 @@ interface ISamplerOutputs<V> {
 /**
  * Emits the last known input value on every `ev_smp` received.
  * The purpose of `Sampler` is to make untagged (or differently tagged) inputs
- * consumable by `Syncer`.
+ * consumable by `Joiner`.
  * @example
  * const sampler = new Sampler<number>();
  * const ticker = new Ticker(1000);

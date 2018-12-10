@@ -23,7 +23,7 @@ interface ISwitchBounced<P extends string, V> {
  * Forwards input to one of the possible outputs.
  * Atomic equivalent of a composite node.
  * Composite view:
- * d_val ---#=> Syncer -> Mapper -> Demuxer -+-> A
+ * d_val ---#=> Joiner -> Mapper -> Demuxer -+-> A
  * st_pos --/                                +-> B
  *                                           +-> P
  *                                           ...

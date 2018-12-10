@@ -1,6 +1,6 @@
 export {Demuxer} from "./Demuxer";
 export {Folder} from "./Folder";
-export {Syncer} from "./Syncer";
+export {Joiner} from "./Joiner";
 export {Mapper} from "./Mapper";
 export {Muxer} from "./Muxer";
 export {Picker} from "./Picker";
