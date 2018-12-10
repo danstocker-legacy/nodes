@@ -15,7 +15,7 @@ interface IFolderInputs<V> {
 }
 
 interface IFolderOutputs<I, O> {
-  b_sync: IFolderInput<I>;
+  b_mul: IFolderInput<I>;
   d_fold: O;
   ev_err: string;
 }
@@ -45,7 +45,7 @@ export class Folder<I, O> implements ISink, ISource {
 
   constructor(cb: TFolderCallback<I, O>, initial?: O) {
     MSink.init.call(this, ["mul"]);
-    MSource.init.call(this, ["b_sync", "d_fold", "ev_err"]);
+    MSource.init.call(this, ["b_mul", "d_fold", "ev_err"]);
     this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);
@@ -66,7 +66,7 @@ export class Folder<I, O> implements ISink, ISource {
         const folded = this.folded = this.cb(curr, next, tag);
         this.o.d_fold.send(folded, tag);
       } catch (err) {
-        this.o.b_sync.send(value, tag);
+        this.o.b_mul.send(value, tag);
         this.o.ev_err.send(String(err), tag);
       }
     }

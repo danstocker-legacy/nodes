@@ -15,7 +15,7 @@ type TSwitchOutputs<P extends string, V> = {
 };
 
 interface ISwitchBounced<P extends string, V> {
-  b_sync: ISwitchInput<P, V>;
+  b_mul: ISwitchInput<P, V>;
   b_d_val: V;
 }
 
@@ -47,7 +47,7 @@ export class Switch<P extends string, V> implements ISink, ISource {
    */
   constructor(positions: Array<string>) {
     MSink.init.call(this, ["mul", "d_val", "st_pos"]);
-    MSource.init.call(this, ["b_sync"].concat(positions));
+    MSource.init.call(this, ["b_mul"].concat(positions));
   }
 
   public send(
@@ -67,7 +67,7 @@ export class Switch<P extends string, V> implements ISink, ISource {
         if (outPort) {
           outPort.send(synced.d_val, tag);
         } else {
-          this.o.b_sync.send(synced as any, tag);
+          this.o.b_mul.send(synced as any, tag);
         }
         break;
 

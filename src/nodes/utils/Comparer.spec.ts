@@ -5,7 +5,7 @@ describe("Comparer", function () {
     it("should add ports", function () {
       const node = new Comparer(() => true);
       expect(node.i.mul).toBeDefined();
-      expect(node.o.b_sync).toBeDefined();
+      expect(node.o.b_mul).toBeDefined();
       expect(node.o.d_eq).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
     });
@@ -32,9 +32,9 @@ describe("Comparer", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.o.b_sync, "send");
+        spyOn(node.o.b_mul, "send");
         node.send(node.i.mul, {d_a: 5, d_b: 5}, "1");
-        expect(node.o.b_sync.send)
+        expect(node.o.b_mul.send)
         .toHaveBeenCalledWith({d_a: 5, d_b: 5}, "1");
       });
 
