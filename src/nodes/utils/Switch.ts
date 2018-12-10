@@ -68,15 +68,15 @@ export class Switch<P extends string, V> implements ISink, ISource {
     let outPort: IOutPort<any>;
     switch (port) {
       case i.mul:
-        const synced = value as ISwitchInput<P, V>;
-        const position = synced.st_pos;
+        const mul = value as ISwitchInput<P, V>;
+        const position = mul.st_pos;
         this.position = position;
 
         outPort = this.o[position];
         if (outPort) {
-          outPort.send(synced.d_val, tag);
+          outPort.send(mul.d_val, tag);
         } else {
-          this.o.b_mul.send(synced as any, tag);
+          this.o.b_mul.send(mul as any, tag);
         }
         break;
 
