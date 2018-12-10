@@ -4,7 +4,7 @@ describe("Folder", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Folder(() => null);
-      expect(node.i.sync).toBeDefined();
+      expect(node.i.mul).toBeDefined();
       expect(node.o.b_sync).toBeDefined();
       expect(node.o.d_fold).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
@@ -21,33 +21,33 @@ describe("Folder", function () {
     describe("before first truthy signal", function () {
       it("should apply callback to initial value", function () {
         spyOn(node.o.d_fold, "send");
-        node.send(node.i.sync, {ev_res: false, d_val: 5}, "1");
+        node.send(node.i.mul, {ev_res: false, d_val: 5}, "1");
         expect(node.o.d_fold.send).toHaveBeenCalledWith(6, "1");
       });
     });
 
     describe("when ev_res is falsy", function () {
       beforeEach(function () {
-        node.send(node.i.sync, {ev_res: false, d_val: 2}, "1");
-        node.send(node.i.sync, {ev_res: false, d_val: 3}, "2");
+        node.send(node.i.mul, {ev_res: false, d_val: 2}, "1");
+        node.send(node.i.mul, {ev_res: false, d_val: 3}, "2");
       });
 
       it("should apply callback to last reduced value", function () {
         spyOn(node.o.d_fold, "send");
-        node.send(node.i.sync, {ev_res: false, d_val: 5}, "3");
+        node.send(node.i.mul, {ev_res: false, d_val: 5}, "3");
         expect(node.o.d_fold.send).toHaveBeenCalledWith(11, "3");
       });
     });
 
     describe("when ev_res is truthy", function () {
       beforeEach(function () {
-        node.send(node.i.sync, {ev_res: false, d_val: 2}, "1");
-        node.send(node.i.sync, {ev_res: false, d_val: 3}, "2");
+        node.send(node.i.mul, {ev_res: false, d_val: 2}, "1");
+        node.send(node.i.mul, {ev_res: false, d_val: 3}, "2");
       });
 
       it("should reset reduced value", function () {
         spyOn(node.o.d_fold, "send");
-        node.send(node.i.sync, {ev_res: true, d_val: 5}, "1");
+        node.send(node.i.mul, {ev_res: true, d_val: 5}, "1");
         expect(node.o.d_fold.send).toHaveBeenCalledWith(6, "1");
       });
     });
@@ -61,7 +61,7 @@ describe("Folder", function () {
 
       it("should bounce inputs", function () {
         spyOn(node.o.b_sync, "send");
-        node.send(node.i.sync, {ev_res: false, d_val: 5}, "1");
+        node.send(node.i.mul, {ev_res: false, d_val: 5}, "1");
         expect(node.o.b_sync.send).toHaveBeenCalledWith({
           d_val: 5,
           ev_res: false
@@ -70,7 +70,7 @@ describe("Folder", function () {
 
       it("should send error to output", function () {
         spyOn(node.o.ev_err, "send");
-        node.send(node.i.sync, {ev_res: false, d_val: 5}, "1");
+        node.send(node.i.mul, {ev_res: false, d_val: 5}, "1");
         expect(node.o.ev_err.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });

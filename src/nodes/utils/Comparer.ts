@@ -9,7 +9,7 @@ interface IComparerInput<V> {
 }
 
 interface IComparerInputs<V> {
-  sync: IComparerInput<V>;
+  mul: IComparerInput<V>;
 }
 
 interface IComparerOutputs<V> {
@@ -35,7 +35,7 @@ export class Comparer<V> implements ISink, ISource {
   private readonly cb: TEqualityCallback<V>;
 
   constructor(cb: TEqualityCallback<V>) {
-    MSink.init.call(this, ["sync"]);
+    MSink.init.call(this, ["mul"]);
     MSource.init.call(this, ["b_sync", "d_eq", "ev_err"]);
     this.cb = cb;
   }
@@ -45,7 +45,7 @@ export class Comparer<V> implements ISink, ISource {
     value: IComparerInput<V>,
     tag?: string
   ): void {
-    if (port === this.i.sync) {
+    if (port === this.i.mul) {
       try {
         const equals = this.cb(value.d_a, value.d_b, tag);
         this.o.d_eq.send(equals, tag);

@@ -11,7 +11,7 @@ interface IFolderInput<V> {
 }
 
 interface IFolderInputs<V> {
-  sync: IFolderInput<V>;
+  mul: IFolderInput<V>;
 }
 
 interface IFolderOutputs<I, O> {
@@ -44,7 +44,7 @@ export class Folder<I, O> implements ISink, ISource {
   private folded: O;
 
   constructor(cb: TFolderCallback<I, O>, initial?: O) {
-    MSink.init.call(this, ["sync"]);
+    MSink.init.call(this, ["mul"]);
     MSource.init.call(this, ["b_sync", "d_fold", "ev_err"]);
     this.cb = cb;
     this.initial = initial;
@@ -56,7 +56,7 @@ export class Folder<I, O> implements ISink, ISource {
     value: IFolderInput<I>,
     tag?: string
   ): void {
-    if (port === this.i.sync) {
+    if (port === this.i.mul) {
       const next = value.d_val;
       const curr = value.ev_res ?
         copy(this.initial) :
