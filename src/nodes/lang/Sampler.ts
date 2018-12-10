@@ -43,13 +43,13 @@ export class Sampler<V> implements ISink, ISource {
     value: ValueOf<ISamplerInputs<V>>,
     tag?: string
   ): void {
-    const inPorts = this.i;
+    const i = this.i;
     switch (port) {
-      case inPorts.d_val:
+      case i.d_val:
         this.buffer = value;
         break;
 
-      case inPorts.ev_smp:
+      case i.ev_smp:
         this.o.d_val.send(this.buffer, tag);
         break;
     }

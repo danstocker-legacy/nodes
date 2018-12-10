@@ -26,17 +26,17 @@ export class Logger implements ISink, ISource {
   }
 
   public send(port: IInPort<any>, input: any, tag?: string): void {
-    const inPorts = this.i;
-    const outPorts = this.o;
+    const i = this.i;
+    const o = this.o;
     switch (port) {
-      case inPorts.d_log:
-        outPorts.d_log.send(input, tag);
+      case i.d_log:
+        o.d_log.send(input, tag);
         break;
-      case inPorts.d_warn:
-        outPorts.d_warn.send(input, tag);
+      case i.d_warn:
+        o.d_warn.send(input, tag);
         break;
-      case inPorts.d_err:
-        outPorts.d_err.send(input, tag);
+      case i.d_err:
+        o.d_err.send(input, tag);
         break;
     }
   }
