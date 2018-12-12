@@ -22,6 +22,9 @@ interface IBufferOutputs<V> {
   /** Value forwarded or released from buffer. */
   d_val: V;
 
+  /** Whether buffer output is open. */
+  st_open: boolean;
+
   /** Buffer size. */
   st_size: number;
 }
@@ -43,7 +46,7 @@ export class Buffer<V> implements ISink, ISource {
 
   constructor() {
     MSink.init.call(this, ["mul", "d_val", "st_open"]);
-    MSource.init.call(this, ["d_val", "st_size"]);
+    MSource.init.call(this, ["d_val", "st_open", "st_size"]);
     this.buffer = [];
     this.open = false;
   }
@@ -62,7 +65,6 @@ export class Buffer<V> implements ISink, ISource {
         openBefore = this.open;
         openAfter = mul.st_open;
         this.open = openAfter;
-
         if (openAfter) {
           if (!openBefore) {
             this.releaseBuffer(tag);
@@ -84,9 +86,10 @@ export class Buffer<V> implements ISink, ISource {
       case i.st_open:
         openBefore = this.open;
         openAfter = value as boolean;
+        this.open = openAfter;
+        this.o.st_open.send(openAfter, tag);
         // if new value is true, release buffer contents
         if (openAfter && !openBefore) {
-          this.open = openAfter;
           this.releaseBuffer(tag);
         }
         break;

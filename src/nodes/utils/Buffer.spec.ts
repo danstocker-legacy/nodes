@@ -8,6 +8,7 @@ describe("Buffer", function () {
       expect(node.i.d_val).toBeDefined();
       expect(node.i.st_open).toBeDefined();
       expect(node.o.d_val).toBeDefined();
+      expect(node.o.st_open).toBeDefined();
       expect(node.o.st_size).toBeDefined();
     });
   });
@@ -69,27 +70,47 @@ describe("Buffer", function () {
       });
     });
 
-    describe("on opening buffer through `st_open`", function () {
-      beforeEach(function () {
-        node.send(node.i.d_val, 5, "1");
-        node.send(node.i.d_val, 3, "2");
-        node.send(node.i.d_val, 6, "3");
+    describe("when sending to `st_open`", function () {
+      describe("on opening buffer", function () {
+        beforeEach(function () {
+          node.send(node.i.d_val, 5, "1");
+          node.send(node.i.d_val, 3, "2");
+          node.send(node.i.d_val, 6, "3");
+        });
+
+        it("should emit buffered inputs on `o.d_val`", function () {
+          const spy = spyOn(node.o.d_val, "send");
+          node.send(node.i.st_open, true);
+          expect(spy.calls.allArgs()).toEqual([
+            [5, "1"],
+            [3, "2"],
+            [6, "3"]
+          ]);
+        });
+
+        it("should emit 'open' state on `st_open`", function () {
+          spyOn(node.o.st_open, "send");
+          node.send(node.i.st_open, true, "1");
+          expect(node.o.st_open.send).toHaveBeenCalledWith(true, "1");
+        });
+
+        it("should emit buffer size on `st_size`", function () {
+          spyOn(node.o.st_size, "send");
+          node.send(node.i.st_open, true, "1");
+          expect(node.o.st_size.send).toHaveBeenCalledWith(0, "1");
+        });
       });
 
-      it("should emit buffered inputs on `o.d_val`", function () {
-        const spy = spyOn(node.o.d_val, "send");
-        node.send(node.i.st_open, true);
-        expect(spy.calls.allArgs()).toEqual([
-          [5, "1"],
-          [3, "2"],
-          [6, "3"]
-        ]);
-      });
+      describe("on closing buffer", function () {
+        beforeEach(function () {
+          node.send(node.i.st_open, true, "1");
+        });
 
-      it("should emit buffer size on `st_size`", function () {
-        spyOn(node.o.st_size, "send");
-        node.send(node.i.st_open, true, "1");
-        expect(node.o.st_size.send).toHaveBeenCalledWith(0, "1");
+        it("should emit 'open' state on `st_open`", function () {
+          spyOn(node.o.st_open, "send");
+          node.send(node.i.st_open, false, "2");
+          expect(node.o.st_open.send).toHaveBeenCalledWith(false, "2");
+        });
       });
     });
   });
