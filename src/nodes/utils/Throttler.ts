@@ -18,7 +18,7 @@ interface IThrottlerOutputs {
  * Emits a boolean with the last received input tag: `true` exactly on tick,
  * `false` on receiving a new input tag.
  * Atomic equivalent of a composite node.
- * Commonly used in conjunction with Picker and Folder.
+ * Commonly used in conjunction with Gate and Folder.
  * Composite view:
  * TBD
  * @example
