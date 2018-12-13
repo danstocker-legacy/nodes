@@ -71,7 +71,7 @@ export class Buffer<V> implements ISink, ISource {
           if (!openBefore) {
             this.releaseBuffer(tag);
           }
-          o.d_val.send(value as V, tag);
+          o.d_val.send(mul.d_val, tag);
         } else {
           this.addToBuffer(mul.d_val, tag);
         }
