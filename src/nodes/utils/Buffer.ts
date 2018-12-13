@@ -57,6 +57,7 @@ export class Buffer<V> implements ISink, ISource {
     tag?: string
   ): void {
     const i = this.i;
+    const o = this.o;
     let openBefore: boolean;
     let openAfter: boolean;
     switch (port) {
@@ -65,11 +66,12 @@ export class Buffer<V> implements ISink, ISource {
         openBefore = this.open;
         openAfter = mul.st_open;
         this.open = openAfter;
+        o.st_open.send(openAfter, tag);
         if (openAfter) {
           if (!openBefore) {
             this.releaseBuffer(tag);
           }
-          this.o.d_val.send(value as V, tag);
+          o.d_val.send(value as V, tag);
         } else {
           this.addToBuffer(mul.d_val, tag);
         }
@@ -77,7 +79,7 @@ export class Buffer<V> implements ISink, ISource {
 
       case i.d_val:
         if (this.open) {
-          this.o.d_val.send(value as V, tag);
+          o.d_val.send(value as V, tag);
         } else {
           this.addToBuffer(value as V, tag);
         }
@@ -87,7 +89,7 @@ export class Buffer<V> implements ISink, ISource {
         openBefore = this.open;
         openAfter = value as boolean;
         this.open = openAfter;
-        this.o.st_open.send(openAfter, tag);
+        o.st_open.send(openAfter, tag);
         // if new value is true, release buffer contents
         if (openAfter && !openBefore) {
           this.releaseBuffer(tag);
