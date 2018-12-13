@@ -5,7 +5,7 @@ interface IGateInput<V> {
   /** Value to be forwarded. */
   d_val: V;
 
-  /** Whether gate is open. */
+  /** Whether gate should be open. */
   st_open: boolean;
 }
 
@@ -23,6 +23,9 @@ interface IGateOutputs<V> {
 
   /** Bounced forwarded value. */
   b_d_val: V;
+
+  /** Whether gate is open. */
+  st_open: boolean;
 }
 
 /**
@@ -36,7 +39,7 @@ export class Gate<V> implements ISink, ISource {
 
   constructor() {
     MSink.init.call(this, ["mul", "d_val", "st_open"]);
-    MSource.init.call(this, ["d_val", "b_mul", "b_d_val"]);
+    MSource.init.call(this, ["d_val", "st_open", "b_mul", "b_d_val"]);
     this.open = false;
   }
 
@@ -46,29 +49,32 @@ export class Gate<V> implements ISink, ISource {
     tag?: string
   ): void {
     const i = this.i;
+    const o = this.o;
     let open;
     switch (port) {
       case i.mul:
         const mul = value as IGateInput<V>;
         open = this.open = mul.st_open;
+        o.st_open.send(open, tag);
         if (open) {
-          this.o.d_val.send(mul.d_val, tag);
+          o.d_val.send(mul.d_val, tag);
         } else {
-          this.o.b_mul.send(mul, tag);
+          o.b_mul.send(mul, tag);
         }
         break;
 
       case i.st_open:
         open = value as boolean;
         this.open = open;
+        o.st_open.send(open, tag);
         break;
 
       case i.d_val:
         const val = value as V;
         if (this.open) {
-          this.o.d_val.send(val, tag);
+          o.d_val.send(val, tag);
         } else {
-          this.o.b_d_val.send(val, tag);
+          o.b_d_val.send(val, tag);
         }
         break;
     }
