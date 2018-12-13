@@ -58,7 +58,7 @@ export namespace MDynamicSink {
     const name = port.name;
     const ports = this.i;
     if (port === ports[name]) {
-      if (port.peer) {
+      if (port.peers.size) {
         port.disconnect();
       }
       delete ports[name];

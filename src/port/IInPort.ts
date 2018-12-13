@@ -7,10 +7,10 @@ import {IPort} from "./IPort";
  */
 export interface IInPort<V> extends IPort<V> {
   /**
-   * Remote port the current port is connecting to.
-   * When this is undefined, the port is not connected.
+   * Remote ports the current port is connecting to.
+   * When set is empty, the port is not connected.
    */
-  peer: IOutPort<V>;
+  peers: Set<IOutPort<V>>;
 
   /**
    * Connects port to the specified remote output port.
@@ -20,8 +20,9 @@ export interface IInPort<V> extends IPort<V> {
   connect(peer: IOutPort<V>, tag?: string): void;
 
   /**
-   * Disconnects port from peer.
+   * Disconnects port from the specified remote output port.
+   * @param peer Remote output port.
    * @param tag Identifies impulse.
    */
-  disconnect(tag?: string): void;
+  disconnect(peer?: IOutPort<V>, tag?: string): void;
 }

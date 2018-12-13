@@ -1,3 +1,5 @@
+import {IOutPort} from "./IOutPort";
+
 /**
  * Describes a generic port.
  * Nodes communicate through ports. Input ports receive data and connect to
@@ -21,11 +23,24 @@ export interface IPort<V> {
   node: any;
 
   /**
-   * Connects port to remote port.
+   * Remote ports the current port is connected to.
+   * When set is empty, the port is not connected.
+   */
+  peers: Set<IPort<V>>;
+
+  /**
+   * Connects port to the specified remote port.
    * @param peer Remote port.
    * @param tag Identifies impulse.
    */
   connect(peer: IPort<V>, tag?: string): void;
+
+  /**
+   * Disconnects port from the specified remote port.
+   * @param peer Remote port.
+   * @param tag Identifies impulse.
+   */
+  disconnect(peer?: IPort<V>, tag?: string): void;
 
   /**
    * Sends value to port.

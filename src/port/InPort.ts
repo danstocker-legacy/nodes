@@ -9,45 +9,11 @@ import {Port} from "./Port";
  */
 export class InPort<V> extends Port<V> implements IInPort<V> {
   /**
-   * Remote port the current port is connecting to.
-   * When this is undefined, the port is not connected.
-   */
-  public peer: IOutPort<V>;
-
-  /**
    * @param name Identifies port in the context of its assigned node.
    * @param node Node the port is assigned to.
    */
   constructor(name: string, node: any) {
     super(name, node);
-  }
-
-  /**
-   * Connects port to the specified remote output port.
-   * Emits error when port is already connected, except when it's
-   * already connected to the specified peer.
-   * Emits event after connecting.
-   * @param peer Remote output port.
-   * @param tag Identifies impulse.
-   */
-  public connect(peer: IOutPort<V>, tag?: string): void {
-    if (!this.peer) {
-      this.peer = peer;
-      peer.connect(this, tag);
-    }
-  }
-
-  /**
-   * Disconnects port from peer.
-   * Emits event after disconnecting.
-   * @param tag Identifies impulse.
-   */
-  public disconnect(tag?: string): void {
-    const peer = this.peer;
-    if (peer) {
-      this.peer = undefined;
-      peer.disconnect(this, tag);
-    }
   }
 
   /**
