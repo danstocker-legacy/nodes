@@ -8,7 +8,6 @@ describe("Buffer", function () {
       expect(node.i.d_val).toBeDefined();
       expect(node.i.st_open).toBeDefined();
       expect(node.o.d_val).toBeDefined();
-      expect(node.o.st_open).toBeDefined();
       expect(node.o.st_size).toBeDefined();
     });
   });
@@ -21,12 +20,6 @@ describe("Buffer", function () {
     });
 
     describe("when sending to `mul`", function () {
-      it("should emit 'open' state on `st_open`", function () {
-        spyOn(node.o.st_open, "send");
-        node.send(node.i.mul, {d_val: 5, st_open: true}, "1");
-        expect(node.o.st_open.send).toHaveBeenCalledWith(true, "1");
-      });
-
       describe("on opening buffer", function () {
         beforeEach(function () {
           node.send(node.i.d_val, 5, "1");
@@ -124,12 +117,6 @@ describe("Buffer", function () {
     });
 
     describe("when sending to `st_open`", function () {
-      it("should emit 'open' state on `st_open`", function () {
-        spyOn(node.o.st_open, "send");
-        node.send(node.i.st_open, true, "1");
-        expect(node.o.st_open.send).toHaveBeenCalledWith(true, "1");
-      });
-
       describe("on opening buffer", function () {
         beforeEach(function () {
           node.send(node.i.d_val, 5, "1");

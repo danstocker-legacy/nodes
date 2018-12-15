@@ -23,9 +23,6 @@ interface IGateOutputs<V> {
 
   /** Bounced forwarded value. */
   b_d_val: V;
-
-  /** Whether gate is open. */
-  st_open: boolean;
 }
 
 /**
@@ -39,7 +36,7 @@ export class Gate<V> implements ISink, ISource {
 
   constructor() {
     MSink.init.call(this, ["mul", "d_val", "st_open"]);
-    MSource.init.call(this, ["d_val", "st_open", "b_mul", "b_d_val"]);
+    MSource.init.call(this, ["d_val", "b_mul", "b_d_val"]);
     this.open = false;
   }
 
@@ -55,7 +52,6 @@ export class Gate<V> implements ISink, ISource {
       case i.mul:
         const mul = value as IGateInput<V>;
         open = this.open = mul.st_open;
-        o.st_open.send(open, tag);
         if (open) {
           o.d_val.send(mul.d_val, tag);
         } else {
@@ -66,7 +62,6 @@ export class Gate<V> implements ISink, ISource {
       case i.st_open:
         open = value as boolean;
         this.open = open;
-        o.st_open.send(open, tag);
         break;
 
       case i.d_val:
