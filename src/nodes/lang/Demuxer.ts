@@ -11,6 +11,11 @@ interface IDemuxerInputs<T> {
   d_mux: IMuxed<T>;
 }
 
+interface IDemuxerOutputs<T> {
+  /** Bounced multiplexed value. */
+  b_d_mux: IMuxed<T>;
+}
+
 /**
  * De-multiplexes input.
  * Distributes impulses to output port specified by input.
@@ -22,7 +27,7 @@ interface IDemuxerInputs<T> {
  */
 export class Demuxer<T> implements ISink, ISource {
   public readonly i: TInBundle<IDemuxerInputs<T>>;
-  public readonly o: TOutBundle<T>;
+  public readonly o: TOutBundle<T> & TOutBundle<IDemuxerOutputs<T>>;
 
   /**
    * @param fields Must be prefixed by their corresponding domains. ("d_" /
@@ -30,13 +35,23 @@ export class Demuxer<T> implements ISink, ISource {
    */
   constructor(fields: Array<string>) {
     MSink.init.call(this, ["d_mux"]);
-    MSource.init.call(this, fields);
+    MSource.init.call(this, ["b_d_mux"].concat(fields));
   }
 
-  public send(port: IInPort<IMuxed<T>>, input: IMuxed<T>, tag?: string): void {
+  public send(
+    port: IInPort<IMuxed<T>>,
+    value: IMuxed<T>,
+    tag?: string
+  ): void {
+    const i = this.i;
+    const o = this.o;
     if (port === this.i.d_mux) {
-      const name = input.name;
-      this.o[name].send(input.val, tag);
+      const name = value.name;
+      if (o[name]) {
+        o[name].send(value.val, tag);
+      } else {
+        o.b_d_mux.send(value, tag);
+      }
     }
   }
 }
