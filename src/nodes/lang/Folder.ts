@@ -45,7 +45,9 @@ export type TFolderCallback<I, O> = (
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
 export class Folder<I, O> implements ISink, ISource {
-  public readonly i: TInBundle<IFolderInputs<I> & IFolderInput<I>>;
+  public readonly i:
+    TInBundle<IFolderInputs<I>> &
+    TInBundle<IFolderInput<I>>;
   public readonly o: TOutBundle<IFolderOutputs<I, O>>;
 
   private readonly cb: TFolderCallback<I, O>;

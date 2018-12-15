@@ -29,7 +29,9 @@ interface IGateOutputs<V> {
  * Forwards default input to output when reference input is truthy.
  */
 export class Gate<V> implements ISink, ISource {
-  public readonly i: TInBundle<IGateInputs<V> & IGateInput<V>>;
+  public readonly i:
+    TInBundle<IGateInputs<V>> &
+    TInBundle<IGateInput<V>>;
   public readonly o: TOutBundle<IGateOutputs<V>>;
 
   private open: boolean;

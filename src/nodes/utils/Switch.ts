@@ -39,8 +39,12 @@ interface ISwitchBounced<P extends string, V> {
  * switch = new Switch(["d_foo", "d_bar", "d_baz");
  */
 export class Switch<P extends string, V> implements ISink, ISource {
-  public readonly i: TInBundle<ISwitchInputs<P, V> & ISwitchInput<P, V>>;
-  public readonly o: TOutBundle<TSwitchOutputs<P, V> & ISwitchBounced<P, V>>;
+  public readonly i:
+    TInBundle<ISwitchInputs<P, V>> &
+    TInBundle<ISwitchInput<P, V>>;
+  public readonly o:
+    TOutBundle<TSwitchOutputs<P, V>> &
+    TOutBundle<ISwitchBounced<P, V>>;
 
   /**
    * Current position of the switch.
@@ -76,7 +80,7 @@ export class Switch<P extends string, V> implements ISink, ISource {
         if (outPort) {
           outPort.send(mul.d_val, tag);
         } else {
-          this.o.b_mul.send(mul as any, tag);
+          this.o.b_mul.send(mul, tag);
         }
         break;
 

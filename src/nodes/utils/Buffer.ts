@@ -35,7 +35,9 @@ interface IBufferOutputs<V> {
  * TBD
  */
 export class Buffer<V> implements ISink, ISource {
-  public readonly i: TInBundle<IBufferInputs<V> & IBufferInput<V>>;
+  public readonly i:
+    TInBundle<IBufferInputs<V>> &
+    TInBundle<IBufferInput<V>>;
   public readonly o: TOutBundle<IBufferOutputs<V>>;
 
   private readonly buffer: Array<[V, string]>;
