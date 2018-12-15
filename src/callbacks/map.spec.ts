@@ -14,4 +14,10 @@ describe("map", function () {
       expect(map.constant$(5)(null)).toBe(5);
     });
   });
+
+  describe("pluck$", function () {
+    it("should return specified property", function () {
+      expect(map.pluck$("foo")({foo: 5, bar: true})).toBe(5);
+    });
+  });
 });

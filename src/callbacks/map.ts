@@ -2,6 +2,7 @@
  * Frequently used Mapper callbacks.
  */
 import {TMapperCallback} from "../nodes/lang/Mapper";
+import {ValueOf} from "../utils";
 
 export namespace map {
   /**
@@ -16,5 +17,13 @@ export namespace map {
    */
   export function constant$(value: any): TMapperCallback<any, any> {
     return () => value;
+  }
+
+  /**
+   * Maps object to one of its properties.
+   * @param property
+   */
+  export function pluck$<T>(property: string): TMapperCallback<T, ValueOf<T>> {
+    return (value: T) => value[property];
   }
 }
