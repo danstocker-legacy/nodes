@@ -3,9 +3,9 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IMuxed, ValueOf} from "../../utils";
 
-type TServerPorts<P extends string, V> = {
-  [port in P]: V
-};
+interface IServerPorts<V> {
+  [key: string]: V;
+}
 
 interface IConnectionInfo {
   lhost: string;
@@ -14,17 +14,17 @@ interface IConnectionInfo {
   rport: number;
 }
 
-interface IServerInputs<P extends string> {
+interface IServerInputs {
   /** Values to be sent through sockets. */
-  d_mux: IMuxed<TServerPorts<P, Buffer | string>>;
+  d_mux: IMuxed<IServerPorts<Buffer | string>>;
 
   /** Whether the server *should be* listening. */
   st_lis: boolean;
 }
 
-interface IServerOutputs<P extends string> {
+interface IServerOutputs {
   /** Values received through sockets. */
-  d_mux: IMuxed<TServerPorts<P, Buffer | string>>;
+  d_mux: IMuxed<IServerPorts<Buffer | string>>;
 
   /** Connection count. */
   st_connc: number;
@@ -33,7 +33,7 @@ interface IServerOutputs<P extends string> {
   st_lis: boolean;
 
   /** Bounced inputs. */
-  b_d_mux: IMuxed<TServerPorts<P, Buffer | string>>;
+  b_d_mux: IMuxed<IServerPorts<Buffer | string>>;
 
   /** Information re. new connection. */
   ev_conn: IConnectionInfo;
@@ -48,9 +48,9 @@ interface IServerOutputs<P extends string> {
 /**
  * Handles TCP connections and data traffic.
  */
-export class Server<P extends string> implements ISink, ISource {
-  public readonly i: TInBundle<IServerInputs<P>>;
-  public readonly o: TOutBundle<IServerOutputs<P>>;
+export class Server implements ISink, ISource {
+  public readonly i: TInBundle<IServerInputs>;
+  public readonly o: TOutBundle<IServerOutputs>;
   private readonly server: net.Server;
   private readonly host: string;
   private readonly port: number;
@@ -75,16 +75,16 @@ export class Server<P extends string> implements ISink, ISource {
   }
 
   public send(
-    port: IInPort<ValueOf<IServerInputs<P>>>,
-    value: ValueOf<IServerInputs<P>>,
+    port: IInPort<ValueOf<IServerInputs>>,
+    value: ValueOf<IServerInputs>,
     tag?: string
   ): void {
     const i = this.i;
     switch (port) {
       case i.d_mux:
-        const mux = value as IMuxed<TServerPorts<P, Buffer | string>>;
+        const mux = value as IMuxed<IServerPorts<Buffer | string>>;
         const sockets = this.sockets;
-        const id = mux.name;
+        const id = mux.name as string;
         if (sockets.has(id)) {
           const socket = sockets.get(id);
           socket.write(mux.val);
@@ -115,7 +115,7 @@ export class Server<P extends string> implements ISink, ISource {
       rhost: socket.remoteAddress,
       rport: socket.remotePort
     };
-    const id = `${info.rhost}:${info.rport}` as P;
+    const id = `${info.rhost}:${info.rport}`;
 
     socket.on("data",
       (data: Buffer | string) => this.onData(data, id));
@@ -145,7 +145,7 @@ export class Server<P extends string> implements ISink, ISource {
    * @param data
    * @param id
    */
-  private onData(data: Buffer | string, id: P): void {
+  private onData(data: Buffer | string, id: string): void {
     this.o.d_mux.send({
       name: id,
       val: data
@@ -159,7 +159,7 @@ export class Server<P extends string> implements ISink, ISource {
    * @param info
    * @param id
    */
-  private onSocketClose(socket: net.Socket, info: IConnectionInfo, id: P): void {
+  private onSocketClose(socket: net.Socket, info: IConnectionInfo, id: string): void {
     const connections = this.sockets;
     connections.delete(id);
     const o = this.o;

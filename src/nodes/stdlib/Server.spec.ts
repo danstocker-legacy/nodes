@@ -62,7 +62,7 @@ describe("Server", function () {
   });
 
   describe("#send()", function () {
-    let node: Server<"192.168.0.101:8889">;
+    let node: Server;
 
     beforeEach(function () {
       node = new Server("localhost", 8888);
@@ -116,7 +116,7 @@ describe("Server", function () {
   });
 
   xdescribe("on connection", function () {
-    let node: Server<"192.168.0.101:8889">;
+    let node: Server;
 
     beforeEach(function () {
       node = new Server("localhost", 8888);
@@ -130,7 +130,7 @@ describe("Server", function () {
   });
 
   xdescribe("on server error", function () {
-    let node: Server<"192.168.0.101:8889">;
+    let node: Server;
 
     beforeEach(function () {
       node = new Server("localhost", 8888);
@@ -145,7 +145,7 @@ describe("Server", function () {
   });
 
   xdescribe("on socket close", function () {
-    let node: Server<"192.168.0.101:8889">;
+    let node: Server;
 
     beforeEach(function () {
       node = new Server("localhost", 8888);
@@ -160,7 +160,7 @@ describe("Server", function () {
   });
 
   xdescribe("on data", function () {
-    let node: Server<"192.168.0.101:8889">;
+    let node: Server;
     let remote: Remote;
 
     beforeEach(function () {
