@@ -23,49 +23,26 @@ describe("Socket", function () {
           break;
       }
     },
-    write: (data, cb) => {
+    write: (data, encoding, cb) => {
       onWrite = cb;
     }
   };
 
   beforeEach(function () {
     spyOn(net, "Socket").and.returnValue(socket);
-    Socket.clear();
-  });
-
-  describe(".instance()", function () {
-    it("should cache instances by host & port", function () {
-      const node = Socket.instance(
-        "192.168.0.101", 8889, "127.0.0.1", 8888);
-      expect(Socket.instance(
-        "192.168.0.101", 8889, "127.0.0.1", 8888)
-      ).toBe(node);
-      expect(Socket.instance(
-        "192.168.0.101", 8890, "127.0.0.1", 8888)
-      ).not.toBe(node);
-    });
-  });
-
-  describe(".clear()", function () {
-    it("should clear instance cache", function () {
-      const node = Socket.instance(
-        "192.168.0.101", 8889, "127.0.0.1", 8888);
-      Socket.clear();
-      expect(Socket.instance(
-        "192.168.0.101", 8889, "127.0.0.1", 8888)
-      ).not.toBe(node);
-    });
   });
 
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = Socket.instance(
-        "192.168.0.101", 8889, "127.0.0.1", 8888);
-      expect(node.i.d_wrap).toBeDefined();
+      const node = new Socket(
+        "192.168.0.101", 8889);
+      expect(node.i.d_val).toBeDefined();
       expect(node.i.st_conn).toBeDefined();
-      expect(node.o.b_d_wrap).toBeDefined();
-      expect(node.o.d_wrap).toBeDefined();
+      expect(node.o.d_val).toBeDefined();
+      expect(node.o.b_d_val).toBeDefined();
       expect(node.o.st_conn).toBeDefined();
+      expect(node.o.ev_conn).toBeDefined();
+      expect(node.o.ev_disc).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
     });
   });
@@ -74,8 +51,8 @@ describe("Socket", function () {
     let node: Socket;
 
     beforeEach(function () {
-      node = Socket.instance(
-        "192.168.0.101", 8889, "127.0.0.1", 8888);
+      node = new Socket(
+        "192.168.0.101", 8889);
     });
 
     it("should send `st_conn` flag to output", function () {
@@ -89,11 +66,11 @@ describe("Socket", function () {
     let node: Socket;
 
     beforeEach(function () {
-      node = Socket.instance(
-        "192.168.0.101", 8889, "127.0.0.1", 8888);
+      node = new Socket(
+        "192.168.0.101", 8889);
     });
 
-    it("should send `st_conn` flag to output", function () {
+    it("should emit connected state", function () {
       spyOn(node.o.st_conn, "send");
       onClose();
       expect(node.o.st_conn.send).toHaveBeenCalledWith(false);
@@ -102,13 +79,13 @@ describe("Socket", function () {
     describe("when there are inputs buffered", function () {
       beforeEach(function () {
         onConnect();
-        node.i.d_wrap.send("foo", "1");
-        node.i.d_wrap.send("bar", "2");
-        node.i.d_wrap.send("baz", "3");
+        node.i.d_val.send("foo", "1");
+        node.i.d_val.send("bar", "2");
+        node.i.d_val.send("baz", "3");
       });
 
       it("should bounce buffered inputs", function () {
-        const spy = spyOn(node.o.b_d_wrap, "send");
+        const spy = spyOn(node.o.b_d_val, "send");
         onClose();
         expect(spy.calls.allArgs()).toEqual([
           ["foo", "1"],
@@ -123,8 +100,8 @@ describe("Socket", function () {
     let node: Socket;
 
     beforeEach(function () {
-      node = Socket.instance(
-        "192.168.0.101", 8889, "127.0.0.1", 8888);
+      node = new Socket(
+        "192.168.0.101", 8889);
     });
 
     it("should emit error", function () {
@@ -136,13 +113,13 @@ describe("Socket", function () {
     describe("when there are inputs buffered", function () {
       beforeEach(function () {
         onConnect();
-        node.i.d_wrap.send("foo", "1");
-        node.i.d_wrap.send("bar", "2");
-        node.i.d_wrap.send("baz", "3");
+        node.i.d_val.send("foo", "1");
+        node.i.d_val.send("bar", "2");
+        node.i.d_val.send("baz", "3");
       });
 
       it("should bounce buffered inputs", function () {
-        const spy = spyOn(node.o.b_d_wrap, "send");
+        const spy = spyOn(node.o.b_d_val, "send");
         onError(new Error("foo"));
         expect(spy.calls.allArgs()).toEqual([
           ["foo", "1"],
@@ -157,10 +134,10 @@ describe("Socket", function () {
     let node: Socket;
 
     beforeEach(function () {
-      node = Socket.instance(
-        "192.168.0.101", 8889, "127.0.0.1", 8888);
+      node = new Socket(
+        "192.168.0.101", 8889);
       onConnect();
-      node.send(node.i.d_wrap, "foo", "1");
+      node.send(node.i.d_val, "foo", "1");
     });
 
     describe("on error", function () {
@@ -171,9 +148,9 @@ describe("Socket", function () {
       });
 
       it("should bounce affected input", function () {
-        spyOn(node.o.b_d_wrap, "send");
+        spyOn(node.o.b_d_val, "send");
         onWrite(new Error("foo"));
-        expect(node.o.b_d_wrap.send).toHaveBeenCalledWith("foo", "1");
+        expect(node.o.b_d_val.send).toHaveBeenCalledWith("foo", "1");
       });
     });
   });
@@ -182,8 +159,8 @@ describe("Socket", function () {
     let node: Socket;
 
     beforeEach(function () {
-      node = Socket.instance(
-        "192.168.0.101", 8889, "127.0.0.1", 8888);
+      node = new Socket(
+        "192.168.0.101", 8889);
     });
 
     describe("when sending value", function () {
@@ -192,23 +169,23 @@ describe("Socket", function () {
           onConnect();
         });
 
-        it("should write wrapped & JSON stringified input to socket", function () {
+        it("should write input to socket", function () {
           const spy = spyOn(socket, "write");
-          node.send(node.i.d_wrap, "foo", "1");
-          expect(spy.calls.argsFor(0)[0]).toBe(`{"value":"foo","tag":"1"}`);
+          node.send(node.i.d_val, "foo", "1");
+          expect(spy.calls.argsFor(0)[0]).toBe("foo");
         });
       });
 
       describe("when not connected", function () {
         it("should bounce inputs", function () {
-          spyOn(node.o.b_d_wrap, "send");
-          node.send(node.i.d_wrap, "foo", "1");
-          expect(node.o.b_d_wrap.send).toHaveBeenCalledWith("foo", "1");
+          spyOn(node.o.b_d_val, "send");
+          node.send(node.i.d_val, "foo", "1");
+          expect(node.o.b_d_val.send).toHaveBeenCalledWith("foo", "1");
         });
       });
     });
 
-    describe("when sending `st_conn`", function () {
+    describe("when sending to 'st_conn'", function () {
       describe("(true)", function () {
         describe("when not connected", function () {
           it("should attempt to connect socket", function () {
@@ -277,7 +254,7 @@ describe("Socket", function () {
             socket.connecting = false;
           });
 
-          it("should close connection", function () {
+          it("should emit connected state", function () {
             spyOn(socket, "end");
             node.send(node.i.st_conn, false);
             expect(socket.end).toHaveBeenCalled();

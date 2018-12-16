@@ -1,93 +1,62 @@
 import * as net from "net";
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
-import {TJson, ValueOf} from "../../utils";
+import {ValueOf} from "../../utils";
+import {IConnectionInfo} from "./IConnectionInfo";
 
 interface ISocketInputs {
-  /** Wrapped value. */
-  d_wrap: TJson;
+  /** Value to be sent to remote server. */
+  d_val: Buffer | string;
 
-  /** "Connected" state. */
+  /** Whether socket *should be* connected. */
   st_conn: boolean;
 }
 
 interface ISocketOutputs {
+  /** Values received from remote server. */
+  d_val: Buffer | string;
+
   /** Bounced wrapped value. */
-  b_d_wrap: TJson;
+  b_d_val: Buffer | string;
 
-  /** Wrapped value emitted by remote server. */
-  d_wrap: TJson;
-
-  /** "Connected" state. Not guaranteed to match `i.st_conn`. */
+  /** Whether socket *is* connected. */
   st_conn: boolean;
+
+  /** Information re. new connection. */
+  ev_conn: IConnectionInfo;
+
+  /** Information re. closed connection. */
+  ev_disc: IConnectionInfo;
 
   /** Error message. */
   ev_err: string;
 }
 
-const instances = new Map<string, Socket>();
-
 export class Socket implements ISink, ISource {
-  /**
-   * Retrieves OR creates a new Socket instance.
-   * @param remoteHost Socket server address
-   * @param remotePort Socket server port
-   * @param localHost Local server address
-   * @param localPort Local server port
-   */
-  public static instance(
-    remoteHost: string,
-    remotePort: number,
-    localHost: string,
-    localPort: number
-  ): Socket {
-    // retrieving / storing instance in cache
-    const key = `${remoteHost}:${remotePort}-${localHost}:${localPort}`;
-    let instance = instances.get(key);
-    if (!instance) {
-      instance = new Socket(remoteHost, remotePort, localHost, localPort);
-      instances.set(key, instance);
-    }
-    return instance;
-  }
-
-  /**
-   * Clears instance cache. For testing purposes only.
-   */
-  public static clear() {
-    instances.clear();
-  }
-
   public readonly i: TInBundle<ISocketInputs>;
   public readonly o: TOutBundle<ISocketOutputs>;
-  private readonly remoteHost: string;
-  private readonly remotePort: number;
+  private readonly host: string;
+  private readonly port: number;
   private readonly socket: net.Socket;
   private readonly buffer: Map<string, any>;
   private connected: boolean;
 
   /**
-   * @param remoteHost
-   * @param remotePort
-   * @param localHost
-   * @param localPort
+   * @param host
+   * @param port
    */
-  private constructor(
-    remoteHost: string,
-    remotePort: number,
-    localHost: string,
-    localPort: number
-  ) {
-    MSink.init.call(this, ["d_wrap", "st_conn"]);
-    MSource.init.call(this, ["b_d_wrap", "d_wrap", "st_conn", "ev_err"]);
+  constructor(host: string, port: number) {
+    MSink.init.call(this, ["d_val", "st_conn"]);
+    MSource.init.call(this, [
+      "d_val", "b_d_val", "st_conn", "ev_conn", "ev_disc", "ev_err"]);
 
     const socket = new net.Socket();
     socket.on("connect", () => this.onConnect());
     socket.on("close", () => this.onClose());
     socket.on("error", (err: Error) => this.onError(err));
 
-    this.remoteHost = remoteHost;
-    this.remotePort = remotePort;
+    this.host = host;
+    this.port = port;
     this.socket = socket;
     this.buffer = new Map();
     this.connected = false;
@@ -101,26 +70,26 @@ export class Socket implements ISink, ISource {
     const socket = this.socket;
     const connected = this.connected;
     switch (port) {
-      case this.i.d_wrap:
+      case this.i.d_val:
+        const val = value as Buffer | string;
         if (connected) {
           const buffer = this.buffer;
           buffer.set(tag, value);
-          socket.write(
-            JSON.stringify({value, tag}),
-            (err: Error) => this.onWrite(err, value, tag));
+          socket.write(val, "utf8", (err: Error) => this.onWrite(err, val, tag));
         } else {
           // socket is not connected
           // bouncing inputs
-          this.o.b_d_wrap.send(value, tag);
+          this.o.b_d_val.send(val, tag);
         }
         break;
 
       case this.i.st_conn:
-        if (value && !connected && !socket.connecting) {
+        const conn = value as boolean;
+        if (conn && !connected && !socket.connecting) {
           // socket is not connected and is not in the process of connecting
           // attempting to open connection
-          socket.connect(this.remotePort, this.remoteHost);
-        } else if (!value && (connected || socket.connecting)) {
+          socket.connect(this.port, this.host);
+        } else if (!conn && (connected || socket.connecting)) {
           // TODO: Can we call end() while connecting?
           // socket is connected or is in the process of connecting
           // closing connection
@@ -136,9 +105,9 @@ export class Socket implements ISink, ISource {
   private bounceAll() {
     const buffer = this.buffer;
     if (buffer.size > 0) {
-      const re = this.o.b_d_wrap;
+      const port = this.o.b_d_val;
       for (const [tag, value] of this.buffer.entries()) {
-        re.send(value, tag);
+        port.send(value, tag);
       }
     }
   }
@@ -155,8 +124,8 @@ export class Socket implements ISink, ISource {
 
   /**
    * Handles socket closure.
-   * Sets connected state, sends false `connected` flag to output, and
-   * bounces all buffered inputs.
+   * Sets connected state, emits false 'connected' flag, and bounces all
+   * buffered inputs.
    */
   private onClose(): void {
     const connected = false;
@@ -167,7 +136,7 @@ export class Socket implements ISink, ISource {
 
   /**
    * Handles socket errors.
-   * Sends stringified error to output.
+   * Emits stringified error.
    * @param err
    */
   private onError(err: Error): void {
@@ -177,14 +146,15 @@ export class Socket implements ISink, ISource {
 
   /**
    * Handles socket write outcome.
-   * Removes affected input from buffer when successful.
+   * Bounces input and emits stringified error on error. Removes affected input
+   * from buffer.
    * @param err
    * @param value
    * @param tag
    */
-  private onWrite(err: Error, value: TJson, tag?: string): void {
+  private onWrite(err: Error, value: Buffer | string, tag?: string): void {
     if (err) {
-      this.o.b_d_wrap.send(value, tag);
+      this.o.b_d_val.send(value, tag);
       this.o.ev_err.send(String(err));
     }
     this.buffer.delete(tag);
