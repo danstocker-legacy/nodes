@@ -1,10 +1,10 @@
-import {Tracker} from "./Tracker";
+import {Merger} from "./Merger";
 
 // tslint:disable
-describe("Tracker", function () {
+describe("Merger", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Tracker<{ d_foo: number, d_bar: boolean }>(["d_foo", "d_bar"]);
+      const node = new Merger<{ d_foo: number, d_bar: boolean }>(["d_foo", "d_bar"]);
       expect(node.i.d_foo).toBeDefined();
       expect(node.i.d_bar).toBeDefined();
       expect(node.o.mul).toBeDefined();
@@ -12,10 +12,10 @@ describe("Tracker", function () {
   });
 
   describe("#send()", function () {
-    let node: Tracker<{ d_foo: number, d_bar: boolean }>;
+    let node: Merger<{ d_foo: number, d_bar: boolean }>;
 
     beforeEach(function () {
-      node = new Tracker(["d_foo", "d_bar"]);
+      node = new Merger(["d_foo", "d_bar"]);
     });
 
     it("should forward all cached inputs", function () {

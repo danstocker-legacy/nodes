@@ -2,9 +2,9 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IAny, ValueOf} from "../../utils";
 
-type TTrackerInputs<T> = T;
+type TMergerInputs<T> = T;
 
-interface ITrackerOutputs<T> {
+interface IMergerOutputs<T> {
   mul: T;
 }
 
@@ -17,14 +17,14 @@ interface ITrackerOutputs<T> {
  * d_B ---> d_val:Sampler:$ -+
  * d_A --> ev_smp:"
  * @example
- * let tracker: Tracker<{ d_foo: number, d_bar: number }>
- * tracker = new Tracker(["d_foo", "d_bar"]);
- * tracker.i.b_foo.send(5, "2");    // mul -> {b_foo: 5, b_bar: undefined}, "2"
- * tracker.i.b_bar.send(true, "1"); // mul -> {b_foo: 5, b_bar: true}, "1"
+ * let merger: Merger<{ d_foo: number, d_bar: number }>
+ * merger = new Merger(["d_foo", "d_bar"]);
+ * merger.i.b_foo.send(5, "2");    // mul -> {b_foo: 5, b_bar: undefined}, "2"
+ * merger.i.b_bar.send(true, "1"); // mul -> {b_foo: 5, b_bar: true}, "1"
  */
-export class Tracker<T extends IAny> implements ISink, ISource {
-  public readonly i: TInBundle<TTrackerInputs<T>>;
-  public readonly o: TOutBundle<ITrackerOutputs<T>>;
+export class Merger<T extends IAny> implements ISink, ISource {
+  public readonly i: TInBundle<TMergerInputs<T>>;
+  public readonly o: TOutBundle<IMergerOutputs<T>>;
 
   /**
    * Stores last input values.
@@ -42,8 +42,8 @@ export class Tracker<T extends IAny> implements ISink, ISource {
   }
 
   public send(
-    port: IInPort<ValueOf<TTrackerInputs<T>>>,
-    input: ValueOf<TTrackerInputs<T>>,
+    port: IInPort<ValueOf<TMergerInputs<T>>>,
+    input: ValueOf<TMergerInputs<T>>,
     tag?: string
   ): void {
     const name = port.name;
