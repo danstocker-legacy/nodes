@@ -4,6 +4,7 @@ import {Server} from "./Server";
 describe("Server", function () {
   let onListening: () => void;
   let onConnection: (socket: any) => void;
+  let onServerClose: () => void;
   let onServerError: (err: Error) => void;
   const server = {
     listen: () => null,
@@ -14,6 +15,9 @@ describe("Server", function () {
           break;
         case "connection":
           onConnection = cb;
+          break;
+        case "close":
+          onServerClose = cb;
           break;
         case "error":
           onServerError = cb;
@@ -164,11 +168,26 @@ describe("Server", function () {
       node = new Server("localhost", 8888);
     });
 
-    it("should send parsed & unwrapped data to remote", function () {
+    it("should emit stringified error", function () {
       const error = new Error("foo");
       spyOn(node.o.ev_err, "send");
       onServerError(error);
       expect(node.o.ev_err.send).toHaveBeenCalledWith("Error: foo");
+    });
+  });
+
+  describe("on server close", function () {
+    let node: Server;
+
+    beforeEach(function () {
+      node = new Server("localhost", 8888);
+      onListening();
+    });
+
+    it("should emit 'st_lis'", function () {
+      spyOn(node.o.st_lis, "send");
+      onServerClose();
+      expect(node.o.st_lis.send).toHaveBeenCalledWith(false);
     });
   });
 
@@ -206,7 +225,7 @@ describe("Server", function () {
       onConnection(socket);
     });
 
-    it("should send parsed data to Remote node", function () {
+    it("should emit multiplexed data", function () {
       spyOn(node.o.d_mux, "send");
       onData("Hello World!");
       expect(node.o.d_mux.send).toHaveBeenCalledWith({

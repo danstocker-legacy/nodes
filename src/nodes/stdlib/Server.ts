@@ -47,7 +47,6 @@ interface IServerOutputs {
 
 /**
  * Handles TCP connections and data traffic.
- * TODO: Add close event handler.
  */
 export class Server implements ISink, ISource {
   public readonly i: TInBundle<IServerInputs>;
@@ -67,6 +66,7 @@ export class Server implements ISink, ISource {
     server.on("listening", () => this.onListen());
     server.on("connection",
       (socket: net.Socket) => this.onConnection(socket));
+    server.on("close", () => this.onServerClose());
     server.on("error", (err: Error) => this.onServerError(err));
 
     this.server = server;
@@ -129,6 +129,10 @@ export class Server implements ISink, ISource {
     const o = this.o;
     o.ev_conn.send(info);
     o.st_connc.send(connections.size);
+  }
+
+  private onServerClose(): void {
+    this.o.st_lis.send(false);
   }
 
   /**
