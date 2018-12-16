@@ -3,7 +3,7 @@ import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TJson, ValueOf} from "../../utils";
 
-interface IRemoteInputs {
+interface ISocketInputs {
   /** Wrapped value. */
   d_wrap: TJson;
 
@@ -11,7 +11,7 @@ interface IRemoteInputs {
   st_conn: boolean;
 }
 
-interface IRemoteOutputs {
+interface ISocketOutputs {
   /** Bounced wrapped value. */
   b_d_wrap: TJson;
 
@@ -25,13 +25,13 @@ interface IRemoteOutputs {
   ev_err: string;
 }
 
-const instances = new Map<string, Remote>();
+const instances = new Map<string, Socket>();
 
-export class Remote implements ISink, ISource {
+export class Socket implements ISink, ISource {
   /**
-   * Retrieves OR creates a new Remote instance.
-   * @param remoteHost Remote server address
-   * @param remotePort Remote server port
+   * Retrieves OR creates a new Socket instance.
+   * @param remoteHost Socket server address
+   * @param remotePort Socket server port
    * @param localHost Local server address
    * @param localPort Local server port
    */
@@ -40,12 +40,12 @@ export class Remote implements ISink, ISource {
     remotePort: number,
     localHost: string,
     localPort: number
-  ): Remote {
+  ): Socket {
     // retrieving / storing instance in cache
     const key = `${remoteHost}:${remotePort}-${localHost}:${localPort}`;
     let instance = instances.get(key);
     if (!instance) {
-      instance = new Remote(remoteHost, remotePort, localHost, localPort);
+      instance = new Socket(remoteHost, remotePort, localHost, localPort);
       instances.set(key, instance);
     }
     return instance;
@@ -58,8 +58,8 @@ export class Remote implements ISink, ISource {
     instances.clear();
   }
 
-  public readonly i: TInBundle<IRemoteInputs>;
-  public readonly o: TOutBundle<IRemoteOutputs>;
+  public readonly i: TInBundle<ISocketInputs>;
+  public readonly o: TOutBundle<ISocketOutputs>;
   private readonly remoteHost: string;
   private readonly remotePort: number;
   private readonly socket: net.Socket;
@@ -94,8 +94,8 @@ export class Remote implements ISink, ISource {
   }
 
   public send(
-    port: IInPort<ValueOf<IRemoteInputs>>,
-    value: ValueOf<IRemoteInputs>,
+    port: IInPort<ValueOf<ISocketInputs>>,
+    value: ValueOf<ISocketInputs>,
     tag?: string
   ): void {
     const socket = this.socket;

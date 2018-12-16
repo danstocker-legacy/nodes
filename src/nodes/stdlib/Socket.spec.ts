@@ -1,7 +1,7 @@
 import * as net from "net";
-import {Remote} from "./Remote";
+import {Socket} from "./Socket";
 
-describe("Remote", function () {
+describe("Socket", function () {
   let onConnect: () => void;
   let onClose: () => void;
   let onError: (err: Error) => void;
@@ -30,17 +30,17 @@ describe("Remote", function () {
 
   beforeEach(function () {
     spyOn(net, "Socket").and.returnValue(socket);
-    Remote.clear();
+    Socket.clear();
   });
 
   describe(".instance()", function () {
     it("should cache instances by host & port", function () {
-      const node = Remote.instance(
+      const node = Socket.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888);
-      expect(Remote.instance(
+      expect(Socket.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888)
       ).toBe(node);
-      expect(Remote.instance(
+      expect(Socket.instance(
         "192.168.0.101", 8890, "127.0.0.1", 8888)
       ).not.toBe(node);
     });
@@ -48,10 +48,10 @@ describe("Remote", function () {
 
   describe(".clear()", function () {
     it("should clear instance cache", function () {
-      const node = Remote.instance(
+      const node = Socket.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888);
-      Remote.clear();
-      expect(Remote.instance(
+      Socket.clear();
+      expect(Socket.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888)
       ).not.toBe(node);
     });
@@ -59,7 +59,7 @@ describe("Remote", function () {
 
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = Remote.instance(
+      const node = Socket.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888);
       expect(node.i.d_wrap).toBeDefined();
       expect(node.i.st_conn).toBeDefined();
@@ -71,10 +71,10 @@ describe("Remote", function () {
   });
 
   describe("on connection", function () {
-    let node: Remote;
+    let node: Socket;
 
     beforeEach(function () {
-      node = Remote.instance(
+      node = Socket.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888);
     });
 
@@ -86,10 +86,10 @@ describe("Remote", function () {
   });
 
   describe("on close", function () {
-    let node: Remote;
+    let node: Socket;
 
     beforeEach(function () {
-      node = Remote.instance(
+      node = Socket.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888);
     });
 
@@ -120,10 +120,10 @@ describe("Remote", function () {
   });
 
   describe("on error", function () {
-    let node: Remote;
+    let node: Socket;
 
     beforeEach(function () {
-      node = Remote.instance(
+      node = Socket.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888);
     });
 
@@ -154,10 +154,10 @@ describe("Remote", function () {
   });
 
   describe("on writing to socket", function () {
-    let node: Remote;
+    let node: Socket;
 
     beforeEach(function () {
-      node = Remote.instance(
+      node = Socket.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888);
       onConnect();
       node.send(node.i.d_wrap, "foo", "1");
@@ -179,10 +179,10 @@ describe("Remote", function () {
   });
 
   describe("#send()", function () {
-    let node: Remote;
+    let node: Socket;
 
     beforeEach(function () {
-      node = Remote.instance(
+      node = Socket.instance(
         "192.168.0.101", 8889, "127.0.0.1", 8888);
     });
 
