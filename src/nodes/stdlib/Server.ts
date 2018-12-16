@@ -1,90 +1,138 @@
 import * as net from "net";
-import {ISource, MSource} from "../../node";
-import {TOutBundle} from "../../port";
-import {Remote} from "./Remote";
+import {ISink, ISource, MSink, MSource} from "../../node";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
+import {IMuxed, ValueOf} from "../../utils";
 
-interface IServerOutputs {
+type TServerPorts<P extends string, V> = {
+  [port in P]: V
+};
+
+interface IConnectionInfo {
+  lhost: string;
+  lport: number;
+  rhost: string;
+  rport: number;
+}
+
+interface IServerInputs<P extends string> {
+  /** Values to be sent through sockets. */
+  d_mux: IMuxed<TServerPorts<P, Buffer | string>>;
+
+  /** Whether the server *should be* listening. */
+  st_lis: boolean;
+}
+
+interface IServerOutputs<P extends string> {
+  /** Values received through sockets. */
+  d_mux: IMuxed<TServerPorts<P, Buffer | string>>;
+
   /** Connection count. */
-  st_conc: number;
+  st_connc: number;
+
+  /** Whether server *is* listening. */
+  st_lis: boolean;
+
+  /** Bounced inputs. */
+  b_d_mux: IMuxed<TServerPorts<P, Buffer | string>>;
+
+  /** Information re. new connection. */
+  ev_conn: IConnectionInfo;
+
+  /** Information re. closed connection. */
+  ev_disc: IConnectionInfo;
 
   /** Error message. */
   ev_err: string;
 }
 
-const instances = new Map<number, Server>();
-
 /**
  * Handles TCP connections and data traffic.
- * Outputs connection count (`connections`) and `error`. (Both untagged.)
- * There is usually a single instance of it available.
  */
-export class Server implements ISource {
-  /**
-   * Creates OR retrieves Server instance.
-   * @param host
-   * @param port
-   */
-  public static instance(host: string, port: number): Server {
-    let instance = instances.get(port);
-    if (!instance) {
-      instance = new Server(host, port);
-      instances.set(port, instance);
-    }
-    return instance;
-  }
-
-  /**
-   * Clears instance cache. For testing purposes only.
-   */
-  public static clear() {
-    instances.clear();
-  }
-
-  private static onData(data: Buffer | string, remote: Remote) {
-    const wrapped = JSON.parse(String(data));
-    remote.o.d_wrap.send(wrapped.value, wrapped.tag);
-  }
-
-  public readonly o: TOutBundle<IServerOutputs>;
+export class Server<P extends string> implements ISink, ISource {
+  public readonly i: TInBundle<IServerInputs<P>>;
+  public readonly o: TOutBundle<IServerOutputs<P>>;
+  private readonly server: net.Server;
   private readonly host: string;
   private readonly port: number;
-  private readonly connections: Set<net.Socket>;
+  private readonly sockets: Map<string, net.Socket>;
 
-  private constructor(host: string, port: number) {
-    MSource.init.call(this, ["st_conc", "ev_err"]);
+  constructor(host: string, port: number) {
+    MSink.init.call(this, ["d_mux", "st_lis"]);
+    MSource.init.call(this, [
+      "d_mux", "st_connc", "st_lis", "b_d_mux", "ev_conn", "ev_disc", "ev_err"
+    ]);
 
     const server = new net.Server();
+    server.on("listen", () => this.onListen());
     server.on("connection",
       (socket: net.Socket) => this.onConnection(socket));
     server.on("error", (err: Error) => this.onServerError(err));
-    server.listen(port, host);
 
+    this.server = server;
     this.host = host;
     this.port = port;
-    this.connections = new Set();
+    this.sockets = new Map();
+  }
+
+  public send(
+    port: IInPort<ValueOf<IServerInputs<P>>>,
+    value: ValueOf<IServerInputs<P>>,
+    tag?: string
+  ): void {
+    const i = this.i;
+    switch (port) {
+      case i.d_mux:
+        const mux = value as IMuxed<TServerPorts<P, Buffer | string>>;
+        const sockets = this.sockets;
+        const id = mux.name;
+        if (sockets.has(id)) {
+          const socket = sockets.get(id);
+          socket.write(mux.val);
+        } else {
+          this.o.b_d_mux.send(mux, tag);
+        }
+        break;
+
+      case i.st_lis:
+        this.server.listen(this.port, this.host);
+        break;
+    }
+  }
+
+  private onListen(): void {
+    this.o.st_lis.send(true);
   }
 
   /**
    * Handles socket connection.
-   * Sends connection count to output.
+   * Emits connection event and connection count.
    * @param socket
    */
   private onConnection(socket: net.Socket): void {
-    const remote = Remote.instance(
-      socket.remoteAddress, socket.remotePort, this.host, this.port);
+    const info = {
+      lhost: socket.localAddress,
+      lport: socket.localPort,
+      rhost: socket.remoteAddress,
+      rport: socket.remotePort
+    };
+    const id = `${info.rhost}:${info.rport}` as P;
+
     socket.on("data",
-      (data: Buffer | string) => Server.onData(data, remote));
-    socket.on("close", () => this.onSocketClose(socket));
+      (data: Buffer | string) => this.onData(data, id));
+    socket.on("close", () => this.onSocketClose(socket, info, id));
     socket.on("error", (err: Error) => this.onSocketError(err));
 
-    const connections = this.connections;
-    connections.add(socket);
-    this.o.st_conc.send(connections.size);
+    const connections = this.sockets;
+    connections.set(id, socket);
+
+    const o = this.o;
+    o.ev_conn.send(info);
+    o.st_connc.send(connections.size);
   }
 
   /**
    * Handles server error.
-   * Sends stringified error to output.
+   * Emits stringified error.
    * @param err
    */
   private onServerError(err: Error): void {
@@ -92,14 +140,31 @@ export class Server implements ISource {
   }
 
   /**
-   * Handles closing sockets.
-   * Sends connection count to output.
-   * @param socket
+   * Handles data received from socket.
+   * Emits multiplexed data.
+   * @param data
+   * @param id
    */
-  private onSocketClose(socket: net.Socket): void {
-    const connections = this.connections;
-    connections.delete(socket);
-    this.o.st_conc.send(connections.size);
+  private onData(data: Buffer | string, id: P): void {
+    this.o.d_mux.send({
+      name: id,
+      val: data
+    });
+  }
+
+  /**
+   * Handles closing sockets.
+   * Emits disconnect event and connection count.
+   * @param socket
+   * @param info
+   * @param id
+   */
+  private onSocketClose(socket: net.Socket, info: IConnectionInfo, id: P): void {
+    const connections = this.sockets;
+    connections.delete(id);
+    const o = this.o;
+    o.ev_disc.send(info);
+    o.st_connc.send(connections.size);
   }
 
   /**
