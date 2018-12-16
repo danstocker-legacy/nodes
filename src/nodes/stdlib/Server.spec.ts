@@ -1,14 +1,17 @@
 import * as net from "net";
-import {Remote} from "./Remote";
 import {Server} from "./Server";
 
 describe("Server", function () {
+  let onListening: () => void;
   let onConnection: (socket: any) => void;
   let onServerError: (err: Error) => void;
   const server = {
     listen: () => null,
     on: (event, cb) => {
       switch (event) {
+        case "listening":
+          onListening = cb;
+          break;
         case "connection":
           onConnection = cb;
           break;
@@ -115,21 +118,46 @@ describe("Server", function () {
     });
   });
 
-  xdescribe("on connection", function () {
+  describe("on listening", function () {
     let node: Server;
 
     beforeEach(function () {
       node = new Server("localhost", 8888);
     });
 
-    it("should send number of connections", function () {
+    it("should emit 'st_lis'", function () {
+      spyOn(node.o.st_lis, "send");
+      onListening();
+      expect(node.o.st_lis.send).toHaveBeenCalledWith(true);
+    });
+  });
+
+  describe("on connection", function () {
+    let node: Server;
+
+    beforeEach(function () {
+      node = new Server("localhost", 8888);
+    });
+
+    it("should emit connection info", function () {
+      spyOn(node.o.ev_conn, "send");
+      onConnection(socket);
+      expect(node.o.ev_conn.send).toHaveBeenCalledWith({
+        lhost: socket.localAddress,
+        lport: socket.localPort,
+        rhost: socket.remoteAddress,
+        rport: socket.remotePort
+      });
+    });
+
+    it("should emit number of connections", function () {
       spyOn(node.o.st_connc, "send");
       onConnection(socket);
       expect(node.o.st_connc.send).toHaveBeenCalledWith(1);
     });
   });
 
-  xdescribe("on server error", function () {
+  describe("on server error", function () {
     let node: Server;
 
     beforeEach(function () {
@@ -144,7 +172,7 @@ describe("Server", function () {
     });
   });
 
-  xdescribe("on socket close", function () {
+  describe("on socket close", function () {
     let node: Server;
 
     beforeEach(function () {
@@ -152,27 +180,54 @@ describe("Server", function () {
       onConnection(socket);
     });
 
-    it("should send number of connections", function () {
+    it("should emit connection info", function () {
+      spyOn(node.o.ev_disc, "send");
+      onSocketClose();
+      expect(node.o.ev_disc.send).toHaveBeenCalledWith({
+        lhost: socket.localAddress,
+        lport: socket.localPort,
+        rhost: socket.remoteAddress,
+        rport: socket.remotePort
+      });
+    });
+
+    it("should emit number of connections", function () {
       spyOn(node.o.st_connc, "send");
       onSocketClose();
       expect(node.o.st_connc.send).toHaveBeenCalledWith(0);
     });
   });
 
-  xdescribe("on data", function () {
+  describe("on data", function () {
     let node: Server;
-    let remote: Remote;
 
     beforeEach(function () {
       node = new Server("localhost", 8888);
-      remote = Remote.instance("192.168.0.101", 8889, "localhost", 8888);
       onConnection(socket);
     });
 
     it("should send parsed data to Remote node", function () {
-      spyOn(remote.o.d_wrap, "send");
-      onData(`{"tag":1,"value":"foo"}`);
-      expect(remote.o.d_wrap.send).toHaveBeenCalledWith("foo", 1);
+      spyOn(node.o.d_mux, "send");
+      onData("Hello World!");
+      expect(node.o.d_mux.send).toHaveBeenCalledWith({
+        name: "192.168.0.101:8889",
+        val: "Hello World!"
+      });
+    });
+  });
+
+  describe("on socket error", function () {
+    let node: Server;
+
+    beforeEach(function () {
+      node = new Server("localhost", 8888);
+      onConnection(socket);
+    });
+
+    it("should emit stringified error", function () {
+      spyOn(node.o.ev_err, "send");
+      onSocketError(new Error("foo"));
+      expect(node.o.ev_err.send).toHaveBeenCalledWith("Error: foo");
     });
   });
 });
