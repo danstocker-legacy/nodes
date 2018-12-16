@@ -2,16 +2,10 @@ import * as net from "net";
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IMuxed, ValueOf} from "../../utils";
+import {IConnectionInfo} from "./IConnectionInfo";
 
 interface IServerPorts<V> {
   [key: string]: V;
-}
-
-interface IConnectionInfo {
-  lhost: string;
-  lport: number;
-  rhost: string;
-  rport: number;
 }
 
 interface IServerInputs {
