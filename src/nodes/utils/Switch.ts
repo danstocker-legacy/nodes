@@ -1,5 +1,10 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
-import {IInPort, IOutPort, TInBundle, TOutBundle} from "../../port";
+import {IInPort, TInBundle, TOutBundle} from "../../port";
+import {IMuxed} from "../../utils";
+
+type TSwitchPositions<P extends string, V> = {
+  [branch in P]: V
+};
 
 interface ISwitchInput<P extends string, V> {
   /** Value to be sent to one of the outputs. */
@@ -14,26 +19,21 @@ interface ISwitchInputs<P extends string, V> {
   mul: ISwitchInput<P, V>;
 }
 
-type TSwitchOutputs<P extends string, V> = {
-  [K in P]: V
-};
+interface ISwitchOutputs<P extends string, V> {
+  d_mux: IMuxed<TSwitchPositions<P, V>>;
 
-interface ISwitchBounced<P extends string, V> {
   /** Bounced multiple inputs */
   b_mul: ISwitchInput<P, V>;
 
-  /** Bounced input value */
-  b_d_val: V;
+  /** Bounced switch position. (When position is not available.) */
+  b_st_pos: P;
 }
 
 /**
  * Forwards input to one of the possible outputs.
  * Atomic equivalent of a composite node.
  * Composite view:
- * d_val ---#=> d_#:Joiner:d_mul -> d_val:Mapper:d_val -> d_mux:Demuxer:d_val -+-> A
- * st_pos --/                                                                  +-> B
- *                                                                             +-> P
- *                                                                             ...
+ * TODO: Add image URL.
  * @example
  * let switch: Switch<"d_foo" | "d_bar" | "d_baz", number>;
  * switch = new Switch(["d_foo", "d_bar", "d_baz");
@@ -42,9 +42,9 @@ export class Switch<P extends string, V> implements ISink, ISource {
   public readonly i:
     TInBundle<ISwitchInputs<P, V>> &
     TInBundle<ISwitchInput<P, V>>;
-  public readonly o:
-    TOutBundle<TSwitchOutputs<P, V>> &
-    TOutBundle<ISwitchBounced<P, V>>;
+  public readonly o: TOutBundle<ISwitchOutputs<P, V>>;
+
+  private readonly positions: Set<P>;
 
   /**
    * Current position of the switch.
@@ -58,9 +58,10 @@ export class Switch<P extends string, V> implements ISink, ISource {
    * prefixed with each positions's respective domain. ("d_" / "st_" /
    * "ev_": data, state, event, etc.)
    */
-  constructor(positions: Array<string>) {
+  constructor(positions: Array<P>) {
     MSink.init.call(this, ["mul", "d_val", "st_pos"]);
-    MSource.init.call(this, ["b_mul"].concat(positions));
+    MSource.init.call(this, ["d_mux", "b_mul", "b_st_pos"]);
+    this.positions = new Set(positions);
   }
 
   public send(
@@ -69,33 +70,38 @@ export class Switch<P extends string, V> implements ISink, ISource {
     tag?: string
   ): void {
     const i = this.i;
-    let outPort: IOutPort<any>;
+    const o = this.o;
+    let position: P;
     switch (port) {
       case i.mul:
         const mul = value as ISwitchInput<P, V>;
-        const position = mul.st_pos;
-        this.position = position;
-
-        outPort = this.o[position];
-        if (outPort) {
-          outPort.send(mul.d_val, tag);
+        position = mul.st_pos;
+        if (this.positions.has(position)) {
+          this.position = position;
+          o.d_mux.send({
+            name: position,
+            val: mul.d_val
+          }, tag);
         } else {
-          this.o.b_mul.send(mul, tag);
+          o.b_mul.send(mul, tag);
         }
         break;
 
       case i.st_pos:
-        this.position = value as P;
+        position = value as P;
+        if (this.positions.has(position)) {
+          this.position = value as P;
+        } else {
+          o.b_st_pos.send(position, tag);
+        }
         break;
 
       case i.d_val:
-        const data = value as V;
-        outPort = this.o[this.position];
-        if (outPort) {
-          outPort.send(data, tag);
-        } else {
-          this.o.b_d_val.send(data, tag);
-        }
+        const val = value as V;
+        o.d_mux.send({
+          name: this.position,
+          val
+        }, tag);
     }
   }
 }
