@@ -79,7 +79,7 @@ export class Server implements ISink, ISource {
       case i.d_mux:
         const mux = value as IMuxed<IServerPorts<Buffer | string>>;
         const sockets = this.sockets;
-        const id = mux.name as string;
+        const id = mux.port as string;
         if (sockets.has(id)) {
           const socket = sockets.get(id);
           socket.write(mux.val);
@@ -146,7 +146,7 @@ export class Server implements ISink, ISource {
    */
   private onData(data: Buffer | string, id: string): void {
     this.o.d_mux.send({
-      name: id,
+      port: id,
       val: data
     });
   }

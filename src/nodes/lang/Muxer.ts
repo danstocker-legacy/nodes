@@ -5,7 +5,7 @@ import {IAny, IMuxed} from "../../utils";
 interface IMuxerOutputs<T> {
   /**
    * Multiplexed value.
-   * Possible values of property `name` is one of the fields passed to
+   * Possible values of property `port` is one of the fields passed to
    * constructor.
    */
   d_mux: IMuxed<T>;
@@ -17,9 +17,9 @@ interface IMuxerOutputs<T> {
  * adding the input port's name.
  * @example
  * let muxer: Muxer<{d_foo: number, d_bar: boolean}>;
- * muxer = new Muxer(["fd_oo", "d_bar"]);
+ * muxer = new Muxer(["d_foo", "d_bar"]);
  * muxer.i.d_foo.send(5);
- * // outputs `{d_foo: 5, name: "foo"}` on port "d_mux"
+ * // outputs `{val: 5, port: "foo"}` on port "d_mux"
  */
 export class Muxer<T extends IAny = IAny> implements ISink, ISource {
   public readonly i: TInBundle<T>;
@@ -37,7 +37,7 @@ export class Muxer<T extends IAny = IAny> implements ISink, ISource {
   public send(port: IInPort<T[keyof T]>, value: T[keyof T], tag?: string): void {
     const name = port.name;
     if (port === this.i[name]) {
-      this.o.d_mux.send({name, val: value}, tag);
+      this.o.d_mux.send({port: name, val: value}, tag);
     }
   }
 }

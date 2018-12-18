@@ -5,7 +5,7 @@ export interface IMuxed<T> {
   /**
    * Name of port associated with transmitted value.
    */
-  name: keyof T;
+  port: keyof T;
 
   /**
    * Multiplexed value.

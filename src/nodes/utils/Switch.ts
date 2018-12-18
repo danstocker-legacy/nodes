@@ -79,7 +79,7 @@ export class Switch<P extends string, V> implements ISink, ISource {
         if (this.positions.has(position)) {
           this.position = position;
           o.d_mux.send({
-            name: position,
+            port: position,
             val: mul.d_val
           }, tag);
         } else {
@@ -99,7 +99,7 @@ export class Switch<P extends string, V> implements ISink, ISource {
       case i.d_val:
         const val = value as V;
         o.d_mux.send({
-          name: this.position,
+          port: this.position,
           val
         }, tag);
     }

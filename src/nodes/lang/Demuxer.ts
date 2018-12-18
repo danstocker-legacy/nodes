@@ -5,7 +5,7 @@ import {IMuxed} from "../../utils";
 interface IDemuxerInputs<T> {
   /**
    * Multiplexed value.
-   * Possible values of property `name` is one of the fields passed to
+   * Possible values of property `port` is one of the fields passed to
    * constructor.
    */
   d_mux: IMuxed<T>;
@@ -22,7 +22,7 @@ interface IDemuxerOutputs<T> {
  * @example
  * let demuxer: Demuxer<{d_foo: number, d_bar: boolean}>;
  * demuxer = new Demuxer(["d_foo", "d_bar"]);
- * demuxer.i.d_mux.send({name: "d_foo", 5});
+ * demuxer.i.d_mux.send({port: "d_foo", val: 5});
  * // outputs `5` on port "d_foo"
  */
 export class Demuxer<T> implements ISink, ISource {
@@ -46,7 +46,7 @@ export class Demuxer<T> implements ISink, ISource {
     const i = this.i;
     const o = this.o;
     if (port === this.i.d_mux) {
-      const name = value.name;
+      const name = value.port;
       if (o[name]) {
         o[name].send(value.val, tag);
       } else {

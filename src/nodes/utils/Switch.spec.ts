@@ -25,7 +25,7 @@ describe("Switch", function () {
         spyOn(node.o.d_mux, "send");
         node.send(node.i.mul, {st_pos: "bar", d_val: 5}, "1");
         expect(node.o.d_mux.send).toHaveBeenCalledWith({
-          name: "bar",
+          port: "bar",
           val: 5
         }, "1");
       });
@@ -52,7 +52,7 @@ describe("Switch", function () {
           spyOn(node.o.d_mux, "send");
           node.send(node.i.d_val, 5, "1");
           expect(node.o.d_mux.send).toHaveBeenCalledWith({
-            name: "bar",
+            port: "bar",
             val: 5
           }, "1");
         });

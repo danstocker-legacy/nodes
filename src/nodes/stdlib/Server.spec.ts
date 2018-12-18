@@ -83,7 +83,7 @@ describe("Server", function () {
       it("should write to socket", function () {
         spyOn(socket, "write");
         node.send(node.i.d_mux, {
-          name: "192.168.0.101:8889",
+          port: "192.168.0.101:8889",
           val: "Hello World!"
         }, "1");
         expect(socket.write).toHaveBeenCalledWith("Hello World!");
@@ -93,7 +93,7 @@ describe("Server", function () {
         it("should not write to socket", function () {
           spyOn(socket, "write");
           node.send(node.i.d_mux, {
-            name: "192.168.0.102:8889",
+            port: "192.168.0.102:8889",
             val: "Hello World!"
           } as any, "1");
           expect(socket.write).not.toHaveBeenCalled();
@@ -102,11 +102,11 @@ describe("Server", function () {
         it("should bounce input", function () {
           spyOn(node.o.b_d_mux, "send");
           node.send(node.i.d_mux, {
-            name: "192.168.0.102:8889",
+            port: "192.168.0.102:8889",
             val: "Hello World!"
           } as any, "1");
           expect(node.o.b_d_mux.send).toHaveBeenCalledWith({
-            name: "192.168.0.102:8889",
+            port: "192.168.0.102:8889",
             val: "Hello World!"
           }, "1");
         });
@@ -229,7 +229,7 @@ describe("Server", function () {
       spyOn(node.o.d_mux, "send");
       onData("Hello World!");
       expect(node.o.d_mux.send).toHaveBeenCalledWith({
-        name: "192.168.0.101:8889",
+        port: "192.168.0.101:8889",
         val: "Hello World!"
       });
     });

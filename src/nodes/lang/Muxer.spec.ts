@@ -21,7 +21,7 @@ describe("Muxer", function () {
       spyOn(node.o.d_mux, "send");
       node.send(node.i.d_foo, 5, "1");
       expect(node.o.d_mux.send).toHaveBeenCalledWith({
-        name: "d_foo",
+        port: "d_foo",
         val: 5
       }, "1");
     });

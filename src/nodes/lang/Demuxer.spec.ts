@@ -20,16 +20,16 @@ describe("Demuxer", function () {
 
     it("should send multiplexed input to output", function () {
       spyOn(node.o.d_foo, "send");
-      node.send(node.i.d_mux, {name: "d_foo", val: 5}, "1");
+      node.send(node.i.d_mux, {port: "d_foo", val: 5}, "1");
       expect(node.o.d_foo.send).toHaveBeenCalledWith(5, "1");
     });
 
     describe("when target port doesn't exist", function () {
       it("should bounce input", function () {
         spyOn(node.o.b_d_mux, "send");
-        node.send(node.i.d_mux, {name: "d_baz", val: 5}, "1");
+        node.send(node.i.d_mux, {port: "d_baz", val: 5}, "1");
         expect(node.o.b_d_mux.send).toHaveBeenCalledWith({
-          name: "d_baz",
+          port: "d_baz",
           val: 5
         }, "1");
       });
