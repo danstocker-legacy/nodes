@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 
@@ -13,23 +13,22 @@ export interface IGateInputs<V> {
 export interface IGateOutputs<V> {
   /** Forwarded value. */
   d_val: V;
-
-  /** Bounced forwarded value. */
-  b_d_val: V;
 }
 
 /**
  * Forwards default input to output when reference input is truthy.
  */
-export class Gate<V> implements ISink, ISource {
+export class Gate<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IGateInputs<V>>;
   public readonly o: TOutBundle<IGateOutputs<V>>;
+  public readonly b: TOutBundle<Pick<IGateInputs<V>, "d_val">>;
 
   private open: boolean;
 
   constructor() {
     MSink.init.call(this, ["d_val", "st_open"]);
-    MSource.init.call(this, ["d_val", "b_d_val"]);
+    MSource.init.call(this, ["d_val"]);
+    MBouncer.init.call(this, ["d_val"]);
     this.open = false;
   }
 
@@ -47,11 +46,10 @@ export class Gate<V> implements ISink, ISource {
 
       case i.d_val:
         const val = value as V;
-        const o = this.o;
         if (this.open) {
-          o.d_val.send(val, tag);
+          this.o.d_val.send(val, tag);
         } else {
-          o.b_d_val.send(val, tag);
+          this.b.d_val.send(val, tag);
         }
         break;
     }

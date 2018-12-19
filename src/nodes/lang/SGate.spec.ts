@@ -6,7 +6,7 @@ describe("SGate", function () {
       const node = new SGate();
       expect(node.i.i).toBeDefined();
       expect(node.o.d_val).toBeDefined();
-      expect(node.o.b_i).toBeDefined();
+      expect(node.b.i).toBeDefined();
     });
   });
 
@@ -33,9 +33,9 @@ describe("SGate", function () {
       });
 
       it("should bounce input", function () {
-        spyOn(node.o.b_i, "send");
+        spyOn(node.b.i, "send");
         node.send(node.i.i, {d_val: 2, st_open: false}, "1");
-        expect(node.o.b_i.send)
+        expect(node.b.i.send)
         .toHaveBeenCalledWith({d_val: 2, st_open: false}, "1");
       });
     });

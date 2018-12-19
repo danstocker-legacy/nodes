@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {TEqualityCallback} from "./SComparer";
 
@@ -8,9 +8,6 @@ interface IDifferInputs<V> {
 }
 
 interface IDifferOutputs<V> {
-  /** Bounced input value. */
-  b_d_val: V;
-
   /** Non-equality of subsequent inputs. */
   d_diff: boolean;
 
@@ -30,16 +27,18 @@ interface IDifferOutputs<V> {
  * differ.i.d_val.send(5) // emits `false` (not different)
  * differ.i.d_val.send(4) // emits `true` (is different)
  */
-export class Differ<V> implements ISink, ISource {
+export class Differ<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IDifferInputs<V>>;
   public readonly o: TOutBundle<IDifferOutputs<V>>;
+  public readonly b: TOutBundle<IDifferInputs<V>>;
 
   private readonly cb: TEqualityCallback<V>;
   private buffer: Array<V>;
 
   constructor(cb: TEqualityCallback<V>) {
     MSink.init.call(this, ["d_val"]);
-    MSource.init.call(this, ["b_d_val", "d_diff", "ev_err"]);
+    MSource.init.call(this, ["d_diff", "ev_err"]);
+    MBouncer.init.call(this, ["d_val"]);
     this.cb = cb;
     this.buffer = [];
   }
@@ -53,7 +52,7 @@ export class Differ<V> implements ISink, ISource {
           const equals = this.cb(buffer.shift(), value);
           this.o.d_diff.send(!equals, tag);
         } catch (err) {
-          this.o.b_d_val.send(value, tag);
+          this.b.d_val.send(value, tag);
           this.o.ev_err.send(String(err), tag);
         }
       } else {

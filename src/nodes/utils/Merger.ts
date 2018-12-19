@@ -19,8 +19,8 @@ interface IMergerOutputs<T> {
  * @example
  * let merger: Merger<{ d_foo: number, d_bar: number }>
  * merger = new Merger(["d_foo", "d_bar"]);
- * merger.i.b_foo.send(5, "2");    // o -> {b_foo: 5, b_bar: undefined}, "2"
- * merger.i.b_bar.send(true, "1"); // o -> {b_foo: 5, b_bar: true}, "1"
+ * merger.i.d_foo.send(5, "2");    // o -> {d_foo: 5, d_bar: undefined}, "2"
+ * merger.i.d_bar.send(true, "1"); // o -> {d_foo: 5, d_bar: true}, "1"
  */
 export class Merger<T extends IAny> implements ISink, ISource {
   public readonly i: TInBundle<TMergerInputs<T>>;

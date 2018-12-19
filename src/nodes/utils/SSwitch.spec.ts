@@ -5,8 +5,8 @@ describe("SSwitch", function () {
     it("should add ports", function () {
       const node = new SSwitch<"foo" | "bar" | "baz", number>(["foo", "bar", "baz"]);
       expect(node.i.i).toBeDefined();
+      expect(node.b.i).toBeDefined();
       expect(node.o.d_mux).toBeDefined();
-      expect(node.o.b_mul).toBeDefined();
     });
   });
 
@@ -28,9 +28,9 @@ describe("SSwitch", function () {
 
     describe("on invalid 'st_pos'", function () {
       it("should bounce inputs", function () {
-        spyOn(node.o.b_mul, "send");
+        spyOn(node.b.i, "send");
         node.send(node.i.i, {st_pos: "quux", d_val: 5} as any, "1");
-        expect(node.o.b_mul.send).toHaveBeenCalledWith({
+        expect(node.b.i.send).toHaveBeenCalledWith({
           d_val: 5,
           st_pos: "quux"
         }, "1");

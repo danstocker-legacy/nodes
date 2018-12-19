@@ -5,7 +5,7 @@ describe("SFolder", function () {
     it("should add ports", function () {
       const node = new SFolder(() => null);
       expect(node.i.i).toBeDefined();
-      expect(node.o.b_i).toBeDefined();
+      expect(node.b.i).toBeDefined();
       expect(node.o.d_fold).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
     });
@@ -60,9 +60,9 @@ describe("SFolder", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.o.b_i, "send");
+        spyOn(node.b.i, "send");
         node.send(node.i.i, {ev_res: false, d_val: 5}, "1");
-        expect(node.o.b_i.send).toHaveBeenCalledWith({
+        expect(node.b.i.send).toHaveBeenCalledWith({
           d_val: 5,
           ev_res: false
         }, "1");

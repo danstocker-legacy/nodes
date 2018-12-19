@@ -38,8 +38,8 @@ describe("Socket", function () {
         "192.168.0.101", 8889);
       expect(node.i.d_val).toBeDefined();
       expect(node.i.st_conn).toBeDefined();
+      expect(node.b.d_val).toBeDefined();
       expect(node.o.d_val).toBeDefined();
-      expect(node.o.b_d_val).toBeDefined();
       expect(node.o.st_conn).toBeDefined();
       expect(node.o.ev_conn).toBeDefined();
       expect(node.o.ev_disc).toBeDefined();
@@ -85,7 +85,7 @@ describe("Socket", function () {
       });
 
       it("should bounce buffered inputs", function () {
-        const spy = spyOn(node.o.b_d_val, "send");
+        const spy = spyOn(node.b.d_val, "send");
         onClose();
         expect(spy.calls.allArgs()).toEqual([
           ["foo", "1"],
@@ -119,7 +119,7 @@ describe("Socket", function () {
       });
 
       it("should bounce buffered inputs", function () {
-        const spy = spyOn(node.o.b_d_val, "send");
+        const spy = spyOn(node.b.d_val, "send");
         onError(new Error("foo"));
         expect(spy.calls.allArgs()).toEqual([
           ["foo", "1"],
@@ -148,9 +148,9 @@ describe("Socket", function () {
       });
 
       it("should bounce affected input", function () {
-        spyOn(node.o.b_d_val, "send");
+        spyOn(node.b.d_val, "send");
         onWrite(new Error("foo"));
-        expect(node.o.b_d_val.send).toHaveBeenCalledWith("foo", "1");
+        expect(node.b.d_val.send).toHaveBeenCalledWith("foo", "1");
       });
     });
   });
@@ -178,9 +178,9 @@ describe("Socket", function () {
 
       describe("when not connected", function () {
         it("should bounce inputs", function () {
-          spyOn(node.o.b_d_val, "send");
+          spyOn(node.b.d_val, "send");
           node.send(node.i.d_val, "foo", "1");
-          expect(node.o.b_d_val.send).toHaveBeenCalledWith("foo", "1");
+          expect(node.b.d_val.send).toHaveBeenCalledWith("foo", "1");
         });
       });
     });

@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IGateInputs} from "./Gate";
 
@@ -10,18 +10,17 @@ export interface ISGateInputs<V> {
 export interface ISGateOutputs<V> {
   /** Forwarded value. */
   d_val: V;
-
-  /** Bounced multiple inputs. */
-  b_i: IGateInputs<V>;
 }
 
-export class SGate<V> implements ISink, ISource {
+export class SGate<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<ISGateInputs<V>>;
   public readonly o: TOutBundle<ISGateOutputs<V>>;
+  public readonly b: TOutBundle<ISGateInputs<V>>;
 
   constructor() {
     MSink.init.call(this, ["i"]);
-    MSource.init.call(this, ["d_val", "b_i"]);
+    MSource.init.call(this, ["d_val"]);
+    MBouncer.init.call(this, ["i"]);
   }
 
   public send(
@@ -33,7 +32,7 @@ export class SGate<V> implements ISink, ISource {
       if (value.st_open) {
         this.o.d_val.send(value.d_val, tag);
       } else {
-        this.o.b_i.send(value, tag);
+        this.b.i.send(value, tag);
       }
     }
   }

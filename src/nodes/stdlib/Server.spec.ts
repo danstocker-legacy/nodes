@@ -58,10 +58,10 @@ describe("Server", function () {
       const node = new Server("localhost", 8888);
       expect(node.i.d_mux).toBeDefined();
       expect(node.i.st_lis).toBeDefined();
+      expect(node.b.d_mux).toBeDefined();
       expect(node.o.d_mux).toBeDefined();
       expect(node.o.st_connc).toBeDefined();
       expect(node.o.st_lis).toBeDefined();
-      expect(node.o.b_d_mux).toBeDefined();
       expect(node.o.ev_conn).toBeDefined();
       expect(node.o.ev_disc).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
@@ -100,12 +100,12 @@ describe("Server", function () {
         });
 
         it("should bounce input", function () {
-          spyOn(node.o.b_d_mux, "send");
+          spyOn(node.b.d_mux, "send");
           node.send(node.i.d_mux, {
             port: "192.168.0.102:8889",
             val: "Hello World!"
           } as any, "1");
-          expect(node.o.b_d_mux.send).toHaveBeenCalledWith({
+          expect(node.b.d_mux.send).toHaveBeenCalledWith({
             port: "192.168.0.102:8889",
             val: "Hello World!"
           }, "1");

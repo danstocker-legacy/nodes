@@ -6,8 +6,8 @@ describe("Switch", function () {
       const node = new Switch<"foo" | "bar" | "baz", number>(["foo", "bar", "baz"]);
       expect(node.i.d_val).toBeDefined();
       expect(node.i.st_pos).toBeDefined();
+      expect(node.b.st_pos).toBeDefined();
       expect(node.o.d_mux).toBeDefined();
-      expect(node.o.b_st_pos).toBeDefined();
     });
   });
 
@@ -38,9 +38,9 @@ describe("Switch", function () {
     describe("when sending to 'st_pos'", function () {
       describe("when position is invalid", function () {
         it("should bounce input", function () {
-          spyOn(node.o.b_st_pos, "send");
+          spyOn(node.b.st_pos, "send");
           node.send(node.i.st_pos, "quux" as any, "1");
-          expect(node.o.b_st_pos.send).toHaveBeenCalledWith("quux", "1");
+          expect(node.b.st_pos.send).toHaveBeenCalledWith("quux", "1");
         });
       });
     });

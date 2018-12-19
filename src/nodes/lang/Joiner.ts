@@ -14,11 +14,11 @@ interface IJoinerOutputs<T> {
  * Joins input values bearing the same tag. Produces a dictionary of port
  * name - value pairs.
  * @example
- * let joiner: Joiner<{b_foo: number, b_bar: boolean}>;
- * joiner = new Joiner(["b_foo", "b_bar"]);
- * joiner.i.b_foo.send(5, "1");
- * joiner.i.b_bar.send(true, "1");
- * // `joiner.o.o` will output `{b_foo: 5, b_bar: true}` for tag "1"
+ * let joiner: Joiner<{d_foo: number, d_bar: boolean}>;
+ * joiner = new Joiner(["d_foo", "d_bar"]);
+ * joiner.i.d_foo.send(5, "1");
+ * joiner.i.d_bar.send(true, "1");
+ * // `joiner.o.o` will output `{d_foo: 5, d_bar: true}` for tag "1"
  */
 export class Joiner<T> implements ISink, ISource {
   public readonly i: TInBundle<T>;

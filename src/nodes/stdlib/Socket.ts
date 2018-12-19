@@ -1,5 +1,5 @@
 import * as net from "net";
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {ValueOf} from "../../utils";
 import {IConnectionInfo} from "./IConnectionInfo";
@@ -16,9 +16,6 @@ interface ISocketOutputs {
   /** Values received from remote server. */
   d_val: Buffer | string;
 
-  /** Bounced wrapped value. */
-  b_d_val: Buffer | string;
-
   /** Whether socket *is* connected. */
   st_conn: boolean;
 
@@ -32,9 +29,10 @@ interface ISocketOutputs {
   ev_err: string;
 }
 
-export class Socket implements ISink, ISource {
+export class Socket implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<ISocketInputs>;
   public readonly o: TOutBundle<ISocketOutputs>;
+  public readonly b: TOutBundle<Pick<ISocketInputs, "d_val">>;
   private readonly host: string;
   private readonly port: number;
   private readonly socket: net.Socket;
@@ -48,7 +46,8 @@ export class Socket implements ISink, ISource {
   constructor(host: string, port: number) {
     MSink.init.call(this, ["d_val", "st_conn"]);
     MSource.init.call(this, [
-      "d_val", "b_d_val", "st_conn", "ev_conn", "ev_disc", "ev_err"]);
+      "d_val", "st_conn", "ev_conn", "ev_disc", "ev_err"]);
+    MBouncer.init.call(this, ["d_val"]);
 
     const socket = new net.Socket();
     socket.on("connect", () => this.onConnect());
@@ -79,7 +78,7 @@ export class Socket implements ISink, ISource {
         } else {
           // socket is not connected
           // bouncing inputs
-          this.o.b_d_val.send(val, tag);
+          this.b.d_val.send(val, tag);
         }
         break;
 
@@ -105,7 +104,7 @@ export class Socket implements ISink, ISource {
   private bounceAll() {
     const buffer = this.buffer;
     if (buffer.size > 0) {
-      const port = this.o.b_d_val;
+      const port = this.b.d_val;
       for (const [tag, value] of this.buffer.entries()) {
         port.send(value, tag);
       }
@@ -154,7 +153,7 @@ export class Socket implements ISink, ISource {
    */
   private onWrite(err: Error, value: Buffer | string, tag?: string): void {
     if (err) {
-      this.o.b_d_val.send(value, tag);
+      this.b.d_val.send(value, tag);
       this.o.ev_err.send(String(err));
     }
     this.buffer.delete(tag);

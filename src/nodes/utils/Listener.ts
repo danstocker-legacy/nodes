@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
@@ -8,9 +8,6 @@ interface IListenerInputs {
 }
 
 interface IListenerOutputs {
-  /** Bounced input. */
-  b_d_val: any;
-
   /** Error message */
   ev_err: string;
 }
@@ -24,15 +21,17 @@ interface IListenerOutputs {
  * // to unsubscribe:
  * listener.i.d_val.disconnect();
  */
-export class Listener implements ISink, ISource {
+export class Listener implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IListenerInputs>;
   public readonly o: TOutBundle<IListenerOutputs>;
+  public readonly b: TOutBundle<IListenerInputs>;
 
   private readonly cb: TListenerCallback;
 
   constructor(cb: TListenerCallback) {
     MSink.init.call(this, ["d_val"]);
-    MSource.init.call(this, ["b_d_val", "ev_err"]);
+    MSource.init.call(this, ["ev_err"]);
+    MBouncer.init.call(this, ["d_val"]);
     this.cb = cb;
   }
 
@@ -41,7 +40,7 @@ export class Listener implements ISink, ISource {
       try {
         this.cb(value, tag);
       } catch (err) {
-        this.o.b_d_val.send(value, tag);
+        this.b.d_val.send(value, tag);
         this.o.ev_err.send(String(err), tag);
       }
     }

@@ -5,7 +5,7 @@ describe("Unfolder", function () {
     it("should add ports", function () {
       const node = new Unfolder(() => null);
       expect(node.i.d_fold).toBeDefined();
-      expect(node.o.b_d_fold).toBeDefined();
+      expect(node.b.d_fold).toBeDefined();
       expect(node.o.d_val).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
     });
@@ -42,9 +42,9 @@ describe("Unfolder", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.o.b_d_fold, "send");
+        spyOn(node.b.d_fold, "send");
         node.send(node.i.d_fold, [1, 2, 3], "1");
-        expect(node.o.b_d_fold.send).toHaveBeenCalledWith([1, 2, 3], "1");
+        expect(node.b.d_fold.send).toHaveBeenCalledWith([1, 2, 3], "1");
       });
 
       it("should send error to output", function () {

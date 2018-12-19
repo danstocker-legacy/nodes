@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {copy, ValueOf} from "../../utils";
 
@@ -11,9 +11,6 @@ export interface IFolderInputs<V> {
 }
 
 export interface IFolderOutputs<I, O> {
-  /** Bounced input value. */
-  b_d_val: I;
-
   /** Folded value */
   d_fold: O;
 
@@ -36,9 +33,10 @@ export type TFolderCallback<I, O> = (
  * sum = new Folder((curr, next) => curr + next, 0);
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
-export class Folder<I, O> implements ISink, ISource {
+export class Folder<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IFolderInputs<I>>;
   public readonly o: TOutBundle<IFolderOutputs<I, O>>;
+  public readonly b: TOutBundle<Pick<IFolderInputs<I>, "d_val">>;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;
@@ -46,7 +44,8 @@ export class Folder<I, O> implements ISink, ISource {
 
   constructor(cb: TFolderCallback<I, O>, initial?: O) {
     MSink.init.call(this, ["d_val", "ev_res"]);
-    MSource.init.call(this, ["b_d_val", "d_fold", "ev_err"]);
+    MSource.init.call(this, ["d_fold", "ev_err"]);
+    MBouncer.init.call(this, ["d_val"]);
     this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);
@@ -65,7 +64,7 @@ export class Folder<I, O> implements ISink, ISource {
           const folded = this.folded = this.cb(this.folded, val, tag);
           this.o.d_fold.send(folded, tag);
         } catch (err) {
-          this.o.b_d_val.send(val, tag);
+          this.b.d_val.send(val, tag);
           this.o.ev_err.send(String(err), tag);
         }
         break;

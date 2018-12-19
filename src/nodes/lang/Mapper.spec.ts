@@ -5,7 +5,7 @@ describe("Mapper", function () {
     it("should add ports", function () {
       const node = new Mapper(String);
       expect(node.i.d_val).toBeDefined();
-      expect(node.o.b_d_val).toBeDefined();
+      expect(node.b.d_val).toBeDefined();
       expect(node.o.d_val).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
     });
@@ -32,9 +32,9 @@ describe("Mapper", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.o.b_d_val, "send");
+        spyOn(node.b.d_val, "send");
         node.send(node.i.d_val, 5, "1");
-        expect(node.o.b_d_val.send).toHaveBeenCalledWith(5, "1");
+        expect(node.b.d_val.send).toHaveBeenCalledWith(5, "1");
       });
 
       it("should send error to output", function () {

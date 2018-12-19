@@ -1,5 +1,5 @@
 import * as net from "net";
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IMuxed, ValueOf} from "../../utils";
 import {IConnectionInfo} from "./IConnectionInfo";
@@ -26,9 +26,6 @@ interface IServerOutputs {
   /** Whether server *is* listening. */
   st_lis: boolean;
 
-  /** Bounced inputs. */
-  b_d_mux: IMuxed<IServerPorts<Buffer | string>>;
-
   /** Information re. new connection. */
   ev_conn: IConnectionInfo;
 
@@ -42,9 +39,10 @@ interface IServerOutputs {
 /**
  * Handles TCP connections and data traffic.
  */
-export class Server implements ISink, ISource {
+export class Server implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IServerInputs>;
   public readonly o: TOutBundle<IServerOutputs>;
+  public readonly b: TOutBundle<Pick<IServerInputs, "d_mux">>;
   private readonly server: net.Server;
   private readonly host: string;
   private readonly port: number;
@@ -53,8 +51,8 @@ export class Server implements ISink, ISource {
   constructor(host: string, port: number) {
     MSink.init.call(this, ["d_mux", "st_lis"]);
     MSource.init.call(this, [
-      "d_mux", "st_connc", "st_lis", "b_d_mux", "ev_conn", "ev_disc", "ev_err"
-    ]);
+      "d_mux", "st_connc", "st_lis", "ev_conn", "ev_disc", "ev_err"]);
+    MBouncer.init.call(this, ["d_mux"]);
 
     const server = new net.Server();
     server.on("listening", () => this.onListen());
@@ -84,7 +82,7 @@ export class Server implements ISink, ISource {
           const socket = sockets.get(id);
           socket.write(mux.val);
         } else {
-          this.o.b_d_mux.send(mux, tag);
+          this.b.d_mux.send(mux, tag);
         }
         break;
 

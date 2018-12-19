@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IMuxed} from "../../utils";
 import {ISwitchInputs, TSwitchPositions} from "./Switch";
@@ -10,9 +10,6 @@ interface ISSwitchInputs<P extends string, V> {
 
 interface ISSwitchOutputs<P extends string, V> {
   d_mux: IMuxed<TSwitchPositions<P, V>>;
-
-  /** Bounced multiple inputs */
-  b_mul: ISwitchInputs<P, V>;
 }
 
 /**
@@ -24,9 +21,10 @@ interface ISSwitchOutputs<P extends string, V> {
  * let switch: SSwitch<"d_foo" | "d_bar" | "d_baz", number>;
  * switch = new SSwitch(["d_foo", "d_bar", "d_baz");
  */
-export class SSwitch<P extends string, V> implements ISink, ISource {
+export class SSwitch<P extends string, V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<ISSwitchInputs<P, V>>;
   public readonly o: TOutBundle<ISSwitchOutputs<P, V>>;
+  public readonly b: TOutBundle<ISSwitchInputs<P, V>>;
 
   private readonly positions: Set<P>;
 
@@ -37,7 +35,8 @@ export class SSwitch<P extends string, V> implements ISink, ISource {
    */
   constructor(positions: Array<P>) {
     MSink.init.call(this, ["i"]);
-    MSource.init.call(this, ["d_mux", "b_mul"]);
+    MSource.init.call(this, ["d_mux"]);
+    MBouncer.init.call(this, ["i"]);
     this.positions = new Set(positions);
   }
 
@@ -55,7 +54,7 @@ export class SSwitch<P extends string, V> implements ISink, ISource {
           val: mul.d_val
         }, tag);
       } else {
-        this.o.b_mul.send(mul, tag);
+        this.b.i.send(mul, tag);
       }
     }
   }

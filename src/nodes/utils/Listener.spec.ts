@@ -5,7 +5,7 @@ describe("Listener", function () {
     it("should open ports", function () {
       const node = new Listener(() => null);
       expect(node.i.d_val).toBeDefined();
-      expect(node.o.b_d_val).toBeDefined();
+      expect(node.b.d_val).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
     });
   });
@@ -32,9 +32,9 @@ describe("Listener", function () {
       });
 
       it("should bounce inputs", function () {
-        spyOn(node.o.b_d_val, "send");
+        spyOn(node.b.d_val, "send");
         node.send(node.i.d_val, 5, "1");
-        expect(node.o.b_d_val.send)
+        expect(node.b.d_val.send)
         .toHaveBeenCalledWith(5, "1");
       });
 
