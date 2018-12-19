@@ -1,6 +1,6 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
-import {copy} from "../../utils";
+import {copy, ValueOf} from "../../utils";
 
 export interface IFolderInputs<V> {
   /** Reset signal */
@@ -53,8 +53,8 @@ export class Folder<I, O> implements ISink, ISource {
   }
 
   public send(
-    port: IInPort<I | boolean>,
-    value: I | boolean,
+    port: IInPort<ValueOf<IFolderInputs<I>>>,
+    value: ValueOf<IFolderInputs<I>>,
     tag?: string
   ): void {
     const i = this.i;

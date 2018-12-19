@@ -1,5 +1,6 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
+import {ValueOf} from "../../utils";
 
 export interface IGateInputs<V> {
   /** Value to be forwarded. */
@@ -33,8 +34,8 @@ export class Gate<V> implements ISink, ISource {
   }
 
   public send(
-    port: IInPort<V | boolean>,
-    value: V | boolean,
+    port: IInPort<ValueOf<IGateInputs<V>>>,
+    value: ValueOf<IGateInputs<V>>,
     tag?: string
   ): void {
     const i = this.i;
