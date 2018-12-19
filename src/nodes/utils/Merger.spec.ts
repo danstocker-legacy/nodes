@@ -7,7 +7,7 @@ describe("Merger", function () {
       const node = new Merger<{ d_foo: number, d_bar: boolean }>(["d_foo", "d_bar"]);
       expect(node.i.d_foo).toBeDefined();
       expect(node.i.d_bar).toBeDefined();
-      expect(node.o.mul).toBeDefined();
+      expect(node.o.o).toBeDefined();
     });
   });
 
@@ -19,9 +19,9 @@ describe("Merger", function () {
     });
 
     it("should forward all cached inputs", function () {
-      spyOn(node.o.mul, "send");
+      spyOn(node.o.o, "send");
       node.send(node.i.d_foo, 2, "2");
-      expect(node.o.mul.send).toHaveBeenCalledWith({d_foo: 2}, "2");
+      expect(node.o.o.send).toHaveBeenCalledWith({d_foo: 2}, "2");
     });
   });
 });
