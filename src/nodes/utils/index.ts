@@ -1,5 +1,4 @@
 export {Buffer} from "./Buffer";
-export {Comparer} from "./Comparer";
 export {Debouncer} from "./Debouncer";
 export {Differ} from "./Differ";
 export {Filter} from "./Filter";
@@ -8,4 +7,5 @@ export {Logger} from "./Logger";
 export {Merger} from "./Merger";
 export {Noop} from "./Noop";
 export {SBuffer} from "./SBuffer";
+export {SComparer} from "./SComparer";
 export {Switch} from "./Switch";

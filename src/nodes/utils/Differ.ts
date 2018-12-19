@@ -1,6 +1,6 @@
 import {ISink, ISource, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
-import {TEqualityCallback} from "./Comparer";
+import {TEqualityCallback} from "./SComparer";
 
 interface IDifferInputs<V> {
   /** Value to be diffed. */

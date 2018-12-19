@@ -1,8 +1,8 @@
-import {TEqualityCallback} from "../nodes/utils/Comparer";
+import {TEqualityCallback} from "../nodes/utils/SComparer";
 import {IAny} from "../utils";
 
 /**
- * Frequently used Comparer callbacks.
+ * Frequently used comparer callbacks.
  * TODO: Add shallow(), deep()
  */
 export namespace equal {
