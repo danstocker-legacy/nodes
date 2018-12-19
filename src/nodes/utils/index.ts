@@ -8,4 +8,5 @@ export {Merger} from "./Merger";
 export {Noop} from "./Noop";
 export {SBuffer} from "./SBuffer";
 export {SComparer} from "./SComparer";
+export {SSwitch} from "./SSwitch";
 export {Switch} from "./Switch";
