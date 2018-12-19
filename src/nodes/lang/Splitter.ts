@@ -11,13 +11,13 @@ interface ISplitterInputs<T> {
 }
 
 /**
- * Splits synchronized values sets.
+ * Splits synchronized sets into individual ports.
  * @example
  * let splitter: Splitter<{foo: number, bar: boolean}>;
  * splitter = new Splitter(["foo", "bar"]);
- * splitter.i.$.connect(A.o.$);
- * splitter.o.foo.connect(B.i.$);
- * splitter.o.bar.connect(C.i.$);
+ * splitter.i.i.connect(A.o.d_val);
+ * splitter.o.foo.connect(B.i.d_val);
+ * splitter.o.bar.connect(C.i.d_val);
  */
 export class Splitter<T extends IAny> implements ISink, ISource {
   public readonly i: TInBundle<ISplitterInputs<T>>;

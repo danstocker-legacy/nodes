@@ -16,7 +16,13 @@ export interface IGateOutputs<V> {
 }
 
 /**
- * Forwards default input to output when reference input is truthy.
+ * Forwards input value when gate is open. Bounces input when gate is closed.
+ * @example
+ * const gate = new Gate<number>();
+ * gate.i.st_open.send(true);   // opening gate
+ * gate.i.d_val.send(5, "1");   // emits 5 on `o.d_val`
+ * gate.i.st_open.send(false);  // closing gate
+ * gate.i.d_val.send(5, "1");   // emits 5 on `b.d_val`
  */
 export class Gate<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IGateInputs<V>>;
