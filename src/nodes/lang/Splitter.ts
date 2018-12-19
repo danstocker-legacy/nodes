@@ -7,7 +7,7 @@ interface ISplitterInputs<T> {
    * Multiple named values.
    * Names match the fields passed to constructor.
    */
-  mul: T;
+  i: T;
 }
 
 /**
@@ -24,12 +24,12 @@ export class Splitter<T extends IAny> implements ISink, ISource {
   public readonly o: TOutBundle<T>;
 
   constructor(fields: Array<string>) {
-    MSink.init.call(this, ["mul"]);
+    MSink.init.call(this, ["i"]);
     MSource.init.call(this, fields);
   }
 
   public send(port: IInPort<T>, input: T, tag?: string): void {
-    if (port === this.i.mul) {
+    if (port === this.i.i) {
       for (const [name, value] of Object.entries(input)) {
         this.o[name].send(value, tag);
       }
