@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../../node";
+import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IMuxed} from "../../utils";
 
@@ -11,11 +11,6 @@ interface IDemuxerInputs<T> {
   d_mux: IMuxed<T>;
 }
 
-interface IDemuxerOutputs<T> {
-  /** Bounced multiplexed value. */
-  b_d_mux: IMuxed<T>;
-}
-
 /**
  * De-multiplexes input.
  * Distributes impulses to output port specified by input.
@@ -25,9 +20,10 @@ interface IDemuxerOutputs<T> {
  * demuxer.i.d_mux.send({port: "d_foo", val: 5});
  * // outputs `5` on port "d_foo"
  */
-export class Demuxer<T> implements ISink, ISource {
+export class Demuxer<T> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IDemuxerInputs<T>>;
-  public readonly o: TOutBundle<T> & TOutBundle<IDemuxerOutputs<T>>;
+  public readonly o: TOutBundle<T>;
+  public readonly b: TOutBundle<IDemuxerInputs<T>>;
 
   /**
    * @param fields Must be prefixed by their corresponding domains. ("d_" /
@@ -35,7 +31,8 @@ export class Demuxer<T> implements ISink, ISource {
    */
   constructor(fields: Array<string>) {
     MSink.init.call(this, ["d_mux"]);
-    MSource.init.call(this, ["b_d_mux"].concat(fields));
+    MSource.init.call(this, fields);
+    MBouncer.init.call(this, ["d_mux"]);
   }
 
   public send(
@@ -43,14 +40,13 @@ export class Demuxer<T> implements ISink, ISource {
     value: IMuxed<T>,
     tag?: string
   ): void {
-    const i = this.i;
-    const o = this.o;
     if (port === this.i.d_mux) {
       const name = value.port;
+      const o = this.o;
       if (o[name]) {
         o[name].send(value.val, tag);
       } else {
-        o.b_d_mux.send(value, tag);
+        this.b.d_mux.send(value, tag);
       }
     }
   }

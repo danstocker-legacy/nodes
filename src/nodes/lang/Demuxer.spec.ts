@@ -5,7 +5,7 @@ describe("Demuxer", function () {
     it("should add ports", function () {
       const node = new Demuxer<{ d_foo: number, d_bar: number }>(["d_foo", "d_bar"]);
       expect(node.i.d_mux).toBeDefined();
-      expect(node.o.b_d_mux).toBeDefined();
+      expect(node.b.d_mux).toBeDefined();
       expect(node.o.d_foo).toBeDefined();
       expect(node.o.d_bar).toBeDefined();
     });
@@ -26,9 +26,9 @@ describe("Demuxer", function () {
 
     describe("when target port doesn't exist", function () {
       it("should bounce input", function () {
-        spyOn(node.o.b_d_mux, "send");
+        spyOn(node.b.d_mux, "send");
         node.send(node.i.d_mux, {port: "d_baz", val: 5}, "1");
-        expect(node.o.b_d_mux.send).toHaveBeenCalledWith({
+        expect(node.b.d_mux.send).toHaveBeenCalledWith({
           port: "d_baz",
           val: 5
         }, "1");
