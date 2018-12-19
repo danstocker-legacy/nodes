@@ -5,12 +5,12 @@ import {IFolderInputs, TFolderCallback} from "./Folder";
 
 export interface ISFolderInputs<V> {
   /** Multiple inputs, containing both `ev_red` and `d_val`. */
-  mul: IFolderInputs<V>;
+  i: IFolderInputs<V>;
 }
 
 export interface ISFolderOutputs<I, O> {
   /** Bounced multiple inputs. */
-  b_mul: IFolderInputs<I>;
+  b_i: IFolderInputs<I>;
 
   /** Folded value */
   d_fold: O;
@@ -38,8 +38,8 @@ export class SFolder<I, O> implements ISink, ISource {
   private folded: O;
 
   constructor(cb: TFolderCallback<I, O>, initial?: O) {
-    MSink.init.call(this, ["mul"]);
-    MSource.init.call(this, ["b_mul", "d_fold", "ev_err"]);
+    MSink.init.call(this, ["i"]);
+    MSource.init.call(this, ["b_i", "d_fold", "ev_err"]);
     this.cb = cb;
     this.initial = initial;
     this.folded = copy(initial);
@@ -50,7 +50,7 @@ export class SFolder<I, O> implements ISink, ISource {
     value: IFolderInputs<I>,
     tag?: string
   ): void {
-    if (port === this.i.mul) {
+    if (port === this.i.i) {
       const curr = value.ev_res ?
         copy(this.initial) :
         this.folded;
@@ -59,7 +59,7 @@ export class SFolder<I, O> implements ISink, ISource {
         const folded = this.folded = this.cb(curr, value.d_val, tag);
         this.o.d_fold.send(folded, tag);
       } catch (err) {
-        this.o.b_mul.send(value, tag);
+        this.o.b_i.send(value, tag);
         this.o.ev_err.send(String(err), tag);
       }
     }

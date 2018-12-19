@@ -3,7 +3,7 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {IBufferInputs} from "./Buffer";
 
 interface ISBufferInputs<V> {
-  mul: IBufferInputs<V>;
+  i: IBufferInputs<V>;
 }
 
 interface ISBufferOutputs<V> {
@@ -31,7 +31,7 @@ export class SBuffer<V> implements ISink, ISource {
   private open: boolean;
 
   constructor() {
-    MSink.init.call(this, ["mul"]);
+    MSink.init.call(this, ["i"]);
     MSource.init.call(this, ["d_val", "st_size"]);
     this.buffer = [];
     this.open = false;
@@ -42,7 +42,7 @@ export class SBuffer<V> implements ISink, ISource {
     value: IBufferInputs<V>,
     tag?: string
   ): void {
-    if (port === this.i.mul) {
+    if (port === this.i.i) {
       const openBefore = this.open;
       const openAfter = value.st_open;
       this.open = openAfter;

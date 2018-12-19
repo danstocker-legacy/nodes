@@ -4,7 +4,7 @@ import {IGateInputs} from "./Gate";
 
 export interface ISGateInputs<V> {
   /** Multiple inputs, including `d_val` and `st_open`. */
-  mul: IGateInputs<V>;
+  i: IGateInputs<V>;
 }
 
 export interface ISGateOutputs<V> {
@@ -12,7 +12,7 @@ export interface ISGateOutputs<V> {
   d_val: V;
 
   /** Bounced multiple inputs. */
-  b_mul: IGateInputs<V>;
+  b_i: IGateInputs<V>;
 }
 
 export class SGate<V> implements ISink, ISource {
@@ -20,8 +20,8 @@ export class SGate<V> implements ISink, ISource {
   public readonly o: TOutBundle<ISGateOutputs<V>>;
 
   constructor() {
-    MSink.init.call(this, ["mul"]);
-    MSource.init.call(this, ["d_val", "b_mul"]);
+    MSink.init.call(this, ["i"]);
+    MSource.init.call(this, ["d_val", "b_i"]);
   }
 
   public send(
@@ -29,11 +29,11 @@ export class SGate<V> implements ISink, ISource {
     value: IGateInputs<V>,
     tag?: string
   ): void {
-    if (port === this.i.mul) {
+    if (port === this.i.i) {
       if (value.st_open) {
         this.o.d_val.send(value.d_val, tag);
       } else {
-        this.o.b_mul.send(value, tag);
+        this.o.b_i.send(value, tag);
       }
     }
   }
