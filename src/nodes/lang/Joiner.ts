@@ -7,7 +7,7 @@ interface IJoinerOutputs<T> {
    * Multiple named values.
    * Names match the fields passed to constructor.
    */
-  mul: T;
+  o: T;
 }
 
 /**
@@ -18,7 +18,7 @@ interface IJoinerOutputs<T> {
  * joiner = new Joiner(["b_foo", "b_bar"]);
  * joiner.i.b_foo.send(5, "1");
  * joiner.i.b_bar.send(true, "1");
- * // `joiner.o.mul` will output `{b_foo: 5, b_bar: true}` for tag "1"
+ * // `joiner.o.o` will output `{b_foo: 5, b_bar: true}` for tag "1"
  */
 export class Joiner<T> implements ISink, ISource {
   public readonly i: TInBundle<T>;
@@ -34,7 +34,7 @@ export class Joiner<T> implements ISink, ISource {
    */
   constructor(fields: Array<string>) {
     MSink.init.call(this, fields);
-    MSource.init.call(this, ["mul"]);
+    MSource.init.call(this, ["o"]);
     this.fields = fields;
     this.inputCache = new Map();
     this.portCache = new Map();
@@ -66,7 +66,7 @@ export class Joiner<T> implements ISink, ISource {
         // releasing input set and cleaning up
         inputCache.delete(tag);
         portCache.delete(tag);
-        this.o.mul.send(inputs, tag);
+        this.o.o.send(inputs, tag);
       }
     }
   }
