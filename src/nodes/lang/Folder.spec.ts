@@ -4,10 +4,8 @@ describe("Folder", function () {
   describe("constructor", function () {
     it("should add ports", function () {
       const node = new Folder(() => null);
-      expect(node.i.mul).toBeDefined();
       expect(node.i.d_val).toBeDefined();
       expect(node.i.ev_res).toBeDefined();
-      expect(node.o.b_mul).toBeDefined();
       expect(node.o.b_d_val).toBeDefined();
       expect(node.o.d_fold).toBeDefined();
       expect(node.o.ev_err).toBeDefined();
@@ -21,66 +19,7 @@ describe("Folder", function () {
       node = new Folder((curr, next) => curr + next, 1);
     });
 
-    describe("when sending to `mul`", function () {
-      describe("before first truthy signal", function () {
-        it("should apply callback to initial value", function () {
-          spyOn(node.o.d_fold, "send");
-          node.send(node.i.mul, {ev_res: false, d_val: 5}, "1");
-          expect(node.o.d_fold.send).toHaveBeenCalledWith(6, "1");
-        });
-      });
-
-      describe("when ev_res is falsy", function () {
-        beforeEach(function () {
-          node.send(node.i.mul, {ev_res: false, d_val: 2}, "1");
-          node.send(node.i.mul, {ev_res: false, d_val: 3}, "2");
-        });
-
-        it("should apply callback to last reduced value", function () {
-          spyOn(node.o.d_fold, "send");
-          node.send(node.i.mul, {ev_res: false, d_val: 5}, "3");
-          expect(node.o.d_fold.send).toHaveBeenCalledWith(11, "3");
-        });
-      });
-
-      describe("when ev_res is truthy", function () {
-        beforeEach(function () {
-          node.send(node.i.mul, {ev_res: false, d_val: 2}, "1");
-          node.send(node.i.mul, {ev_res: false, d_val: 3}, "2");
-        });
-
-        it("should reset reduced value", function () {
-          spyOn(node.o.d_fold, "send");
-          node.send(node.i.mul, {ev_res: true, d_val: 5}, "1");
-          expect(node.o.d_fold.send).toHaveBeenCalledWith(6, "1");
-        });
-      });
-
-      describe("when callback throws", function () {
-        beforeEach(function () {
-          node = new Folder(() => {
-            throw new Error("foo");
-          });
-        });
-
-        it("should bounce inputs", function () {
-          spyOn(node.o.b_mul, "send");
-          node.send(node.i.mul, {ev_res: false, d_val: 5}, "1");
-          expect(node.o.b_mul.send).toHaveBeenCalledWith({
-            d_val: 5,
-            ev_res: false
-          }, "1");
-        });
-
-        it("should send error to output", function () {
-          spyOn(node.o.ev_err, "send");
-          node.send(node.i.mul, {ev_res: false, d_val: 5}, "1");
-          expect(node.o.ev_err.send).toHaveBeenCalledWith("Error: foo", "1");
-        });
-      });
-    });
-
-    describe("when sending to `d_val`", function () {
+    describe("when sending to 'd_val'", function () {
       it("should apply callback to current folded value", function () {
         spyOn(node.o.d_fold, "send");
         node.send(node.i.d_val, 5, "1");

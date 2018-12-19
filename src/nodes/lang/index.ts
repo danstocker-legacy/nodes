@@ -6,6 +6,7 @@ export {Mapper} from "./Mapper";
 export {Muxer} from "./Muxer";
 export {Sampler} from "./Sampler";
 export {Serializer} from "./Serializer";
+export {SFolder} from "./SFolder";
 export {SGate} from "./SGate";
 export {Shifter} from "./Shifter";
 export {Splitter} from "./Splitter";
