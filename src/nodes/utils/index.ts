@@ -7,4 +7,5 @@ export {Listener} from "./Listener";
 export {Logger} from "./Logger";
 export {Merger} from "./Merger";
 export {Noop} from "./Noop";
+export {SBuffer} from "./SBuffer";
 export {Switch} from "./Switch";
