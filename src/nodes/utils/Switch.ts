@@ -1,6 +1,5 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
-import {IMuxed} from "../../utils";
 
 export type TSwitchPositions<P extends string, V> = {
   [branch in P]: V
@@ -14,10 +13,6 @@ export interface ISwitchInputs<P extends string, V> {
   st_pos: P;
 }
 
-export interface ISwitchOutputs<P extends string, V> {
-  d_mux: IMuxed<TSwitchPositions<P, V>>;
-}
-
 /**
  * Forwards input to one of the possible outputs.
  * Atomic equivalent of a composite node.
@@ -29,7 +24,7 @@ export interface ISwitchOutputs<P extends string, V> {
  */
 export class Switch<P extends string, V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<ISwitchInputs<P, V>>;
-  public readonly o: TOutBundle<ISwitchOutputs<P, V>>;
+  public readonly o: TOutBundle<TSwitchPositions<P, V>>;
   public readonly b: TOutBundle<Pick<ISwitchInputs<P, V>, "st_pos">>;
 
   private readonly positions: Set<P>;
@@ -48,7 +43,7 @@ export class Switch<P extends string, V> implements ISink, ISource, IBouncer {
    */
   constructor(positions: Array<P>) {
     MSink.init.call(this, ["d_val", "st_pos"]);
-    MSource.init.call(this, ["d_mux"]);
+    MSource.init.call(this, positions);
     MBouncer.init.call(this, ["st_pos"]);
     this.positions = new Set(positions);
   }
@@ -71,10 +66,7 @@ export class Switch<P extends string, V> implements ISink, ISource, IBouncer {
 
       case i.d_val:
         const val = value as V;
-        this.o.d_mux.send({
-          port: this.position,
-          val
-        }, tag);
+        this.o[this.position].send(val, tag);
     }
   }
 }

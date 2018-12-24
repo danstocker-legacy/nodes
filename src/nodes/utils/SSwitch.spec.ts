@@ -6,7 +6,9 @@ describe("SSwitch", function () {
       const node = new SSwitch<"foo" | "bar" | "baz", number>(["foo", "bar", "baz"]);
       expect(node.i.i).toBeDefined();
       expect(node.b.i).toBeDefined();
-      expect(node.o.d_mux).toBeDefined();
+      expect(node.o.foo).toBeDefined();
+      expect(node.o.bar).toBeDefined();
+      expect(node.o.baz).toBeDefined();
     });
   });
 
@@ -18,12 +20,13 @@ describe("SSwitch", function () {
     });
 
     it("should forward to specified output", function () {
-      spyOn(node.o.d_mux, "send");
+      spyOn(node.o.foo, "send");
+      spyOn(node.o.bar, "send");
+      spyOn(node.o.baz, "send");
       node.send(node.i.i, {st_pos: "bar", d_val: 5}, "1");
-      expect(node.o.d_mux.send).toHaveBeenCalledWith({
-        port: "bar",
-        val: 5
-      }, "1");
+      expect(node.o.foo.send).not.toHaveBeenCalled();
+      expect(node.o.bar.send).toHaveBeenCalledWith(5, "1");
+      expect(node.o.baz.send).not.toHaveBeenCalled();
     });
 
     describe("on invalid 'st_pos'", function () {

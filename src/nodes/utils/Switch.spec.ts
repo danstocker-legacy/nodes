@@ -7,7 +7,9 @@ describe("Switch", function () {
       expect(node.i.d_val).toBeDefined();
       expect(node.i.st_pos).toBeDefined();
       expect(node.b.st_pos).toBeDefined();
-      expect(node.o.d_mux).toBeDefined();
+      expect(node.o.foo).toBeDefined();
+      expect(node.o.bar).toBeDefined();
+      expect(node.o.baz).toBeDefined();
     });
   });
 
@@ -25,12 +27,13 @@ describe("Switch", function () {
         });
 
         it("should forward to matching output", function () {
-          spyOn(node.o.d_mux, "send");
+          spyOn(node.o.foo, "send");
+          spyOn(node.o.bar, "send");
+          spyOn(node.o.baz, "send");
           node.send(node.i.d_val, 5, "1");
-          expect(node.o.d_mux.send).toHaveBeenCalledWith({
-            port: "bar",
-            val: 5
-          }, "1");
+          expect(node.o.foo.send).not.toHaveBeenCalled();
+          expect(node.o.bar.send).toHaveBeenCalledWith(5, "1");
+          expect(node.o.baz.send).not.toHaveBeenCalled();
         });
       });
     });
