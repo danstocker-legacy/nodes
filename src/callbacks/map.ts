@@ -20,6 +20,14 @@ export namespace map {
   }
 
   /**
+   * Splits input into multiple strings, along the specified delimiter.
+   * @param delimiter
+   */
+  export function split$(delimiter: string): TMapperCallback<string, Array<string>> {
+    return (next: string) => next.split(delimiter);
+  }
+
+  /**
    * Maps object to one of its properties.
    * @param property
    */
