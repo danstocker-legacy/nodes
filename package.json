@@ -1,7 +1,7 @@
 {
   "name": "@kwaia/nodes",
-  "version": "1.1.0",
-  "description": "FRP library that thinks in graphs",
+  "version": "2.0.0",
+  "description": "Low-level computational graph library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
