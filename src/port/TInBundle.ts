@@ -1,5 +1,4 @@
-import {TBundle} from "./TBundle";
-import {TInPort} from "./TInPort";
+import {IInPort} from "./IInPort";
 
 /**
  * Defines an input port bundle as having the name / type pairs of the
@@ -7,4 +6,6 @@ import {TInPort} from "./TInPort";
  * @example
  * const port: TInBundle<{foo: number, bar: boolean}>
  */
-export type TInBundle<I> = TBundle<I, TInPort<I>>;
+export type TInBundle<I> = {
+  [K in keyof I]: IInPort<I[K]>
+};

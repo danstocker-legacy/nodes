@@ -1,5 +1,4 @@
-import {TBundle} from "./TBundle";
-import {TOutPort} from "./TOutPort";
+import {IOutPort} from "./IOutPort";
 
 /**
  * Defines an output port bundle as having the name / type pairs of the
@@ -7,4 +6,6 @@ import {TOutPort} from "./TOutPort";
  * @example
  * const port: TOutBundle<{foo: number, bar: boolean}>
  */
-export type TOutBundle<I> = TBundle<I, TOutPort<I>>;
+export type TOutBundle<I> = {
+  [K in keyof I]: IOutPort<I[K]>
+};

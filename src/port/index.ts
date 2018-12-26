@@ -5,8 +5,5 @@ export {IPort} from "./IPort";
 export {OutPort} from "./OutPort";
 export {Port} from "./Port";
 export {TInBundle} from "./TInBundle";
-export {TInPort} from "./TInPort";
 export {TOutBundle} from "./TOutBundle";
-export {TOutPort} from "./TOutPort";
-export {TBundle} from "./TBundle";
 export {TPort} from "./TPort";
