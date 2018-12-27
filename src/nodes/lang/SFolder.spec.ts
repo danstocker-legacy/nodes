@@ -18,24 +18,16 @@ describe("SFolder", function () {
       node = new SFolder((curr, next) => curr + next, 1);
     });
 
-    describe("before first truthy signal", function () {
-      it("should apply callback to initial value", function () {
-        spyOn(node.o.d_fold, "send");
-        node.send(node.i.i, {ev_res: false, d_val: 5}, "1");
-        expect(node.o.d_fold.send).toHaveBeenCalledWith(6, "1");
-      });
-    });
-
     describe("when 'ev_res' is falsy", function () {
       beforeEach(function () {
         node.send(node.i.i, {ev_res: false, d_val: 2}, "1");
         node.send(node.i.i, {ev_res: false, d_val: 3}, "2");
       });
 
-      it("should apply callback to last reduced value", function () {
+      it("should not emit", function () {
         spyOn(node.o.d_fold, "send");
         node.send(node.i.i, {ev_res: false, d_val: 5}, "3");
-        expect(node.o.d_fold.send).toHaveBeenCalledWith(11, "3");
+        expect(node.o.d_fold.send).not.toHaveBeenCalled();
       });
     });
 

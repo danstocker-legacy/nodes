@@ -4,7 +4,7 @@ import {copy, ValueOf} from "../../utils";
 
 export interface IFolderInputs<V> {
   /** Reset signal */
-  ev_res: boolean;
+  ev_res: any;
 
   /** Next input value */
   d_val: V;
@@ -61,8 +61,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
       case i.d_val:
         const val = value as I;
         try {
-          const folded = this.folded = this.cb(this.folded, val, tag);
-          this.o.d_fold.send(folded, tag);
+          this.folded = this.cb(this.folded, val, tag);
         } catch (err) {
           this.b.d_val.send(val, tag);
           this.o.ev_err.send(String(err), tag);
@@ -70,6 +69,7 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
         break;
 
       case i.ev_res:
+        this.o.d_fold.send(this.folded, tag);
         this.folded = copy(this.initial);
         break;
     }

@@ -20,12 +20,6 @@ describe("Folder", function () {
     });
 
     describe("when sending to 'd_val'", function () {
-      it("should apply callback to current folded value", function () {
-        spyOn(node.o.d_fold, "send");
-        node.send(node.i.d_val, 5, "1");
-        expect(node.o.d_fold.send).toHaveBeenCalledWith(6, "1");
-      });
-
       describe("when callback throws", function () {
         beforeEach(function () {
           node = new Folder(() => {
@@ -44,6 +38,19 @@ describe("Folder", function () {
           node.send(node.i.d_val, 5, "1");
           expect(node.o.ev_err.send).toHaveBeenCalledWith("Error: foo", "1");
         });
+      });
+    });
+
+    describe("when sending to 'ev_res'", function () {
+      beforeEach(function () {
+        node.i.d_val.send(5, "1");
+        node.i.d_val.send(3, "2");
+      });
+
+      it("should send current folded value", function () {
+        spyOn(node.o.d_fold, "send");
+        node.send(node.i.ev_res, null, "3");
+        expect(node.o.d_fold.send).toHaveBeenCalledWith(9, "3");
       });
     });
   });

@@ -3,9 +3,17 @@ import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {copy} from "../../utils";
 import {IFolderInputs, TFolderCallback} from "./Folder";
 
+interface ISFolderInput<V> {
+  /** Reset signal */
+  ev_res: boolean;
+
+  /** Next input value */
+  d_val: V;
+}
+
 export interface ISFolderInputs<V> {
   /** Multiple inputs, containing both `ev_red` and `d_val`. */
-  i: IFolderInputs<V>;
+  i: ISFolderInput<V>;
 }
 
 export interface ISFolderOutputs<I, O> {
@@ -50,13 +58,16 @@ export class SFolder<I, O> implements ISink, ISource, IBouncer {
     tag?: string
   ): void {
     if (port === this.i.i) {
-      const curr = value.ev_res ?
+      const res = value.ev_res as boolean;
+      let curr = res ?
         copy(this.initial) :
         this.folded;
 
       try {
-        const folded = this.folded = this.cb(curr, value.d_val, tag);
-        this.o.d_fold.send(folded, tag);
+        curr = this.folded = this.cb(curr, value.d_val, tag);
+        if (res) {
+          this.o.d_fold.send(curr, tag);
+        }
       } catch (err) {
         this.b.i.send(value, tag);
         this.o.ev_err.send(String(err), tag);
