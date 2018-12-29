@@ -1,4 +1,4 @@
-import {fold} from "./fold";
+import * as fold from "./fold";
 
 describe("fold", function () {
   describe("push()", function () {

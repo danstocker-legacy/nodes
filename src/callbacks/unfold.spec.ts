@@ -1,4 +1,4 @@
-import {unfold} from "./unfold";
+import * as unfold from "./unfold";
 
 describe("unfold", function () {
   describe("pop()", function () {

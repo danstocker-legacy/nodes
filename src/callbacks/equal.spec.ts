@@ -1,4 +1,4 @@
-import {equal} from "./equal";
+import * as equal from "./equal";
 
 describe("equal", function () {
   describe("reference", function () {

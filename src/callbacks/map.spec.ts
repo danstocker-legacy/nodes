@@ -1,4 +1,4 @@
-import {map} from "./map";
+import * as map from "./map";
 
 describe("map", function () {
   describe("identity", function () {
