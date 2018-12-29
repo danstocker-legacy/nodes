@@ -1,7 +1,7 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {copy} from "../../utils";
-import {IFolderInputs, TFolderCallback} from "./Folder";
+import {IFolderInputs, TFolderCallback} from "../af/Folder";
 
 interface ISFolderInput<V> {
   /** Reset signal */
@@ -30,11 +30,11 @@ export interface ISFolderOutputs<I, O> {
  * Takes a callback function which aggregates input values received since the
  * last reset signal.
  * @example
- * let sum: SFolder<number, number>;
- * sum = new SFolder((curr, next) => curr + next, 0);
+ * let sum: Folder<number, number>;
+ * sum = new Folder((curr, next) => curr + next, 0);
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
-export class SFolder<I, O> implements ISink, ISource, IBouncer {
+export class Folder<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<ISFolderInputs<I>>;
   public readonly o: TOutBundle<ISFolderOutputs<I, O>>;
   public readonly b: TOutBundle<ISFolderInputs<I>>;
