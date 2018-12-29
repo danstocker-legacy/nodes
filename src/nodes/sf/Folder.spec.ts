@@ -37,10 +37,10 @@ describe("Folder", function () {
         node.send(node.i.i, {d_res: false, d_val: 3}, "2");
       });
 
-      it("should reset reduced value", function () {
+      it("should emit folded value", function () {
         spyOn(node.o.d_fold, "send");
-        node.send(node.i.i, {d_res: true, d_val: 5}, "1");
-        expect(node.o.d_fold.send).toHaveBeenCalledWith(6, "1");
+        node.send(node.i.i, {d_res: true, d_val: 5}, "3");
+        expect(node.o.d_fold.send).toHaveBeenCalledWith(11, "3");
       });
     });
 

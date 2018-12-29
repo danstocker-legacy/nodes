@@ -1,7 +1,7 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
 import {copy} from "../../utils";
-import {IFolderInputs, TFolderCallback} from "../af/Folder";
+import {TFolderCallback} from "../af/Folder";
 
 interface ISFolderInput<V> {
   /** Reset signal */
@@ -58,15 +58,14 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
     tag?: string
   ): void {
     if (port === this.i.i) {
-      const res = value.d_res as boolean;
-      let curr = res ?
-        copy(this.initial) :
-        this.folded;
-
       try {
-        curr = this.folded = this.cb(curr, value.d_val, tag);
+        const folded = this.cb(this.folded, value.d_val, tag);
+        const res = value.d_res as boolean;
         if (res) {
-          this.o.d_fold.send(curr, tag);
+          this.o.d_fold.send(folded, tag);
+          this.folded = copy(this.initial);
+        } else {
+          this.folded = folded;
         }
       } catch (err) {
         this.b.i.send(value, tag);
