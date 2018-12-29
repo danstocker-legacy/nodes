@@ -1,0 +1,1 @@
+Synchronous inputs, filtered output

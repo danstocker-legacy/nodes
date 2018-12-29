@@ -1,6 +1,6 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../port";
-import {IGateInputs} from "./Gate";
+import {IGateInputs} from "../af/Gate";
 
 export interface ISGateInputs<V> {
   /** Multiple inputs, including `d_val` and `st_open`. */
@@ -16,13 +16,13 @@ export interface ISGateOutputs<V> {
  * Forwards input value when gate is open. Bounces input when gate is
  * closed. Takes value and open state synchronously.
  * @example
- * const gate = new SGate<number>();
+ * const gate = new Gate<number>();
  * // emits 5 on `o.d_val`:
  * gate.i.i.send({st_open: true, val: 5}, "1");
  * // emits {st_open: false, val: 5} on `b.i`:
  * gate.i.i.send({st_open: false, val: 5}, "1");
  */
-export class SGate<V> implements ISink, ISource, IBouncer {
+export class Gate<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<ISGateInputs<V>>;
   public readonly o: TOutBundle<ISGateOutputs<V>>;
   public readonly b: TOutBundle<ISGateInputs<V>>;
