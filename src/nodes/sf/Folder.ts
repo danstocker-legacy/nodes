@@ -5,7 +5,7 @@ import {IFolderInputs, TFolderCallback} from "../af/Folder";
 
 interface ISFolderInput<V> {
   /** Reset signal */
-  ev_res: boolean;
+  d_res: boolean;
 
   /** Next input value */
   d_val: V;
@@ -53,12 +53,12 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
   }
 
   public send(
-    port: IInPort<IFolderInputs<I>>,
-    value: IFolderInputs<I>,
+    port: IInPort<ISFolderInput<I>>,
+    value: ISFolderInput<I>,
     tag?: string
   ): void {
     if (port === this.i.i) {
-      const res = value.ev_res as boolean;
+      const res = value.d_res as boolean;
       let curr = res ?
         copy(this.initial) :
         this.folded;
