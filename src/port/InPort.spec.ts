@@ -1,8 +1,5 @@
-import {Noop} from "../nodes";
-import {IInPort} from "./IInPort";
+import {Noop} from "../nodes/symmetric/independent";
 import {InPort} from "./InPort";
-import {IOutPort} from "./IOutPort";
-import {OutPort} from "./OutPort";
 
 describe("InPort", function () {
   describe("#send()", function () {

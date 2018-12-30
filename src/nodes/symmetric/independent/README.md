@@ -1,0 +1,1 @@
+Independent inputs, symmetric output

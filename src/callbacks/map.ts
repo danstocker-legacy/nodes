@@ -1,4 +1,4 @@
-import {TMapperCallback} from "../nodes/lang/Mapper";
+import {TMapperCallback} from "../nodes/symmetric/independent/Mapper";
 import {ValueOf} from "../utils";
 
 /**

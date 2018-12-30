@@ -1,1 +1,0 @@
-Asynchronous inputs, filtered output

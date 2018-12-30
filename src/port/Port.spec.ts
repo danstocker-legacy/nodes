@@ -1,5 +1,5 @@
 import {ISource} from "../node";
-import {Noop} from "../nodes/utils";
+import {Noop} from "../nodes/symmetric/independent";
 import {IInPort} from "./IInPort";
 import {InPort} from "./InPort";
 import {IOutPort} from "./IOutPort";
