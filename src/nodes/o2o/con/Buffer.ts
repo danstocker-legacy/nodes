@@ -1,6 +1,6 @@
 import {ISink, ISource, MSink, MSource} from "../../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../../port";
-import {IBufferInputs} from "../independent/Buffer";
+import {IBufferInputs} from "../sep/Buffer";
 
 interface ISBufferInputs<V> {
   i: IBufferInputs<V>;

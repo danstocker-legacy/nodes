@@ -1,6 +1,6 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../../port";
-import {ISwitchInputs, TSwitchPositions} from "../independent/Switch";
+import {ISwitchInputs, TSwitchPositions} from "../sep/Switch";
 
 interface ISSwitchInputs<P extends string, V> {
   /** Multiple inputs, containing `d_val` and `st_pos`. */

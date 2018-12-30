@@ -1,4 +1,4 @@
-import {Noop} from "../nodes/symmetric/independent";
+import {Noop} from "../nodes/o2o/sep";
 import {InPort} from "./InPort";
 import {OutPort} from "./OutPort";
 

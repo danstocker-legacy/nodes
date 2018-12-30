@@ -1,7 +1,7 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../../port";
 import {copy} from "../../../utils";
-import {TFolderCallback} from "../independent/Folder";
+import {TFolderCallback} from "../sep/Folder";
 
 interface ISFolderInput<V> {
   /** Reset signal */

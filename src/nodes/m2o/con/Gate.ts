@@ -1,6 +1,6 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../../../node";
 import {IInPort, TInBundle, TOutBundle} from "../../../port";
-import {IGateInputs} from "../independent/Gate";
+import {IGateInputs} from "../sep/Gate";
 
 export interface ISGateInputs<V> {
   /** Multiple inputs, including `d_val` and `st_open`. */
