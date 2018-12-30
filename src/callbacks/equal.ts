@@ -1,4 +1,4 @@
-import {TEqualityCallback} from "../nodes/symmetric/simultaneous/SComparer";
+import {TEqualityCallback} from "../nodes/symmetric/simultaneous/Comparer";
 import {IAny} from "../utils";
 
 /**

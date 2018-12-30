@@ -23,7 +23,7 @@ interface ISBufferOutputs<V> {
  * @example
  * TBD
  */
-export class SBuffer<V> implements ISink, ISource {
+export class Buffer<V> implements ISink, ISource {
   public readonly i: TInBundle<ISBufferInputs<V>>;
   public readonly o: TOutBundle<ISBufferOutputs<V>>;
 

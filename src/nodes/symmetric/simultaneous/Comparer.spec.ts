@@ -1,9 +1,9 @@
-import {SComparer} from "./SComparer";
+import {Comparer} from "./Comparer";
 
-describe("SComparer", function () {
+describe("Comparer", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new SComparer(() => true);
+      const node = new Comparer(() => true);
       expect(node.i.i).toBeDefined();
       expect(node.b.i).toBeDefined();
       expect(node.o.d_eq).toBeDefined();
@@ -12,10 +12,10 @@ describe("SComparer", function () {
   });
 
   describe("#send()", function () {
-    let node: SComparer<number>;
+    let node: Comparer<number>;
 
     beforeEach(function () {
-      node = new SComparer((a, b) => a === b);
+      node = new Comparer((a, b) => a === b);
     });
 
     it("should send result of equality callback", function () {
@@ -26,7 +26,7 @@ describe("SComparer", function () {
 
     describe("when callback throws", function () {
       beforeEach(function () {
-        node = new SComparer(() => {
+        node = new Comparer(() => {
           throw new Error("foo");
         });
       });

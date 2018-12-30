@@ -27,7 +27,7 @@ export interface IBufferOutputs<V> {
  * Atomic equivalent of a composite node.
  * Composite view:
  * TBD
- * TODO: Share code w/ SBuffer
+ * TODO: Share code w/ Buffer
  * @example
  * TBD
  */
