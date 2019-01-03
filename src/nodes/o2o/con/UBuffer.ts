@@ -10,7 +10,7 @@ interface ISBufferOutputs<V> {
   /** Value forwarded or released from buffer. */
   d_val: V;
 
-  /** Buffer size. */
+  /** UBuffer size. */
   st_size: number;
 }
 
@@ -19,11 +19,11 @@ interface ISBufferOutputs<V> {
  * Atomic equivalent of a composite node.
  * Composite view:
  * TBD
- * TODO: Share code w/ Buffer
+ * TODO: Share code w/ UBuffer
  * @example
  * TBD
  */
-export class Buffer<V> implements ISink, ISource {
+export class UBuffer<V> implements ISink, ISource {
   public readonly i: TInBundle<ISBufferInputs<V>>;
   public readonly o: TOutBundle<ISBufferOutputs<V>>;
 

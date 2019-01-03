@@ -30,11 +30,11 @@ export interface ISFolderOutputs<I, O> {
  * Takes a callback function which aggregates input values received since the
  * last reset signal.
  * @example
- * let sum: Folder<number, number>;
- * sum = new Folder((curr, next) => curr + next, 0);
+ * let sum: UFolder<number, number>;
+ * sum = new UFolder((curr, next) => curr + next, 0);
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
-export class Folder<I, O> implements ISink, ISource, IBouncer {
+export class UFolder<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<ISFolderInputs<I>>;
   public readonly o: TOutBundle<ISFolderOutputs<I, O>>;
   public readonly b: TOutBundle<ISFolderInputs<I>>;

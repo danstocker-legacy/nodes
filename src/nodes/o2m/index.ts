@@ -1,3 +1,1 @@
-import * as sep from "./sep";
-
-export {sep};
+export * from "./sep";

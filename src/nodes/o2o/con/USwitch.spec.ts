@@ -1,9 +1,9 @@
-import {Switch} from "./Switch";
+import {USwitch} from "./USwitch";
 
-describe("Switch", function () {
+describe("USwitch", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Switch<"foo" | "bar" | "baz", number>(["foo", "bar", "baz"]);
+      const node = new USwitch<"foo" | "bar" | "baz", number>(["foo", "bar", "baz"]);
       expect(node.i.i).toBeDefined();
       expect(node.b.i).toBeDefined();
       expect(node.o.foo).toBeDefined();
@@ -13,10 +13,10 @@ describe("Switch", function () {
   });
 
   describe("#send()", function () {
-    let node: Switch<"foo" | "bar" | "baz", number>;
+    let node: USwitch<"foo" | "bar" | "baz", number>;
 
     beforeEach(function () {
-      node = new Switch(["foo", "bar", "baz"]);
+      node = new USwitch(["foo", "bar", "baz"]);
     });
 
     it("should forward to specified output", function () {

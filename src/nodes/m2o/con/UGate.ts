@@ -16,13 +16,13 @@ export interface ISGateOutputs<V> {
  * Forwards input value when gate is open. Bounces input when gate is
  * closed. Takes value and open state synchronously.
  * @example
- * const gate = new Gate<number>();
+ * const gate = new UGate<number>();
  * // emits 5 on `o.d_val`:
  * gate.i.i.send({st_open: true, val: 5}, "1");
  * // emits {st_open: false, val: 5} on `b.i`:
  * gate.i.i.send({st_open: false, val: 5}, "1");
  */
-export class Gate<V> implements ISink, ISource, IBouncer {
+export class UGate<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<ISGateInputs<V>>;
   public readonly o: TOutBundle<ISGateOutputs<V>>;
   public readonly b: TOutBundle<ISGateInputs<V>>;

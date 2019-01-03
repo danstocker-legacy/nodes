@@ -1,3 +1,3 @@
-export {Buffer} from "./Buffer";
-export {Comparer} from "./Comparer";
-export {Switch} from "./Switch";
+export {UBuffer} from "./UBuffer";
+export {UComparer} from "./UComparer";
+export {USwitch} from "./USwitch";

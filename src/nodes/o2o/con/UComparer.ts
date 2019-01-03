@@ -32,10 +32,10 @@ interface ISComparerOutputs<V> {
  * Composite view:
  * TBD
  * @example
- * const comparer = new Comparer<number>((a, b) => a === b);
+ * const comparer = new UComparer<number>((a, b) => a === b);
  * comparer.i.$.send({a: 4, b: 5}); // outputs `false`
  */
-export class Comparer<V> implements ISink, ISource, IBouncer {
+export class UComparer<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<ISComparerInputs<V>>;
   public readonly o: TOutBundle<ISComparerOutputs<V>>;
   public readonly b: TOutBundle<ISComparerInputs<V>>;

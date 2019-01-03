@@ -1,9 +1,9 @@
-import {Buffer} from "./Buffer";
+import {UBuffer} from "./UBuffer";
 
 describe("Buffer", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Buffer();
+      const node = new UBuffer();
       expect(node.i.i).toBeDefined();
       expect(node.o.d_val).toBeDefined();
       expect(node.o.st_size).toBeDefined();
@@ -11,10 +11,10 @@ describe("Buffer", function () {
   });
 
   describe("#send()", function () {
-    let node: Buffer<number>;
+    let node: UBuffer<number>;
 
     beforeEach(function () {
-      node = new Buffer();
+      node = new UBuffer();
     });
 
     describe("on opening buffer", function () {

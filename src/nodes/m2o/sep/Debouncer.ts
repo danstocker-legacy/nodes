@@ -17,6 +17,7 @@ interface IDebouncerOutputs {
  * Atomic equivalent of a composite node.
  * Composite view:
  * TBD
+ * TODO: Add symmetric version.
  * @example
  * const debouncer = new Debouncer(500);
  * debouncer.i.ev_sig.connect(...);

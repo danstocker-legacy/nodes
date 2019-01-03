@@ -1,4 +1,4 @@
-import {TEqualityCallback} from "../nodes/o2o/con/Comparer";
+import {TEqualityCallback} from "../nodes/o2o/con/UComparer";
 import {IAny} from "../utils";
 
 /**

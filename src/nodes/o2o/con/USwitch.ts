@@ -13,10 +13,10 @@ interface ISSwitchInputs<P extends string, V> {
  * Composite view:
  * TODO: Add image URL.
  * @example
- * let switch: Switch<"d_foo" | "d_bar" | "d_baz", number>;
- * switch = new Switch(["d_foo", "d_bar", "d_baz");
+ * let switch: USwitch<"d_foo" | "d_bar" | "d_baz", number>;
+ * switch = new USwitch(["d_foo", "d_bar", "d_baz");
  */
-export class Switch<P extends string, V> implements ISink, ISource, IBouncer {
+export class USwitch<P extends string, V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<ISSwitchInputs<P, V>>;
   public readonly o: TOutBundle<TSwitchPositions<P, V>>;
   public readonly b: TOutBundle<ISSwitchInputs<P, V>>;

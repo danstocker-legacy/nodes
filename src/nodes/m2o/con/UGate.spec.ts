@@ -1,9 +1,9 @@
-import {Gate} from "./Gate";
+import {UGate} from "./UGate";
 
-describe("Gate", function () {
+describe("UGate", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Gate();
+      const node = new UGate();
       expect(node.i.i).toBeDefined();
       expect(node.o.d_val).toBeDefined();
       expect(node.b.i).toBeDefined();
@@ -11,10 +11,10 @@ describe("Gate", function () {
   });
 
   describe("#send()", function () {
-    let node: Gate<number>;
+    let node: UGate<number>;
 
     beforeEach(function () {
-      node = new Gate();
+      node = new UGate();
     });
 
     describe("when 'st_open' is truthy", function () {

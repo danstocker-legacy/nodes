@@ -8,9 +8,9 @@ interface IMapperInputs<V> {
   d_val: V;
 }
 
-interface IMapperOutputs<I, O> {
+interface IMapperOutputs<V> {
   /** Mapped value */
-  d_val: O;
+  d_val: V;
 
   /** Error message */
   ev_err: string;
@@ -25,7 +25,7 @@ interface IMapperOutputs<I, O> {
  */
 export class Mapper<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IMapperInputs<I>>;
-  public readonly o: TOutBundle<IMapperOutputs<I, O>>;
+  public readonly o: TOutBundle<IMapperOutputs<O>>;
   public readonly b: TOutBundle<IMapperInputs<I>>;
 
   private readonly cb: TMapperCallback<I, O>;

@@ -1,9 +1,9 @@
-import {Folder} from "./Folder";
+import {UFolder} from "./UFolder";
 
-describe("Folder", function () {
+describe("UFolder", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Folder(() => null);
+      const node = new UFolder(() => null);
       expect(node.i.i).toBeDefined();
       expect(node.b.i).toBeDefined();
       expect(node.o.d_fold).toBeDefined();
@@ -12,10 +12,10 @@ describe("Folder", function () {
   });
 
   describe("#send()", function () {
-    let node: Folder<number, number>;
+    let node: UFolder<number, number>;
 
     beforeEach(function () {
-      node = new Folder((curr, next) => curr + next, 1);
+      node = new UFolder((curr, next) => curr + next, 1);
     });
 
     describe("when 'd_res' is falsy", function () {
@@ -46,7 +46,7 @@ describe("Folder", function () {
 
     describe("when callback throws", function () {
       beforeEach(function () {
-        node = new Folder(() => {
+        node = new UFolder(() => {
           throw new Error("foo");
         });
       });

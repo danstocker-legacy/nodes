@@ -1,9 +1,9 @@
-import {Comparer} from "./Comparer";
+import {UComparer} from "./UComparer";
 
-describe("Comparer", function () {
+describe("UComparer", function () {
   describe("constructor", function () {
     it("should add ports", function () {
-      const node = new Comparer(() => true);
+      const node = new UComparer(() => true);
       expect(node.i.i).toBeDefined();
       expect(node.b.i).toBeDefined();
       expect(node.o.d_eq).toBeDefined();
@@ -12,10 +12,10 @@ describe("Comparer", function () {
   });
 
   describe("#send()", function () {
-    let node: Comparer<number>;
+    let node: UComparer<number>;
 
     beforeEach(function () {
-      node = new Comparer((a, b) => a === b);
+      node = new UComparer((a, b) => a === b);
     });
 
     it("should send result of equality callback", function () {
@@ -26,7 +26,7 @@ describe("Comparer", function () {
 
     describe("when callback throws", function () {
       beforeEach(function () {
-        node = new Comparer(() => {
+        node = new UComparer(() => {
           throw new Error("foo");
         });
       });
