@@ -3,7 +3,7 @@ import {IInPort, TInBundle, TOutBundle} from "../port";
 import {copy} from "../utils";
 import {TFolderCallback} from "./Folder";
 
-interface ISFolderInput<V> {
+interface IFolderInputs<V> {
   /** Reset signal */
   d_res: boolean;
 
@@ -11,12 +11,12 @@ interface ISFolderInput<V> {
   d_val: V;
 }
 
-export interface ISFolderInputs<V> {
+export interface IInputs<V> {
   /** Multiple inputs, containing both `ev_red` and `d_val`. */
-  i: ISFolderInput<V>;
+  i: IFolderInputs<V>;
 }
 
-export interface ISFolderOutputs<I, O> {
+export interface IOutputs<I, O> {
   /** Folded value */
   d_fold: O;
 
@@ -35,9 +35,9 @@ export interface ISFolderOutputs<I, O> {
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
 export class UFolder<I, O> implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<ISFolderInputs<I>>;
-  public readonly o: TOutBundle<ISFolderOutputs<I, O>>;
-  public readonly b: TOutBundle<ISFolderInputs<I>>;
+  public readonly i: TInBundle<IInputs<I>>;
+  public readonly o: TOutBundle<IOutputs<I, O>>;
+  public readonly b: TOutBundle<IInputs<I>>;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;
@@ -53,8 +53,8 @@ export class UFolder<I, O> implements ISink, ISource, IBouncer {
   }
 
   public send(
-    port: IInPort<ISFolderInput<I>>,
-    value: ISFolderInput<I>,
+    port: IInPort<IFolderInputs<I>>,
+    value: IFolderInputs<I>,
     tag?: string
   ): void {
     if (port === this.i.i) {

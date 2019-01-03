@@ -2,12 +2,12 @@ import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {TEqualityCallback} from "./UComparer";
 
-interface IDifferInputs<V> {
+interface IInputs<V> {
   /** Value to be diffed. */
   d_val: V;
 }
 
-interface IDifferOutputs<V> {
+interface IOutputs<V> {
   /** Non-equality of subsequent inputs. */
   d_diff: boolean;
 
@@ -28,9 +28,9 @@ interface IDifferOutputs<V> {
  * differ.i.d_val.send(4) // emits `true` (is different)
  */
 export class Differ<V> implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<IDifferInputs<V>>;
-  public readonly o: TOutBundle<IDifferOutputs<V>>;
-  public readonly b: TOutBundle<IDifferInputs<V>>;
+  public readonly i: TInBundle<IInputs<V>>;
+  public readonly o: TOutBundle<IOutputs<V>>;
+  public readonly b: TOutBundle<IInputs<V>>;
 
   private readonly cb: TEqualityCallback<V>;
   private buffer: Array<V>;

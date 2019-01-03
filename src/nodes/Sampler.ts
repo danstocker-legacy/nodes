@@ -2,7 +2,7 @@ import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {ValueOf} from "../utils";
 
-interface ISamplerInputs<V> {
+interface IInputs<V> {
   /** Value to be sampled. */
   d_val: V;
 
@@ -10,7 +10,7 @@ interface ISamplerInputs<V> {
   ev_smp: any;
 }
 
-interface ISamplerOutputs<V> {
+interface IOutputs<V> {
   /** Sampled value. */
   d_val: V;
 }
@@ -28,8 +28,8 @@ interface ISamplerOutputs<V> {
  * // `sampler` will output the last value from `ticker` on each input to `foo`
  */
 export class Sampler<V> implements ISink, ISource {
-  public readonly i: TInBundle<ISamplerInputs<V>>;
-  public readonly o: TOutBundle<ISamplerOutputs<V>>;
+  public readonly i: TInBundle<IInputs<V>>;
+  public readonly o: TOutBundle<IOutputs<V>>;
 
   private buffer: V;
 
@@ -39,8 +39,8 @@ export class Sampler<V> implements ISink, ISource {
   }
 
   public send(
-    port: IInPort<ValueOf<ISamplerInputs<V>>>,
-    value: ValueOf<ISamplerInputs<V>>,
+    port: IInPort<ValueOf<IInputs<V>>>,
+    value: ValueOf<IInputs<V>>,
     tag?: string
   ): void {
     const i = this.i;

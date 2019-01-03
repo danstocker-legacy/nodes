@@ -10,7 +10,7 @@ export interface IGateInputs<V> {
   st_open: boolean;
 }
 
-export interface IGateOutputs<V> {
+export interface IOutputs<V> {
   /** Forwarded value. */
   d_val: V;
 }
@@ -26,7 +26,7 @@ export interface IGateOutputs<V> {
  */
 export class Gate<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IGateInputs<V>>;
-  public readonly o: TOutBundle<IGateOutputs<V>>;
+  public readonly o: TOutBundle<IOutputs<V>>;
   public readonly b: TOutBundle<Pick<IGateInputs<V>, "d_val">>;
 
   private open: boolean;

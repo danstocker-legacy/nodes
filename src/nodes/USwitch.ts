@@ -2,10 +2,12 @@ import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {ISwitchInputs, TSwitchPositions} from "./Switch";
 
-interface ISSwitchInputs<P extends string, V> {
+interface IInputs<P extends string, V> {
   /** Multiple inputs, containing `d_val` and `st_pos`. */
   i: ISwitchInputs<P, V>;
 }
+
+type TOutputs<P extends string, V> = TSwitchPositions<P, V>;
 
 /**
  * Forwards input to one of the possible outputs.
@@ -17,9 +19,9 @@ interface ISSwitchInputs<P extends string, V> {
  * switch = new USwitch(["d_foo", "d_bar", "d_baz");
  */
 export class USwitch<P extends string, V> implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<ISSwitchInputs<P, V>>;
-  public readonly o: TOutBundle<TSwitchPositions<P, V>>;
-  public readonly b: TOutBundle<ISSwitchInputs<P, V>>;
+  public readonly i: TInBundle<IInputs<P, V>>;
+  public readonly o: TOutBundle<TOutputs<P, V>>;
+  public readonly b: TOutBundle<IInputs<P, V>>;
 
   private readonly positions: Set<P>;
 

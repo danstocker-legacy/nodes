@@ -1,31 +1,21 @@
 import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
-import {IBufferInputs} from "./Buffer";
-
-interface ISBufferInputs<V> {
-  i: IBufferInputs<V>;
-}
-
-interface ISBufferOutputs<V> {
-  /** Value forwarded or released from buffer. */
-  d_val: V;
-
-  /** UBuffer size. */
-  st_size: number;
-}
+import {IInputs, IOutputs} from "./Buffer";
 
 /**
  * Buffers inputs when open. Forwards input otherwise.
  * Atomic equivalent of a composite node.
  * Composite view:
  * TBD
- * TODO: Share code w/ UBuffer
+ * TODO: Share code w/ Buffer
  * @example
  * TBD
  */
 export class UBuffer<V> implements ISink, ISource {
-  public readonly i: TInBundle<ISBufferInputs<V>>;
-  public readonly o: TOutBundle<ISBufferOutputs<V>>;
+  public readonly i: TInBundle<{
+    i: IInputs<V>;
+  }>;
+  public readonly o: TOutBundle<IOutputs<V>>;
 
   private readonly buffer: Array<[V, string]>;
   private open: boolean;
@@ -38,8 +28,8 @@ export class UBuffer<V> implements ISink, ISource {
   }
 
   public send(
-    port: IInPort<IBufferInputs<V>>,
-    value: IBufferInputs<V>,
+    port: IInPort<IInputs<V>>,
+    value: IInputs<V>,
     tag?: string
   ): void {
     if (port === this.i.i) {

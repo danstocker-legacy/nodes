@@ -3,11 +3,11 @@ import {IInPort, TInBundle, TOutBundle} from "../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
 
-interface IListenerInputs {
+interface IInputs {
   d_val: any;
 }
 
-interface IListenerOutputs {
+interface IOutputs {
   /** Error message */
   ev_err: string;
 }
@@ -22,9 +22,9 @@ interface IListenerOutputs {
  * listener.i.d_val.disconnect();
  */
 export class Listener implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<IListenerInputs>;
-  public readonly o: TOutBundle<IListenerOutputs>;
-  public readonly b: TOutBundle<IListenerInputs>;
+  public readonly i: TInBundle<IInputs>;
+  public readonly o: TOutBundle<IOutputs>;
+  public readonly b: TOutBundle<IInputs>;
 
   private readonly cb: TListenerCallback;
 

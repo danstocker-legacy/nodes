@@ -1,12 +1,12 @@
 import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
-interface IDebouncerInputs {
+interface IInputs {
   /** Signal to be debounced. */
   ev_sig: any;
 }
 
-interface IDebouncerOutputs {
+interface IOutputs {
   /** Debounced signal. */
   ev_sig: any;
 }
@@ -24,8 +24,8 @@ interface IDebouncerOutputs {
  * debouncer.o.ev_sig.connect(...);
  */
 export class Debouncer<V> implements ISink, ISource {
-  public readonly i: TInBundle<IDebouncerInputs>;
-  public readonly o: TOutBundle<IDebouncerOutputs>;
+  public readonly i: TInBundle<IInputs>;
+  public readonly o: TOutBundle<IOutputs>;
 
   private readonly ms: number;
   private timer: NodeJS.Timer;

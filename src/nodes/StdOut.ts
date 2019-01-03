@@ -1,7 +1,7 @@
 import {ISink, MSink} from "../node";
 import {IInPort, TInBundle} from "../port";
 
-interface IStdOutInputs {
+interface IInputs {
   d_val: string | Buffer;
 }
 
@@ -9,7 +9,7 @@ interface IStdOutInputs {
  * Forwards input to `process.stdout`.
  */
 export class StdOut implements ISink {
-  public readonly i: TInBundle<IStdOutInputs>;
+  public readonly i: TInBundle<IInputs>;
 
   constructor() {
     MSink.init.call(this, ["d_val"]);

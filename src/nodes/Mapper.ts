@@ -3,12 +3,12 @@ import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
 
-interface IMapperInputs<V> {
+interface IInputs<V> {
   /** Value to be mapped */
   d_val: V;
 }
 
-interface IMapperOutputs<V> {
+interface IOutputs<V> {
   /** Mapped value */
   d_val: V;
 
@@ -24,9 +24,9 @@ interface IMapperOutputs<V> {
  * mapper.i.d_val.send(5, "1"); // o.d_val -> "5", "1"
  */
 export class Mapper<I, O> implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<IMapperInputs<I>>;
-  public readonly o: TOutBundle<IMapperOutputs<O>>;
-  public readonly b: TOutBundle<IMapperInputs<I>>;
+  public readonly i: TInBundle<IInputs<I>>;
+  public readonly o: TOutBundle<IOutputs<O>>;
+  public readonly b: TOutBundle<IInputs<I>>;
 
   private readonly cb: TMapperCallback<I, O>;
 

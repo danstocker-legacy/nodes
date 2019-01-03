@@ -11,12 +11,12 @@ interface IComparerInputs<V> {
   d_b: V;
 }
 
-interface ISComparerInputs<V> {
+interface IInputs<V> {
   /** Multiple inputs containing `d_a` and `d_b`. */
   i: IComparerInputs<V>;
 }
 
-interface ISComparerOutputs<V> {
+interface IOutputs<V> {
   /** Equality of operands. */
   d_eq: boolean;
 
@@ -36,9 +36,9 @@ interface ISComparerOutputs<V> {
  * comparer.i.$.send({a: 4, b: 5}); // outputs `false`
  */
 export class UComparer<V> implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<ISComparerInputs<V>>;
-  public readonly o: TOutBundle<ISComparerOutputs<V>>;
-  public readonly b: TOutBundle<ISComparerInputs<V>>;
+  public readonly i: TInBundle<IInputs<V>>;
+  public readonly o: TOutBundle<IOutputs<V>>;
+  public readonly b: TOutBundle<IInputs<V>>;
 
   private readonly cb: TEqualityCallback<V>;
 

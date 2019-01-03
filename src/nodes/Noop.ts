@@ -1,11 +1,11 @@
 import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
-interface INoopInputs<V> {
+interface IInputs<V> {
   d_val: V;
 }
 
-interface INoopOutputs<V> {
+interface IOutputs<V> {
   d_val: V;
 }
 
@@ -20,8 +20,8 @@ interface INoopOutputs<V> {
  * noop.i.d_val.send(5); // emits 5
  */
 export class Noop<V> implements ISink, ISource {
-  public readonly i: TInBundle<INoopInputs<V>>;
-  public readonly o: TOutBundle<INoopOutputs<V>>;
+  public readonly i: TInBundle<IInputs<V>>;
+  public readonly o: TOutBundle<IOutputs<V>>;
 
   constructor() {
     MSink.init.call(this, ["d_val"]);

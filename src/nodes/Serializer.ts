@@ -1,14 +1,14 @@
 import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
-interface ISerializerInputs<V> {
+interface IInputs<V> {
   d_val: V;
 
   /** Reference input, defining tag order. */
   d_tag: string;
 }
 
-interface ISerializerOutputs<V> {
+interface IOutputs<V> {
   d_val: V;
 }
 
@@ -19,8 +19,8 @@ interface ISerializerOutputs<V> {
  * node = new Serializer();
  */
 export class Serializer<V> implements ISink, ISource {
-  public readonly i: TInBundle<ISerializerInputs<V>>;
-  public readonly o: TOutBundle<ISerializerOutputs<V>>;
+  public readonly i: TInBundle<IInputs<V>>;
+  public readonly o: TOutBundle<IOutputs<V>>;
 
   private readonly inputs: Map<string, V>;
   private readonly order: Array<string>;

@@ -2,7 +2,7 @@ import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IMuxed} from "../utils";
 
-interface IDemuxerInputs<T> {
+interface IInputs<T> {
   /**
    * Multiplexed value.
    * Possible values of property `port` is one of the fields passed to
@@ -21,9 +21,9 @@ interface IDemuxerInputs<T> {
  * // outputs `5` on port "d_foo"
  */
 export class Demuxer<T> implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<IDemuxerInputs<T>>;
+  public readonly i: TInBundle<IInputs<T>>;
   public readonly o: TOutBundle<T>;
-  public readonly b: TOutBundle<IDemuxerInputs<T>>;
+  public readonly b: TOutBundle<IInputs<T>>;
 
   /**
    * @param fields Must be prefixed by their corresponding domains. ("d_" /

@@ -3,12 +3,12 @@ import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export type TFilterCallback<V> = (value: V, tag?: string) => boolean;
 
-interface IFilterInputs<V> {
+interface IInputs<V> {
   /** Value to be filtered. */
   d_val: V;
 }
 
-interface IFilterOutputs<V> {
+interface IOutputs<V> {
   /** Filtered output. */
   d_val: V;
 
@@ -27,9 +27,9 @@ interface IFilterOutputs<V> {
  * filter.i.d_val.send(2); // will not output
  */
 export class Filter<V> implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<IFilterInputs<V>>;
-  public readonly o: TOutBundle<IFilterOutputs<V>>;
-  public readonly b: TOutBundle<IFilterInputs<V>>;
+  public readonly i: TInBundle<IInputs<V>>;
+  public readonly o: TOutBundle<IOutputs<V>>;
+  public readonly b: TOutBundle<IInputs<V>>;
 
   private readonly cb: TFilterCallback<V>;
 

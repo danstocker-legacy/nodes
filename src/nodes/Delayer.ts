@@ -1,11 +1,11 @@
 import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
-interface IDelayerInputs<V> {
+interface IInputs<V> {
   d_val: V;
 }
 
-interface IDelayerOutputs<V> {
+interface IOutputs<V> {
   d_val: V;
 }
 
@@ -13,8 +13,8 @@ interface IDelayerOutputs<V> {
  * Forwards input with the specified delay.
  */
 export class Delayer<V> implements ISink, ISource {
-  public readonly i: TInBundle<IDelayerInputs<V>>;
-  public readonly o: TOutBundle<IDelayerOutputs<V>>;
+  public readonly i: TInBundle<IInputs<V>>;
+  public readonly o: TOutBundle<IOutputs<V>>;
 
   private readonly ms: number;
 

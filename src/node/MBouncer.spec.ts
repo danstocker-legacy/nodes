@@ -6,14 +6,14 @@ import {MBouncer} from "./MBouncer";
 import {MSink} from "./MSink";
 
 describe("MBouncer", function () {
-  interface ITestBouncerInputs {
+  interface IInputs {
     foo: number;
     bar: boolean;
   }
 
   class TestBouncer implements IBouncer, ISink {
-    public readonly i: TInBundle<ITestBouncerInputs>;
-    public readonly b: TOutBundle<ITestBouncerInputs>;
+    public readonly i: TInBundle<IInputs>;
+    public readonly b: TOutBundle<IInputs>;
 
     constructor() {
       MSink.init.call(this, ["foo", "bar"]);
@@ -21,8 +21,8 @@ describe("MBouncer", function () {
     }
 
     public send(
-      port: IInPort<ValueOf<ITestBouncerInputs>>,
-      value: ValueOf<ITestBouncerInputs>,
+      port: IInPort<ValueOf<IInputs>>,
+      value: ValueOf<IInputs>,
       tag?: string
     ): void {
       //

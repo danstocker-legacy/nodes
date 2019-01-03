@@ -1,11 +1,11 @@
 import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
-interface IShifterInputs<V> {
+interface IInputs<V> {
   d_val: V;
 }
 
-interface IShifterOutputs<V> {
+interface IOutputs<V> {
   d_val: V;
 }
 
@@ -16,8 +16,8 @@ interface IShifterOutputs<V> {
  * TODO: Is a displacement > 1 useful?
  */
 export class Shifter<V> implements ISink, ISource {
-  public readonly i: TInBundle<IShifterInputs<V>>;
-  public readonly o: TOutBundle<IShifterOutputs<V>>;
+  public readonly i: TInBundle<IInputs<V>>;
+  public readonly o: TOutBundle<IOutputs<V>>;
 
   private readonly displacement: number;
   private readonly buffer: Array<V>;

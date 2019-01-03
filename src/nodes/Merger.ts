@@ -2,9 +2,9 @@ import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IAny, ValueOf} from "../utils";
 
-type TMergerInputs<T> = T;
+type TInputs<T> = T;
 
-interface IMergerOutputs<T> {
+interface IOutputs<T> {
   o: T;
 }
 
@@ -23,8 +23,8 @@ interface IMergerOutputs<T> {
  * merger.i.d_bar.send(true, "1"); // o -> {d_foo: 5, d_bar: true}, "1"
  */
 export class Merger<T extends IAny> implements ISink, ISource {
-  public readonly i: TInBundle<TMergerInputs<T>>;
-  public readonly o: TOutBundle<IMergerOutputs<T>>;
+  public readonly i: TInBundle<TInputs<T>>;
+  public readonly o: TOutBundle<IOutputs<T>>;
 
   /**
    * Stores last input values.
@@ -42,8 +42,8 @@ export class Merger<T extends IAny> implements ISink, ISource {
   }
 
   public send(
-    port: IInPort<ValueOf<TMergerInputs<T>>>,
-    input: ValueOf<TMergerInputs<T>>,
+    port: IInPort<ValueOf<TInputs<T>>>,
+    input: ValueOf<TInputs<T>>,
     tag?: string
   ): void {
     const name = port.name;

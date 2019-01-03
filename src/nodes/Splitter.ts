@@ -2,13 +2,15 @@ import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IAny} from "../utils";
 
-interface ISplitterInputs<T> {
+interface IInputs<T> {
   /**
    * Multiple named values.
    * Names match the fields passed to constructor.
    */
   i: T;
 }
+
+type TOutputs<T> = T;
 
 /**
  * Splits synchronized sets into individual ports.
@@ -20,8 +22,8 @@ interface ISplitterInputs<T> {
  * splitter.o.bar.connect(C.i.d_val);
  */
 export class Splitter<T extends IAny> implements ISink, ISource {
-  public readonly i: TInBundle<ISplitterInputs<T>>;
-  public readonly o: TOutBundle<T>;
+  public readonly i: TInBundle<IInputs<T>>;
+  public readonly o: TOutBundle<TOutputs<T>>;
 
   constructor(fields: Array<string>) {
     MSink.init.call(this, ["i"]);

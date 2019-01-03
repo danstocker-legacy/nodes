@@ -2,7 +2,7 @@ import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {ValueOf} from "../utils";
 
-export interface IBufferInputs<V> {
+export interface IInputs<V> {
   /** Value to be buffered. */
   d_val: V;
 
@@ -14,7 +14,7 @@ export interface IBufferInputs<V> {
   st_open: boolean;
 }
 
-export interface IBufferOutputs<V> {
+export interface IOutputs<V> {
   /** Value forwarded or released from buffer. */
   d_val: V;
 
@@ -32,8 +32,8 @@ export interface IBufferOutputs<V> {
  * TBD
  */
 export class Buffer<V> implements ISink, ISource {
-  public readonly i: TInBundle<IBufferInputs<V>>;
-  public readonly o: TOutBundle<IBufferOutputs<V>>;
+  public readonly i: TInBundle<IInputs<V>>;
+  public readonly o: TOutBundle<IOutputs<V>>;
 
   private readonly buffer: Array<[V, string]>;
   private open: boolean;
@@ -46,8 +46,8 @@ export class Buffer<V> implements ISink, ISource {
   }
 
   public send(
-    port: IInPort<ValueOf<IBufferInputs<V>>>,
-    value: ValueOf<IBufferInputs<V>>,
+    port: IInPort<ValueOf<IInputs<V>>>,
+    value: ValueOf<IInputs<V>>,
     tag?: string
   ): void {
     const i = this.i;

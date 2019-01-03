@@ -2,7 +2,7 @@ import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {copy, ValueOf} from "../utils";
 
-export interface IFolderInputs<V> {
+export interface IInputs<V> {
   /** Reset signal */
   ev_res: any;
 
@@ -10,7 +10,7 @@ export interface IFolderInputs<V> {
   d_val: V;
 }
 
-export interface IFolderOutputs<I, O> {
+export interface IOutputs<I, O> {
   /** Folded value */
   d_fold: O;
 
@@ -35,9 +35,9 @@ export type TFolderCallback<I, O> = (
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
 export class Folder<I, O> implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<IFolderInputs<I>>;
-  public readonly o: TOutBundle<IFolderOutputs<I, O>>;
-  public readonly b: TOutBundle<Pick<IFolderInputs<I>, "d_val">>;
+  public readonly i: TInBundle<IInputs<I>>;
+  public readonly o: TOutBundle<IOutputs<I, O>>;
+  public readonly b: TOutBundle<Pick<IInputs<I>, "d_val">>;
 
   private readonly cb: TFolderCallback<I, O>;
   private readonly initial?: O;
@@ -53,8 +53,8 @@ export class Folder<I, O> implements ISink, ISource, IBouncer {
   }
 
   public send(
-    port: IInPort<ValueOf<IFolderInputs<I>>>,
-    value: ValueOf<IFolderInputs<I>>,
+    port: IInPort<ValueOf<IInputs<I>>>,
+    value: ValueOf<IInputs<I>>,
     tag?: string
   ): void {
     const i = this.i;
