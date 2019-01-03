@@ -2,9 +2,9 @@ import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IAny, ValueOf} from "../utils";
 
-type TInputs<T> = T;
+export type TInputs<T> = T;
 
-interface IOutputs<T> {
+export interface IOutputs<T> {
   o: T;
 }
 

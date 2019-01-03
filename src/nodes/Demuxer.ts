@@ -2,7 +2,7 @@ import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IMuxed} from "../utils";
 
-interface IInputs<T> {
+export interface IInputs<T> {
   /**
    * Multiplexed value.
    * Possible values of property `port` is one of the fields passed to

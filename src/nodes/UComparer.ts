@@ -11,12 +11,12 @@ interface IComparerInputs<V> {
   d_b: V;
 }
 
-interface IInputs<V> {
+export interface IInputs<V> {
   /** Multiple inputs containing `d_a` and `d_b`. */
   i: IComparerInputs<V>;
 }
 
-interface IOutputs<V> {
+export interface IOutputs<V> {
   /** Equality of operands. */
   d_eq: boolean;
 

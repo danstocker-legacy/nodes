@@ -2,12 +2,12 @@ import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {TEqualityCallback} from "./UComparer";
 
-interface IInputs<V> {
+export interface IInputs<V> {
   /** Value to be diffed. */
   d_val: V;
 }
 
-interface IOutputs<V> {
+export interface IOutputs<V> {
   /** Non-equality of subsequent inputs. */
   d_diff: boolean;
 

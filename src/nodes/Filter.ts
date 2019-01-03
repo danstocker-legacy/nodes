@@ -3,12 +3,12 @@ import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export type TFilterCallback<V> = (value: V, tag?: string) => boolean;
 
-interface IInputs<V> {
+export interface IInputs<V> {
   /** Value to be filtered. */
   d_val: V;
 }
 
-interface IOutputs<V> {
+export interface IOutputs<V> {
   /** Filtered output. */
   d_val: V;
 

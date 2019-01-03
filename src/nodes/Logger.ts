@@ -1,13 +1,13 @@
 import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
-interface IInputs {
+export interface IInputs {
   d_log: any;
   d_warn: any;
   d_err: any;
 }
 
-interface IOutputs {
+export interface IOutputs {
   d_log: any;
   d_warn: any;
   d_err: any;

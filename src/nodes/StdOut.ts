@@ -1,7 +1,7 @@
 import {ISink, MSink} from "../node";
 import {IInPort, TInBundle} from "../port";
 
-interface IInputs {
+export interface IInputs {
   d_val: string | Buffer;
 }
 

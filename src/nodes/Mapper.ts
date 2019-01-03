@@ -3,12 +3,12 @@ import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
 
-interface IInputs<V> {
+export interface IInputs<V> {
   /** Value to be mapped */
   d_val: V;
 }
 
-interface IOutputs<V> {
+export interface IOutputs<V> {
   /** Mapped value */
   d_val: V;
 

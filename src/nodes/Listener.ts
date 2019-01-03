@@ -3,11 +3,11 @@ import {IInPort, TInBundle, TOutBundle} from "../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
 
-interface IInputs {
+export interface IInputs {
   d_val: any;
 }
 
-interface IOutputs {
+export interface IOutputs {
   /** Error message */
   ev_err: string;
 }

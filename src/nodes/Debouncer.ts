@@ -1,12 +1,12 @@
 import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
-interface IInputs {
+export interface IInputs {
   /** Signal to be debounced. */
   ev_sig: any;
 }
 
-interface IOutputs {
+export interface IOutputs {
   /** Debounced signal. */
   ev_sig: any;
 }

@@ -1,11 +1,11 @@
 import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
-interface IInputs<V> {
+export interface IInputs<V> {
   d_val: V;
 }
 
-interface IOutputs<V> {
+export interface IOutputs<V> {
   d_val: V;
 }
 

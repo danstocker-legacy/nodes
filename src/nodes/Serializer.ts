@@ -1,14 +1,14 @@
 import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
-interface IInputs<V> {
+export interface IInputs<V> {
   d_val: V;
 
   /** Reference input, defining tag order. */
   d_tag: string;
 }
 
-interface IOutputs<V> {
+export interface IOutputs<V> {
   d_val: V;
 }
 

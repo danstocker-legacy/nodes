@@ -2,12 +2,12 @@ import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {ISwitchInputs, TSwitchPositions} from "./Switch";
 
-interface IInputs<P extends string, V> {
+export interface IInputs<P extends string, V> {
   /** Multiple inputs, containing `d_val` and `st_pos`. */
   i: ISwitchInputs<P, V>;
 }
 
-type TOutputs<P extends string, V> = TSwitchPositions<P, V>;
+export type TOutputs<P extends string, V> = TSwitchPositions<P, V>;
 
 /**
  * Forwards input to one of the possible outputs.

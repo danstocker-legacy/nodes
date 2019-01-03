@@ -8,12 +8,12 @@ import {IInPort, TInBundle, TOutBundle} from "../port";
  */
 export type TUnfolderCallback<I, O> = (value: I) => IterableIterator<O>;
 
-interface IInputs<V> {
+export interface IInputs<V> {
   /** Folded value. */
   d_fold: V;
 }
 
-interface IOutputs<I, O> {
+export interface IOutputs<I, O> {
   /** Unfolded value. */
   d_val: O;
 

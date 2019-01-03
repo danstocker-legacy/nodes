@@ -2,7 +2,7 @@ import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {ValueOf} from "../utils";
 
-interface IInputs<V> {
+export interface IInputs<V> {
   /** Value to be sampled. */
   d_val: V;
 
@@ -10,7 +10,7 @@ interface IInputs<V> {
   ev_smp: any;
 }
 
-interface IOutputs<V> {
+export interface IOutputs<V> {
   /** Sampled value. */
   d_val: V;
 }

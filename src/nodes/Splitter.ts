@@ -2,7 +2,7 @@ import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IAny} from "../utils";
 
-interface IInputs<T> {
+export interface IInputs<T> {
   /**
    * Multiple named values.
    * Names match the fields passed to constructor.
@@ -10,7 +10,7 @@ interface IInputs<T> {
   i: T;
 }
 
-type TOutputs<T> = T;
+export type TOutputs<T> = T;
 
 /**
  * Splits synchronized sets into individual ports.
