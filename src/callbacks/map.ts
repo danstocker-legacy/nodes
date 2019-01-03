@@ -1,4 +1,4 @@
-import {TMapperCallback} from "../nodes/o2o/sep/Mapper";
+import {TMapperCallback} from "../nodes/Mapper";
 import {ValueOf} from "../utils";
 
 /**

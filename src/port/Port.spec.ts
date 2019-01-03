@@ -1,5 +1,5 @@
 import {ISource} from "../node";
-import {Noop} from "../nodes/o2o/sep";
+import {Noop} from "../nodes";
 import {IInPort} from "./IInPort";
 import {InPort} from "./InPort";
 import {IOutPort} from "./IOutPort";

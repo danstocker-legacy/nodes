@@ -1,4 +1,4 @@
-import {Noop} from "../nodes/o2o/sep";
+import {Noop} from "../nodes";
 import {InPort} from "./InPort";
 
 describe("InPort", function () {
