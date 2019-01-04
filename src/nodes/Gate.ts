@@ -1,8 +1,8 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
+import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {ValueOf} from "../utils";
 
-export interface IGateInputs<V> {
+export interface IInputs<V> {
   /** Value to be forwarded. */
   d_val: V;
 
@@ -22,25 +22,23 @@ export interface IOutputs<V> {
  * gate.i.st_open.send(true);   // opening gate
  * gate.i.d_val.send(5, "1");   // emits 5 on `o.d_val`
  * gate.i.st_open.send(false);  // closing gate
- * gate.i.d_val.send(5, "1");   // emits 5 on `b.d_val`
+ * gate.i.d_val.send(5, "1");   // doesn't emit
  */
-export class Gate<V> implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<IGateInputs<V>>;
+export class Gate<V> implements ISink, ISource {
+  public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
-  public readonly b: TOutBundle<Pick<IGateInputs<V>, "d_val">>;
 
   private open: boolean;
 
   constructor() {
     MSink.init.call(this, ["d_val", "st_open"]);
     MSource.init.call(this, ["d_val"]);
-    MBouncer.init.call(this, ["d_val"]);
     this.open = false;
   }
 
   public send(
-    port: IInPort<ValueOf<IGateInputs<V>>>,
-    value: ValueOf<IGateInputs<V>>,
+    port: IInPort<ValueOf<IInputs<V>>>,
+    value: ValueOf<IInputs<V>>,
     tag?: string
   ): void {
     const i = this.i;
@@ -54,8 +52,6 @@ export class Gate<V> implements ISink, ISource, IBouncer {
         const val = value as V;
         if (this.open) {
           this.o.d_val.send(val, tag);
-        } else {
-          this.b.d_val.send(val, tag);
         }
         break;
     }

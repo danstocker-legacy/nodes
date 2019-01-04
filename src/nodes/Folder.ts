@@ -4,15 +4,15 @@ import {copy, ValueOf} from "../utils";
 
 export interface IInputs<V> {
   /** Reset signal */
-  ev_res: any;
+  ev_res: boolean;
 
   /** Next input value */
   d_val: V;
 }
 
-export interface IOutputs<I, O> {
+export interface IOutputs<V> {
   /** Folded value */
-  d_fold: O;
+  d_fold: V;
 
   /** Error message */
   ev_err: string;
@@ -36,7 +36,7 @@ export type TFolderCallback<I, O> = (
  */
 export class Folder<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs<I>>;
-  public readonly o: TOutBundle<IOutputs<I, O>>;
+  public readonly o: TOutBundle<IOutputs<O>>;
   public readonly b: TOutBundle<Pick<IInputs<I>, "d_val">>;
 
   private readonly cb: TFolderCallback<I, O>;

@@ -1,6 +1,6 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
+import {ISink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
-import {IGateInputs} from "./Gate";
+import {IInputs as IGateInputs} from "./Gate";
 
 export interface IInputs<V> {
   /** Multiple inputs, including `d_val` and `st_open`. */
@@ -22,15 +22,13 @@ export interface IOutputs<V> {
  * // emits {st_open: false, val: 5} on `b.i`:
  * gate.i.i.send({st_open: false, val: 5}, "1");
  */
-export class UGate<V> implements ISink, ISource, IBouncer {
+export class UGate<V> implements ISink, ISource {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
-  public readonly b: TOutBundle<IInputs<V>>;
 
   constructor() {
     MSink.init.call(this, ["i"]);
     MSource.init.call(this, ["d_val"]);
-    MBouncer.init.call(this, ["i"]);
   }
 
   public send(
@@ -41,8 +39,6 @@ export class UGate<V> implements ISink, ISource, IBouncer {
     if (port === this.i.i) {
       if (value.st_open) {
         this.o.d_val.send(value.d_val, tag);
-      } else {
-        this.b.i.send(value, tag);
       }
     }
   }

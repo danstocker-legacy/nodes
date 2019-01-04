@@ -6,7 +6,6 @@ describe("UGate", function () {
       const node = new UGate();
       expect(node.i.i).toBeDefined();
       expect(node.o.d_val).toBeDefined();
-      expect(node.b.i).toBeDefined();
     });
   });
 
@@ -30,13 +29,6 @@ describe("UGate", function () {
         spyOn(node.o.d_val, "send");
         node.send(node.i.i, {d_val: 2, st_open: false}, "1");
         expect(node.o.d_val.send).not.toHaveBeenCalled();
-      });
-
-      it("should bounce input", function () {
-        spyOn(node.b.i, "send");
-        node.send(node.i.i, {d_val: 2, st_open: false}, "1");
-        expect(node.b.i.send)
-        .toHaveBeenCalledWith({d_val: 2, st_open: false}, "1");
       });
     });
   });

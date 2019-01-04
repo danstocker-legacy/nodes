@@ -3,7 +3,7 @@ import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
 
-interface IComparerInputs<V> {
+export interface IComparerInputs<V> {
   /** First operand. */
   d_a: V;
 

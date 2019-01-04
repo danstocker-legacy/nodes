@@ -7,7 +7,6 @@ describe("Gate", function () {
       expect(node.i.d_val).toBeDefined();
       expect(node.i.st_open).toBeDefined();
       expect(node.o.d_val).toBeDefined();
-      expect(node.b.d_val).toBeDefined();
     });
   });
 
@@ -40,12 +39,6 @@ describe("Gate", function () {
           spyOn(node.o.d_val, "send");
           node.send(node.i.d_val, 2, "2");
           expect(node.o.d_val.send).not.toHaveBeenCalled();
-        });
-
-        it("should bounce input", function () {
-          spyOn(node.b.d_val, "send");
-          node.send(node.i.d_val, 2, "2");
-          expect(node.b.d_val.send).toHaveBeenCalledWith(2, "2");
         });
       });
     });

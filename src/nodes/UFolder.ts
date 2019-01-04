@@ -1,15 +1,7 @@
 import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {copy} from "../utils";
-import {TFolderCallback} from "./Folder";
-
-interface IFolderInputs<V> {
-  /** Reset signal */
-  d_res: boolean;
-
-  /** Next input value */
-  d_val: V;
-}
+import {IInputs as IFolderInputs, TFolderCallback} from "./Folder";
 
 export interface IInputs<V> {
   /** Multiple inputs, containing both `ev_red` and `d_val`. */
@@ -60,7 +52,7 @@ export class UFolder<I, O> implements ISink, ISource, IBouncer {
     if (port === this.i.i) {
       try {
         const folded = this.cb(this.folded, value.d_val, tag);
-        const res = value.d_res as boolean;
+        const res = value.ev_res as boolean;
         if (res) {
           this.o.d_fold.send(folded, tag);
           this.folded = copy(this.initial);

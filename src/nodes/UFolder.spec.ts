@@ -18,28 +18,28 @@ describe("UFolder", function () {
       node = new UFolder((curr, next) => curr + next, 1);
     });
 
-    describe("when 'd_res' is falsy", function () {
+    describe("when 'ev_res' is falsy", function () {
       beforeEach(function () {
-        node.send(node.i.i, {d_res: false, d_val: 2}, "1");
-        node.send(node.i.i, {d_res: false, d_val: 3}, "2");
+        node.send(node.i.i, {ev_res: false, d_val: 2}, "1");
+        node.send(node.i.i, {ev_res: false, d_val: 3}, "2");
       });
 
       it("should not emit", function () {
         spyOn(node.o.d_fold, "send");
-        node.send(node.i.i, {d_res: false, d_val: 5}, "3");
+        node.send(node.i.i, {ev_res: false, d_val: 5}, "3");
         expect(node.o.d_fold.send).not.toHaveBeenCalled();
       });
     });
 
-    describe("when 'd_res' is truthy", function () {
+    describe("when 'ev_res' is truthy", function () {
       beforeEach(function () {
-        node.send(node.i.i, {d_res: false, d_val: 2}, "1");
-        node.send(node.i.i, {d_res: false, d_val: 3}, "2");
+        node.send(node.i.i, {ev_res: false, d_val: 2}, "1");
+        node.send(node.i.i, {ev_res: false, d_val: 3}, "2");
       });
 
       it("should emit folded value", function () {
         spyOn(node.o.d_fold, "send");
-        node.send(node.i.i, {d_res: true, d_val: 5}, "3");
+        node.send(node.i.i, {ev_res: true, d_val: 5}, "3");
         expect(node.o.d_fold.send).toHaveBeenCalledWith(11, "3");
       });
     });
@@ -53,16 +53,16 @@ describe("UFolder", function () {
 
       it("should bounce inputs", function () {
         spyOn(node.b.i, "send");
-        node.send(node.i.i, {d_res: false, d_val: 5}, "1");
+        node.send(node.i.i, {ev_res: false, d_val: 5}, "1");
         expect(node.b.i.send).toHaveBeenCalledWith({
-          d_res: false,
-          d_val: 5
+          d_val: 5,
+          ev_res: false
         }, "1");
       });
 
       it("should send error to output", function () {
         spyOn(node.o.ev_err, "send");
-        node.send(node.i.i, {d_res: false, d_val: 5}, "1");
+        node.send(node.i.i, {ev_res: false, d_val: 5}, "1");
         expect(node.o.ev_err.send).toHaveBeenCalledWith("Error: foo", "1");
       });
     });

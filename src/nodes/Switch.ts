@@ -5,13 +5,15 @@ export type TSwitchPositions<P extends string, V> = {
   [branch in P]: V
 };
 
-export interface ISwitchInputs<P extends string, V> {
+export interface IInputs<P extends string, V> {
   /** Value to be sent to one of the outputs. */
   d_val: V;
 
   /** Switch position. Takes immediately. */
   st_pos: P;
 }
+
+export type TOutputs<P extends string, V> = TSwitchPositions<P, V>;
 
 /**
  * Forwards input to one of the possible outputs.
@@ -23,9 +25,9 @@ export interface ISwitchInputs<P extends string, V> {
  * switch = new Switch(["d_foo", "d_bar", "d_baz");
  */
 export class Switch<P extends string, V> implements ISink, ISource, IBouncer {
-  public readonly i: TInBundle<ISwitchInputs<P, V>>;
+  public readonly i: TInBundle<IInputs<P, V>>;
   public readonly o: TOutBundle<TSwitchPositions<P, V>>;
-  public readonly b: TOutBundle<Pick<ISwitchInputs<P, V>, "st_pos">>;
+  public readonly b: TOutBundle<Pick<IInputs<P, V>, "st_pos">>;
 
   private readonly positions: Set<P>;
 
@@ -49,8 +51,8 @@ export class Switch<P extends string, V> implements ISink, ISource, IBouncer {
   }
 
   public send(
-    port: IInPort<ISwitchInputs<P, V> | V | P>,
-    value: ISwitchInputs<P, V> | V | P,
+    port: IInPort<IInputs<P, V> | V | P>,
+    value: IInputs<P, V> | V | P,
     tag?: string
   ): void {
     const i = this.i;

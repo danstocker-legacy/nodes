@@ -27,6 +27,7 @@ export interface IOutputs<V> {
  * Atomic equivalent of a composite node.
  * Composite view:
  * TBD
+ * TODO: Bounce d_val when full.
  * TODO: Share code w/ UBuffer
  * @example
  * TBD
