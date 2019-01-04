@@ -1,9 +1,10 @@
+import {ISink, ISource} from "../node";
 import {TInBundle, TOutBundle} from "../port";
 import {IInputs, IOutputs} from "./Gate";
 import {Joiner} from "./Joiner";
 import {UGate} from "./UGate";
 
-export class GateJ<V> {
+export class GateJ<V> implements ISink, ISource {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
 

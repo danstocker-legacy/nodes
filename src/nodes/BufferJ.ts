@@ -1,9 +1,10 @@
+import {ISink, ISource} from "../node";
 import {TInBundle, TOutBundle} from "../port";
 import {IInputs, IOutputs} from "./Buffer";
 import {Joiner} from "./Joiner";
 import {UBuffer} from "./UBuffer";
 
-export class BufferJ<V> {
+export class BufferJ<V> implements ISink, ISource {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
 

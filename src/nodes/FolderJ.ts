@@ -1,9 +1,10 @@
+import {IBouncer, ISink, ISource} from "../node";
 import {TInBundle, TOutBundle} from "../port";
 import {IInputs, IOutputs, TFolderCallback} from "./Folder";
 import {Joiner} from "./Joiner";
 import {IInputs as IUFolderInputs, UFolder} from "./UFolder";
 
-export class FolderJ<I, O> {
+export class FolderJ<I, O> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs<I>>;
   public readonly o: TOutBundle<IOutputs<O>>;
   public readonly b: TOutBundle<IUFolderInputs<I>>;

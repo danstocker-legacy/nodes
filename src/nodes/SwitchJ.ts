@@ -1,9 +1,10 @@
+import {IBouncer, ISink, ISource} from "../node";
 import {TInBundle, TOutBundle} from "../port";
 import {Joiner} from "./Joiner";
 import {IInputs, TOutputs} from "./Switch";
 import {IInputs as IUSwitchInputs, USwitch} from "./USwitch";
 
-export class SwitchJ<P extends string, V> {
+export class SwitchJ<P extends string, V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs<P, V>>;
   public readonly o: TOutBundle<TOutputs<P, V>>;
   public readonly b: TOutBundle<IUSwitchInputs<P, V>>;

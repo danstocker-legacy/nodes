@@ -1,3 +1,4 @@
+import {IBouncer, ISink, ISource} from "../node";
 import {TInBundle, TOutBundle} from "../port";
 import {Joiner} from "./Joiner";
 import {
@@ -8,7 +9,7 @@ import {
   UComparer
 } from "./UComparer";
 
-export class ComparerJ<V> {
+export class ComparerJ<V> implements ISink, ISource, IBouncer {
   public readonly i: TInBundle<IComparerInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
   public readonly b: TOutBundle<IInputs<V>>;
