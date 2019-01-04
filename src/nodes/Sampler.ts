@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {ValueOf} from "../utils";
 
@@ -27,7 +27,7 @@ export interface IOutputs<V> {
  * foo.o.$.connect(sampler.i.ev_smp);
  * // `sampler` will output the last value from `ticker` on each input to `foo`
  */
-export class Sampler<V> implements ISink, ISource {
+export class Sampler<V> implements IAtomicSink, ISource {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
 

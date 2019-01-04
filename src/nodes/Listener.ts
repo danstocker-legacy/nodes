@@ -1,4 +1,11 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
+import {
+  IAtomicSink,
+  IBouncer,
+  ISource,
+  MBouncer,
+  MSink,
+  MSource
+} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
 type TListenerCallback = (value: any, tag?: string) => void;
@@ -21,7 +28,7 @@ export interface IOutputs {
  * // to unsubscribe:
  * listener.i.d_val.disconnect();
  */
-export class Listener implements ISink, ISource, IBouncer {
+export class Listener implements IAtomicSink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs>;
   public readonly o: TOutBundle<IOutputs>;
   public readonly b: TOutBundle<IInputs>;

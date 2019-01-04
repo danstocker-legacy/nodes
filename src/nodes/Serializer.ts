@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export interface IInputs<V> {
@@ -18,7 +18,7 @@ export interface IOutputs<V> {
  * let node: Serializer<number>;
  * node = new Serializer();
  */
-export class Serializer<V> implements ISink, ISource {
+export class Serializer<V> implements IAtomicSink, ISource {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
 

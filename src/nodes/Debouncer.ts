@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export interface IInputs {
@@ -23,7 +23,7 @@ export interface IOutputs {
  * debouncer.i.ev_sig.connect(...);
  * debouncer.o.ev_sig.connect(...);
  */
-export class Debouncer<V> implements ISink, ISource {
+export class Debouncer<V> implements IAtomicSink, ISource {
   public readonly i: TInBundle<IInputs>;
   public readonly o: TOutBundle<IOutputs>;
 

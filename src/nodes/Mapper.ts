@@ -1,4 +1,11 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
+import {
+  IAtomicSink,
+  IBouncer,
+  ISource,
+  MBouncer,
+  MSink,
+  MSource
+} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export type TMapperCallback<I, O> = (value: I, tag?: string) => O;
@@ -23,7 +30,7 @@ export interface IOutputs<V> {
  * const mapper = new Mapper<number, string>(String);
  * mapper.i.d_val.send(5, "1"); // o.d_val -> "5", "1"
  */
-export class Mapper<I, O> implements ISink, ISource, IBouncer {
+export class Mapper<I, O> implements IAtomicSink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs<I>>;
   public readonly o: TOutBundle<IOutputs<O>>;
   public readonly b: TOutBundle<IInputs<I>>;

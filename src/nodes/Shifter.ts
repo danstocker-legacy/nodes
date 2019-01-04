@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export interface IInputs<V> {
@@ -15,7 +15,7 @@ export interface IOutputs<V> {
  * original tag order is to be retained.
  * TODO: Is a displacement > 1 useful?
  */
-export class Shifter<V> implements ISink, ISource {
+export class Shifter<V> implements IAtomicSink, ISource {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
 

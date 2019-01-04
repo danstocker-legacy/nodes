@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IInputs as IGateInputs} from "./Gate";
 
@@ -22,7 +22,7 @@ export interface IOutputs<V> {
  * // emits {st_open: false, val: 5} on `b.i`:
  * gate.i.i.send({st_open: false, val: 5}, "1");
  */
-export class UGate<V> implements ISink, ISource {
+export class UGate<V> implements IAtomicSink, ISource {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
 

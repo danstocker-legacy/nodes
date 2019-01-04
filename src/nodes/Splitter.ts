@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IAny} from "../utils";
 
@@ -21,7 +21,7 @@ export type TOutputs<T> = T;
  * splitter.o.foo.connect(B.i.d_val);
  * splitter.o.bar.connect(C.i.d_val);
  */
-export class Splitter<T extends IAny> implements ISink, ISource {
+export class Splitter<T extends IAny> implements IAtomicSink, ISource {
   public readonly i: TInBundle<IInputs<T>>;
   public readonly o: TOutBundle<TOutputs<T>>;
 

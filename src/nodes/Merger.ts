@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IAny, ValueOf} from "../utils";
 
@@ -22,7 +22,7 @@ export interface IOutputs<T> {
  * merger.i.d_foo.send(5, "2");    // o -> {d_foo: 5, d_bar: undefined}, "2"
  * merger.i.d_bar.send(true, "1"); // o -> {d_foo: 5, d_bar: true}, "1"
  */
-export class Merger<T extends IAny> implements ISink, ISource {
+export class Merger<T extends IAny> implements IAtomicSink, ISource {
   public readonly i: TInBundle<TInputs<T>>;
   public readonly o: TOutBundle<IOutputs<T>>;
 

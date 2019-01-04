@@ -1,4 +1,11 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
+import {
+  IAtomicSink,
+  IBouncer,
+  ISource,
+  MBouncer,
+  MSink,
+  MSource
+} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
 /**
@@ -37,7 +44,7 @@ export interface IOutputs<I, O> {
  * }));
  * @see {@link https://en.wikipedia.org/wiki/Anamorphism}
  */
-export class Unfolder<I, O> implements ISink, ISource, IBouncer {
+export class Unfolder<I, O> implements IAtomicSink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs<I>>;
   public readonly o: TOutBundle<IOutputs<I, O>>;
   public readonly b: TOutBundle<IInputs<I>>;

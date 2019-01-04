@@ -6,7 +6,7 @@ import {ISink} from "./ISink";
  * Adds "i" port bundle to host.
  * To be mixed into classes that implement ISink.
  * @example
- * class SinkNode implements ISink {
+ * class SinkNode implements IAtomicSink {
  *   public i: TInBundle<...>
  *   ...
  *   constructor() {

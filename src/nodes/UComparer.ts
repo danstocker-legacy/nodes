@@ -1,4 +1,11 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
+import {
+  IAtomicSink,
+  IBouncer,
+  ISource,
+  MBouncer,
+  MSink,
+  MSource
+} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
@@ -35,7 +42,7 @@ export interface IOutputs<V> {
  * const comparer = new UComparer<number>((a, b) => a === b);
  * comparer.i.$.send({a: 4, b: 5}); // outputs `false`
  */
-export class UComparer<V> implements ISink, ISource, IBouncer {
+export class UComparer<V> implements IAtomicSink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
   public readonly b: TOutBundle<IInputs<V>>;

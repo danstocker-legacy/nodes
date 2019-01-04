@@ -1,4 +1,11 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
+import {
+  IAtomicSink,
+  IBouncer,
+  ISource,
+  MBouncer,
+  MSink,
+  MSource
+} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {TEqualityCallback} from "./UComparer";
 
@@ -27,7 +34,7 @@ export interface IOutputs<V> {
  * differ.i.d_val.send(5) // emits `false` (not different)
  * differ.i.d_val.send(4) // emits `true` (is different)
  */
-export class Differ<V> implements ISink, ISource, IBouncer {
+export class Differ<V> implements IAtomicSink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
   public readonly b: TOutBundle<IInputs<V>>;

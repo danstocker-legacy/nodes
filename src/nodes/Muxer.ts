@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IAny, IMuxed} from "../utils";
 
@@ -21,7 +21,7 @@ interface IMuxerOutputs<T> {
  * muxer.i.d_foo.send(5);
  * // outputs `{val: 5, port: "foo"}` on port "d_mux"
  */
-export class Muxer<T extends IAny = IAny> implements ISink, ISource {
+export class Muxer<T extends IAny = IAny> implements IAtomicSink, ISource {
   public readonly i: TInBundle<T>;
   public readonly o: TOutBundle<IMuxerOutputs<T>>;
 

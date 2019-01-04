@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IInputs, IOutputs} from "./Buffer";
 
@@ -11,7 +11,7 @@ import {IInputs, IOutputs} from "./Buffer";
  * @example
  * TBD
  */
-export class UBuffer<V> implements ISink, ISource {
+export class UBuffer<V> implements IAtomicSink, ISource {
   public readonly i: TInBundle<{
     i: IInputs<V>;
   }>;

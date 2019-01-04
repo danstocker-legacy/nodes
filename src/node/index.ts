@@ -1,3 +1,4 @@
+export {IAtomicSink} from "./IAtomicSink";
 export {IBouncer} from "./IBouncer";
 export {ISink} from "./ISink";
 export {ISource} from "./ISource";

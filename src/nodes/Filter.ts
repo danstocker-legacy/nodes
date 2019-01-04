@@ -1,4 +1,11 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
+import {
+  IAtomicSink,
+  IBouncer,
+  ISource,
+  MBouncer,
+  MSink,
+  MSource
+} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export type TFilterCallback<V> = (value: V, tag?: string) => boolean;
@@ -26,7 +33,7 @@ export interface IOutputs<V> {
  * filter.i.d_val.send(1); // outputs 1
  * filter.i.d_val.send(2); // will not output
  */
-export class Filter<V> implements ISink, ISource, IBouncer {
+export class Filter<V> implements IAtomicSink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
   public readonly b: TOutBundle<IInputs<V>>;

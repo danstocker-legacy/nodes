@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {ValueOf} from "../utils";
 
@@ -20,7 +20,7 @@ interface IJoinerOutputs<T> {
  * joiner.i.d_bar.send(true, "1");
  * // `joiner.o.o` will output `{d_foo: 5, d_bar: true}` for tag "1"
  */
-export class Joiner<T> implements ISink, ISource {
+export class Joiner<T> implements IAtomicSink, ISource {
   public readonly i: TInBundle<T>;
   public readonly o: TOutBundle<IJoinerOutputs<T>>;
 

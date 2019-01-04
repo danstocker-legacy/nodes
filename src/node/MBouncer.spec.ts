@@ -1,5 +1,4 @@
-import {IInPort, TInBundle, TOutBundle} from "../port";
-import {ValueOf} from "../utils";
+import {TInBundle, TOutBundle} from "../port";
 import {IBouncer} from "./IBouncer";
 import {ISink} from "./ISink";
 import {MBouncer} from "./MBouncer";
@@ -18,14 +17,6 @@ describe("MBouncer", function () {
     constructor() {
       MSink.init.call(this, ["foo", "bar"]);
       MBouncer.init.call(this, ["foo", "bar"]);
-    }
-
-    public send(
-      port: IInPort<ValueOf<IInputs>>,
-      value: ValueOf<IInputs>,
-      tag?: string
-    ): void {
-      //
     }
   }
 

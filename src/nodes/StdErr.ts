@@ -1,4 +1,4 @@
-import {ISink, MSink} from "../node";
+import {IAtomicSink, MSink} from "../node";
 import {IInPort, TInBundle} from "../port";
 
 export interface IInputs {
@@ -8,7 +8,7 @@ export interface IInputs {
 /**
  * Forwards input to `process.stderr`.
  */
-export class StdErr implements ISink {
+export class StdErr implements IAtomicSink {
   public readonly i: TInBundle<IInputs>;
 
   constructor() {

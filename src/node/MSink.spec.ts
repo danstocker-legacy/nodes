@@ -9,10 +9,6 @@ describe("MSink", function () {
     constructor() {
       MSink.init.call(this, ["foo", "bar"]);
     }
-
-    public send(): void {
-      //
-    }
   }
 
   describe("init()", function () {

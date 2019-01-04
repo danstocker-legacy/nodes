@@ -1,4 +1,11 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
+import {
+  IAtomicSink,
+  IBouncer,
+  ISource,
+  MBouncer,
+  MSink,
+  MSource
+} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {copy, ValueOf} from "../utils";
 
@@ -34,7 +41,7 @@ export type TFolderCallback<I, O> = (
  * sum = new Folder((curr, next) => curr + next, 0);
  * @see {@link https://en.wikipedia.org/wiki/Catamorphism}
  */
-export class Folder<I, O> implements ISink, ISource, IBouncer {
+export class Folder<I, O> implements IAtomicSink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs<I>>;
   public readonly o: TOutBundle<IOutputs<O>>;
   public readonly b: TOutBundle<Pick<IInputs<I>, "d_val">>;

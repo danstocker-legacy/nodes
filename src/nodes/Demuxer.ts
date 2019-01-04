@@ -1,4 +1,11 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
+import {
+  IAtomicSink,
+  IBouncer,
+  ISource,
+  MBouncer,
+  MSink,
+  MSource
+} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IMuxed} from "../utils";
 
@@ -20,7 +27,7 @@ export interface IInputs<T> {
  * demuxer.i.d_mux.send({port: "d_foo", val: 5});
  * // outputs `5` on port "d_foo"
  */
-export class Demuxer<T> implements ISink, ISource, IBouncer {
+export class Demuxer<T> implements IAtomicSink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs<T>>;
   public readonly o: TOutBundle<T>;
   public readonly b: TOutBundle<IInputs<T>>;

@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export interface IInputs<V> {
@@ -12,7 +12,7 @@ export interface IOutputs<V> {
 /**
  * Forwards input with the specified delay.
  */
-export class Delayer<V> implements ISink, ISource {
+export class Delayer<V> implements IAtomicSink, ISource {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
 

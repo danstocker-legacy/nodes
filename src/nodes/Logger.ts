@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 
 export interface IInputs {
@@ -17,7 +17,7 @@ export interface IOutputs {
  * Forwards logs, warnings, and errors to connected sink nodes.
  * TODO: Necessary?
  */
-export class Logger implements ISink, ISource {
+export class Logger implements IAtomicSink, ISource {
   public readonly i: TInBundle<IInputs>;
   public readonly o: TOutBundle<IOutputs>;
 

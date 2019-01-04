@@ -1,4 +1,4 @@
-import {ISink, ISource, MSink, MSource} from "../node";
+import {IAtomicSink, ISource, MSink, MSource} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {ValueOf} from "../utils";
 
@@ -32,7 +32,7 @@ export interface IOutputs<V> {
  * @example
  * TBD
  */
-export class Buffer<V> implements ISink, ISource {
+export class Buffer<V> implements IAtomicSink, ISource {
   public readonly i: TInBundle<IInputs<V>>;
   public readonly o: TOutBundle<IOutputs<V>>;
 

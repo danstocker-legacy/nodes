@@ -1,4 +1,11 @@
-import {IBouncer, ISink, ISource, MBouncer, MSink, MSource} from "../node";
+import {
+  IAtomicSink,
+  IBouncer,
+  ISource,
+  MBouncer,
+  MSink,
+  MSource
+} from "../node";
 import {IInPort, TInBundle, TOutBundle} from "../port";
 import {IInputs as ISwitchInputs, TSwitchPositions} from "./Switch";
 
@@ -18,7 +25,7 @@ export type TOutputs<P extends string, V> = TSwitchPositions<P, V>;
  * let switch: USwitch<"d_foo" | "d_bar" | "d_baz", number>;
  * switch = new USwitch(["d_foo", "d_bar", "d_baz");
  */
-export class USwitch<P extends string, V> implements ISink, ISource, IBouncer {
+export class USwitch<P extends string, V> implements IAtomicSink, ISource, IBouncer {
   public readonly i: TInBundle<IInputs<P, V>>;
   public readonly o: TOutBundle<TOutputs<P, V>>;
   public readonly b: TOutBundle<IInputs<P, V>>;
