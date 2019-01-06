@@ -6,7 +6,8 @@ describe("MapperJ", function () {
       const node = new MapperJ<{ foo: number, bar: number }, number>(["foo", "bar"], () => null);
       expect(node.i.foo).toBeDefined();
       expect(node.i.bar).toBeDefined();
-      expect(node.b.i).toBeDefined();
+      expect(node.b.foo).toBeDefined();
+      expect(node.b.bar).toBeDefined();
       expect(node.o.d_val).toBeDefined();
     });
   });
@@ -30,6 +31,15 @@ describe("MapperJ", function () {
         node = new MapperJ(["foo", "bar"], () => {
           throw new Error();
         });
+      });
+
+      it("should bounce inputs", function () {
+        spyOn(node.b.foo, "send");
+        spyOn(node.b.bar, "send");
+        node.i.foo.send(1, "1");
+        node.i.bar.send(2, "1");
+        expect(node.b.foo.send).toHaveBeenCalledWith(1, "1");
+        expect(node.b.bar.send).toHaveBeenCalledWith(2, "1");
       });
 
       it("should emit error", function () {
