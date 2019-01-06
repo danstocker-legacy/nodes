@@ -22,6 +22,7 @@ export class SwitchJ<P extends string, V> implements ISink, ISource, IBouncer {
     for (const p of positions) {
       o[p] = switchO[p];
     }
+    this.o = o;
     this.b = {
       i: switch1.b.i
     };
