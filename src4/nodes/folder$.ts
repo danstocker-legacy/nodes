@@ -1,10 +1,10 @@
-import {INode, TInPorts} from "../node";
+import {INode, TInPorts, TTag} from "../node";
 import {copy, createOutPorts, createOutputs} from "../utils";
 
 export type TFolderCallback<I, O> = (
   curr: O,
   next: I,
-  tag?: string) => O;
+  tag?: TTag) => O;
 
 export interface IInputs<I> {
   d_val: I;
