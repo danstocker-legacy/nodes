@@ -22,7 +22,7 @@ module.exports = function (grunt) {
       options: {
         configuration: "./tslint.json"
       },
-      files: "src/**/*.ts"
+      files: "src4/**/*.ts"
     },
 
     exec: {
@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 
     watch: {
       ts: {
-        files: ["src/**/*.ts"],
+        files: ["src4/**/*.ts"],
         tasks: ["build-quick"]
       }
     },

@@ -9,6 +9,8 @@
       true,
       "generic"
     ],
+    "forin": false,
+    "no-angle-bracket-type-assertion": false,
     "no-namespace": false,
     "only-arrow-functions": false,
     "semicolon": [
@@ -22,6 +24,14 @@
       true,
       "check-format",
       "allow-leading-underscore"
+    ],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
     ]
   },
   "rulesDirectory": []
