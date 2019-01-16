@@ -1,6 +1,16 @@
-import {copy} from "./utils";
+import {copy, createOutPorts} from "./utils";
 
 describe("utils", function () {
+  describe("createOutPorts()", function () {
+    it("should return output port structure", function () {
+      const result = createOutPorts(["foo", "bar"]);
+      expect(result).toEqual({
+        bar: new Set(),
+        foo: new Set()
+      });
+    });
+  });
+
   describe("copy()", function () {
     describe("for array", function () {
       it("should return copy array", function () {
