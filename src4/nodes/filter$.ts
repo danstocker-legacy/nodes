@@ -1,4 +1,4 @@
-import {INode} from "../node";
+import {INode, TInPorts} from "../node";
 import {TTag} from "../node/TTag";
 import {createOutPorts, createOutputs} from "../utils";
 
@@ -20,7 +20,7 @@ export function filter$<V>(cb: TFilterCallback<V>): TFilter<V> {
   const o = createOutPorts(["b_d_val", "d_val", "ev_err"]);
   const outputs = createOutputs(o);
 
-  const i = {
+  const i: TInPorts<IInputs<V>> = {
     d_val: (value, tag) => {
       try {
         if (cb(value, tag)) {

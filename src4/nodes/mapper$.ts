@@ -1,4 +1,4 @@
-import {INode} from "../node";
+import {INode, TInPorts} from "../node";
 import {TTag} from "../node/TTag";
 import {createOutPorts, createOutputs} from "../utils";
 
@@ -20,7 +20,7 @@ export function mapper$<I, O>(cb: TMapperCallback<I, O>): TMapper<I, O> {
   const o = createOutPorts(["b_d_val", "d_val", "ev_err"]);
   const outputs = createOutputs(o);
 
-  const i = {
+  const i: TInPorts<IInputs<I>> = {
     d_val: (value, tag) => {
       try {
         outputs.d_val(cb(value, tag), tag);

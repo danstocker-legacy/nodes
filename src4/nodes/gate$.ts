@@ -1,4 +1,4 @@
-import {INode} from "../node";
+import {INode, TInPorts} from "../node";
 import {createOutPorts, createOutputs} from "../utils";
 
 export interface IInputs<V> {
@@ -18,7 +18,7 @@ export function gate$<V>(): TGate<V> {
 
   let open: boolean = false;
 
-  const i = {
+  const i: TInPorts<IInputs<V> & { all: IInputs<V> }> = {
     all: ({d_val, st_open}, tag) => {
       if (st_open) {
         outputs.d_val(d_val, tag);

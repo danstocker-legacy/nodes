@@ -1,4 +1,4 @@
-import {INode} from "../node";
+import {INode, TInPorts} from "../node";
 import {createOutPorts, createOutputs} from "../utils";
 
 export interface IInputs<V> {
@@ -18,7 +18,7 @@ export function sampler$<V>() {
 
   let input: V;
 
-  const i = {
+  const i: TInPorts<IInputs<V>> = {
     d_val: (value) => {
       input = value;
     },

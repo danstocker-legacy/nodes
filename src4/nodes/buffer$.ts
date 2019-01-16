@@ -1,4 +1,4 @@
-import {INode} from "../node";
+import {INode, TInPorts} from "../node";
 import {TTag} from "../node/TTag";
 import {createOutPorts, createOutputs} from "../utils";
 
@@ -21,7 +21,7 @@ export function buffer$<V>(): TBuffer<V> {
   let open: boolean = false;
   const buffer: Array<{ value: V, tag: TTag }> = [];
 
-  const i = {
+  const i: TInPorts<IInputs<V> & { all: IInputs<V> }> = {
     all: ({d_val, st_open}, tag) => {
       if (st_open && !open) {
         flush();

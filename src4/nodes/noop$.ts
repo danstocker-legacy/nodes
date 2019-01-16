@@ -1,4 +1,4 @@
-import {INode} from "../node";
+import {INode, TInPorts} from "../node";
 import {createOutPorts, createOutputs} from "../utils";
 
 export interface IInputs<V> {
@@ -15,7 +15,7 @@ export function noop$<V>(): TNoop<V> {
   const o = createOutPorts(["d_val"]);
   const outputs = createOutputs(o);
 
-  const i = {
+  const i: TInPorts<IInputs<V>> = {
     d_val: (value, tag) => outputs.d_val(value, tag)
   };
 
