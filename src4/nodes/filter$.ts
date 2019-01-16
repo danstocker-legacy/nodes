@@ -9,15 +9,15 @@ export interface IInputs<V> {
 }
 
 export interface IOutputs<V> {
-  d_val: V;
   b_d_val: V;
+  d_val: V;
   ev_err: string;
 }
 
 export type TFilter<V> = INode<IInputs<V>, IOutputs<V>>;
 
 export function filter$<V>(cb: TFilterCallback<V>): TFilter<V> {
-  const o = createOutPorts(["d_val", "b_d_val", "ev_err"]);
+  const o = createOutPorts(["b_d_val", "d_val", "ev_err"]);
   const outputs = createOutputs(o);
 
   const i = {

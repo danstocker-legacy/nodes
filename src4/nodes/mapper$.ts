@@ -9,15 +9,15 @@ export interface IInputs<I> {
 }
 
 export interface IOutputs<I, O> {
-  d_val: O;
   b_d_val: I;
+  d_val: O;
   ev_err: string;
 }
 
 export type TMapper<I, O> = INode<IInputs<I>, IOutputs<I, O>>;
 
 export function mapper$<I, O>(cb: TMapperCallback<I, O>): TMapper<I, O> {
-  const o = createOutPorts(["d_val", "b_d_val", "ev_err"]);
+  const o = createOutPorts(["b_d_val", "d_val", "ev_err"]);
   const outputs = createOutputs(o);
 
   const i = {
