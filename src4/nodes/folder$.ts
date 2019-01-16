@@ -12,8 +12,8 @@ export interface IInputs<I> {
 }
 
 export interface IOutputs<I, O> {
-  d_fold: O;
   b_d_val: I;
+  d_fold: O;
   ev_err: string;
 }
 
