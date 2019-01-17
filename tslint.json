@@ -11,20 +11,9 @@
     ],
     "forin": false,
     "no-angle-bracket-type-assertion": false,
-    "no-namespace": false,
     "only-arrow-functions": false,
-    "semicolon": [
-      true,
-      "always",
-      "ignore-bound-class-methods"
-    ],
     "space-before-function-paren": false,
     "trailing-comma": false,
-    "variable-name": [
-      true,
-      "check-format",
-      "allow-leading-underscore"
-    ],
     "whitespace": [
       true,
       "check-branch",
