@@ -1,16 +1,16 @@
 import {connect} from "../node";
 import {filter$, TFilter} from "./filter$";
 
-describe("filter$", function () {
-  describe("on input (d_val)", function () {
+describe("filter$", () => {
+  describe("on input (d_val)", () => {
     let node: TFilter<number>;
 
     beforeEach(function () {
       node = filter$((value) => value > 5);
     });
 
-    describe("when value satisfies callback", function () {
-      it("should forward d_val", function () {
+    describe("when value satisfies callback", () => {
+      it("should forward d_val", () => {
         const spy = jasmine.createSpy();
         connect(node.o.d_val, spy);
         node.i.d_val(6, "1");
@@ -18,8 +18,8 @@ describe("filter$", function () {
       });
     });
 
-    describe("when value doesn't satisfies callback", function () {
-      it("should not forward d_val", function () {
+    describe("when value doesn't satisfies callback", () => {
+      it("should not forward d_val", () => {
         const spy = jasmine.createSpy();
         connect(node.o.d_val, spy);
         node.i.d_val(5, "1");
@@ -27,21 +27,21 @@ describe("filter$", function () {
       });
     });
 
-    describe("when callback throws", function () {
+    describe("when callback throws", () => {
       beforeEach(function () {
         node = filter$(() => {
           throw new Error();
         });
       });
 
-      it("should bounce d_val", function () {
+      it("should bounce d_val", () => {
         const spy = jasmine.createSpy();
         connect(node.o.b_d_val, spy);
         node.i.d_val(6, "1");
         expect(spy).toHaveBeenCalledWith(6, "1");
       });
 
-      it("should emit on ev_err", function () {
+      it("should emit on ev_err", () => {
         const spy = jasmine.createSpy();
         connect(node.o.ev_err, spy);
         node.i.d_val(6, "1");

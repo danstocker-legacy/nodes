@@ -1,8 +1,8 @@
 import {connect} from "../node";
 import {sampler$, TSampler} from "./sampler$";
 
-describe("sampler$", function () {
-  describe("on input (ev_smp)", function () {
+describe("sampler$", () => {
+  describe("on input (ev_smp)", () => {
     let node: TSampler<number>;
 
     beforeEach(function () {
@@ -10,7 +10,7 @@ describe("sampler$", function () {
       node.i.d_val(5, "1");
     });
 
-    it("should emit on d_val", function () {
+    it("should emit on d_val", () => {
       const spy = jasmine.createSpy();
       connect(node.o.d_val, spy);
       node.i.ev_smp(null, "2");

@@ -1,16 +1,16 @@
 import {connect} from "../node";
 import {buffer$, TBuffer} from "./buffer$";
 
-describe("buffer$", function () {
-  describe("on input (all)", function () {
+describe("buffer$", () => {
+  describe("on input (all)", () => {
     let node: TBuffer<number>;
 
     beforeEach(function () {
       node = buffer$();
     });
 
-    describe("when st_open is false", function () {
-      it("should emit on st_size", function () {
+    describe("when st_open is false", () => {
+      it("should emit on st_size", () => {
         const spy = jasmine.createSpy();
         connect(node.o.st_size, spy);
         node.i.all({d_val: 5, st_open: false}, "1");
@@ -18,28 +18,28 @@ describe("buffer$", function () {
       });
     });
 
-    describe("when st_open is true", function () {
-      it("should forward d_val", function () {
+    describe("when st_open is true", () => {
+      it("should forward d_val", () => {
         const spy = jasmine.createSpy();
         connect(node.o.d_val, spy);
         node.i.all({d_val: 5, st_open: true}, "1");
         expect(spy).toHaveBeenCalledWith(5, "1");
       });
 
-      it("should emit on st_size", function () {
+      it("should emit on st_size", () => {
         const spy = jasmine.createSpy();
         connect(node.o.st_size, spy);
         node.i.all({d_val: 5, st_open: true}, "1");
         expect(spy).toHaveBeenCalledWith(0, "1");
       });
 
-      describe("but was false", function () {
+      describe("but was false", () => {
         beforeEach(function () {
           node.i.all({d_val: 5, st_open: false}, "1");
           node.i.all({d_val: 3, st_open: false}, "2");
         });
 
-        it("should flush contents and forward d_val", function () {
+        it("should flush contents and forward d_val", () => {
           const spy = jasmine.createSpy();
           connect(node.o.d_val, spy);
           node.i.all({d_val: 4, st_open: true}, "3");
@@ -50,7 +50,7 @@ describe("buffer$", function () {
           ]);
         });
 
-        it("should emit on st_size", function () {
+        it("should emit on st_size", () => {
           const spy = jasmine.createSpy();
           connect(node.o.st_size, spy);
           node.i.all({d_val: 4, st_open: true}, "3");
@@ -60,22 +60,22 @@ describe("buffer$", function () {
     });
   });
 
-  describe("on input (st_open)", function () {
+  describe("on input (st_open)", () => {
     let node: TBuffer<number>;
 
     beforeEach(function () {
       node = buffer$();
     });
 
-    describe("when st_open is true", function () {
-      describe("but was false", function () {
+    describe("when st_open is true", () => {
+      describe("but was false", () => {
         beforeEach(function () {
           node.i.st_open(false, "1");
           node.i.d_val(5, "2");
           node.i.d_val(3, "3");
         });
 
-        it("should flush contents", function () {
+        it("should flush contents", () => {
           const spy = jasmine.createSpy();
           connect(node.o.d_val, spy);
           node.i.st_open(true, "4");
@@ -85,7 +85,7 @@ describe("buffer$", function () {
           ]);
         });
 
-        it("should emit on st_size", function () {
+        it("should emit on st_size", () => {
           const spy = jasmine.createSpy();
           connect(node.o.st_size, spy);
           node.i.st_open(true, "4");
@@ -94,14 +94,14 @@ describe("buffer$", function () {
       });
     });
 
-    describe("when st_open is false", function () {
+    describe("when st_open is false", () => {
       beforeEach(function () {
         node.i.st_open(false, "1");
         node.i.d_val(5, "2");
         node.i.d_val(3, "3");
       });
 
-      it("should emit on st_size", function () {
+      it("should emit on st_size", () => {
         const spy = jasmine.createSpy();
         connect(node.o.st_size, spy);
         node.i.st_open(false, "4");

@@ -1,15 +1,15 @@
 import {connect} from "../node";
 import {demuxer$, TDemuxer} from "./demuxer$";
 
-describe("demuxer$", function () {
-  describe("on input (d_mux)", function () {
+describe("demuxer$", () => {
+  describe("on input (d_mux)", () => {
     let node: TDemuxer<{ foo: number, bar: number }>;
 
     beforeEach(function () {
       node = demuxer$(["foo", "bar"]);
     });
 
-    it("should emit on specified port", function () {
+    it("should emit on specified port", () => {
       const spy = jasmine.createSpy();
       connect(node.o.bar, spy);
       node.i.d_mux({field: "bar", value: 5}, "1");

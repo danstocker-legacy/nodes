@@ -1,8 +1,8 @@
 import {connect} from "../node";
 import {shifter$, TShifter} from "./shifter$";
 
-describe("shifter$", function () {
-  describe("on input (d_val)", function () {
+describe("shifter$", () => {
+  describe("on input (d_val)", () => {
     let node: TShifter<number>;
 
     beforeEach(function () {
@@ -10,7 +10,7 @@ describe("shifter$", function () {
       node.i.d_val(5, "1");
     });
 
-    it("should emit last input on d_val", function () {
+    it("should emit last input on d_val", () => {
       const spy = jasmine.createSpy();
       connect(node.o.d_val, spy);
       node.i.d_val(3, "2");

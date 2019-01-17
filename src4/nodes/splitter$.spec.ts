@@ -1,15 +1,15 @@
 import {connect} from "../node";
 import {splitter$, TSplitter} from "./splitter$";
 
-describe("splitter$", function () {
-  describe("on input (d_val)", function () {
+describe("splitter$", () => {
+  describe("on input (d_val)", () => {
     let node: TSplitter<{ foo: number, bar: number }>;
 
     beforeEach(function () {
       node = splitter$(["foo", "bar"]);
     });
 
-    it("should emit on all ports", function () {
+    it("should emit on all ports", () => {
       const foo = jasmine.createSpy();
       const bar = jasmine.createSpy();
       connect(node.o.foo, foo);
