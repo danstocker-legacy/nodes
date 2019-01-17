@@ -2,7 +2,7 @@ import {connect} from "../node";
 import {filter$, TFilter} from "./filter$";
 
 describe("filter$", function () {
-  describe("on d_val", function () {
+  describe("on input (d_val)", function () {
     let node: TFilter<number>;
 
     beforeEach(function () {
@@ -41,7 +41,7 @@ describe("filter$", function () {
         expect(spy).toHaveBeenCalledWith(6, "1");
       });
 
-      it("should emit error", function () {
+      it("should emit on ev_err", function () {
         const spy = jasmine.createSpy();
         connect(node.o.ev_err, spy);
         node.i.d_val(6, "1");

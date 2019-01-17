@@ -9,8 +9,8 @@ describe("joiner$", function () {
       node = joiner$(["foo", "bar"]);
     });
 
-    describe("before first full set", function () {
-      it("should not emit all", function () {
+    describe("on input (before first full set)", function () {
+      it("should not emit on all", function () {
         const spy = jasmine.createSpy();
         connect(node.o.all, spy);
         node.i.foo(5, "1");
@@ -19,13 +19,13 @@ describe("joiner$", function () {
       });
     });
 
-    describe("on full set", function () {
+    describe("on input (full set)", function () {
       beforeEach(function () {
         node.i.foo(5, "1");
         node.i.bar(3, "2");
       });
 
-      it("should emit all", function () {
+      it("should emit on all", function () {
         const spy = jasmine.createSpy();
         connect(node.o.all, spy);
         node.i.foo(4, "2");

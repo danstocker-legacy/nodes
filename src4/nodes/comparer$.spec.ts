@@ -3,14 +3,14 @@ import {comparer$, TComparer} from "./comparer$";
 
 describe("comparer$", function () {
   describe("with callback", function () {
-    describe("on d_vals", function () {
+    describe("on input (d_vals)", function () {
       let node: TComparer<number>;
 
       beforeEach(function () {
         node = comparer$((a, b) => a === b);
       });
 
-      it("should emit d_eq", function () {
+      it("should emit on d_eq", function () {
         const spy = jasmine.createSpy();
         connect(node.o.d_eq, spy);
         node.i.d_vals({a: 5, b: 5}, "1");
@@ -31,7 +31,7 @@ describe("comparer$", function () {
           expect(spy).toHaveBeenCalledWith({a: 5, b: 5}, "1");
         });
 
-        it("should emit ev_err", function () {
+        it("should emit on ev_err", function () {
           const spy = jasmine.createSpy();
           connect(node.o.ev_err, spy);
           node.i.d_vals({a: 5, b: 5}, "1");
@@ -42,14 +42,14 @@ describe("comparer$", function () {
   });
 
   describe("without callback", function () {
-    describe("on d_vals", function () {
+    describe("on input (d_vals)", function () {
       let node: TComparer<number>;
 
       beforeEach(function () {
         node = comparer$();
       });
 
-      it("should emit d_eq", function () {
+      it("should emit on d_eq", function () {
         const spy = jasmine.createSpy();
         connect(node.o.d_eq, spy);
         node.i.d_vals({a: 5, b: 5}, "1");

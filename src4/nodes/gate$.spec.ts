@@ -2,7 +2,7 @@ import {connect} from "../node";
 import {gate$, TGate} from "./gate$";
 
 describe("gate$", function () {
-  describe("on all", function () {
+  describe("on input (all)", function () {
     let node: TGate<number>;
 
     beforeEach(function () {
@@ -28,7 +28,7 @@ describe("gate$", function () {
     });
   });
 
-  describe("on d_val", function () {
+  describe("on input (d_val)", function () {
     let node: TGate<number>;
 
     beforeEach(function () {

@@ -9,7 +9,7 @@ describe("merger$", function () {
       node = merger$(["foo", "bar"]);
     });
 
-    it("should emit all", function () {
+    it("should emit on all", function () {
       const spy = jasmine.createSpy();
       connect(node.o.all, spy);
       node.i.foo(5, "1");

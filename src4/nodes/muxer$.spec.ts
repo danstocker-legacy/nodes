@@ -9,7 +9,7 @@ describe("muxer$", function () {
       node = muxer$(["foo", "bar"]);
     });
 
-    it("should emit d_mux", function () {
+    it("should emit on d_mux", function () {
       const spy = jasmine.createSpy();
       connect(node.o.d_mux, spy);
       node.i.bar(5, "1");

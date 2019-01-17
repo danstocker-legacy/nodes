@@ -2,7 +2,7 @@ import {connect} from "../node";
 import {buffer$, TBuffer} from "./buffer$";
 
 describe("buffer$", function () {
-  describe("on all", function () {
+  describe("on input (all)", function () {
     let node: TBuffer<number>;
 
     beforeEach(function () {
@@ -10,7 +10,7 @@ describe("buffer$", function () {
     });
 
     describe("when st_open is false", function () {
-      it("should emit st_size", function () {
+      it("should emit on st_size", function () {
         const spy = jasmine.createSpy();
         connect(node.o.st_size, spy);
         node.i.all({d_val: 5, st_open: false}, "1");
@@ -26,7 +26,7 @@ describe("buffer$", function () {
         expect(spy).toHaveBeenCalledWith(5, "1");
       });
 
-      it("should emit st_size", function () {
+      it("should emit on st_size", function () {
         const spy = jasmine.createSpy();
         connect(node.o.st_size, spy);
         node.i.all({d_val: 5, st_open: true}, "1");
@@ -50,7 +50,7 @@ describe("buffer$", function () {
           ]);
         });
 
-        it("should emit st_size", function () {
+        it("should emit on st_size", function () {
           const spy = jasmine.createSpy();
           connect(node.o.st_size, spy);
           node.i.all({d_val: 4, st_open: true}, "3");
@@ -60,7 +60,7 @@ describe("buffer$", function () {
     });
   });
 
-  describe("on st_open", function () {
+  describe("on input (st_open)", function () {
     let node: TBuffer<number>;
 
     beforeEach(function () {
@@ -85,7 +85,7 @@ describe("buffer$", function () {
           ]);
         });
 
-        it("should emit st_size", function () {
+        it("should emit on st_size", function () {
           const spy = jasmine.createSpy();
           connect(node.o.st_size, spy);
           node.i.st_open(true, "4");
@@ -101,7 +101,7 @@ describe("buffer$", function () {
         node.i.d_val(3, "3");
       });
 
-      it("should emit st_size", function () {
+      it("should emit on st_size", function () {
         const spy = jasmine.createSpy();
         connect(node.o.st_size, spy);
         node.i.st_open(false, "4");

@@ -2,7 +2,7 @@ import {connect} from "../node";
 import {shifter$, TShifter} from "./shifter$";
 
 describe("shifter$", function () {
-  describe("on d_val", function () {
+  describe("on input (d_val)", function () {
     let node: TShifter<number>;
 
     beforeEach(function () {

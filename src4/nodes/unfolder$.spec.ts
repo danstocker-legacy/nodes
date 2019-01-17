@@ -2,7 +2,7 @@ import {connect} from "../node";
 import {TUnfolder, unfolder$} from "./unfolder$";
 
 describe("unfolder$", function () {
-  describe("on d_fold", function () {
+  describe("on input (d_fold)", function () {
     let node: TUnfolder<Array<number>, number>;
 
     beforeEach(function () {
@@ -14,7 +14,7 @@ describe("unfolder$", function () {
       });
     });
 
-    it("should emit d_val", function () {
+    it("should emit on d_val", function () {
       const spy = jasmine.createSpy();
       connect(node.o.d_val, spy);
       node.i.d_fold([1, 2, 3], "1");
@@ -39,7 +39,7 @@ describe("unfolder$", function () {
         expect(spy).toHaveBeenCalledWith([1, 2, 3], "1");
       });
 
-      it("should emit ev_err", function () {
+      it("should emit on ev_err", function () {
         const spy = jasmine.createSpy();
         connect(node.o.ev_err, spy);
         node.i.d_fold([1, 2, 3], "1");

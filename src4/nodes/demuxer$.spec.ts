@@ -2,7 +2,7 @@ import {connect} from "../node";
 import {demuxer$, TDemuxer} from "./demuxer$";
 
 describe("demuxer$", function () {
-  describe("on d_mux", function () {
+  describe("on input (d_mux)", function () {
     let node: TDemuxer<{ foo: number, bar: number }>;
 
     beforeEach(function () {

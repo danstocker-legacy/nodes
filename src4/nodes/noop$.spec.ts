@@ -2,7 +2,7 @@ import {connect} from "../node";
 import {noop$, TNoop} from "./noop$";
 
 describe("noop$", function () {
-  describe("on d_val", function () {
+  describe("on input (d_val)", function () {
     let node: TNoop<number>;
 
     beforeEach(function () {
