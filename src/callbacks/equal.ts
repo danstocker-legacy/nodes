@@ -1,30 +1,14 @@
-import {TEqualityCallback} from "../nodes/UComparer";
-import {IAny} from "../utils";
+import {TEqualityCallback} from "../nodes/basic/comparer$";
 
-/**
- * @module equal
- * Frequently used comparer callbacks.
- * TODO: Add shallow(), deep()
- */
-
-/**
- * Determines equality by reference.
- */
-export function reference<V>(a: V, b: V): boolean {
-  return a === b;
-}
-
-/**
- * Determines equality by the specified property of both arguments.
- * @param name Name of property to be compared.
- * @param cb Optional equality callback for determining property equality.
- * (Defaults to `equal.reference`.)
- */
-export function property$<I extends IAny>(
+export function property$<I>(
   name: string,
-  cb: TEqualityCallback<I[keyof I]> = reference
+  cb?: TEqualityCallback<I[keyof I]>
 ): TEqualityCallback<I> {
-  return (a: I, b: I): boolean => {
-    return a && b && cb(a[name], b[name]);
-  };
+  return cb ?
+    (a, b) => {
+      return a && b && cb(a[name], b[name]);
+    } :
+    (a, b) => {
+      return a && b && a[name] === b[name];
+    };
 }

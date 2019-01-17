@@ -1,41 +1,55 @@
+import {TEqualityCallback} from "../nodes/basic/comparer$";
 import * as equal from "./equal";
 
 describe("equal", function () {
-  describe("reference", function () {
-    describe("when arguments are equal by reference", function () {
-      it("should return true", function () {
-        expect(equal.reference(1, 1)).toBe(true);
-        const obj = {};
-        expect(equal.reference(obj, obj)).toBe(true);
-      });
-    });
-
-    describe("when arguments are not equal by reference", function () {
-      it("should return false", function () {
-        expect(equal.reference(1, 0)).toBe(false);
-        expect(equal.reference({}, {})).toBe(false);
-      });
-    });
-  });
-
   describe("property", function () {
-    describe("when properties match", function () {
-      it("should return true", function () {
-        expect(equal.property$("foo")({foo: 1}, {foo: 1})).toBe(true);
+    describe("when callback is specified", function () {
+      let cb: TEqualityCallback<number>;
+
+      beforeEach(function () {
+        cb = (a, b) => a % 2 === b % 2;
+      });
+
+      describe("when properties match", function () {
+        it("should return true", function () {
+          expect(equal.property$("foo", cb)({foo: 3}, {foo: 1})).toBe(true);
+        });
+      });
+
+      describe("when properties don't match", function () {
+        it("should return false", function () {
+          expect(equal.property$("foo", cb)({foo: 2}, {foo: 1})).toBe(false);
+          expect(equal.property$("foo", cb)({}, {foo: 1})).toBe(false);
+        });
+      });
+
+      describe("when either argument is undefined", function () {
+        it("should return undefined", function () {
+          expect(equal.property$("foo", cb)(undefined, {foo: 1})).toBeUndefined();
+          expect(equal.property$("foo", cb)({foo: 1}, undefined)).toBeUndefined();
+        });
       });
     });
 
-    describe("when properties don't match", function () {
-      it("should return false", function () {
-        expect(equal.property$("foo")({foo: 2}, {foo: 1})).toBe(false);
-        expect(equal.property$("foo")({}, {foo: 1})).toBe(false);
+    describe("when callback is not specified", function () {
+      describe("when properties match", function () {
+        it("should return true", function () {
+          expect(equal.property$("foo")({foo: 1}, {foo: 1})).toBe(true);
+        });
       });
-    });
 
-    describe("when either argument is undefined", function () {
-      it("should return false", function () {
-        expect(equal.property$("foo")(undefined, {foo: 1})).toBeUndefined();
-        expect(equal.property$("foo")({foo: 1}, undefined)).toBeUndefined();
+      describe("when properties don't match", function () {
+        it("should return false", function () {
+          expect(equal.property$("foo")({foo: 2}, {foo: 1})).toBe(false);
+          expect(equal.property$("foo")({}, {foo: 1})).toBe(false);
+        });
+      });
+
+      describe("when either argument is undefined", function () {
+        it("should return undefined", function () {
+          expect(equal.property$("foo")(undefined, {foo: 1})).toBeUndefined();
+          expect(equal.property$("foo")({foo: 1}, undefined)).toBeUndefined();
+        });
       });
     });
   });

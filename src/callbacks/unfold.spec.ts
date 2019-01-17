@@ -1,8 +1,9 @@
+import {TUnfolderCallback} from "../nodes/basic/unfolder$";
 import * as unfold from "./unfold";
 
 describe("unfold", function () {
   describe("pop()", function () {
-    it("should destructure array", function () {
+    it("should unfold array", function () {
       const iterator = unfold.pop([1, 2, 3]);
       expect([...iterator]).toEqual([3, 2, 1]);
     });
@@ -18,7 +19,7 @@ describe("unfold", function () {
   });
 
   describe("shift()", function () {
-    it("should destructure array", function () {
+    it("should unfold array", function () {
       const iterator = unfold.shift([1, 2, 3]);
       expect([...iterator]).toEqual([1, 2, 3]);
     });
@@ -41,7 +42,7 @@ describe("unfold", function () {
     });
 
     describe("on subsequent calls", function () {
-      let split: (value: string) => IterableIterator<string>;
+      let split: TUnfolderCallback<string, string>;
       let iterable: IterableIterator<string>;
 
       beforeEach(function () {

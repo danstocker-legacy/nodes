@@ -1,11 +1,5 @@
-/**
- * @module unfold
- * Frequently used Unfolder callbacks.
- */
+import {TUnfolderCallback} from "../nodes/basic/unfolder$";
 
-/**
- * @param value
- */
 export function* pop(value: Array<any>): any {
   value = value.slice();
   while (value.length > 0) {
@@ -13,9 +7,6 @@ export function* pop(value: Array<any>): any {
   }
 }
 
-/**
- * @param value
- */
 export function* shift(value: Array<any>): any {
   value = value.concat();
   while (value.length > 0) {
@@ -23,13 +14,7 @@ export function* shift(value: Array<any>): any {
   }
 }
 
-/**
- * Returns function which splits string along the specified delimiter,
- * preserving fragments at ends / beginnings of inputs.
- * @example
- * const lineSplitter = new Unfolder(unfold.split$("\n"));
- */
-export function split$(delimiter: string): (value: string) => IterableIterator<string> {
+export function split$(delimiter: string): TUnfolderCallback<string, string> {
   let fragment = "";
   return function* (value: string) {
     const items = (fragment + value).split(delimiter);

@@ -1,5 +1,4 @@
-import {INode, TInPorts} from "../../node";
-import {TTag} from "../../node/TTag";
+import {INode, TInPorts, TTag} from "../../node";
 import {createOutPorts, createOutputs} from "../../utils";
 
 export type TFilterCallback<V> = (value: V, tag?: TTag) => boolean;

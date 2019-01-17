@@ -3,5 +3,5 @@
 /dist
 /node_modules
 /*.tgz
-/src4/**/*.js
-/src4/**/*.map
+/src/**/*.js
+/src/**/*.map
