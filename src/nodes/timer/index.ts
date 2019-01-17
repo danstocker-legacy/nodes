@@ -1,1 +1,1 @@
-export {delayer$} from "./delayer$";
+export {TDelayer, delayer$} from "./delayer$";
