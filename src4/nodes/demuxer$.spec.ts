@@ -5,7 +5,7 @@ describe("demuxer$", () => {
   describe("on input (d_mux)", () => {
     let node: TDemuxer<{ foo: number, bar: number }>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = demuxer$(["foo", "bar"]);
     });
 

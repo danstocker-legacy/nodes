@@ -6,7 +6,7 @@ describe("comparer$", () => {
     describe("on input (d_vals)", () => {
       let node: TComparer<number>;
 
-      beforeEach(function () {
+      beforeEach(() => {
         node = comparer$((a, b) => a === b);
       });
 
@@ -18,7 +18,7 @@ describe("comparer$", () => {
       });
 
       describe("when callback throws", () => {
-        beforeEach(function () {
+        beforeEach(() => {
           node = comparer$(() => {
             throw new Error();
           });
@@ -45,7 +45,7 @@ describe("comparer$", () => {
     describe("on input (d_vals)", () => {
       let node: TComparer<number>;
 
-      beforeEach(function () {
+      beforeEach(() => {
         node = comparer$();
       });
 

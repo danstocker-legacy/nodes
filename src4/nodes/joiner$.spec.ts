@@ -5,7 +5,7 @@ describe("joiner$", () => {
   describe("on input", () => {
     let node: TJoiner<{ foo: number, bar: number }>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = joiner$(["foo", "bar"]);
     });
 
@@ -20,7 +20,7 @@ describe("joiner$", () => {
     });
 
     describe("on input (full set)", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node.i.foo(5, "1");
         node.i.bar(3, "2");
       });

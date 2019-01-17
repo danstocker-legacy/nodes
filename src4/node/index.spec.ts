@@ -5,7 +5,7 @@ describe("connect", () => {
   let outPort: TOutPort<number>;
   let inPort: TInPort<number>;
 
-  beforeEach(function () {
+  beforeEach(() => {
     outPort = new Set();
     inPort = noop;
   });
@@ -21,7 +21,7 @@ describe("disconnect", () => {
   let inPort1: TInPort<number>;
   let inPort2: TInPort<number>;
 
-  beforeEach(function () {
+  beforeEach(() => {
     outPort = new Set();
     inPort1 = () => null;
     inPort2 = () => null;

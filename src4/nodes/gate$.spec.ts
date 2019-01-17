@@ -5,7 +5,7 @@ describe("gate$", () => {
   describe("on input (all)", () => {
     let node: TGate<number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = gate$();
     });
 
@@ -31,12 +31,12 @@ describe("gate$", () => {
   describe("on input (d_val)", () => {
     let node: TGate<number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = gate$();
     });
 
     describe("when open", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node.i.st_open(true);
       });
 
@@ -49,7 +49,7 @@ describe("gate$", () => {
     });
 
     describe("when closed", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node.i.st_open(false);
       });
 

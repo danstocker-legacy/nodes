@@ -5,12 +5,12 @@ describe("folder$", () => {
   describe("on input (all)", () => {
     let node: TFolder<number, number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = folder$((curr, next) => curr + next, 0);
     });
 
     describe("when ev_res is true", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node.i.all({d_val: 5, ev_res: false}, "1");
         node.i.all({d_val: 3, ev_res: false}, "2");
       });
@@ -24,7 +24,7 @@ describe("folder$", () => {
     });
 
     describe("when callback throws", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node = folder$(() => {
           throw new Error();
         });
@@ -49,12 +49,12 @@ describe("folder$", () => {
   describe("on input (d_val)", () => {
     let node: TFolder<number, number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = folder$((curr, next) => curr + next, 0);
     });
 
     describe("when callback throws", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node = folder$(() => {
           throw new Error();
         });
@@ -79,12 +79,12 @@ describe("folder$", () => {
   describe("on input (ev_res)", () => {
     let node: TFolder<number, number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = folder$((curr, next) => curr + next, 0);
     });
 
     describe("when truthy", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node.i.ev_res(false, "1");
         node.i.d_val(5, "2");
         node.i.d_val(3, "3");
@@ -99,7 +99,7 @@ describe("folder$", () => {
     });
 
     describe("when falsy", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node.i.ev_res(false, "1");
         node.i.d_val(5, "2");
         node.i.d_val(3, "3");

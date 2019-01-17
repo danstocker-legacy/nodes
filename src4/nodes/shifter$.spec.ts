@@ -5,7 +5,7 @@ describe("shifter$", () => {
   describe("on input (d_val)", () => {
     let node: TShifter<number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = shifter$();
       node.i.d_val(5, "1");
     });

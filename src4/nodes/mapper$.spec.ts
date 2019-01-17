@@ -5,7 +5,7 @@ describe("mapper$", () => {
   describe("on input (d_val)", () => {
     let node: TMapper<number, boolean>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = mapper$((value) => value > 5);
     });
 
@@ -17,7 +17,7 @@ describe("mapper$", () => {
     });
 
     describe("when callback throws", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node = mapper$(() => {
           throw new Error();
         });

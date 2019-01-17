@@ -5,12 +5,12 @@ describe("delayer$", () => {
   describe("on input (d_val)", () => {
     let node: TDelayer<number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = delayer$(500);
       jasmine.clock().install();
     });
 
-    afterEach(function () {
+    afterEach(() => {
       jasmine.clock().uninstall();
     });
 

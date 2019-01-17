@@ -5,7 +5,7 @@ describe("unfolder$", () => {
   describe("on input (d_fold)", () => {
     let node: TUnfolder<Array<number>, number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = unfolder$(function* (value) {
         value = value.slice();
         while (value.length > 0) {
@@ -26,7 +26,7 @@ describe("unfolder$", () => {
     });
 
     describe("when callback throws", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node = unfolder$(function* () {
           throw new Error();
         });

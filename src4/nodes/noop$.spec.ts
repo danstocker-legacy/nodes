@@ -5,7 +5,7 @@ describe("noop$", () => {
   describe("on input (d_val)", () => {
     let node: TNoop<number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = noop$();
     });
 

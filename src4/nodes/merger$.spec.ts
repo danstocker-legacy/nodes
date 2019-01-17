@@ -5,7 +5,7 @@ describe("merger$", () => {
   describe("on input", () => {
     let node: TMerger<{ foo: number, bar: number }>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = merger$(["foo", "bar"]);
     });
 

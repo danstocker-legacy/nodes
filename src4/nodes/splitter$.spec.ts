@@ -5,7 +5,7 @@ describe("splitter$", () => {
   describe("on input (d_val)", () => {
     let node: TSplitter<{ foo: number, bar: number }>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = splitter$(["foo", "bar"]);
     });
 

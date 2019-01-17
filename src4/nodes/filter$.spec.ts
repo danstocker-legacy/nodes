@@ -5,7 +5,7 @@ describe("filter$", () => {
   describe("on input (d_val)", () => {
     let node: TFilter<number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = filter$((value) => value > 5);
     });
 
@@ -28,7 +28,7 @@ describe("filter$", () => {
     });
 
     describe("when callback throws", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node = filter$(() => {
           throw new Error();
         });

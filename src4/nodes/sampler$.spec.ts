@@ -5,7 +5,7 @@ describe("sampler$", () => {
   describe("on input (ev_smp)", () => {
     let node: TSampler<number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = sampler$();
       node.i.d_val(5, "1");
     });

@@ -5,7 +5,7 @@ describe("buffer$", () => {
   describe("on input (all)", () => {
     let node: TBuffer<number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = buffer$();
     });
 
@@ -34,7 +34,7 @@ describe("buffer$", () => {
       });
 
       describe("but was false", () => {
-        beforeEach(function () {
+        beforeEach(() => {
           node.i.all({d_val: 5, st_open: false}, "1");
           node.i.all({d_val: 3, st_open: false}, "2");
         });
@@ -63,13 +63,13 @@ describe("buffer$", () => {
   describe("on input (st_open)", () => {
     let node: TBuffer<number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = buffer$();
     });
 
     describe("when st_open is true", () => {
       describe("but was false", () => {
-        beforeEach(function () {
+        beforeEach(() => {
           node.i.st_open(false, "1");
           node.i.d_val(5, "2");
           node.i.d_val(3, "3");
@@ -95,7 +95,7 @@ describe("buffer$", () => {
     });
 
     describe("when st_open is false", () => {
-      beforeEach(function () {
+      beforeEach(() => {
         node.i.st_open(false, "1");
         node.i.d_val(5, "2");
         node.i.d_val(3, "3");
