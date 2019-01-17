@@ -11,5 +11,6 @@ export {merger$} from "./merger$";
 export {muxer$} from "./muxer$";
 export {noop$} from "./noop$";
 export {sampler$} from "./sampler$";
+export {serializer$} from "./serializer$";
 export {splitter$} from "./splitter$";
 export {unfolder$} from "./unfolder$";
