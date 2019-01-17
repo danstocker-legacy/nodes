@@ -1,0 +1,1 @@
+export {stdIn$} from "./stdIn$";
