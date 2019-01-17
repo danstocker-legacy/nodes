@@ -16,7 +16,9 @@ export function noop$<V>(): TNoop<V> {
   const outputs = createOutputs(o);
 
   const i: TInPorts<IInputs<V>> = {
-    d_val: (value, tag) => outputs.d_val(value, tag)
+    d_val: (value, tag) => {
+      outputs.d_val(value, tag);
+    }
   };
 
   return {i, o};
