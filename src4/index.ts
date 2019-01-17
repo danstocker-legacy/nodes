@@ -1,3 +1,3 @@
 export * from "./node";
-export * from "./nodes";
+export * from "./nodes/basic";
 export * from "./utils";
