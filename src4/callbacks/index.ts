@@ -1,1 +1,3 @@
-export * from "./equal";
+import * as equal from "./equal";
+
+export {equal};
