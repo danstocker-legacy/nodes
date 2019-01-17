@@ -1,5 +1,6 @@
 export {buffer$} from "./buffer$";
 export {comparer$} from "./comparer$";
+export {delayer$} from "./delayer$";
 export {demuxer$} from "./demuxer$";
 export {filter$} from "./filter$";
 export {folder$} from "./folder$";
