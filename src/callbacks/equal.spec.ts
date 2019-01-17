@@ -1,4 +1,4 @@
-import {TEqualityCallback} from "../nodes/basic/comparer$";
+import {TEqualityCallback} from "../nodes/basic";
 import * as equal from "./equal";
 
 describe("equal", function () {

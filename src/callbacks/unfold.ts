@@ -1,4 +1,4 @@
-import {TUnfolderCallback} from "../nodes/basic/unfolder$";
+import {TUnfolderCallback} from "../nodes/basic";
 
 export function* pop(value: Array<any>): any {
   value = value.slice();

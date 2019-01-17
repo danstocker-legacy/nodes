@@ -1,4 +1,4 @@
-import {TMapperCallback} from "../nodes/basic/mapper$";
+import {TMapperCallback} from "../nodes/basic";
 
 export function constant$(value: any): TMapperCallback<any, any> {
   return () => value;

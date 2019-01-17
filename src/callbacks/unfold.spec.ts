@@ -1,4 +1,4 @@
-import {TUnfolderCallback} from "../nodes/basic/unfolder$";
+import {TUnfolderCallback} from "../nodes/basic";
 import * as unfold from "./unfold";
 
 describe("unfold", function () {

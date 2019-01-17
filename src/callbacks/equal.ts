@@ -1,4 +1,4 @@
-import {TEqualityCallback} from "../nodes/basic/comparer$";
+import {TEqualityCallback} from "../nodes/basic";
 
 export function property$<I>(
   name: string,
