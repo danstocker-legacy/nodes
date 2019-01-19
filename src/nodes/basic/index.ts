@@ -9,4 +9,5 @@ export {TMuxer, createMuxer} from "./TMuxer";
 export {TNoop, createNoop} from "./TNoop";
 export {TSampler, createSampler} from "./TSampler";
 export {TSplitter, createSplitter} from "./TSplitter";
+export {TSwitch, createSwitch} from "./TSwitch";
 export {TUnfolder, TUnfolderCallback, createUnfolder} from "./TUnfolder";
