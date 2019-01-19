@@ -12,11 +12,9 @@ export interface IOutputs<V> {
 
 export type TGate<V> = INode<IInputs<V> & { all: IInputs<V> }, IOutputs<V>>;
 
-export function createGate<V>(): TGate<V> {
+export function createGate<V>(open?: boolean): TGate<V> {
   const o = createOutPorts(["d_val"]);
   const outputs = createOutputs(o);
-
-  let open: boolean = false;
 
   const i: TInPorts<IInputs<V> & { all: IInputs<V> }> = {
     all: ({d_val, st_open}, tag) => {

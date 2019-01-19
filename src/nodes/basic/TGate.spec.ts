@@ -29,15 +29,11 @@ describe("createGate", () => {
   });
 
   describe("on input (d_val)", () => {
-    let node: TGate<number>;
-
-    beforeEach(() => {
-      node = createGate();
-    });
-
     describe("when open", () => {
+      let node: TGate<number>;
+
       beforeEach(() => {
-        node.i.st_open(true);
+        node = createGate(true);
       });
 
       it("should forward d_val", () => {
@@ -49,8 +45,10 @@ describe("createGate", () => {
     });
 
     describe("when closed", () => {
+      let node: TGate<number>;
+
       beforeEach(() => {
-        node.i.st_open(false);
+        node = createGate(false);
       });
 
       it("should not forward d_val", () => {

@@ -64,7 +64,7 @@ describe("createBuffer", () => {
     let node: TBuffer<number>;
 
     beforeEach(() => {
-      node = createBuffer();
+      node = createBuffer(false);
     });
 
     describe("when st_open is true", () => {

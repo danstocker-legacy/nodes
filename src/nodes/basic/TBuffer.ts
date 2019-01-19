@@ -13,11 +13,10 @@ export interface IOutputs<V> {
 
 export type TBuffer<V> = INode<IInputs<V> & { all: IInputs<V> }, IOutputs<V>>;
 
-export function createBuffer<V>(): TBuffer<V> {
+export function createBuffer<V>(open?: boolean): TBuffer<V> {
   const o = createOutPorts(["d_val", "st_size"]);
   const outputs = createOutputs(o);
 
-  let open: boolean = false;
   const buffer: Array<{ value: V, tag: TTag }> = [];
 
   const i: TInPorts<IInputs<V> & { all: IInputs<V> }> = {
