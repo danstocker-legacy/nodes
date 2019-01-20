@@ -39,3 +39,12 @@ export function prepend$(prefix: string): (next: string) => string {
     return prefix + next;
   };
 }
+
+export function round$(precision?: number): (next: number) => number {
+  const factor = Math.pow(10, precision);
+  return precision ?
+    (next: number) => {
+      return Math.round(next * factor) / factor;
+    } :
+    Math.round;
+}

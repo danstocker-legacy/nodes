@@ -67,4 +67,35 @@ describe("map", function () {
       expect(prepend("foo")).toBe("_foo");
     });
   });
+
+  describe("round$()", () => {
+    describe("when precision is specified", () => {
+      let round: (next: number) => number;
+
+      beforeEach(() => {
+        round = map.round$(2);
+      });
+
+      it("should return value rounded to precision", function () {
+        expect(round(5)).toBe(5);
+        expect(round(5.11)).toBe(5.11);
+        expect(round(5.111)).toBe(5.11);
+        expect(round(5.115)).toBe(5.12);
+      });
+    });
+
+    describe("when precision is not specified", () => {
+      let round: (next: number) => number;
+
+      beforeEach(() => {
+        round = map.round$();
+      });
+
+      it("should return value rounded to whole", function () {
+        expect(round(5)).toBe(5);
+        expect(round(5.1)).toBe(5);
+        expect(round(5.5)).toBe(6);
+      });
+    });
+  });
 });
