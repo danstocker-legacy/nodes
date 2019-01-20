@@ -5,7 +5,7 @@ describe("createSwitch()", () => {
   describe("on input (all)", () => {
     let node: TSwitch<"foo" | "bar" | "baz", number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = createSwitch(["foo", "bar", "baz"]);
     });
 
@@ -35,7 +35,7 @@ describe("createSwitch()", () => {
   describe("on input (d_val)", () => {
     let node: TSwitch<"foo" | "bar" | "baz", number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = createSwitch(["foo", "bar", "baz"], "foo");
     });
 
@@ -50,11 +50,11 @@ describe("createSwitch()", () => {
   describe("on input (st_pos)", () => {
     let node: TSwitch<"foo" | "bar" | "baz", number>;
 
-    beforeEach(function () {
+    beforeEach(() => {
       node = createSwitch(["foo", "bar", "baz"], "foo");
     });
 
-    describe("on invalid st_pos", function () {
+    describe("on invalid st_pos", () => {
       it("should bounce st_pos", () => {
         const spy = jasmine.createSpy();
         connect(node.o.b_st_pos, spy);

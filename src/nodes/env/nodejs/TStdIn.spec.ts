@@ -2,7 +2,7 @@ import {connect} from "../../../node";
 import {createStdIn, TStdIn} from "./TStdIn";
 
 describe("createStdIn", () => {
-  it("should be singleton", function () {
+  it("should be singleton", () => {
     expect(createStdIn()).toBe(createStdIn());
   });
 

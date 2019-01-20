@@ -1,14 +1,14 @@
 import {TUnfolderCallback} from "../nodes/basic";
 import * as unfold from "./unfold";
 
-describe("unfold", function () {
-  describe("pop()", function () {
-    it("should unfold array", function () {
+describe("unfold", () => {
+  describe("pop()", () => {
+    it("should unfold array", () => {
       const iterator = unfold.pop([1, 2, 3]);
       expect([...iterator]).toEqual([3, 2, 1]);
     });
 
-    it("should leave original input intact", function () {
+    it("should leave original input intact", () => {
       const array = [1, 2, 3];
       const iterator = unfold.pop(array);
       for (const item of iterator) {
@@ -18,13 +18,13 @@ describe("unfold", function () {
     });
   });
 
-  describe("shift()", function () {
-    it("should unfold array", function () {
+  describe("shift()", () => {
+    it("should unfold array", () => {
       const iterator = unfold.shift([1, 2, 3]);
       expect([...iterator]).toEqual([1, 2, 3]);
     });
 
-    it("should leave original input intact", function () {
+    it("should leave original input intact", () => {
       const array = [1, 2, 3];
       const iterator = unfold.shift(array);
       for (const item of iterator) {
@@ -34,18 +34,18 @@ describe("unfold", function () {
     });
   });
 
-  describe("createSplit()", function () {
-    it("should return string fragments", function () {
+  describe("createSplit()", () => {
+    it("should return string fragments", () => {
       const split = unfold.createSplit("\n");
       const iterable = split("foo\nbar\nbaz");
       expect([...iterable]).toEqual(["foo", "bar"]);
     });
 
-    describe("on subsequent calls", function () {
+    describe("on subsequent calls", () => {
       let split: TUnfolderCallback<string, string>;
       let iterable: IterableIterator<string>;
 
-      beforeEach(function () {
+      beforeEach(() => {
         split = unfold.createSplit("\n");
         iterable = split("foo\nba");
         for (const item of iterable) {
@@ -53,7 +53,7 @@ describe("unfold", function () {
         }
       });
 
-      it("should preserve fragment", function () {
+      it("should preserve fragment", () => {
         iterable = split("r\nbaz");
         expect([...iterable]).toEqual(["bar"]);
       });

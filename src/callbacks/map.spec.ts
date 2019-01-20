@@ -1,21 +1,21 @@
 import * as map from "./map";
 
-describe("map", function () {
-  describe("createConstant", function () {
-    it("should return specified value", function () {
+describe("map", () => {
+  describe("createConstant", () => {
+    it("should return specified value", () => {
       expect(map.createConstant(5)(null)).toBe(5);
     });
   });
 
-  describe("createSplit", function () {
-    it("should return split string", function () {
+  describe("createSplit", () => {
+    it("should return split string", () => {
       expect(map.createSplit(",")("foo,bar,baz"))
       .toEqual(["foo", "bar", "baz"]);
     });
   });
 
-  describe("createPluck", function () {
-    it("should return specified property", function () {
+  describe("createPluck", () => {
+    it("should return specified property", () => {
       expect(map.createPluck("foo")({foo: 5, bar: true})).toBe(5);
     });
   });
@@ -76,7 +76,7 @@ describe("map", function () {
         round = map.createRound(2);
       });
 
-      it("should return value rounded to precision", function () {
+      it("should return value rounded to precision", () => {
         expect(round(5)).toBe(5);
         expect(round(5.11)).toBe(5.11);
         expect(round(5.111)).toBe(5.11);
@@ -91,7 +91,7 @@ describe("map", function () {
         round = map.createRound();
       });
 
-      it("should return value rounded to whole", function () {
+      it("should return value rounded to whole", () => {
         expect(round(5)).toBe(5);
         expect(round(5.1)).toBe(5);
         expect(round(5.5)).toBe(6);

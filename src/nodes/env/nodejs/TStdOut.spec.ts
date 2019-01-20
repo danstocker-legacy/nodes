@@ -1,7 +1,7 @@
 import {createStdOut, TStdOut} from "./TStdOut";
 
 describe("createStdOut", () => {
-  it("should be singleton", function () {
+  it("should be singleton", () => {
     expect(createStdOut()).toBe(createStdOut());
   });
 

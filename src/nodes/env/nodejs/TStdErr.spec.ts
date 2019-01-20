@@ -1,7 +1,7 @@
 import {createStdErr, TStdErr} from "./TStdErr";
 
 describe("createStdErr", () => {
-  it("should be singleton", function () {
+  it("should be singleton", () => {
     expect(createStdErr()).toBe(createStdErr());
   });
 
