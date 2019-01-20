@@ -1,4 +1,6 @@
 export {TBuffer, createBuffer} from "./TBuffer";
+export {TChangeDetector, createChangeDetector} from "./TChangeDetector";
+export {TChangeFilter, createChangeFilter} from "./TChangeFilter";
 export {TComparer, TEqualityCallback, createComparer} from "./TComparer";
 export {TDemuxer, createDemuxer} from "./TDemuxer";
 export {TFilter, TFilterCallback, createFilter} from "./TFilter";
