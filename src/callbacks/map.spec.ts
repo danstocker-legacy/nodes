@@ -1,30 +1,30 @@
 import * as map from "./map";
 
 describe("map", function () {
-  describe("constant$", function () {
+  describe("createConstant", function () {
     it("should return specified value", function () {
-      expect(map.constant$(5)(null)).toBe(5);
+      expect(map.createConstant(5)(null)).toBe(5);
     });
   });
 
-  describe("split$", function () {
+  describe("createSplit", function () {
     it("should return split string", function () {
-      expect(map.split$(",")("foo,bar,baz"))
+      expect(map.createSplit(",")("foo,bar,baz"))
       .toEqual(["foo", "bar", "baz"]);
     });
   });
 
-  describe("pluck$", function () {
+  describe("createPluck", function () {
     it("should return specified property", function () {
-      expect(map.pluck$("foo")({foo: 5, bar: true})).toBe(5);
+      expect(map.createPluck("foo")({foo: 5, bar: true})).toBe(5);
     });
   });
 
-  describe("mpluck$()", () => {
+  describe("createMpluck()", () => {
     let mpluck: (value: {}) => any;
 
     beforeEach(() => {
-      mpluck = map.mpluck$(["foo", "bar"]);
+      mpluck = map.createMpluck(["foo", "bar"]);
     });
 
     it("should pluck multiple values", () => {
@@ -32,11 +32,11 @@ describe("map", function () {
     });
   });
 
-  describe("join$()", () => {
+  describe("createJoin()", () => {
     let join: (value: Array<any>) => string;
 
     beforeEach(() => {
-      join = map.join$(";");
+      join = map.createJoin(";");
     });
 
     it("should join input array", () => {
@@ -44,11 +44,11 @@ describe("map", function () {
     });
   });
 
-  describe("append$()", () => {
+  describe("createAppend()", () => {
     let append: (value: string) => string;
 
     beforeEach(() => {
-      append = map.append$("_");
+      append = map.createAppend("_");
     });
 
     it("should append to input string", () => {
@@ -56,11 +56,11 @@ describe("map", function () {
     });
   });
 
-  describe("prepend$()", () => {
+  describe("createPrepend()", () => {
     let prepend: (value: string) => string;
 
     beforeEach(() => {
-      prepend = map.prepend$("_");
+      prepend = map.createPrepend("_");
     });
 
     it("should prepend to input string", () => {
@@ -68,12 +68,12 @@ describe("map", function () {
     });
   });
 
-  describe("round$()", () => {
+  describe("createRound()", () => {
     describe("when precision is specified", () => {
       let round: (next: number) => number;
 
       beforeEach(() => {
-        round = map.round$(2);
+        round = map.createRound(2);
       });
 
       it("should return value rounded to precision", function () {
@@ -88,7 +88,7 @@ describe("map", function () {
       let round: (next: number) => number;
 
       beforeEach(() => {
-        round = map.round$();
+        round = map.createRound();
       });
 
       it("should return value rounded to whole", function () {
