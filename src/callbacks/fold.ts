@@ -1,3 +1,7 @@
+export function count(curr: number) {
+  return ++curr;
+}
+
 export function push(curr: Array<any>, next: any): Array<any> {
   curr.push(next);
   return curr;

@@ -1,6 +1,13 @@
 import * as fold from "./fold";
 
 describe("fold", function () {
+  describe("count()", () => {
+    it("should count inputs", () => {
+      const input = [1, 2, 3, 4, 5];
+      expect(input.reduce(fold.count, 0)).toEqual(5);
+    });
+  });
+
   describe("push()", function () {
     it("should append items to array", function () {
       const input = [1, 2, 3, 4, 5];
