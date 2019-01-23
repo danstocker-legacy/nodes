@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createFilter, TFilter} from "./TFilter";
+import {Filter$, TFilter} from "./TFilter";
 
-describe("createFilter", () => {
+describe("Filter$", () => {
   describe("on input (d_val)", () => {
     let node: TFilter<number>;
 
     beforeEach(() => {
-      node = createFilter((value) => value > 5);
+      node = Filter$((value) => value > 5);
     });
 
     describe("when value satisfies callback", () => {
@@ -29,7 +29,7 @@ describe("createFilter", () => {
 
     describe("when callback throws", () => {
       beforeEach(() => {
-        node = createFilter(() => {
+        node = Filter$(() => {
           throw new Error();
         });
       });

@@ -1,6 +1,6 @@
 import {TOutPorts, TTag} from "../node";
 
-export function createOutPorts<O>(fields: Array<keyof O>): TOutPorts<O> {
+export function OutPorts$<O>(fields: Array<keyof O>): TOutPorts<O> {
   const outPorts = <TOutPorts<O>>{};
   for (const field of fields) {
     outPorts[field] = new Set();
@@ -13,7 +13,7 @@ type TOutputs<O> = {
   [K in keyof O]: TOutput<O[K]>
 };
 
-export function createOutputs<O>(outPorts: TOutPorts<O>): TOutputs<O> {
+export function Outputs$<O>(outPorts: TOutPorts<O>): TOutputs<O> {
   const outputs = <TOutputs<O>>{};
   for (const field in outPorts) {
     const inPorts = outPorts[field];

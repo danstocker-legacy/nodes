@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createMerger, TMerger} from "./TMerger";
+import {Merger$, TMerger} from "./TMerger";
 
-describe("createMerger", () => {
+describe("Merger$", () => {
   describe("on input", () => {
     let node: TMerger<{ foo: number, bar: number }>;
 
     beforeEach(() => {
-      node = createMerger(["foo", "bar"]);
+      node = Merger$(["foo", "bar"]);
     });
 
     it("should emit on all", () => {

@@ -1,5 +1,5 @@
 import {INode, TInPorts, TTag} from "../../node";
-import {createOutPorts, createOutputs} from "../../utils";
+import {OutPorts$, Outputs$} from "../../utils";
 
 export interface IInputs<V> {
   d_val: V;
@@ -13,9 +13,9 @@ export interface IOutputs<V> {
 
 export type TBuffer<V> = INode<IInputs<V> & { all: IInputs<V> }, IOutputs<V>>;
 
-export function createBuffer<V>(open?: boolean): TBuffer<V> {
-  const o = createOutPorts(["d_val", "st_size"]);
-  const outputs = createOutputs(o);
+export function Buffer$<V>(open?: boolean): TBuffer<V> {
+  const o = OutPorts$(["d_val", "st_size"]);
+  const outputs = Outputs$(o);
 
   const buffer: Array<{ value: V, tag: TTag }> = [];
 

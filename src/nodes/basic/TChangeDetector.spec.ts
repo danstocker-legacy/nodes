@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createChangeDetector, TChangeDetector} from "./TChangeDetector";
+import {Change$Detector, TChangeDetector} from "./TChangeDetector";
 
-describe("createChangeDetector()", () => {
+describe("Change$Detector()", () => {
   describe("when callback is specified", () => {
     let node: TChangeDetector<number>;
 
     beforeEach(() => {
-      node = createChangeDetector((a, b) => a % 2 === b % 2);
+      node = Change$Detector((a, b) => a % 2 === b % 2);
     });
 
     describe("on input (d_val)", () => {
@@ -38,7 +38,7 @@ describe("createChangeDetector()", () => {
 
       describe("when callback throws", () => {
         beforeEach(() => {
-          node = createChangeDetector(() => {
+          node = Change$Detector(() => {
             throw new Error();
           });
         });
@@ -64,7 +64,7 @@ describe("createChangeDetector()", () => {
     let node: TChangeDetector<number>;
 
     beforeEach(() => {
-      node = createChangeDetector();
+      node = Change$Detector();
     });
 
     describe("on input (d_val)", () => {

@@ -1,5 +1,5 @@
 import {INode, TInPorts} from "../../node";
-import {createOutPorts, createOutputs, IMuxed} from "../../utils";
+import {IMuxed, OutPorts$, Outputs$} from "../../utils";
 
 export interface IInputs<T> {
   d_mux: IMuxed<T>;
@@ -9,9 +9,9 @@ export type TOutputs<T> = T;
 
 export type TDemuxer<T> = INode<IInputs<T>, TOutputs<T>>;
 
-export function createDemuxer<T>(fields: Array<keyof T>): TDemuxer<T> {
-  const o = createOutPorts(fields);
-  const outputs = createOutputs(o);
+export function Demuxer$<T>(fields: Array<keyof T>): TDemuxer<T> {
+  const o = OutPorts$(fields);
+  const outputs = Outputs$(o);
 
   const i: TInPorts<IInputs<T>> = {
     d_mux: ({field, value}, tag) => {

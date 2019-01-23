@@ -8,7 +8,7 @@ export type TStdOut = INode<IInputs, {}>;
 
 let instance: TStdOut;
 
-export function createStdOut(): TStdOut {
+export function Std$Out(): TStdOut {
   if (instance) {
     return instance;
   }

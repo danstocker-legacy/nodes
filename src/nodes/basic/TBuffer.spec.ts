@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createBuffer, TBuffer} from "./TBuffer";
+import {Buffer$, TBuffer} from "./TBuffer";
 
-describe("createBuffer", () => {
+describe("Buffer$", () => {
   describe("on input (all)", () => {
     let node: TBuffer<number>;
 
     beforeEach(() => {
-      node = createBuffer();
+      node = Buffer$();
     });
 
     describe("when st_open is false", () => {
@@ -64,7 +64,7 @@ describe("createBuffer", () => {
     let node: TBuffer<number>;
 
     beforeEach(() => {
-      node = createBuffer(false);
+      node = Buffer$(false);
     });
 
     describe("when st_open is true", () => {

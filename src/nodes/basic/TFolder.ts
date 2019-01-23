@@ -1,5 +1,5 @@
 import {INode, TInPorts, TTag} from "../../node";
-import {copy, createOutPorts, createOutputs} from "../../utils";
+import {copy, OutPorts$, Outputs$} from "../../utils";
 
 export type TFolderCallback<I, O> = (
   curr: O,
@@ -19,12 +19,12 @@ export interface IOutputs<I, O> {
 
 export type TFolder<I, O> = INode<IInputs<I> & { all: IInputs<I> }, IOutputs<I, O>>;
 
-export function createFolder<I, O>(
+export function Folder$<I, O>(
   cb: TFolderCallback<I, O>,
   initial?: O
 ): TFolder<I, O> {
-  const o = createOutPorts(["b_d_val", "d_fold", "ev_err"]);
-  const outputs = createOutputs(o);
+  const o = OutPorts$(["b_d_val", "d_fold", "ev_err"]);
+  const outputs = Outputs$(o);
 
   let folded = copy(initial);
 

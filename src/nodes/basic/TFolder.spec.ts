@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createFolder, TFolder} from "./TFolder";
+import {Folder$, TFolder} from "./TFolder";
 
-describe("createFolder", () => {
+describe("Folder$", () => {
   describe("on input (all)", () => {
     let node: TFolder<number, number>;
 
     beforeEach(() => {
-      node = createFolder((curr, next) => curr + next, 0);
+      node = Folder$((curr, next) => curr + next, 0);
     });
 
     describe("when ev_res is true", () => {
@@ -25,7 +25,7 @@ describe("createFolder", () => {
 
     describe("when callback throws", () => {
       beforeEach(() => {
-        node = createFolder(() => {
+        node = Folder$(() => {
           throw new Error();
         });
       });
@@ -50,12 +50,12 @@ describe("createFolder", () => {
     let node: TFolder<number, number>;
 
     beforeEach(() => {
-      node = createFolder((curr, next) => curr + next, 0);
+      node = Folder$((curr, next) => curr + next, 0);
     });
 
     describe("when callback throws", () => {
       beforeEach(() => {
-        node = createFolder(() => {
+        node = Folder$(() => {
           throw new Error();
         });
       });
@@ -80,7 +80,7 @@ describe("createFolder", () => {
     let node: TFolder<number, number>;
 
     beforeEach(() => {
-      node = createFolder((curr, next) => curr + next, 0);
+      node = Folder$((curr, next) => curr + next, 0);
     });
 
     describe("when truthy", () => {

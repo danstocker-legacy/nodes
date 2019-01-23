@@ -1,5 +1,5 @@
 import {INode, TInPorts, TTag} from "../../node";
-import {createOutPorts, createOutputs} from "../../utils";
+import {OutPorts$, Outputs$} from "../../utils";
 
 export type TUnfolderCallback<I, O> = (value: I, tag?: TTag) => IterableIterator<O>;
 
@@ -15,9 +15,9 @@ export interface IOutputs<I, O> {
 
 export type TUnfolder<I, O> = INode<IInputs<I>, IOutputs<I, O>>;
 
-export function createUnfolder<I, O>(cb: TUnfolderCallback<I, O>): TUnfolder<I, O> {
-  const o = createOutPorts(["b_d_fold", "d_val", "ev_err"]);
-  const outputs = createOutputs(o);
+export function Unfolder$<I, O>(cb: TUnfolderCallback<I, O>): TUnfolder<I, O> {
+  const o = OutPorts$(["b_d_fold", "d_val", "ev_err"]);
+  const outputs = Outputs$(o);
 
   const i: TInPorts<IInputs<I>> = {
     d_fold: (value, tag) => {

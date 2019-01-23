@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createSwitch, TSwitch} from "./TSwitch";
+import {Switch$, TSwitch} from "./TSwitch";
 
-describe("createSwitch()", () => {
+describe("Switch$()", () => {
   describe("on input (all)", () => {
     let node: TSwitch<"foo" | "bar" | "baz", number>;
 
     beforeEach(() => {
-      node = createSwitch(["foo", "bar", "baz"]);
+      node = Switch$(["foo", "bar", "baz"]);
     });
 
     it("should forward to specified output", () => {
@@ -36,7 +36,7 @@ describe("createSwitch()", () => {
     let node: TSwitch<"foo" | "bar" | "baz", number>;
 
     beforeEach(() => {
-      node = createSwitch(["foo", "bar", "baz"], "foo");
+      node = Switch$(["foo", "bar", "baz"], "foo");
     });
 
     it("should forward to current position", () => {
@@ -51,7 +51,7 @@ describe("createSwitch()", () => {
     let node: TSwitch<"foo" | "bar" | "baz", number>;
 
     beforeEach(() => {
-      node = createSwitch(["foo", "bar", "baz"], "foo");
+      node = Switch$(["foo", "bar", "baz"], "foo");
     });
 
     describe("on invalid st_pos", () => {

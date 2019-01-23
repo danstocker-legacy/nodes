@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createSerializer, TSerializer} from "./TSerializer";
+import {Serializer$, TSerializer} from "./TSerializer";
 
-describe("createSerializer", () => {
+describe("Serializer$", () => {
   describe("on input (d_val)", () => {
     let node: TSerializer<number>;
 
     beforeEach(() => {
-      node = createSerializer();
+      node = Serializer$();
     });
 
     describe("when there is no matching tag", () => {
@@ -42,7 +42,7 @@ describe("createSerializer", () => {
     let node: TSerializer<number>;
 
     beforeEach(() => {
-      node = createSerializer();
+      node = Serializer$();
     });
 
     describe("when there is no matching value", () => {

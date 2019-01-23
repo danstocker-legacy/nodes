@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createNoop, TNoop} from "./TNoop";
+import {Noop$, TNoop} from "./TNoop";
 
-describe("createNoop", () => {
+describe("Noop$", () => {
   describe("on input (d_val)", () => {
     let node: TNoop<number>;
 
     beforeEach(() => {
-      node = createNoop();
+      node = Noop$();
     });
 
     it("should forward d_val", () => {

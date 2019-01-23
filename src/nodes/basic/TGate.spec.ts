@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createGate, TGate} from "./TGate";
+import {Gate$, TGate} from "./TGate";
 
-describe("createGate", () => {
+describe("Gate$", () => {
   describe("on input (all)", () => {
     let node: TGate<number>;
 
     beforeEach(() => {
-      node = createGate();
+      node = Gate$();
     });
 
     describe("when st_open is true", () => {
@@ -33,7 +33,7 @@ describe("createGate", () => {
       let node: TGate<number>;
 
       beforeEach(() => {
-        node = createGate(true);
+        node = Gate$(true);
       });
 
       it("should forward d_val", () => {
@@ -48,7 +48,7 @@ describe("createGate", () => {
       let node: TGate<number>;
 
       beforeEach(() => {
-        node = createGate(false);
+        node = Gate$(false);
       });
 
       it("should not forward d_val", () => {

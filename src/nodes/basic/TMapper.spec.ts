@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createMapper, TMapper} from "./TMapper";
+import {Mapper$, TMapper} from "./TMapper";
 
-describe("createMapper", () => {
+describe("Mapper$", () => {
   describe("on input (d_val)", () => {
     let node: TMapper<number, boolean>;
 
     beforeEach(() => {
-      node = createMapper((value) => value > 5);
+      node = Mapper$((value) => value > 5);
     });
 
     it("should emit on d_val", () => {
@@ -18,7 +18,7 @@ describe("createMapper", () => {
 
     describe("when callback throws", () => {
       beforeEach(() => {
-        node = createMapper(() => {
+        node = Mapper$(() => {
           throw new Error();
         });
       });

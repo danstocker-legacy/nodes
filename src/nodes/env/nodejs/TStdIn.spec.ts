@@ -1,16 +1,16 @@
 import {connect} from "../../../node";
-import {createStdIn, TStdIn} from "./TStdIn";
+import {Std$In, TStdIn} from "./TStdIn";
 
-describe("createStdIn", () => {
+describe("Std$In", () => {
   it("should be singleton", () => {
-    expect(createStdIn()).toBe(createStdIn());
+    expect(Std$In()).toBe(Std$In());
   });
 
   describe("on stdin readable", () => {
     let node: TStdIn;
 
     beforeEach(() => {
-      node = createStdIn();
+      node = Std$In();
     });
 
     it("should emit on d_val", () => {

@@ -1,13 +1,13 @@
 import {connect} from "../../node";
-import {createComparer, TComparer} from "./TComparer";
+import {Comparer$, TComparer} from "./TComparer";
 
-describe("createComparer", () => {
+describe("Comparer$", () => {
   describe("with callback", () => {
     describe("on input (d_vals)", () => {
       let node: TComparer<number>;
 
       beforeEach(() => {
-        node = createComparer((a, b) => a === b);
+        node = Comparer$((a, b) => a === b);
       });
 
       it("should emit on d_eq", () => {
@@ -19,7 +19,7 @@ describe("createComparer", () => {
 
       describe("when callback throws", () => {
         beforeEach(() => {
-          node = createComparer(() => {
+          node = Comparer$(() => {
             throw new Error();
           });
         });
@@ -46,7 +46,7 @@ describe("createComparer", () => {
       let node: TComparer<number>;
 
       beforeEach(() => {
-        node = createComparer();
+        node = Comparer$();
       });
 
       it("should emit on d_eq", () => {

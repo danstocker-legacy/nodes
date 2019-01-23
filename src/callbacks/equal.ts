@@ -1,6 +1,6 @@
 import {TEqualityCallback} from "../nodes/basic";
 
-export function createProperty<I>(
+export function property$<I>(
   name: string,
   cb?: TEqualityCallback<I[keyof I]>
 ): TEqualityCallback<I> {

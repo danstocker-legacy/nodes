@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createJoiner, TJoiner} from "./TJoiner";
+import {Joiner$, TJoiner} from "./TJoiner";
 
-describe("createJoiner", () => {
+describe("Joiner$", () => {
   describe("on input", () => {
     let node: TJoiner<{ foo: number, bar: number }>;
 
     beforeEach(() => {
-      node = createJoiner(["foo", "bar"]);
+      node = Joiner$(["foo", "bar"]);
     });
 
     describe("on input (before first full set)", () => {

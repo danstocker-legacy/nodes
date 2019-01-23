@@ -1,9 +1,9 @@
-import {copy, createOutPorts} from "./utils";
+import {copy, OutPorts$} from "./utils";
 
 describe("utils", () => {
-  describe("createOutPorts()", () => {
+  describe("OutPorts$()", () => {
     it("should return output port structure", () => {
-      const result = createOutPorts(["foo", "bar"]);
+      const result = OutPorts$(["foo", "bar"]);
       expect(result).toEqual({
         bar: new Set(),
         foo: new Set()

@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {createSampler, TSampler} from "./TSampler";
+import {Sampler$, TSampler} from "./TSampler";
 
-describe("createSampler", () => {
+describe("Sampler$", () => {
   describe("on input (ev_smp)", () => {
     let node: TSampler<number>;
 
     beforeEach(() => {
-      node = createSampler();
+      node = Sampler$();
       node.i.d_val(5, "1");
     });
 

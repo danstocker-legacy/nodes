@@ -1,5 +1,5 @@
 import {INode, TInPorts, TTag} from "../../node";
-import {createOutPorts, createOutputs} from "../../utils";
+import {OutPorts$, Outputs$} from "../../utils";
 
 export type TInputs<T> = T;
 
@@ -9,9 +9,9 @@ export interface IOutputs<T> {
 
 export type TJoiner<T> = INode<TInputs<T>, IOutputs<T>>;
 
-export function createJoiner<T>(fields: Array<keyof T>): TJoiner<T> {
-  const o = createOutPorts(["all"]);
-  const outputs = createOutputs(o);
+export function Joiner$<T>(fields: Array<keyof T>): TJoiner<T> {
+  const o = OutPorts$(["all"]);
+  const outputs = Outputs$(o);
 
   const inputSets: Map<TTag, T> = new Map();
   const portSets: Map<TTag, Set<keyof T>> = new Map();

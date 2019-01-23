@@ -1,5 +1,5 @@
 import {INode, TInPorts} from "../../node";
-import {createOutPorts, createOutputs} from "../../utils";
+import {OutPorts$, Outputs$} from "../../utils";
 
 export interface IInputs<P extends string | number, V> {
   d_val: V;
@@ -20,12 +20,12 @@ export type TSwitch<P extends string | number, V> =
  * TODO: Remove <any> typecasts once TS supports string patterns in types
  * @link https://github.com/Microsoft/TypeScript/issues/12754
  */
-export function createSwitch<P extends string | number, V>(
+export function Switch$<P extends string | number, V>(
   positions: Array<P>,
   position?: P
 ): TSwitch<P, V> {
-  const o = createOutPorts((<Array<keyof TOutputs<P, V>>>positions).concat("b_st_pos"));
-  const outputs = createOutputs<TOutputs<P, V>>(o);
+  const o = OutPorts$((<Array<keyof TOutputs<P, V>>>positions).concat("b_st_pos"));
+  const outputs = Outputs$<TOutputs<P, V>>(o);
 
   const positionSet = new Set(positions);
 
