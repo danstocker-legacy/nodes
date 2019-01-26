@@ -8,8 +8,8 @@ export function OutPorts$<O>(fields: Array<keyof O>): TOutPorts<O> {
   return outPorts;
 }
 
-type TOutput<V> = (value: V, tag?: TTag) => void;
-type TOutputs<O> = {
+export type TOutput<V> = (value: V, tag?: TTag) => void;
+export type TOutputs<O> = {
   [K in keyof O]: TOutput<O[K]>
 };
 
