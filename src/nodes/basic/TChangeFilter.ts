@@ -14,7 +14,7 @@ export interface IOutputs<V> {
 
 export type TChangeFilter<V> = INode<IInputs<V>, IOutputs<V>>;
 
-export function Change$Filter<V>(cb?: TEqualityCallback<V>): TChangeFilter<V> {
+export function ChangeFilter$<V>(cb?: TEqualityCallback<V>): TChangeFilter<V> {
   const o = OutPorts$(["b_d_val", "d_val", "ev_err"]);
   const outputs = Outputs$(o);
 

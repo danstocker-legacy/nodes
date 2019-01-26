@@ -14,7 +14,7 @@ export interface IOutputs<V> {
 
 export type TChangeDetector<V> = INode<IInputs<V>, IOutputs<V>>;
 
-export function Change$Detector<V>(
+export function ChangeDetector$<V>(
   cb?: TEqualityCallback<V>
 ): TChangeDetector<V> {
   const o = OutPorts$(["b_d_val", "d_eq", "ev_err"]);
