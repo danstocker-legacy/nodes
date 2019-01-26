@@ -29,7 +29,7 @@ describe("RemoteIn$()", () => {
 
     beforeEach(() => {
       spyOn(net, "Server").and.returnValue(server);
-      node = RemoteIn$("1");
+      node = RemoteIn$("localhost", 8888, "1");
       onConnection(socket);
     });
 

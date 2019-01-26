@@ -9,23 +9,24 @@ export interface IOutputs<V> {
 
 export type TRemoteIn<V> = INode<{}, IOutputs<V>>;
 
-let server: Server;
+const serverCache: Map<string, Server> = new Map();
 const outputCache: Map<string, TOutputs<IOutputs<any>>> = new Map();
 
-export function RemoteIn$<V>(id: string): TRemoteIn<V> {
+export function RemoteIn$<V>(host: string, port: number, id: string): TRemoteIn<V> {
   const o = OutPorts$(["d_val", "ev_err"]);
   outputCache.set(id, Outputs$(o));
 
-  if (!server) {
-    setupTcp();
+  const serverId = `${host}:${port}`;
+  if (!serverCache.get(serverId)) {
+    serverCache.set(serverId, tcpServer$(host, port));
   }
 
   return {i: {}, o};
 }
 
-function setupTcp() {
-  server = new Server();
-  server.listen(8888, "localhost");
+function tcpServer$(host: string, port: number): Server {
+  const server = new Server();
+  server.listen(port, host);
   server.on("connection", (socket: Socket) => {
     socket.on("data", (data: string) => {
       // tslint:disable
@@ -42,4 +43,5 @@ function setupTcp() {
       }
     });
   });
+  return server;
 }
