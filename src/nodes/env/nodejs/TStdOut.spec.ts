@@ -1,15 +1,15 @@
-import {Std$Out, TStdOut} from "./TStdOut";
+import {StdOut$, TStdOut} from "./TStdOut";
 
-describe("Std$Out", () => {
+describe("StdOut$", () => {
   it("should be singleton", () => {
-    expect(Std$Out()).toBe(Std$Out());
+    expect(StdOut$()).toBe(StdOut$());
   });
 
   describe("on input (d_val)", () => {
     let node: TStdOut;
 
     beforeEach(() => {
-      node = Std$Out();
+      node = StdOut$();
     });
 
     it("should write to stdout", () => {

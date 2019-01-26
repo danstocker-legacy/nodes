@@ -9,7 +9,7 @@ export type TStdIn = INode<{}, IOutputs>;
 
 let instance: TStdIn;
 
-export function Std$In(): TStdIn {
+export function StdIn$(): TStdIn {
   if (instance) {
     return instance;
   }

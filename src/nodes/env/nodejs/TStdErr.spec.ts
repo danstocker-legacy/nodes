@@ -1,15 +1,15 @@
-import {Std$Err, TStdErr} from "./TStdErr";
+import {StdErr$, TStdErr} from "./TStdErr";
 
-describe("Std$Err", () => {
+describe("StdErr$", () => {
   it("should be singleton", () => {
-    expect(Std$Err()).toBe(Std$Err());
+    expect(StdErr$()).toBe(StdErr$());
   });
 
   describe("on input (d_val)", () => {
     let node: TStdErr;
 
     beforeEach(() => {
-      node = Std$Err();
+      node = StdErr$();
     });
 
     it("should write to stderr", () => {

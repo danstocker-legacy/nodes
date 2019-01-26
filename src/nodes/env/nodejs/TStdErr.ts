@@ -8,7 +8,7 @@ export type TStdErr = INode<IInputs, {}>;
 
 let instance: TStdErr;
 
-export function Std$Err(): TStdErr {
+export function StdErr$(): TStdErr {
   if (instance) {
     return instance;
   }
