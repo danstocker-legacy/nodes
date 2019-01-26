@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Splitter$, TSplitter} from "./TSplitter";
 
-describe("Splitter$", () => {
+describe("Splitter$()", () => {
   describe("on input (d_val)", () => {
     let node: TSplitter<{ foo: number, bar: number }>;
 

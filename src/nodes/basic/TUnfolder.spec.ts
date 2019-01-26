@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {TUnfolder, Unfolder$} from "./TUnfolder";
 
-describe("Unfolder$", () => {
+describe("Unfolder$()", () => {
   describe("on input (d_fold)", () => {
     let node: TUnfolder<Array<number>, number>;
 

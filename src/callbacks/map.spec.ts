@@ -1,20 +1,20 @@
 import * as map from "./map";
 
 describe("map", () => {
-  describe("constant$", () => {
+  describe("constant$()", () => {
     it("should return specified value", () => {
       expect(map.constant$(5)(null)).toBe(5);
     });
   });
 
-  describe("split$", () => {
+  describe("split$()", () => {
     it("should return split string", () => {
       expect(map.split$(",")("foo,bar,baz"))
       .toEqual(["foo", "bar", "baz"]);
     });
   });
 
-  describe("pluck$", () => {
+  describe("pluck$()", () => {
     it("should return specified property", () => {
       expect(map.pluck$("foo")({foo: 5, bar: true})).toBe(5);
     });

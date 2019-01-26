@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Folder$, TFolder} from "./TFolder";
 
-describe("Folder$", () => {
+describe("Folder$()", () => {
   describe("on input (all)", () => {
     let node: TFolder<number, number>;
 

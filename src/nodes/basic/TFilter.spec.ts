@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Filter$, TFilter} from "./TFilter";
 
-describe("Filter$", () => {
+describe("Filter$()", () => {
   describe("on input (d_val)", () => {
     let node: TFilter<number>;
 

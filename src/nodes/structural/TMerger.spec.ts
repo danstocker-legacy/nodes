@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Merger$, TMerger} from "./TMerger";
 
-describe("Merger$", () => {
+describe("Merger$()", () => {
   describe("on input", () => {
     let node: TMerger<{ foo: number, bar: number }>;
 

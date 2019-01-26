@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Noop$, TNoop} from "./TNoop";
 
-describe("Noop$", () => {
+describe("Noop$()", () => {
   describe("on input (d_val)", () => {
     let node: TNoop<number>;
 

@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Gate$, TGate} from "./TGate";
 
-describe("Gate$", () => {
+describe("Gate$()", () => {
   describe("on input (all)", () => {
     let node: TGate<number>;
 

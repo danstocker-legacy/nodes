@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Comparer$, TComparer} from "./TComparer";
 
-describe("Comparer$", () => {
+describe("Comparer$()", () => {
   describe("with callback", () => {
     describe("on input (d_vals)", () => {
       let node: TComparer<number>;

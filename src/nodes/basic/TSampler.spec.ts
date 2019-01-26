@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Sampler$, TSampler} from "./TSampler";
 
-describe("Sampler$", () => {
+describe("Sampler$()", () => {
   describe("on input (ev_smp)", () => {
     let node: TSampler<number>;
 

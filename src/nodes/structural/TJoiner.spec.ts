@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Joiner$, TJoiner} from "./TJoiner";
 
-describe("Joiner$", () => {
+describe("Joiner$()", () => {
   describe("on input", () => {
     let node: TJoiner<{ foo: number, bar: number }>;
 

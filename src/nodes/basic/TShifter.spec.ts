@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Shifter$, TShifter} from "./TShifter";
 
-describe("Shifter$", () => {
+describe("Shifter$()", () => {
   describe("on input (d_val)", () => {
     let node: TShifter<number>;
 

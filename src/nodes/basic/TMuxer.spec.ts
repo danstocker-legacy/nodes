@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Muxer$, TMuxer} from "./TMuxer";
 
-describe("Muxer$", () => {
+describe("Muxer$()", () => {
   describe("on input", () => {
     let node: TMuxer<{ foo: number, bar: number }>;
 

@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Mapper$, TMapper} from "./TMapper";
 
-describe("Mapper$", () => {
+describe("Mapper$()", () => {
   describe("on input (d_val)", () => {
     let node: TMapper<number, boolean>;
 

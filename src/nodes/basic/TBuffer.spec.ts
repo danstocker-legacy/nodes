@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Buffer$, TBuffer} from "./TBuffer";
 
-describe("Buffer$", () => {
+describe("Buffer$()", () => {
   describe("on input (all)", () => {
     let node: TBuffer<number>;
 

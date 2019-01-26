@@ -1,7 +1,7 @@
 import {connect} from "../../node";
 import {Serializer$, TSerializer} from "./TSerializer";
 
-describe("Serializer$", () => {
+describe("Serializer$()", () => {
   describe("on input (d_val)", () => {
     let node: TSerializer<number>;
 
