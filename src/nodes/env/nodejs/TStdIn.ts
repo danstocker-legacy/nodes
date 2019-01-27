@@ -1,5 +1,5 @@
 import {INode} from "../../../node";
-import {OutPorts$, Outputs$} from "../../../utils";
+import {createOutPorts, createOutputs} from "../../../utils";
 
 interface IOutputs {
   d_val: string | Buffer;
@@ -9,13 +9,13 @@ export type TStdIn = INode<{}, IOutputs>;
 
 let instance: TStdIn;
 
-export function StdIn$(): TStdIn {
+export function createStdIn(): TStdIn {
   if (instance) {
     return instance;
   }
 
-  const o = OutPorts$(["d_val"]);
-  const outputs = Outputs$(o);
+  const o = createOutPorts(["d_val"]);
+  const outputs = createOutputs(o);
 
   process.stdin.on("readable", () => {
     const chunk = process.stdin.read();

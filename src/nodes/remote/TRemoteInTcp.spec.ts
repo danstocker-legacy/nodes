@@ -1,8 +1,8 @@
 import * as net from "net";
 import {connect} from "../../node";
-import {RemoteInTcp$, TRemoteInTcp} from "./TRemoteInTcp";
+import {createRemoteInTcp, TRemoteInTcp} from "./TRemoteInTcp";
 
-describe("RemoteInTcp$()", () => {
+describe("createRemoteInTcp()", () => {
   describe("on data", () => {
     let node: TRemoteInTcp<number>;
     let onData: (data) => void;
@@ -29,7 +29,7 @@ describe("RemoteInTcp$()", () => {
 
     beforeEach(() => {
       spyOn(net, "Server").and.returnValue(server);
-      node = RemoteInTcp$("localhost", 8888, "1");
+      node = createRemoteInTcp("localhost", 8888, "1");
       onConnection(socket);
     });
 

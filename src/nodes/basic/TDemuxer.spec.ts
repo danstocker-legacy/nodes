@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {Demuxer$, TDemuxer} from "./TDemuxer";
+import {createDemuxer, TDemuxer} from "./TDemuxer";
 
-describe("Demuxer$()", () => {
+describe("createDemuxer()", () => {
   describe("on input (d_mux)", () => {
     let node: TDemuxer<{ foo: number, bar: number }>;
 
     beforeEach(() => {
-      node = Demuxer$(["foo", "bar"]);
+      node = createDemuxer(["foo", "bar"]);
     });
 
     it("should emit on specified port", () => {

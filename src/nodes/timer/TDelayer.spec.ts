@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {Delayer$, TDelayer} from "./TDelayer";
+import {createDelayer, TDelayer} from "./TDelayer";
 
-describe("Delayer$()", () => {
+describe("createDelayer()", () => {
   describe("on input (d_val)", () => {
     let node: TDelayer<number>;
 
     beforeEach(() => {
-      node = Delayer$(500);
+      node = createDelayer(500);
       jasmine.clock().install();
     });
 

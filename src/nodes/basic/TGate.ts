@@ -1,5 +1,5 @@
 import {INode, TInPorts} from "../../node";
-import {OutPorts$, Outputs$} from "../../utils";
+import {createOutPorts, createOutputs} from "../../utils";
 
 export interface IInputs<V> {
   d_val: V;
@@ -12,9 +12,9 @@ export interface IOutputs<V> {
 
 export type TGate<V> = INode<IInputs<V> & { all: IInputs<V> }, IOutputs<V>>;
 
-export function Gate$<V>(open?: boolean): TGate<V> {
-  const o = OutPorts$(["d_val"]);
-  const outputs = Outputs$(o);
+export function createGate<V>(open?: boolean): TGate<V> {
+  const o = createOutPorts(["d_val"]);
+  const outputs = createOutputs(o);
 
   const i: TInPorts<IInputs<V> & { all: IInputs<V> }> = {
     all: ({d_val, st_open}, tag) => {

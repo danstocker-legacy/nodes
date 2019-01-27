@@ -1,5 +1,5 @@
 import {INode, TInPorts} from "../../node";
-import {OutPorts$, Outputs$} from "../../utils";
+import {createOutPorts, createOutputs} from "../../utils";
 import {TEqualityCallback} from "./TComparer";
 
 export interface IInputs<V> {
@@ -14,11 +14,11 @@ export interface IOutputs<V> {
 
 export type TChangeDetector<V> = INode<IInputs<V>, IOutputs<V>>;
 
-export function ChangeDetector$<V>(
+export function createChangeDetector<V>(
   cb?: TEqualityCallback<V>
 ): TChangeDetector<V> {
-  const o = OutPorts$(["b_d_val", "d_eq", "ev_err"]);
-  const outputs = Outputs$(o);
+  const o = createOutPorts(["b_d_val", "d_eq", "ev_err"]);
+  const outputs = createOutputs(o);
 
   let last: V;
 

@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {Splitter$, TSplitter} from "./TSplitter";
+import {createSplitter, TSplitter} from "./TSplitter";
 
-describe("Splitter$()", () => {
+describe("createSplitter()", () => {
   describe("on input (d_val)", () => {
     let node: TSplitter<{ foo: number, bar: number }>;
 
     beforeEach(() => {
-      node = Splitter$(["foo", "bar"]);
+      node = createSplitter(["foo", "bar"]);
     });
 
     it("should emit on all ports", () => {

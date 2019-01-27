@@ -34,9 +34,9 @@ describe("unfold", () => {
     });
   });
 
-  describe("split$()", () => {
+  describe("split()", () => {
     it("should return string fragments", () => {
-      const split = unfold.split$("\n");
+      const split = unfold.split("\n");
       const iterable = split("foo\nbar\nbaz");
       expect([...iterable]).toEqual(["foo", "bar"]);
     });
@@ -46,7 +46,7 @@ describe("unfold", () => {
       let iterable: IterableIterator<string>;
 
       beforeEach(() => {
-        split = unfold.split$("\n");
+        split = unfold.split("\n");
         iterable = split("foo\nba");
         for (const item of iterable) {
           //

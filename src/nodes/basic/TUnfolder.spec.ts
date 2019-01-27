@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {TUnfolder, Unfolder$} from "./TUnfolder";
+import {createUnfolder, TUnfolder} from "./TUnfolder";
 
-describe("Unfolder$()", () => {
+describe("createUnfolder()", () => {
   describe("on input (d_fold)", () => {
     let node: TUnfolder<Array<number>, number>;
 
     beforeEach(() => {
-      node = Unfolder$(function* (value) {
+      node = createUnfolder(function* (value) {
         value = value.slice();
         while (value.length > 0) {
           yield value.shift();
@@ -27,7 +27,7 @@ describe("Unfolder$()", () => {
 
     describe("when callback throws", () => {
       beforeEach(() => {
-        node = Unfolder$(function* () {
+        node = createUnfolder(function* () {
           throw new Error();
         });
       });

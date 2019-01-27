@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {ChangeFilter$, TChangeFilter} from "./TChangeFilter";
+import {createChangeFilter, TChangeFilter} from "./TChangeFilter";
 
-describe("ChangeFilter$", () => {
+describe("createChangeFilter", () => {
   describe("when callback is specified", () => {
     let node: TChangeFilter<number>;
 
     beforeEach(() => {
-      node = ChangeFilter$((a, b) => a % 2 === b % 2);
+      node = createChangeFilter((a, b) => a % 2 === b % 2);
     });
 
     describe("on input (d_val)", () => {
@@ -34,7 +34,7 @@ describe("ChangeFilter$", () => {
 
       describe("when callback throws", () => {
         beforeEach(() => {
-          node = ChangeFilter$(() => {
+          node = createChangeFilter(() => {
             throw new Error();
           });
         });
@@ -60,7 +60,7 @@ describe("ChangeFilter$", () => {
     let node: TChangeFilter<number>;
 
     beforeEach(() => {
-      node = ChangeFilter$();
+      node = createChangeFilter();
       node.i.d_val(3, "1");
     });
 

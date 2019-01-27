@@ -1,6 +1,6 @@
 import {Socket} from "net";
 import {INode, TInPorts, TTag} from "../../node";
-import {OutPorts$, Outputs$} from "../../utils";
+import {createOutPorts, createOutputs} from "../../utils";
 
 export interface IInputs<V> {
   d_val: V;
@@ -15,9 +15,9 @@ export type TRemoteOutTcp<V> = INode<IInputs<V>, IOutputs<V>>;
 
 const socketCache: Map<string, Socket> = new Map();
 
-export function RemoteOutTcp$<V>(host: string, port: number, id: string): TRemoteOutTcp<V> {
-  const o = OutPorts$(["b_d_val", "ev_err"]);
-  const outputs = Outputs$(o);
+export function createRemoteOutTcp<V>(host: string, port: number, id: string): TRemoteOutTcp<V> {
+  const o = createOutPorts(["b_d_val", "ev_err"]);
+  const outputs = createOutputs(o);
   const inputCache: Set<{ tag: TTag, value: any }> = new Set();
 
   const socketId = `${host}:${port}`;

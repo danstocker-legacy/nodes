@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {Shifter$, TShifter} from "./TShifter";
+import {createShifter, TShifter} from "./TShifter";
 
-describe("Shifter$()", () => {
+describe("createShifter()", () => {
   describe("on input (d_val)", () => {
     let node: TShifter<number>;
 
     beforeEach(() => {
-      node = Shifter$();
+      node = createShifter();
       node.i.d_val(5, "1");
     });
 

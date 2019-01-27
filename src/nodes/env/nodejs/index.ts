@@ -1,3 +1,3 @@
-export {TStdErr, StdErr$} from "./TStdErr";
-export {TStdIn, StdIn$} from "./TStdIn";
-export {TStdOut, StdOut$} from "./TStdOut";
+export {TStdErr, createStdErr} from "./TStdErr";
+export {TStdIn, createStdIn} from "./TStdIn";
+export {TStdOut, createStdOut} from "./TStdOut";

@@ -1,5 +1,5 @@
 import {INode, TInPorts} from "../../node";
-import {OutPorts$, Outputs$} from "../../utils";
+import {createOutPorts, createOutputs} from "../../utils";
 
 export interface IInputs<V> {
   d_val: V;
@@ -11,9 +11,9 @@ export interface IOutputs<V> {
 
 export type TShifter<V> = INode<IInputs<V>, IOutputs<V>>;
 
-export function Shifter$<V>(): TShifter<V> {
-  const o = OutPorts$(["d_val"]);
-  const outputs = Outputs$(o);
+export function createShifter<V>(): TShifter<V> {
+  const o = createOutPorts(["d_val"]);
+  const outputs = createOutputs(o);
 
   let last: V;
 

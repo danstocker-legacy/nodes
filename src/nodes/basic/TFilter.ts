@@ -1,5 +1,5 @@
 import {INode, TInPorts, TTag} from "../../node";
-import {OutPorts$, Outputs$} from "../../utils";
+import {createOutPorts, createOutputs} from "../../utils";
 
 export type TFilterCallback<V> = (value: V, tag?: TTag) => boolean;
 
@@ -15,9 +15,9 @@ export interface IOutputs<V> {
 
 export type TFilter<V> = INode<IInputs<V>, IOutputs<V>>;
 
-export function Filter$<V>(cb: TFilterCallback<V>): TFilter<V> {
-  const o = OutPorts$(["b_d_val", "d_val", "ev_err"]);
-  const outputs = Outputs$(o);
+export function createFilter<V>(cb: TFilterCallback<V>): TFilter<V> {
+  const o = createOutPorts(["b_d_val", "d_val", "ev_err"]);
+  const outputs = createOutputs(o);
 
   const i: TInPorts<IInputs<V>> = {
     d_val: (value, tag) => {

@@ -1,5 +1,5 @@
 import {INode, TInPorts} from "../../node";
-import {OutPorts$, Outputs$} from "../../utils";
+import {createOutPorts, createOutputs} from "../../utils";
 
 export type TEqualityCallback<V> = (a: V, b: V, tag?: string) => boolean;
 
@@ -18,9 +18,9 @@ export interface IOutputs<V> {
 
 export type TComparer<V> = INode<IInputs<V>, IOutputs<V>>;
 
-export function Comparer$<V>(cb?: TEqualityCallback<V>): TComparer<V> {
-  const o = OutPorts$(["b_d_vals", "d_eq", "ev_err"]);
-  const outputs = Outputs$(o);
+export function createComparer<V>(cb?: TEqualityCallback<V>): TComparer<V> {
+  const o = createOutPorts(["b_d_vals", "d_eq", "ev_err"]);
+  const outputs = createOutputs(o);
 
   const i: TInPorts<IInputs<V>> = cb ? {
     d_vals: (value, tag) => {

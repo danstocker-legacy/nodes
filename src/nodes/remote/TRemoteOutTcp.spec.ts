@@ -1,8 +1,8 @@
 import * as net from "net";
 import {connect} from "../../node";
-import {RemoteOutTcp$, TRemoteOutTcp} from "./TRemoteOutTcp";
+import {createRemoteOutTcp, TRemoteOutTcp} from "./TRemoteOutTcp";
 
-describe("RemoteOutTcp$()", () => {
+describe("createRemoteOutTcp()", () => {
   describe("on input (d_val)", () => {
     let node: TRemoteOutTcp<number>;
     let onError: (error) => void;
@@ -23,7 +23,7 @@ describe("RemoteOutTcp$()", () => {
 
     beforeEach(() => {
       spyOn(net, "Socket").and.returnValue(socket);
-      node = RemoteOutTcp$("localhost", 8888, "1");
+      node = createRemoteOutTcp("localhost", 8888, "1");
     });
 
     it("should invoke socket#write()", () => {
@@ -35,7 +35,7 @@ describe("RemoteOutTcp$()", () => {
 
     describe("on error", () => {
       beforeEach(() => {
-        node = RemoteOutTcp$("localhost", 8888, "1");
+        node = createRemoteOutTcp("localhost", 8888, "1");
         node.i.d_val(5, "1");
       });
 

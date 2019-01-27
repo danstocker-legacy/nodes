@@ -1,6 +1,6 @@
 import {Server, Socket} from "net";
 import {INode} from "../../node";
-import {OutPorts$, Outputs$, TOutputs} from "../../utils";
+import {createOutPorts, createOutputs, TOutputs} from "../../utils";
 
 export interface IOutputs<V> {
   d_val: V;
@@ -12,19 +12,19 @@ export type TRemoteInTcp<V> = INode<{}, IOutputs<V>>;
 const serverCache: Map<string, Server> = new Map();
 const outputCache: Map<string, TOutputs<IOutputs<any>>> = new Map();
 
-export function RemoteInTcp$<V>(host: string, port: number, id: string): TRemoteInTcp<V> {
-  const o = OutPorts$(["d_val", "ev_err"]);
-  outputCache.set(id, Outputs$(o));
+export function createRemoteInTcp<V>(host: string, port: number, id: string): TRemoteInTcp<V> {
+  const o = createOutPorts(["d_val", "ev_err"]);
+  outputCache.set(id, createOutputs(o));
 
   const serverId = `${host}:${port}`;
   if (!serverCache.get(serverId)) {
-    serverCache.set(serverId, tcpServer$(host, port));
+    serverCache.set(serverId, tcpcreateServer(host, port));
   }
 
   return {i: {}, o};
 }
 
-function tcpServer$(host: string, port: number): Server {
+function tcpcreateServer(host: string, port: number): Server {
   const server = new Server();
   server.listen(port, host);
   server.on("connection", (socket: Socket) => {

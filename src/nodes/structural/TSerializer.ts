@@ -1,5 +1,5 @@
 import {INode, TInPorts, TTag} from "../../node";
-import {OutPorts$, Outputs$} from "../../utils";
+import {createOutPorts, createOutputs} from "../../utils";
 
 export interface IInputs<V> {
   d_val: V;
@@ -12,9 +12,9 @@ export interface IOutputs<V> {
 
 export type TSerializer<V> = INode<IInputs<V>, IOutputs<V>>;
 
-export function Serializer$<V>(): TSerializer<V> {
-  const o = OutPorts$(["d_val"]);
-  const outputs = Outputs$(o);
+export function createSerializer<V>(): TSerializer<V> {
+  const o = createOutPorts(["d_val"]);
+  const outputs = createOutputs(o);
 
   const values: Map<TTag, V> = new Map();
   const order: Array<TTag> = [];

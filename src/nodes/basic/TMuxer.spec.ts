@@ -1,12 +1,12 @@
 import {connect} from "../../node";
-import {Muxer$, TMuxer} from "./TMuxer";
+import {createMuxer, TMuxer} from "./TMuxer";
 
-describe("Muxer$()", () => {
+describe("createMuxer()", () => {
   describe("on input", () => {
     let node: TMuxer<{ foo: number, bar: number }>;
 
     beforeEach(() => {
-      node = Muxer$(["foo", "bar"]);
+      node = createMuxer(["foo", "bar"]);
     });
 
     it("should emit on d_mux", () => {

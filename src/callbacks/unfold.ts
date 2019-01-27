@@ -14,7 +14,7 @@ export function* shift(value: Array<any>): any {
   }
 }
 
-export function split$(delimiter: string): TUnfolderCallback<string, string> {
+export function split(delimiter: string): TUnfolderCallback<string, string> {
   let fragment = "";
   return function* (value: string) {
     const items = (fragment + value).split(delimiter);

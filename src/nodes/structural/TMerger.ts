@@ -1,5 +1,5 @@
 import {INode, TInPorts} from "../../node";
-import {copy, OutPorts$, Outputs$} from "../../utils";
+import {copy, createOutPorts, createOutputs} from "../../utils";
 import {TOutputs} from "../basic/TDemuxer";
 
 export type TInputs<T> = T;
@@ -10,9 +10,9 @@ export interface IOutputs<T> {
 
 export type TMerger<T> = INode<TInputs<T>, IOutputs<T>>;
 
-export function Merger$<T>(fields: Array<keyof T>): TMerger<T> {
-  const o = OutPorts$(["all"]);
-  const outputs = Outputs$(o);
+export function createMerger<T>(fields: Array<keyof T>): TMerger<T> {
+  const o = createOutPorts(["all"]);
+  const outputs = createOutputs(o);
 
   const inputs = <TOutputs<T>>{};
 
