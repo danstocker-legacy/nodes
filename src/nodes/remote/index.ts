@@ -1,2 +1,2 @@
-export {TRemoteIn, RemoteIn$} from "./TRemoteIn";
-export {TRemoteOut, RemoteOut$} from "./TRemoteOut";
+export {TRemoteInTcp, RemoteInTcp$} from "./TRemoteInTcp";
+export {TRemoteOutTcp, RemoteOutTcp$} from "./TRemoteOutTcp";

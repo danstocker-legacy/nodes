@@ -1,10 +1,10 @@
 import * as net from "net";
 import {connect} from "../../node";
-import {RemoteOut$, TRemoteOut} from "./TRemoteOut";
+import {RemoteOutTcp$, TRemoteOutTcp} from "./TRemoteOutTcp";
 
-describe("RemoteOut$()", () => {
+describe("RemoteOutTcp$()", () => {
   describe("on input (d_val)", () => {
-    let node: TRemoteOut<number>;
+    let node: TRemoteOutTcp<number>;
     let onError: (error) => void;
     let onWrite: () => void;
     const socket = {
@@ -23,7 +23,7 @@ describe("RemoteOut$()", () => {
 
     beforeEach(() => {
       spyOn(net, "Socket").and.returnValue(socket);
-      node = RemoteOut$("localhost", 8888, "1");
+      node = RemoteOutTcp$("localhost", 8888, "1");
     });
 
     it("should invoke socket#write()", () => {
@@ -35,7 +35,7 @@ describe("RemoteOut$()", () => {
 
     describe("on error", () => {
       beforeEach(() => {
-        node = RemoteOut$("localhost", 8888, "1");
+        node = RemoteOutTcp$("localhost", 8888, "1");
         node.i.d_val(5, "1");
       });
 

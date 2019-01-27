@@ -1,10 +1,10 @@
 import * as net from "net";
 import {connect} from "../../node";
-import {RemoteIn$, TRemoteIn} from "./TRemoteIn";
+import {RemoteInTcp$, TRemoteInTcp} from "./TRemoteInTcp";
 
-describe("RemoteIn$()", () => {
+describe("RemoteInTcp$()", () => {
   describe("on data", () => {
-    let node: TRemoteIn<number>;
+    let node: TRemoteInTcp<number>;
     let onData: (data) => void;
     const socket = {
       on: (event, cb) => {
@@ -29,7 +29,7 @@ describe("RemoteIn$()", () => {
 
     beforeEach(() => {
       spyOn(net, "Server").and.returnValue(server);
-      node = RemoteIn$("localhost", 8888, "1");
+      node = RemoteInTcp$("localhost", 8888, "1");
       onConnection(socket);
     });
 

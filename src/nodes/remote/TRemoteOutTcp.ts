@@ -11,11 +11,11 @@ export interface IOutputs<V> {
   ev_err: string;
 }
 
-export type TRemoteOut<V> = INode<IInputs<V>, IOutputs<V>>;
+export type TRemoteOutTcp<V> = INode<IInputs<V>, IOutputs<V>>;
 
 const socketCache: Map<string, Socket> = new Map();
 
-export function RemoteOut$<V>(host: string, port: number, id: string): TRemoteOut<V> {
+export function RemoteOutTcp$<V>(host: string, port: number, id: string): TRemoteOutTcp<V> {
   const o = OutPorts$(["b_d_val", "ev_err"]);
   const outputs = Outputs$(o);
   const inputCache: Set<{ tag: TTag, value: any }> = new Set();

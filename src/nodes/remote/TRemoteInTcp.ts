@@ -7,12 +7,12 @@ export interface IOutputs<V> {
   ev_err: string;
 }
 
-export type TRemoteIn<V> = INode<{}, IOutputs<V>>;
+export type TRemoteInTcp<V> = INode<{}, IOutputs<V>>;
 
 const serverCache: Map<string, Server> = new Map();
 const outputCache: Map<string, TOutputs<IOutputs<any>>> = new Map();
 
-export function RemoteIn$<V>(host: string, port: number, id: string): TRemoteIn<V> {
+export function RemoteInTcp$<V>(host: string, port: number, id: string): TRemoteInTcp<V> {
   const o = OutPorts$(["d_val", "ev_err"]);
   outputCache.set(id, Outputs$(o));
 
